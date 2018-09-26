@@ -1,0 +1,39 @@
+
+<div class="mycontent">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <hr/>
+                <h3 class="text-center">{{'adminConfigarationPage.statusPage.status' | translate}}</h3>
+                <hr/>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+            <div class="col-md-12">
+                  
+                   
+                    <table class="table table-bordered myTable">
+                        <thead>
+                        <tr class="text-center">
+                            <th > {{'adminConfigarationPage.statusPage.id' | translate}} </th>
+                            <th > {{'adminConfigarationPage.statusPage.status' | translate}}</th>
+                            
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of statusList" >
+                                <td>{{item.studentStatusId}}</td>
+                                <td>{{item.status}}</td> 
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                   
+    
+                </div>
+            </div>
+
+    
+</div>

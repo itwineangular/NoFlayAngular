@@ -1,0 +1,36 @@
+[{
+    "id": "KA",
+   "name": "Karnataka",
+   "countryCode":"IN"
+    
+},
+{
+    "id": "AP",
+    "name": "AndhraPradesh",
+    "countryCode":"IN"
+   
+},
+{
+    "id": "TN",
+    "name": "Tamil Nadu",
+    "countryCode":"IN"
+   
+},
+
+{
+    "id": "CA",
+    "name": "California",
+    "countryCode":"USA"
+   
+},
+
+{
+    "id": "AL",
+    "name": "Alabama",
+    "countryCode":"USA"
+   
+}]
+
+
+
+

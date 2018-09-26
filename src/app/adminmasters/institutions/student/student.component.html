@@ -1,0 +1,664 @@
+<div class="mycontent">
+    <div class="col-md-12">
+        <hr />
+        <h3 class="text-center">{{ 'adminConfigarationPage.studentPage.student' | translate }}</h3>
+        <hr />
+    </div>
+    <div class="col-md-12">
+        <div class="rcorners2">
+            <form class="form-horizontal" #studentForm="ngForm" (ngSubmit)="searchStudent(studentForm)">
+                <div class="col-md-3">
+                    <label for="institutionName">{{'adminConfigarationPage.studentPage.institution'
+                        | translate}}</label>
+                        <select class="form-control" name="institutionName" #institutionName="ngModel"
+                        [(ngModel)]="student.institutionName" (change)="onInstituteSelect($event.target.value)"
+                        required>
+                        <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.institution'
+                            | translate}}</option>
+                        <option *ngFor="let item of institutionList" value={{item.institutionId}}>{{item.instName}}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="categoryCode">{{'adminConfigarationPage.studentPage.courseCategory'
+                        | translate}}</label>
+                    <select class="form-control" type="text" name="courseCategory" #courseCategory="ngModel"
+                        [(ngModel)]="student.courseCategory" required>
+                        <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.courseCategory'
+                            | translate}}</option>
+                        <option *ngFor="let item of courseCategoryList" value={{item.categoryCode}}>{{item.categoryCode}}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="courseName">{{'adminConfigarationPage.studentPage.courses'
+                        | translate}}</label>
+                    <select class="form-control" type="text" name="course" #course="ngModel" [(ngModel)]="student.course"
+                        required>
+                        <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.courses'
+                            | translate}}</option>
+                        <option *ngFor="let item of courseList" value={{item.courseName}}>{{item.courseName}}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="status">{{'adminConfigarationPage.studentPage.status'
+                        | translate}}</label>
+                    <select class="form-control" name="status" #status="ngModel" [(ngModel)]="student.status" required>
+                        <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.status'
+                            | translate}}</option>
+                        <option *ngFor="let item of statusList" value={{item.status}}>{{item.status}} </option>
+                    </select>
+                </div>
+                <div class="col-md-12">
+                    <button class="btn btn-info btn-outline pull-right cssButtonPadding" data-toggle="modal"
+                        data-target="#addModal" (click)="addNew()">{{'adminConfigarationPage.studentPage.individual'
+                        | translate}}</button>
+                    <button class="btn btn-info btn-outline pull-right cssButtonPadding" data-toggle="modal"
+                        data-target="#bulk">{{'adminConfigarationPage.studentPage.bulk'
+                        | translate}}</button>
+                    <button class="btn btn-warning btn-outline pull-right cssButtonPadding" type="button" (click)="searchClear()">{{'adminConfigarationPage.commonFields.clear'
+                        | translate}}</button>
+                    <button class="btn btn-primary btn-outline pull-right cssButtonPadding" type="submit">{{'adminConfigarationPage.commonFields.search'
+                        | translate}}</button>
+                </div>
+            </form>
+        </div>
+        <div class="alert alert-warning fade in myAlert" *ngIf="alertMassege">
+            <a class="close" href="#" data-dismiss="alert" (click)="clickedAlert()">X</a>
+            <h4>{{alertMassege}}</h4>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered myTable">
+                <thead>
+                    <tr class="text-center">
+                        <th>{{'adminConfigarationPage.commonFields.index' | translate}}</th>
+                        <th [class.active]="key === 'stdName'" (click)=" sort('stdName')">{{
+                            'adminConfigarationPage.studentPage.studentName'
+                            | translate }} <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span></th>
+                        <th [class.active]="key === 'stdPhone'" (click)=" sort('stdPhone')">{{
+                            'adminConfigarationPage.studentPage.mobile'
+                            | translate }} <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span></th>
+                        <th [class.active]="key === 'stdEmail'" (click)=" sort('stdEmail')">{{
+                            'adminConfigarationPage.studentPage.email'
+                            | translate }} <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span></th>
+                        <th [class.active]="key === 'stdAdmissionNumber'" (click)=" sort('stdAdmissionNumber')">{{
+                            'adminConfigarationPage.studentPage.rollNumber'
+                            | translate }} <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span></th>
+                        <th [class.active]="key === 'institutionName'" (click)=" sort('institutionName')">{{
+                            'adminConfigarationPage.studentPage.institution'
+                            | translate }} <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span></th>
+                        <th [class.active]="key === 'courseCategory'" (click)=" sort('courseCategory')">{{
+                            'adminConfigarationPage.studentPage.courseCategory'
+                            | translate }} <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span></th>
+                        <th [class.active]="key === 'course'" (click)=" sort('course')">{{
+                            'adminConfigarationPage.studentPage.courses'
+                            | translate }} <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span></th>
+                        <th [class.active]="key === 'status'" (click)=" sort('status')">{{
+                            'adminConfigarationPage.studentPage.status'
+                            | translate }} <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span></th>
+                        <th>{{ 'adminConfigarationPage.commonFields.edit' | translate }}</th>
+                        <th>{{ 'adminConfigarationPage.commonFields.delete' | translate }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of studentList | orderBy: key : reverse : caseInsensitive : comparator |  paginate: { itemsPerPage: pagenumber, currentPage: p };let i=index">
+                        <td>{{((p-1)*itemsPerPage2)+i+1}}</td>
+                        <td>{{item.stdName}}</td>
+                        <td>{{item.stdPhone}}</td>
+                        <td>{{item.stdEmail}}</td>
+                        <td>{{item.stdAdmissionNumber}}</td>
+                        <td>{{item.institutionName}}</td>
+                        <td>{{item.courseCategory}}</td>
+                        <td>{{item.course}}</td>
+                        <td>{{item.status}}</td>
+                        <td>
+                            <button class="btn btn-warning" data-toggle="modal" data-target="#addModal" (click)="selectUser(item)">
+                                <i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size:15px"></i>
+                            </button>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" (click)="selectUser(item)">
+                                <i class="fa fa-trash-o" aria-hidden="true" style="font-size:15px"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="form-group">
+            <div class="col-md-4">
+                Show
+                <select (change)="pageChange($event.target.value)" style="border: none;">
+
+                    <option>5</option>
+                    <option>10</option>
+                    <option>15</option>
+                </select>
+                Entries
+            </div>
+            <div class="col-md-2"></div>
+
+            <div class=" col-md-6 text-right">
+                <pagination-controls (pageChange)="customPageChange($event)"></pagination-controls>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <!-- Add Modal-->
+    <div class="modal fade" id="addModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form class="form-horizontal" #studentForm="ngForm" (ngSubmit)="saveStudent(studentForm)">
+                    <div class="modal-header">
+                        <button class="close" type="button" data-dismiss="modal">X</button>
+                        <h4 class="modal-title">{{'adminConfigarationPage.studentPage.addStudent' | translate}}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group col-md-12"></div>
+
+
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentPage.studentName' | translate}}"
+                                    name="stdName" #stdName="ngModel" [(ngModel)]="student.stdName" required />
+                                <div class="validation-error" *ngIf="stdName.invalid && stdName.touched">{{'adminConfigarationPage.commonFields.nameFieldRequired'
+                                    | translate}}</div>
+
+
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-control" class="form-control" type="text" name="gender" #gender="ngModel"
+                                    [(ngModel)]="student.gender" required>
+                                    <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.gender'
+                                        | translate}}</option>
+                                    <option value="0"> Male </option>
+                                    <option value="1"> Female </option>
+                                </select>
+                                <div class="validation-error" *ngIf="gender.invalid && gender.touched">{{'adminConfigarationPage.commonFields.gender'
+                                    | translate}}</div>
+                            </div>
+
+
+
+                            <div class="col-md-3">
+                                <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentPage.address1' | translate}}"
+                                    name="addressOne" #addressOne="ngModel" [(ngModel)]="student.addressOne" required />
+                                <div class="validation-error" *ngIf="addressOne.invalid && addressOne.touched">{{'adminConfigarationPage.commonFields.Address1Required'
+                                    | translate}}</div>
+
+                            </div>
+                            <div class="col-md-3">
+                                <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentPage.address2' | translate}}"
+                                    name="addressTwo" #addressTwo="ngModel" [(ngModel)]="student.addressTwo" required />
+                                <div class="validation-error" *ngIf="addressTwo.invalid && addressTwo.touched">{{'adminConfigarationPage.commonFields.Address2Required'
+                                    | translate}}</div>
+
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <select class="form-control" name="countryName" #countryName="ngModel" [(ngModel)]="student.countryName"
+                                    (change)="onSelect($event.target.value)" required>
+                                    <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.country'
+                                        | translate}}</option>
+                                    <option *ngFor="let country of countries" value={{country.id}}>
+                                        {{country.name}}
+                                    </option>
+                                </select>
+                                <div class="validation-error" *ngIf="countryName.invalid && countryName.touched">{{'adminConfigarationPage.commonFields.countryRequired'
+                                    | translate}}</div>
+
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-control" name="state" #state="ngModel" [(ngModel)]="student.state"
+                                    (change)="onStateSelect($event.target.value)" required>
+                                    <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.state'
+                                        | translate}}</option>
+                                    <option *ngFor="let state of states" value={{state.id}}>
+                                        {{state.name}}
+                                    </option>
+                                </select>
+                                <div class="validation-error" *ngIf="state.invalid && state.touched">{{'adminConfigarationPage.commonFields.stateRequired'
+                                    | translate}}</div>
+
+
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-control" name="city" #city="ngModel" [(ngModel)]="student.city"
+                                    required>
+                                    <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.city'
+                                        | translate}}</option>
+                                    <option *ngFor="let city of cities" value={{city.id}}>
+                                        {{city.name}}
+                                    </option>
+                                </select>
+                                <div class="validation-error" *ngIf="city.invalid && city.touched">{{'adminConfigarationPage.commonFields.cityRequired'
+                                    | translate}}</div>
+
+
+                            </div>
+                            <div class="col-md-3">
+                                <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentPage.pinCode' | translate}}"
+                                    name="zipcode" #zipcode="ngModel" [(ngModel)]="student.zipcode" required />
+                                <div class="validation-error" *ngIf="zipcode.invalid && zipcode.touched">{{'adminConfigarationPage.commonFields.PincodeRequired'
+                                    | translate}}</div>
+
+
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="form-group">
+
+
+                            <div class="col-md-3">
+                                <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentPage.mobile' | translate}}"
+                                    name="stdPhone" #stdPhone="ngModel" [(ngModel)]="student.stdPhone" pattern="\d*"
+                                    minlength=10 maxlength=15 required />
+                                <div class="validation-error" *ngIf="stdPhone.invalid && stdPhone.touched">
+                                    <div class="validation-error" *ngIf="stdPhone.errors.required ">
+                                        {{'adminConfigarationPage.commonFields.MobileRequired' | translate}}
+                                    </div>
+                                    <div class="validation-error" *ngIf="stdPhone.errors.minlength">
+                                        {{'adminConfigarationPage.commonFields.mobileLength' | translate}}
+                                    </div>
+                                    <div class="validation-error" *ngIf="stdPhone.errors.pattern">
+                                        {{'adminConfigarationPage.commonFields.invalidMobileMessage' | translate}}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <select class="form-control" name="institutionName" #institutionName="ngModel"
+                                    [(ngModel)]="student.institutionName" (change)="onInstituteSelect($event.target.value)"
+                                    required>
+                                    <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.institution'
+                                        | translate}}</option>
+                                    <option *ngFor="let item of institutionList" value={{item.institutionId}}>{{item.instName}}
+                                    </option>
+                                </select>
+                                <div class="validation-error" *ngIf="institutionName.invalid && institutionName.touched">{{'adminConfigarationPage.commonFields.institution'
+                                    | translate}}</div>
+
+                            </div>
+                            <div class="col-sm-3">
+                                <select class="form-control" type="text" name="courseCategory" #courseCategory="ngModel"
+                                    [(ngModel)]="student.courseCategory" (change)="onCourseCategorySelect($event.target.value)"
+                                    required>
+                                    <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.courseCategory'
+                                        | translate}}</option>
+                                    <option *ngFor="let item of courseCategoryList" value={{item.categoryId}}>{{item.categoryName}}
+                                    </option>
+                                </select>
+                                <div class="validation-error" *ngIf="courseCategory.invalid && courseCategory.touched">{{'adminConfigarationPage.commonFields.courseCategory'
+                                    | translate}}</div>
+
+                            </div>
+                            <div class="col-sm-3">
+                                <select class="form-control" type="text" name="course" #course="ngModel" [(ngModel)]="student.course"
+                                    (change)="onCourseSelect($event.target.value)" required>
+                                    <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.courses'
+                                        | translate}}</option>
+                                    <option *ngFor="let item of courseList" value={{item.courseName}}>{{item.courseName}}
+                                    </option>
+                                </select>
+                                <div class="validation-error" *ngIf="course.invalid && course.touched">{{'adminConfigarationPage.commonFields.courses'
+                                    | translate}}</div>
+
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+
+                        <div class="form-group">
+
+
+                            <div class="col-sm-3">
+
+                                <select class="form-control" class="form-control" type="text" name="yearofjoining"
+                                    #yearofjoining="ngModel" [(ngModel)]="student.yearofjoining" required>
+                                    <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.yearofjoining'
+                                        | translate}}</option>
+                                    <option *ngFor="let year of academicYearsList" value="{{year}}"> {{year}} </option>
+
+
+                                </select>
+                                <div class="validation-error" *ngIf="yearofjoining.invalid && yearofjoining.touched">{{'adminConfigarationPage.commonFields.yearofjoining'
+                                    | translate}}</div>
+
+                            </div>
+                            <div class="col-md-3">
+                                <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentPage.email' | translate}}"
+                                    name="stdEmail" #stdEmail="ngModel" [(ngModel)]="student.stdEmail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$"
+                                    required />
+                                <div class="validation-error" *ngIf="stdEmail.invalid && stdEmail.touched">
+                                    <div class="validation-error" *ngIf="stdEmail.errors.required ">
+                                        {{'adminConfigarationPage.commonFields.emailRequired' | translate}}
+                                    </div>
+                                    <div class="validation-error" *ngIf="stdEmail.errors.pattern">
+                                        {{'adminConfigarationPage.commonFields.invalidEmailMessage' | translate}}
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-3">
+                                <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentPage.rollNumber' | translate}}"
+                                    name="stdAdmissionNumber" #stdAdmissionNumber="ngModel" [(ngModel)]="student.stdAdmissionNumber"
+                                    required />
+                                <div class="validation-error" *ngIf="stdAdmissionNumber.invalid && stdAdmissionNumber.touched">{{'adminConfigarationPage.commonFields.stdAdmissionNumber'
+                                    | translate}}</div>
+
+
+                            </div>
+
+                            <div class="col-sm-3">
+                                <select class="form-control" name="status" #status="ngModel" [(ngModel)]="student.status"
+                                    required>
+                                    <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.status'
+                                        | translate}}</option>
+                                    <option *ngFor="let item of statusList" value={{item.status}}>{{item.status}}
+                                    </option>
+                                </select>
+                                <div class="validation-error" *ngIf="status.invalid && status.touched">{{'adminConfigarationPage.commonFields.statusMesaage'
+                                    | translate}}</div>
+
+                            </div>
+
+                            <div class="clearfix"></div>
+
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-3">
+                                <select class="form-control" type="text" name="plan" #plan="ngModel" [(ngModel)]="student.plan"
+                                    required>
+                                    <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.plan'
+                                        | translate}}</option>
+                                    <option *ngFor="let item of planList" value={{item.planId}}>{{item.planName}}
+                                    </option>
+                                </select>
+                                <div class="validation-error" *ngIf="plan.invalid && plan.touched">{{'adminConfigarationPage.commonFields.planMessage'
+                                    | translate}}</div>
+
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+
+                        <button class="btn btn-success" [disabled]="studentForm.invalid" (click)="saveStudent(student)"
+                            type="button" data-dismiss="modal">Save</button>
+                        <button class="btn btn-default" type="button" data-dismiss="modal">{{
+                            'adminConfigarationPage.commonFields.close'
+                            | translate }}</button>
+
+                    </div>
+                    <div class="clearfix"></div>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Delete Modal-->
+    <div class="modal fade" id="deleteModal" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal">X</button>
+                    <h4 class="modal-title">{{ 'adminConfigarationPage.commonFields.delete' | translate }}</h4>
+                </div>
+                <div class="modal-body">
+                    <h3>Are you sure to delete
+                        <span>{{student.stdName}}</span>??</h3>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger" type="button" (click)="deleteStudent(student.stdId)" data-dismiss="modal">{{
+                        'adminConfigarationPage.commonFields.yes' | translate }}</button>
+                    <button class="btn btn-primary" type="button" data-dismiss="modal">{{
+                        'adminConfigarationPage.commonFields.no'
+                        | translate }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bulk upload -->
+
+    <div class="modal fade" id="bulk" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <form role="form" class="form-horizontal">
+                    <div class="modal-header">
+                        <button class="close" type="button" data-dismiss="modal">X</button>
+                        <h4 class="modal-title">{{'adminConfigarationPage.studentPage.uploadStudent' | translate}}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h4 class="modal-title">{{'adminConfigarationPage.studentPage.selectFile' | translate}}</h4>
+
+                        <input type="file" #fileInput multiple (change)="addToFileToServer($event.target.files)" />
+                        <br>
+                        <div class="col-lg-12 text-left">
+                            <button class="btn btn-warning" data-toggle="modal" data-target="#studentFileUploadModal"
+                                (click)="displayStudentsForUpdate()">View</button>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="clearfix"></div>
+                </form>
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <!-- studentfileupload -->
+
+    <div class="modal fade" id="studentFileUploadModal" role="dialog">
+        <div class="modal-dialog modal-lg ">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <form class="form-horizontal" #studentUploadFileForm="ngForm">
+                    <div class="modal-header">
+                        <button class="close" type="button" data-dismiss="modal">X</button>
+                        <h4 class="modal-title">{{'adminConfigarationPage.studentFileUpload.studentUploadedfile'|
+                            translate}}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h4>Select Plans </h4>
+                        <div class="col-md-2">
+                            <select class="form-control" name="planName" id="planName" #planName="ngModel" [(ngModel)]="plan.planId">
+                                <option *ngFor="let item of planNameList" value={{item.planName}}
+                                    -{{item.planMembership}}> {{item.planName}}
+                                    - {{item.planMembership}} </option>
+                            </select>
+                            {{ errormsg }}
+                        </div>
+                        <br>
+                        <br>
+                        <table class="table table-bordered myTable">
+                            <tr class="text-center">
+                                <th>checkbox</th>
+                                <th>{{'adminConfigarationPage.studentFileUpload.slno'| translate}}</th>
+                                <th>{{'adminConfigarationPage.studentFileUpload.studentName'| translate}}</th>
+                                <th>{{'adminConfigarationPage.studentFileUpload.gender'| translate}}</th>
+                                <th>{{'adminConfigarationPage.studentFileUpload.address1'| translate}}</th>
+                                <th>{{'adminConfigarationPage.studentFileUpload.address2'| translate}}</th>
+                                <th>{{'adminConfigarationPage.studentFileUpload.country'| translate}}</th>
+                                <th>{{'adminConfigarationPage.studentFileUpload.state'| translate}}</th>
+                                <th>{{'adminConfigarationPage.studentFileUpload.city'| translate}}</th>
+                                <th>{{'adminConfigarationPage.studentFileUpload.zipCode'| translate}}</th>
+                                <th>{{'adminConfigarationPage.studentFileUpload.email'| translate}}</th>
+                                <th>{{'adminConfigarationPage.studentFileUpload.admissionNumber'| translate}}</th>
+                                <th>{{'adminConfigarationPage.studentFileUpload.institutionNumber'| translate}}</th>
+                                <th>{{'adminConfigarationPage.studentFileUpload.courseCategory'| translate}}</th>
+                                <th>{{'adminConfigarationPage.studentFileUpload.course'| translate}}</th>
+                                <th>{{'adminConfigarationPage.studentFileUpload.parentsPhone'| translate}}</th>
+                                <th>{{'adminConfigarationPage.studentFileUpload.plan'| translate}}</th>
+                                <th>{{'adminConfigarationPage.studentFileUpload.status'| translate}}</th>
+                                <th>{{'adminConfigarationPage.studentFileUpload.delete'| translate}}</th>
+
+                            </tr>
+                            <tbody>
+                                <tr *ngFor="let item of studentBulkList;let i=index">
+                                    <td style="color:#cccccc">
+                                        <input type="checkbox" id="mycheck-{{ i+1 }}" value="{{ i+1 }}" (change)="onSelectPlan($event.target.value)">
+                                        <label for="mycheck-{{ i+1 }}"></label>
+                                    </td>
+                                    <td>{{i+1}}</td>
+                                    <td>
+                                        <input type="text" id="studentname-{{ i }}" name="stdName[{{ i }}]"
+                                            #stdNameControl="ngModel" [(ngModel)]="item.stdName" pattern="[a-zA-Z]*"
+                                            minlength="4" required>
+                                        <div class="validation-error" *ngIf="stdNameControl.invalid "> Name must be at
+                                            least 4 characters</div>
+                                    </td>
+                                    <td>
+                                        <input type="text" id="studentgender-{{ i }}" name="gender[{{ i }}]"
+                                            #genderControl="ngModel" [(ngModel)]="item.gender" pattern="[a-zA-Z]*"
+                                            minlength="4" maxlength="6" required>
+                                        <div class="validation-error" *ngIf="genderControl.invalid "> Gender is
+                                            required</div>
+                                    </td>
+                                    <td>
+                                        <input type="text" id="studentaddressOne-{{ i }}" name="addressOne[{{ i }}]"
+                                            #addressOneControl="ngModel" [(ngModel)]="item.addressOne" required>
+                                        <div class="validation-error" *ngIf="addressOneControl.invalid "> Address1 is
+                                            required</div>
+                                    </td>
+                                    <td>
+                                        <input type="text" id="studentaddressTwo-{{ i }}" name="addressTwo[{{ i }}]"
+                                            #addressTwoControl="ngModel" [(ngModel)]="item.addressTwo" required>
+                                        <div class="validation-error" *ngIf="addressTwoControl.invalid "> Address2 is
+                                            required</div>
+                                    </td>
+                                    <td>
+                                        <input type="text" id="studentcountryName-{{ i }}" name="countryName[{{ i }}]"
+                                            #countryNameControl="ngModel" [(ngModel)]="item.countryName" required>
+                                        <div class="validation-error" *ngIf="countryNameControl.invalid "> Country Name
+                                            is required</div>
+                                    </td>
+                                    <td>
+                                        <input type="text" id="studentstate-{{ i }}" name="state[{{ i }}]"
+                                            #stateControl="ngModel" [(ngModel)]="item.countryName" required>
+                                        <div class="validation-error" *ngIf="stateControl.invalid "> Country Name is
+                                            required</div>
+                                    </td>
+                                    <td>
+                                        <input type="text" id="studentcity-{{ i }}" name="city[{{ i }}]" #cityControl="ngModel"
+                                            [(ngModel)]="item.city" required>
+                                        <div class="validation-error" *ngIf="cityControl.invalid "> City is required</div>
+                                    </td>
+                                    <td>
+                                        <input type="text" id="studentzipcode-{{ i }}" name="zipcode[{{ i }}]"
+                                            #zipcodeControl="ngModel" [(ngModel)]="item.zipcode" pattern="[0-9]*"
+                                            maxlength="6" required>
+                                        <div class="validation-error" *ngIf="zipcodeControl.invalid"> ZipCode must be
+                                            in digits</div>
+                                    </td>
+                                    <td>
+                                        <input type="text" id="stdEmail-{{ i }}" name="stdEmail[{{ i }}]"
+                                            #stdEmailControl="ngModel" [(ngModel)]="item.stdEmail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                                            (blur)="fncheckemail($event.target.value)" required />
+                                        <div class="validation-error" *ngIf="stdEmailControl.invalid "> Please enter
+                                            the correct email or valid email.
+                                            <div *ngIf="item.stdEmail== ''">Email duplicates detected</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <input type="text" id="stdAdmissionNumber-{{ i }}" name="stdAdmissionNumber[{{ i }}]"
+                                            #stdAdmissionNumberControl="ngModel" [(ngModel)]="item.stdAdmissionNumber"
+                                            required>
+                                        <div class="validation-error" *ngIf="stdAdmissionNumberControl.invalid ">
+                                            Admission Number is required</div>
+                                    </td>
+                                    <td>
+                                        <input type="text" id="studentinstitutionName-{{ i }}" name="institutionName[{{ i }}]"
+                                            #institutionNameControl="ngModel" [(ngModel)]="item.institutionName"
+                                            required>
+                                        <div class="validation-error" *ngIf="institutionNameControl.invalid ">
+                                            Institution Name is required</div>
+                                    </td>
+                                    <td>
+                                        <input type="text" id="studentcourseCategory-{{ i }}" name="courseCategory[{{ i }}]"
+                                            #courseCategoryControl="ngModel" [(ngModel)]="item.courseCategory" required>
+                                        <div class="validation-error" *ngIf="courseCategoryControl.invalid ">CourseCategory
+                                            is required</div>
+                                    </td>
+                                    <td>
+                                        <input type="text" id="studentcourse-{{ i }}" name="course[{{ i }}]"
+                                            #courseControl="ngModel" [(ngModel)]="item.course" required>
+                                        <div class="validation-error" *ngIf="courseControl.invalid ">Course is required</div>
+                                    </td>
+                                    <td>
+                                        <input type="text" id="studentparentPhone-{{ i }}" name="parentPhone[{{ i }}]"
+                                            #parentPhoneControl="ngModel" [(ngModel)]="item.parentPhone" minlength="10"
+                                            maxlength="12" pattern="[0-9]*" required>
+                                        <div class="validation-error" *ngIf="parentPhoneControl.invalid ">Phone Number
+                                            is not valid</div>
+                                    </td>
+
+
+
+                                    <td>
+                                        <input type="text" id="studentplan-{{ i+1 }}" name="plan[{{ i }}]" #planControl="ngModel"
+                                            [(ngModel)]="item.plan" readonly required>
+                                        <div class="validation-error" *ngIf="planControl.invalid && planControl.touched ">Plan
+                                            is required</div>
+                                    </td>
+
+                                    <td>
+                                        <input type="text" id="studentstatus-{{ i }}" name="status[{{ i }}]"
+                                            #statusControl="ngModel" [(ngModel)]="item.status" required>
+                                        <div class="validation-error" *ngIf="statusControl.invalid ">Status is not
+                                            required</div>
+                                    </td>
+
+                                    <td>
+                                        <button class="btn btn-danger" data-toggle="modal" data-target="#studentDeleteModal"
+                                            (click)="selectedStudent(item)">
+                                            <i class="fa fa-trash-o" aria-hidden="true" style="font-size:15px"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger" type="submit" (click)="saveStudentuploadFile(studentBulkList)"
+                            data-dismiss="modal">{{'adminConfigarationPage.commonFields.save'| translate}}</button>
+                        <button class="btn btn-primary" type="button" data-dismiss="modal">{{'adminConfigarationPage.commonFields.close'|
+                            translate}}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="studentDeleteModal" role="dialog">
+        <div class="modal-dialog modal-sm ">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal">X</button>
+                    <h4 class="modal-title">{{'adminConfigarationPage.studentFileUpload.deleteStudent'| translate}}</h4>
+                </div>
+
+                <div class="modal-body">
+                    <h3>Are you sure to delete
+                        <span>{{student.stdName}}</span>????</h3>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-danger" type="button" (click)="deleteStudentBulk(studentBulk)" data-dismiss="modal">{{'adminConfigarationPage.commonFields.yes'|
+                        translate}}</button>
+                    <button class="btn btn-primary" type="button" data-dismiss="modal">{{'adminConfigarationPage.commonFields.no'|
+                        translate}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+.left-side{
+    padding: 150px 0px;
+}
+.right-side > img{
+    position: fixed;
+    height: 100%;
+}
+.btn-design{
+    background: #2C74E1;
+    border-color:#2C74E1;
+}
+.part-head{
+    margin-bottom: 15px;
+    text-align: center;
+}
+.lbl-text{
+    font-size: 12px;
+}

@@ -1,0 +1,540 @@
+<div class="mycontent">
+    <div class="col-md-12">
+        <hr />
+        <h3 class="text-center">{{ 'adminConfigarationPage.businessEntity.businessEntity' | translate }}</h3>
+        <hr />
+    </div>
+    <div class="col-md-12">
+        <div class="rcorners2">
+            <form class="form-horizontal" #businessEntityForm="ngForm" (ngSubmit)="searchBusinessEntity(businessEntityForm)">
+                <div class="col-md-3">
+                    <label for="name">{{'adminConfigarationPage.businessEntity.businessName' | translate}}</label>
+                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.businessEntity.businessName' | translate}}"
+                        name="name" #name="ngModel" [(ngModel)]="business.name" />
+                </div>
+                <div class="col-md-3">
+                    <label for="registrationCode">{{'adminConfigarationPage.businessEntity.registrationNumber' | translate}}</label>
+                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.businessEntity.registrationNumber' | translate}}"
+                        name="registrationCode" #registrationCode="ngModel" [(ngModel)]="business.registrationCode" />
+                </div>
+                <div class="col-md-12">
+                    <button class="btn btn-info btn-outline pull-right cssButtonPadding" data-toggle="modal"
+                        data-target="#addModal" type="button" (click)="addNew()">{{'adminConfigarationPage.commonFields.addNew'
+                        | translate}}</button>
+                    <button class="btn btn-warning btn-outline pull-right cssButtonPadding" type="button" (click)="searchClear()">{{'adminConfigarationPage.commonFields.clear'
+                        | translate}}</button>
+                    <button class="btn btn-primary btn-outline pull-right cssButtonPadding" type="submit">{{'adminConfigarationPage.commonFields.search'
+                        | translate}}</button>
+                </div>
+            </form>
+        </div>
+        <div class="alert alert-warning fade in myAlert" *ngIf="alertMassege">
+            <a class="close" href="#" data-dismiss="alert" (click)="clickedAlert()">X</a>
+            <h4>{{alertMassege}}</h4>
+        </div>
+        <div class="table-responsive">
+        <table class="table table-bordered myTable">
+            <thead>
+            <tr class="text-center">
+                <th>{{'adminConfigarationPage.commonFields.index' | translate}}</th>
+                <th [class.active]="key === 'name'" (click)=" sort('name')">{{'adminConfigarationPage.businessEntity.businessName'
+                    | translate}} <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span></th>
+                <th [class.active]="key === 'registrationCode'" (click)=" sort('registrationCode')">{{'adminConfigarationPage.businessEntity.registrationNumber'
+                    | translate}} <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span></th>
+                <th>{{ 'adminConfigarationPage.commonFields.edit' | translate }}</th>
+                <th>{{ 'adminConfigarationPage.commonFields.delete' | translate }}</th>
+            </tr>
+        </thead>
+            <tbody>
+                <tr *ngFor="let item of businessEntityList | orderBy: key : reverse : caseInsensitive : comparator |  paginate: { itemsPerPage: pagenumber, currentPage: p };let i=index">
+                    <td>{{((p-1)*itemsPerPage2)+i+1}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.registrationCode}}</td>
+                    <td>
+                        <button class="btn btn-warning" data-toggle="modal" data-target="#editModal" (click)="selectUser(item)">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size:15px"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" (click)="selectUser(item)">
+                            <i class="fa fa-trash-o" aria-hidden="true" style="font-size:15px"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+        <div class="form-group">
+            <div class="col-md-4">
+                Show
+                <select (change)="pageChange($event.target.value)" style="border: none;">
+
+                    <option>5</option>
+                    <option>10</option>
+                    <option>15</option>
+                </select>
+                Entries
+            </div>
+            <div class="col-md-2"></div>
+
+            <div class=" col-md-6 text-right">
+                <pagination-controls (pageChange)="customPageChange($event)"></pagination-controls>
+            </div>
+            <div class="clearfix"></div>
+
+        </div>
+    </div>
+    <!-- Add Modal-->
+    <div class="modal fade" id="addModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <form class="form-horizontal" #businessEntityForm="ngForm" (ngSubmit)="saveBusinessEntity(businessEntityForm)">
+                    <div class="modal-header">
+                        <button class="close" type="button" data-dismiss="modal">X</button>
+                        <h4 class="modal-title">{{ 'adminConfigarationPage.commonFields.addNew' | translate }}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="Name">{{
+                                    'adminConfigarationPage.commonFields.primaryDetails' | translate }}</label>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.businessEntity.businessName' | translate}}"
+                                        name="name" #name="ngModel" [(ngModel)]="business.name" />
+
+                                </div>
+                                <div class="col-md-3">
+                                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.businessEntity.shortName' | translate}}"
+                                        name="shortname" #shortname="ngModel" [(ngModel)]="business.shortname" />
+
+                                </div>
+                                <div class="col-md-3">
+                                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.businessEntity.registrationNumber' | translate}}"
+                                        name="registrationCode" #registrationCode="ngModel" [(ngModel)]="business.registrationCode" />
+
+                                </div>
+                                <div class="col-md-3">
+                                    <select class="form-control" name="businessCatCode" #businessCatCode="ngModel"
+                                        [(ngModel)]="business.businessCategoryCode">
+                                        <option disabled hidden [value]="selectUndefinedOptionValue" placeholder="Business Category">{{
+                                            'adminConfigarationPage.businessCategory.businessCategory1' | translate }}</option>
+                                        <option *ngFor="let item of businessCategoryList" value={{item.businessCategoryName}}>{{item.businessCategoryName}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="wizard">
+                                <div class="wizard-inner">
+                                    <div class="connecting-line"></div>
+                                    <ul class="nav nav-tabs" role="tablist">
+
+                                        <li role="presentation" class="active">
+                                            <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="Contact Details">
+                                                <span class="round-tab">
+                                                    <i class="glyphicon glyphicon-phone-alt"></i>
+                                                </span>
+                                            </a>
+                                        </li>
+
+                                        <li role="presentation">
+                                            <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Bank Details">
+                                                <span class="round-tab">
+                                                    <i class="glyphicon glyphicon-piggy-bank"></i>
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li role="presentation">
+                                            <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab" title="Offers">
+                                                <span class="round-tab">
+                                                    <i class="glyphicon glyphicon-tag"></i>
+                                                </span>
+                                            </a>
+                                        </li>
+
+                                        <li role="presentation">
+                                            <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab"
+                                                title="Plans">
+                                                <span class="round-tab">
+                                                    <i class="fa fa-indent"></i>
+                                                </span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <form role="form">
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" role="tabpanel" id="step1">
+                                            <h3>{{ 'adminConfigarationPage.commonFields.contactDetails' | translate }}</h3>
+                                            <div class="form-group">
+                                                <div class="col-md-3">
+                                                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.contactPerson' | translate}}"
+                                                        name="contactPerson" #contactPerson="ngModel" [(ngModel)]="business.contactPerson" />
+
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.designation' | translate}}"
+                                                        name="designation" #designation="ngModel" [(ngModel)]="business.designation" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.address1' | translate}}"
+                                                        name="address1" #address1="ngModel" [(ngModel)]="business.address1" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.address2' | translate}}"
+                                                        name="address2" #address2="ngModel" [(ngModel)]="business.address2" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-md-3">
+                                                    <select class="form-control" name="country" #country="ngModel"
+                                                        [(ngModel)]="business.country" (change)="onSelect($event.target.value)">
+                                                        <option *ngFor="let country of countries" value={{country.id}}>
+                                                            {{country.name}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <select class="form-control" name=" state" #state="ngModel"
+                                                        [(ngModel)]="business. state" (change)="onStateSelect($event.target.value)">
+                                                        <option *ngFor="let state of states" value={{state.id}}>
+                                                            {{state.name}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <select class="form-control" name="city" #city="ngModel"
+                                                        [(ngModel)]="business. city">
+                                                        <option *ngFor="let city of cities" value={{city.id}}>
+                                                            {{city.name}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.pinCode' | translate}}"
+                                                        name="pincode" #pincode="ngModel" [(ngModel)]="business.pincode" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-md-3">
+                                                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.mobile' | translate}}"
+                                                        name="mobile" #mobile="ngModel" [(ngModel)]="business.mobile" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.phone' | translate}}"
+                                                        name="phone" #phone="ngModel" [(ngModel)]="business.phone" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.fax' | translate}}"
+                                                        name="fax" #fax="ngModel" [(ngModel)]="business.fax" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" role="tabpanel" id="step2">
+                                            <h3>{{ 'adminConfigarationPage.commonFields.bankDetails' | translate }}</h3>
+                                            <div class="form-group">
+                                                <div class="col-md-3">
+                                                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.accountHolderName' | translate}}"
+                                                        name="accountHolderName" #accountHolderName="ngModel"
+                                                        [(ngModel)]="business.accountHolderName" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.accountNumber' | translate}}"
+                                                        name="accountNumber" #accountNumber="ngModel" [(ngModel)]="business.accountNumber" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.ifscCode' | translate}}"
+                                                        name="ifscCode" #ifscCode="ngModel" [(ngModel)]="business.ifscCode" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.accountType' | translate}}"
+                                                        name="accountType" #accountType="ngModel" [(ngModel)]="business.accountType" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-md-3">
+                                                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.bankName' | translate}}"
+                                                        name="bankName" #bankName="ngModel" [(ngModel)]="business.bankName" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.branch' | translate}}"
+                                                        name="bankBranch" #bankBranch="ngModel" [(ngModel)]="business.bankBranch" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" role="tabpanel" id="step3">
+                                            <h3>{{'adminConfigarationPage.businessEntity.selectOffers' | translate}}
+                                            </h3>
+                                            <div class="boxes" *ngFor="let item of attributeList">
+                                                <input type="checkbox" id="{{item.attributeName}}" name="attributeList[]"
+                                                    value={{item.attributeName}}>
+                                                <label for="{{item.attributeName}}">{{item.attributeName}}</label>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" role="tabpanel" id="complete">
+                                            <h3>{{'adminConfigarationPage.businessEntity.plans' | translate}}</h3>
+
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-success" type="button" data-dismiss="modal" (click)="saveBusinessEntity(business)">{{
+                            'adminConfigarationPage.commonFields.save' | translate }}</button>
+                        <button class="btn btn-default" type="button" data-dismiss="modal">{{
+                            'adminConfigarationPage.commonFields.close' | translate }}</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="editModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <form class="form-horizontal" #businessEntityForm="ngForm" (ngSubmit)="saveBusinessEntity(businessEntityForm)">
+                    <div class="modal-header">
+                        <button class="close" type="button" data-dismiss="modal">X</button>
+                        <h4 class="modal-title">{{ 'adminConfigarationPage.commonFields.edit' | translate }}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="Name">{{
+                                    'adminConfigarationPage.commonFields.primaryDetails' | translate }}</label>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    <input class="form-control" type="text" placeholder="{{ 'adminConfigarationPage.businessEntity.businessName' | translate }}"
+                                        name="name" #name="ngModel" [(ngModel)]="business.name" />
+
+                                </div>
+                                <div class="col-md-3">
+                                    <input class="form-control" type="text" placeholder="{{ 'adminConfigarationPage.businessEntity.shortName' | translate }}"
+                                        name="shortname" #shortname="ngModel" [(ngModel)]="business.shortname" />
+
+                                </div>
+                                <div class="col-md-3">
+                                    <input class="form-control" type="text" placeholder="{{ 'adminConfigarationPage.businessEntity.registrationNumber' | translate }}"
+                                        name="registrationCode" #registrationCode="ngModel" [(ngModel)]="business.registrationCode" />
+
+                                </div>
+                                <div class="col-md-3">
+                                    <select class="form-control" name="businessCatCode" #businessCatCode="ngModel"
+                                        [(ngModel)]="business.businessCategoryCode">
+                                        <option disabled hidden [value]="selectUndefinedOptionValue" placeholder="Business Category">{{
+                                            'adminConfigarationPage.businessCategory.businessCategory1' | translate }}</option>
+                                        <option *ngFor="let item of businessCategoryList" value={{item.businessCategoryName}}>{{item.businessCategoryName}}
+                                        </option>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="wizard">
+                                <div class="wizard-inner">
+                                    <div class="connecting-line"></div>
+                                    <ul class="nav nav-tabs" role="tablist">
+
+                                        <li role="presentation" class="active">
+                                            <a href="#step11" data-toggle="tab" aria-controls="step11" role="tab" title="Contact Details">
+                                                <span class="round-tab">
+                                                    <i class="glyphicon glyphicon-phone-alt"></i>
+                                                </span>
+                                            </a>
+                                        </li>
+
+                                        <li role="presentation">
+                                            <a href="#step22" data-toggle="tab" aria-controls="step22" role="tab" title="Bank Details">
+                                                <span class="round-tab">
+                                                    <i class="glyphicon glyphicon-piggy-bank"></i>
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li role="presentation">
+                                            <a href="#step33" data-toggle="tab" aria-controls="step33" role="tab" title="Offers">
+                                                <span class="round-tab">
+                                                    <i class="glyphicon glyphicon-tag"></i>
+                                                </span>
+                                            </a>
+                                        </li>
+
+                                        <li role="presentation">
+                                            <a href="#complete4" data-toggle="tab" aria-controls="complete4" role="tab"
+                                                title="Plans">
+                                                <span class="round-tab">
+                                                    <i class="fa fa-indent"></i>
+                                                </span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <form role="form">
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" role="tabpanel" id="step11">
+                                            <h3>{{ 'adminConfigarationPage.commonFields.contactDetails' | translate }}</h3>
+                                            <div class="form-group">
+                                                <div class="col-md-3">
+                                                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.contactPerson' | translate}}"
+                                                        name="contactPerson" #contactPerson="ngModel" [(ngModel)]="business.contactPerson" />
+
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.designation' | translate}}"
+                                                        name="designation" #designation="ngModel" [(ngModel)]="business.designation" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.address1' | translate}}"
+                                                        name="address1" #address1="ngModel" [(ngModel)]="business.address1" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.address2' | translate}}"
+                                                        name="address2" #address2="ngModel" [(ngModel)]="business.address2" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-md-3">
+                                                    <select class="form-control" name="country" #country="ngModel"
+                                                        [(ngModel)]="business.country" (change)="onSelect($event.target.value)">
+                                                        <option *ngFor="let country of countries" value={{country.id}}>
+                                                            {{country.name}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+
+
+
+                                                <div class="col-md-3">
+                                                    <select class="form-control" name=" state" #state="ngModel"
+                                                        [(ngModel)]="business. state" (change)="onStateSelect($event.target.value)">
+                                                        <option *ngFor="let state of states" value={{state.id}}>
+                                                            {{state.name}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <select class="form-control" name="city" #city="ngModel"
+                                                        [(ngModel)]="business. city">
+                                                        <option *ngFor="let city of cities" value={{city.id}}>
+                                                            {{city.name}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.pinCode' | translate}}"
+                                                        name="pincode" #pincode="ngModel" [(ngModel)]="business.pincode" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-md-3">
+                                                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.mobile' | translate}}"
+                                                        name="mobile" #mobile="ngModel" [(ngModel)]="business.mobile" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.phone' | translate}}"
+                                                        name="phone" #phone="ngModel" [(ngModel)]="business.phone" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.fax' | translate}}"
+                                                        name="fax" #fax="ngModel" [(ngModel)]="business.fax" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" role="tabpanel" id="step22">
+                                            <h3>{{ 'adminConfigarationPage.commonFields.bankDetails' | translate }}</h3>
+                                            <div class="form-group">
+                                                <div class="col-md-3">
+                                                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.accountHolderName' | translate}}"
+                                                        name="accountHolderName" #accountHolderName="ngModel"
+                                                        [(ngModel)]="business.accountHolderName" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.accountNumber' | translate}}"
+                                                        name="accountNumber" #accountNumber="ngModel" [(ngModel)]="business.accountNumber" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.ifscCode' | translate}}"
+                                                        name="ifscCode" #ifscCode="ngModel" [(ngModel)]="business.ifscCode" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.accountType' | translate}}"
+                                                        name="accountType" #accountType="ngModel" [(ngModel)]="business.accountType" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-md-3">
+                                                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.bankName' | translate}}"
+                                                        name="bankName" #bankName="ngModel" [(ngModel)]="business.bankName" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.branch' | translate}}"
+                                                        name="bankBranch" #bankBranch="ngModel" [(ngModel)]="business.bankBranch" />
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" role="tabpanel" id="step33">
+                                            <h3>{{'adminConfigarationPage.businessEntity.selectOffers' | translate}}</h3>
+                                            <div class="boxes" *ngFor="let item of attributeList">
+                                                <input type="checkbox" id="{{item.attributeName}}" name="attributeList[]"
+                                                    value={{item.attributeName}}>
+                                                <label for="{{item.attributeName}}">{{item.attributeName}}</label>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="tab-pane" role="tabpanel" id="complete4">
+                                            <h3>{{'adminConfigarationPage.businessEntity.plans' | translate}}</h3>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-success" type="button" data-dismiss="modal" (click)="updateBusinessEntity(business)">{{
+                            'adminConfigarationPage.commonFields.save' | translate }}</button>
+                        <button class="btn btn-default" type="button" data-dismiss="modal">{{
+                            'adminConfigarationPage.commonFields.close' | translate }}</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- Delete Modal-->
+    <div class="modal fade" id="deleteModal" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal">X</button>
+                    <h4 class="modal-title">{{ 'adminConfigarationPage.commonFields.delete' | translate }}</h4>
+                </div>
+                <div class="modal-body">
+                    <h3>Are you sure to delete
+                        <span>{{business.name}}</span>????</h3>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger" type="button" (click)="deleteBusinessEntity(business.businessId)"
+                        data-dismiss="modal">{{ 'adminConfigarationPage.commonFields.yes' | translate }}</button>
+                    <button class="btn btn-primary" type="button" data-dismiss="modal">{{
+                        'adminConfigarationPage.commonFields.no' | translate }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

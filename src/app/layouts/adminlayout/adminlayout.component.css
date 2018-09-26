@@ -1,0 +1,228 @@
+.nopad{
+    padding: 0px;
+}
+.nopad-t{
+    padding-top: 0px;
+}
+.nopad-b{
+    padding-bottom: 0px;
+}
+.nopad-l{
+    padding-left: 0px;
+}
+.nopad-r{
+    padding-right: 0px;
+}
+.nomar{
+    margin: 0px;
+}
+.nomar-t{
+    margin-top: 0px;
+}
+.nomar-b{
+    margin-bottom: 0px;
+}
+.nomar-l{
+    margin-left: 0px;
+}
+.nomar-r{
+    margin-right: 0px;
+}
+.navbar{
+    min-height: 60px;
+    max-height : 60px;
+    margin-bottom: 0px;
+    background-color: #3C8DBC;
+
+    /* overflow: hidden;
+    position: fixed; 
+    top: 0; 
+    width: 100%;  */
+}
+.navbar-brand{
+    font-size: 20px;
+    font-family: 'Lato', sans-serif;
+    padding: 23px 15px;
+}
+.color1{
+    color:#2C74E1;
+}
+.color2{
+    color:#2C74E1;
+}
+.color3{
+    color:#2C74E1;
+}
+input.crText {
+    margin-top: 17px;
+    border: 1px solid #ccc;
+    background: #fff;
+    border-radius: 15px;
+    padding: 5px;
+    margin-right: 5px;
+    font-size: 13px;
+}
+.crBtn {
+    border-radius: 15px;
+    width: 75px;
+    background: #2C74E1;
+    border-color:#2C74E1;
+}
+.crLogo{
+    width:50px;
+    position: absolute;
+    top:2px;
+}
+.navbar-brand > span {
+    position: absolute;
+    left: 75px;
+    top:18px;
+    color: white
+}
+.med-advertise{
+    padding: 30px 0px;
+}
+.navbar-nav>li>a {
+    padding-top: 19px;
+    padding-bottom: 19px;
+    color: white
+}
+
+.sidebar{
+    width:250px;
+    position: fixed;
+    height: 100%;
+    background: #222D32;
+    top:60px;
+}
+.panel-group .panel+.panel {
+    margin-top: 0px;
+    border-radius: 0px;
+}
+.white {
+    background-color: #ffffff !important;
+}
+.atag{
+    color: #424242;
+    font-weight: bold;
+    text-decoration: none;
+}
+.mymenu{
+    margin:0px;
+    padding: 0px;
+}
+.mymenu>li>a{
+    padding: 5px 20px;
+}
+.mymenu1{
+    min-width: 350px;
+}
+
+.glyphicon
+{
+    top: 3px;
+}
+
+/* .badpos {
+    background: green;
+    position: relative;
+    top: -13px;
+    left: -13px;
+} */
+.tIcon{
+    font-size:10px;
+    margin-top:5px;
+}
+.horz-main-menu {
+    width: 100%;
+    background:#1E282C;
+    margin-bottom: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+a.horz-main-menu-a {
+    padding: 7px 20px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.horz-main-menu {
+    padding-left: 240px;
+}
+.badge {
+    display: inline-block;
+    min-width: 5px;
+    padding: 3px 5px;
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    border-radius: 10px;
+}
+
+.panel-heading
+{
+    border-radius: 0px;
+}
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover {
+    color: white;
+    background-color: #367FA9;
+    
+}
+
+.badpos[_ngcontent-c2] {
+    background: green;
+    position: relative;
+    top: -10px;
+    left: -8px;
+}
+
+.navbar-default {
+    background-color: #367FA9;
+    border-color: #367FA9;
+    border-radius: 0px;
+}
+
+ .panel-group .panel {
+    margin-bottom: 0;
+   border-radius: 0px; 
+} 
+
+
+.iactive{
+    background: #03D2FE;
+    color:#ffffff;
+}
+/* .custompanel{
+    background: transparent !important;
+    color: white !important;
+} */
+
+.nav-tabs
+{
+    margin-left: 250px;
+    /* margin-top: 60px; */
+    /* padding-top: 60px; */
+}
+
+
+.logo{
+    height: 40px;
+    width: 40px;
+	/* margin-left: 51px;
+    margin-top: 14px; */
+}
+.title
+{
+    margin-top: -9px;
+    color: white;
+    height: 40px;
+    margin-left: 80px;
+}
+

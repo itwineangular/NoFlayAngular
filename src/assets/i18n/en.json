@@ -1,0 +1,276 @@
+{
+    "adminMasterPage": {
+        "myAccount": "My Account",
+        "dashboard": "Dashboard",
+        "configarations": "Configurations",
+        "reports": "Reports"
+     },
+ 
+     "adminConfigarationPage": {
+ 
+        "courseCategoryPage": {
+            "courseCategory": "Course Category",
+            "categoryName": "Category Name",
+            "categoryCode" : "Category Code",           
+            "active" : "Active",
+            "inactive" : "Inactive"
+        },
+        "coursePage": {
+            "courses": "Courses",
+            "courseName" : "Course Name",
+            "enterName" : "Enter Name",
+            "enterCode" : "Enter Code",
+            "courseCode" : "Course Code",
+            "categoryName" : "Category Name",
+            "duration"  : "Duration"
+        },
+        "educationalInstitutesPage" :{
+            "educationalInstitutes" : "Educational Institutes",
+            "instituteName" : "Institute Name",
+            "shortName" : "Short Name",
+            "coursesOffered"    : "Courses offered",
+            "registrationNumber" : "Registration Number",
+            "branch" : "Branch",   
+            "contactPerson" : "Contact Person",
+            "designation" : "Designation",
+            "address1" : "Address 1",
+            "address2" : "Address 2",
+            "pinCode" : "PIN Code",
+            "email" : "Email",
+            "mobile" : "Mobile",
+            "phone" : "Phone",
+            "fax" : "Fax",           
+            "accountHolderName" : "Account Holder Name",
+            "accountNumber" : "Account Number",
+            "ifscCode" : "ifsc Code",
+            "accountType" : "Account Type",
+            "bankName" : "Bank Name",
+            "uploads" : "Uploads",
+            "country" : "Country",
+            "state" : "State",
+            "city" : "City"
+            
+        },
+        "studentPage": {
+            "student": "Student",
+            "studentName": "Name",
+            "gender": "Gender",
+            "mobile" : "Mobile",
+            "email" : "Email",
+            "rollNumber" : "Roll number",
+            "address1" : "Address 1",
+            "address2" : "Address 2",
+            "pinCode" : "PIN Code",
+            "status" : "Status",
+            "institution": "Institution Name",
+            "courseCategory": "Course Category",
+            "courses": "Courses Name",
+            "yearofjoining" : "Academic Year",  
+            "individual": "Single Student",
+            "bulk": "Bulk Upload",
+             "active" : "Active",
+            "inactive" : "Inactive",
+            "plan" : "Plans",
+            "addStudent": "Add Student",
+            "uploadStudent": "Upload Student",
+            "selectFile":"Select File",
+            "planName":"Plan Name"  ,
+            "country" : "Country",
+            "state" : "State",
+            "city" : "City"
+           
+
+        },
+        "studentFileUpload":{
+            "studentUploadedfile" :"Student uploaded File",
+            "slno":"slno",
+            "studentName":"Student Name",
+            "gender":"Gender",
+            "address1":"Address1",
+            "address2":"Address2",
+            "country":"Country",
+            "state":"State",
+            "city":"City",
+            "zipCode":"ZipCode",
+            "email":"Email",
+            "admissionNumber":"Admission Number",
+            "institutionNumber":"Institution Name",
+            "courseCategory":"Course Category",
+            "course":"Course",
+            "parentsPhone":"Phone Number",
+            "plan":"Plan",
+            "status":"Status",
+            "edit":"Edit",
+            "delete":"Delete",
+            "deleteStudent" :"Delete Student"
+            },
+        "commonFields": {
+            "titleShort":"NoFlay",
+            "title":"NoFlay",
+            "punchline":"LIVING IN WELLNESS - BALANCED LIFE",
+            "primaryDetails" : "Primary Details",
+            "contactDetails" : "Contact Details",
+            "bankDetails" : "Bank Details",
+            "clear" : "Clear",
+            "addNew" : "Add New",
+            "save" : "Save",
+            "edit" : "Edit",
+            "delete" : "Delete",
+            "status" : "Status",
+            "search" : "Search",
+            "index" : "Index",
+            "close" : "Close",
+            "no" : "No",
+            "yes" : "Yes",
+            "enterName" : "Enter Name",
+            "enterCode" :"Enter Code",
+            "nameFieldRequired":"Name is required",
+            "codeFieldRequired":"Code is required",
+            "shortNameRequired":"ShortName  required",
+            "contactPersonRequired":"ContactPersonName required",
+            "DesignationRequired":"Desigantion required",
+            "Address1Required":"Address1 required ",
+            "Address2Required":"Address2 required ",
+            "PincodeRequired":"PinCode required ",
+            "MobileRequired":"MobileNumber required",
+            "accountHolderName" : "AccountHolderName required",
+            "accountNumber" : "AccountNumber required",
+            "ifscCode" : "ifscCode required",
+            "accountType" :"AccountType required",
+            "bankName" : "BankName required",
+            "branchRequired":"Branch required",
+            "countryRequired" : "Select Country",
+            "stateRequired" : "Select State",
+            "cityRequired" : "Select City",
+            "emailRequired" : "Email Required",
+            "invalidEmailMessage" : "Invalid Email Id",
+            "mobileLength" : "Mobile number must be at least 10 digits long",
+            "invalidMobileMessage" : "Invalid Mobile Number",
+            "registerNumberRequired" : "Register Number Required",
+            "addNewplan":"Add New Plan",
+            "deleteplan":"Delete Plan",
+            "enterPrice" : "Enter Price",
+            "enterDate" : "Enter Date",
+            "priceFieldRequired":"Price is required",
+            "datetFieldRequired":"Date is required",
+            "gender":"Gender Required",
+
+            "courseCategory":"Course Category Required",
+            "courses": "Course Name Required",
+            "yearofjoining": "Year Of Joining Required",
+            "institution": "Institution Name Required",
+            "stdAdmissionNumber":"Roll Number Required",
+            "statusMesaage": "Status Required",
+            "planMessage":"Plan Required"
+        },
+
+        "businessCategory" : {
+            "businessCategory1" : "Business Category",
+            "businessCategoryName" : "Business Category Name",
+            "businessCategoryCode" : "Business Category Code"
+        },
+        "businessEntity" : {
+            "businessEntity" : "Business Entity",
+            "businessName" : "Business Name",
+            "registrationNumber" : "Registration Number",
+            "shortName" : "ShortName",
+            "selectOffers" : "select Offers",
+            "plans" : "Plans"
+        },
+
+        "attributes" : {
+            "attribute" : "Attributes",
+            "attributeName" : "Attribute Name",
+            "attributeCode" : "Attribute Code",
+            "businessCategoryName" : "Business Category Name"
+        },
+        "membershipPage" : {
+            "membership" : "Membership",
+            "membershipName" : "Membership Name"
+          
+        },
+        "plannamePage":
+        {
+            "plan" : "Plans",
+            "planName":"Plan Name"   
+        },
+        "plans" : {
+            "plans" : "Plans",
+            "planName" : "Plan Name",
+            "planPrice" : "Plan Price",
+            "planMembership" : "Plan Membership",
+            "startDate" : "StartDate",
+            "endDate" : "EndDate"
+        },
+        "statusPage":
+        {
+            "status" : "Status",
+            "id" : "ID"
+
+        }
+     },
+     "studentLoginPage": {
+        "navbar" : {
+            "about" : "ABOUT",
+            "services" : "SERVICES",
+            "pricing" : "PRICING",
+            "login" : "LOGIN"
+        },
+        "aboutSection" : {
+            "aboutMcm" : "ABOUT NoFlay",
+            "aboutMcmDesc1" : "Student life is a critical period for developing attitudes, skills and knowledge for living a healthy life. During this time they notice, assess and make judgments about what is normal and desirable. Their choices depend on a host of variables such as, what is easily accessible, what is cost effective, what their peers choose, what is common practice at home and their surroundings. They make choices from what they know.",
+            "aboutMcmDesc2" : "Learning Institutions have a critical role in supporting students to make healthy lifestyle choices and to understand consequences on lifelong health and wellbeing. The link between health and wellbeing and positive academic performance is well researched:",
+            "ourValues" : "OUR VALUES",
+            "missionTitle" : "MISSION: ",
+            "missionDesc1" : "Every aspect of one’s life influences one’s state of wellbeing. Researchers investigating happiness have found the following factors enhance a person's wellbeing. Student life is a critical period for developing attitudes, skills and knowledge for living a healthy life. During this time they notice, assess and make judgments about what is normal and desirable. Their choices depend on a host of variables such as, what is easily accessible, what is cost effective, what their peers choose, what is common practice at home and their surroundings. They make choices from what they know.",
+            "visionTitle" : "VISION:",
+            "visionDesc1" : "Happy relationships with friends",
+            "visionDesc2" : "Network of close friends",
+            "visionDesc3" : "Enjoyable and fulfilling career",
+            "visionDesc4" : "Spiritual or religious beliefs",
+            "visionDesc5" : "Fun hobbies and leisure pursuits",
+            "visionDesc6" : "Optimistic outlook",
+            "visionDesc7" : "Sense of purpose and meaning",
+            "visionDesc8" : "Living in a fair and democratic society."
+        },
+        "services" : {
+            "servicesTitle" : "SERVICES",
+            "whatWeOffer" : "What we offer",
+            "medicalInsurance" : "MEDICAL INSURANCE",
+            "wellness" : "WELLNESS",
+            "socialChat" : "SOCIAL CHAT",
+            "sports" : "SPORTS",
+            "career" : "CAREER",
+            "caring" : "CARING"
+        },
+        "pricingPage" : {
+            "pricing" : "PRICING",
+            "labelMsg" : "Choose a payment plan that works for you",
+            "silver" : "Silver",
+            "gold" : "Gold",
+            "platinum" : "Platinum",
+            "signup" : "Sign Up"
+        },
+        "studentLogin" : {
+            "login" : "LOGIN",
+            "userName" : "Username",
+            "password" : "Password",
+            "letsgo" : "Lets Go",
+            "noAccount" : "Don't have an account ?",
+            "register" : "Register here",
+            "connectWith" : "or connect With"
+        },
+        "studentRegister" : {
+            "userName" : "Username",
+            "mobile" : "Mobile",
+            "email" : "Email",
+            "rollNumber" : "Roll number",
+            "institute" : "Institute",
+            "plan" : "Plan",
+            "register" : "Register",
+            "message" : "Already have an account ?",
+            "signhere" : "Sign here"
+        }
+     }
+
+}

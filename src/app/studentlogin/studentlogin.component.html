@@ -1,0 +1,351 @@
+<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+    <!--  (nav Section start) -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#myPage">{{'adminConfigarationPage.commonFields.titleShort' | translate}}</a>
+                <!-- <img src="../../assets/img/noflaylogo2.jpg" style="height: 30px;width: 30px" alt="noflaylogo2"> -->
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#about">{{'studentLoginPage.navbar.about' | translate}}</a>
+                    </li>
+                    <li>
+                        <a href="#services">{{'studentLoginPage.navbar.services' | translate}}</a>
+                    </li>
+                    <li>
+                        <a href="#pricing">{{'studentLoginPage.navbar.pricing' | translate}}</a>
+                    </li>
+                    <li>
+                        <a href="#login">{{'studentLoginPage.navbar.login' | translate}}</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" (click)="changeLanguage()">{{selectedLanguage}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!--  (nav Section end) -->
+    <div class="jumbotron text-center">
+        <h1>{{'adminConfigarationPage.commonFields.title' | translate}}</h1>
+        <h2 style="color: white">{{'adminConfigarationPage.commonFields.punchline' | translate}}</h2>
+        <!-- <p>We specialize in blablabla</p>
+        <form>
+            <div class="input-group">
+                <input type="email" class="form-control" size="50" placeholder="Email Address" required>
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-danger">Subscribe</button>
+                </div>
+            </div>
+        </form> -->
+    </div>
+
+    <!-- Container (About Section start) -->
+    <div id="about" class="container-fluid">
+        <div class="row">
+            <div class="col-sm-8">
+                <h2>{{'studentLoginPage.aboutSection.aboutMcm' | translate}}</h2>
+                <br>
+                <h4>{{'studentLoginPage.aboutSection.aboutMcmDesc1' | translate}} </h4>
+                <br>
+                <p>{{'studentLoginPage.aboutSection.aboutMcmDesc2' | translate}}</p>
+                <br>
+                <!-- <button class="btn btn-default btn-lg">Get in Touch</button> -->
+            </div>
+            <div class="col-sm-4 text-center">
+                <!-- <span class="glyphicon glyphicon-grain logo"></span> -->
+                <img src="./assets/img/noflaylogo2.jpg" alt="noflaylogo2">
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid bg-grey">
+        <div class="row">
+            <div class="col-sm-4">
+                <span class="glyphicon glyphicon-globe logo"></span>
+                <!-- <span class="glyphicon glyphicon-globe logo slideanim"></span> -->
+            </div>
+            <div class="col-sm-8">
+                <h2>{{'studentLoginPage.aboutSection.ourValues' | translate}}</h2>
+                <br>
+                <h4>
+                    <strong>{{'studentLoginPage.aboutSection.missionTitle' | translate}} </strong> {{'studentLoginPage.aboutSection.missionDesc1'
+                    | translate}} </h4>
+                <br>
+                <p>
+                    <strong>{{'studentLoginPage.aboutSection.visionTitle' | translate}}</strong>
+                </p>
+                <ul>
+                    <li>
+                        {{'studentLoginPage.aboutSection.visionDesc1' | translate}}
+                    </li>
+                    <li>
+                        {{'studentLoginPage.aboutSection.visionDesc2' | translate}}
+                    </li>
+                    <li>
+                        {{'studentLoginPage.aboutSection.visionDesc3' | translate}}
+                    </li>
+                    <li>
+                        {{'studentLoginPage.aboutSection.visionDesc4' | translate}}
+                    </li>
+                    <li>
+                        {{'studentLoginPage.aboutSection.visionDesc5' | translate}}
+                    </li>
+                    <li>
+                        {{'studentLoginPage.aboutSection.visionDesc6' | translate}}
+                    </li>
+                    <li>
+                        {{'studentLoginPage.aboutSection.visionDesc7' | translate}}
+                    </li>
+                    <li>
+                        {{'studentLoginPage.aboutSection.visionDesc8' | translate}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Container (About Section end) -->
+
+    <!-- Container (Services Section start) -->
+    <div id="services" class="container-fluid text-center">
+        <h2>{{'studentLoginPage.services.servicesTitle' | translate}}</h2>
+        <h4>{{'studentLoginPage.services.whatWeOffer' | translate}}</h4>
+        <br>
+        <div class="row ">
+            <div class="col-sm-4">
+                <i class="fa fa-heartbeat" aria-hidden="true"></i>
+                <h4>{{'studentLoginPage.services.medicalInsurance' | translate}}</h4>
+            </div>
+            <div class="col-sm-4">
+                <i class="fa fa-pagelines" aria-hidden="true"></i>
+                <h4>{{'studentLoginPage.services.wellness' | translate}}</h4>
+            </div>
+            <div class="col-sm-4">
+                <i class="fa fa-comments" aria-hidden="true"></i>
+                <h4>{{'studentLoginPage.services.socialChat' | translate}}</h4>
+                <!-- <p>Online chat with freinds and our service provider.</p> -->
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="row ">
+            <div class="col-sm-4">
+                <i class="fa fa-trophy" aria-hidden="true"></i>
+                <h4>{{'studentLoginPage.services.sports' | translate}}</h4>
+                <!-- <p>Healthy life with our mcm card.</p> -->
+            </div>
+            <div class="col-sm-4">
+                <!-- <span class="glyphicon glyphicon-certificate logo-small"></span> -->
+                <!-- <i class="fa fa-certificate" aria-hidden="true"></i> -->
+                <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                <h4>{{'studentLoginPage.services.career' | translate}}</h4>
+                <!-- <p>Enjoyable and fulfilling career</p> -->
+            </div>
+            <div class="col-sm-4">
+                <!-- <span class="glyphicon glyphicon-wrench logo-small"></span> -->
+                <i class="fa fa-heart" aria-hidden="true"></i>
+                <h4 style="color:#303030;">{{'studentLoginPage.services.caring' | translate}}</h4>
+                <!-- <p>Lorem ipsum dolor sit amet..</p> -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Container (Services Section end) -->
+
+    <!-- Container (Pricing Section start) -->
+    <div id="pricing" class="container-fluid">
+        <div class="text-center">
+            <h2>{{'studentLoginPage.pricingPage.pricing' | translate}}</h2>
+            <h4>{{'studentLoginPage.pricingPage.labelMsg' | translate}}</h4>
+        </div>
+        <div class="row">
+            <div class="col-sm-4 col-xs-12">
+                <div class="panel panel-default text-center">
+                    <div class="panel-heading">
+                        <h1>{{'studentLoginPage.pricingPage.silver' | translate}}</h1>
+                    </div>
+                    <div class="panel-body">
+                        <p>
+                            <strong>20</strong> Offers</p>
+                        <p>
+                            <strong>15</strong> Offers</p>
+                        <p>
+                            <strong>5</strong> Offers</p>
+                        <p>
+                            <strong>2</strong> Offers</p>
+                        <p>
+                            <strong>Endless</strong> Offers</p>
+                    </div>
+                    <div class="panel-footer">
+                        <h3>$19</h3>
+                        <h4>per month</h4>
+                        <button class="btn btn-lg">{{'studentLoginPage.pricingPage.signup' | translate}}</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 col-xs-12">
+                <div class="panel panel-default text-center">
+                    <div class="panel-heading">
+                        <h1>{{'studentLoginPage.pricingPage.gold' | translate}}</h1>
+                    </div>
+                    <div class="panel-body">
+                        <p>
+                            <strong>50</strong> Offers</p>
+                        <p>
+                            <strong>25</strong> Offers</p>
+                        <p>
+                            <strong>10</strong> Offers</p>
+                        <p>
+                            <strong>5</strong> Offers</p>
+                        <p>
+                            <strong>Endless</strong> Offers</p>
+                    </div>
+                    <div class="panel-footer">
+                        <h3>$29</h3>
+                        <h4>per month</h4>
+                        <button class="btn btn-lg">{{'studentLoginPage.pricingPage.signup' | translate}}</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 col-xs-12">
+                <div class="panel panel-default text-center">
+                    <div class="panel-heading">
+                        <h1>{{'studentLoginPage.pricingPage.platinum' | translate}}</h1>
+                    </div>
+                    <div class="panel-body">
+                        <p>
+                            <strong>100</strong> Offers</p>
+                        <p>
+                            <strong>50</strong> Offers</p>
+                        <p>
+                            <strong>25</strong> Offers</p>
+                        <p>
+                            <strong>10</strong> Offers</p>
+                        <p>
+                            <strong>Endless</strong> Offers</p>
+                    </div>
+                    <div class="panel-footer">
+                        <h3>$49</h3>
+                        <h4>per month</h4>
+                        <button class="btn btn-lg">{{'studentLoginPage.pricingPage.signup' | translate}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Container (Pricing Section start) -->
+
+    <!-- Container (Pricing Section start) -->
+    <div id="login" class="container-fluid">
+        <!-- <div class="text-center">
+            <h2>LOGIN</h2>
+        </div> -->
+        <div class="row">
+            <div class="col-sm-4 col-xs-12">
+                <div class="col-sm-12 col-xs-12">
+                    <div class="panel panel-default text-center add">
+                        <!-- <img src="./assets/img/sadd1.jpg" alt="add1"> -->
+                        <img src="./assets/img/na4.jpg" alt="add1">
+                    </div>
+                </div>
+                <div class="col-sm-12 col-xs-12">
+                    <div class="panel panel-default text-center add">
+                        <img src="./assets/img/sadd2.jpg" alt="add2">
+                    </div>
+                </div>
+                <div class="col-sm-12 col-xs-12">
+                    <div class="panel panel-default text-center add">
+                        <img src="./assets/img/sadd3.jpg" alt="add3">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8 col-xs-12">
+                <div class="panel panel-default text-center login">
+                    <div class="panel-heading">
+                        <h1>{{loginOrRegister}}</h1>
+                    </div>
+                    <div class="panel-body">
+                        <!-- <form class="login">
+                            <h1 class="login-title">Simple Login</h1>
+                            <input type="text" class="login-input" placeholder="Email Adress" autofocus>
+                            <input type="password" class="login-input" placeholder="Password">
+                            <input type="submit" value="Lets Go" class="login-button">
+                            <p class="login-lost">
+                                <a href="">Forgot Password?</a>
+                            </p>
+                        </form> -->
+                        <div class="tab-content">
+                            <div id="sign" class="tab-pane fade in active">
+                                <input type="text" class="login-input" style="margin-top: 50px;" placeholder="{{'studentLoginPage.studentLogin.userName' | translate}}" autofocus>
+                                <br>
+                                <input type="password" class="login-input" placeholder="{{'studentLoginPage.studentLogin.password' | translate}}">
+                                <br>
+                                <input type="submit" value="{{'studentLoginPage.studentLogin.letsgo' | translate}}" class="login-button">
+                                <br>
+                                <p class="login-lost">
+                                    <!-- <a href="">Forgot Password?</a> -->
+                                    <label style="margin-right: 5px">{{'studentLoginPage.studentLogin.noAccount' | translate}}</label>
+                                    <a data-toggle="tab" href="#reg" (click)="regester()">{{'studentLoginPage.studentLogin.register' | translate}}</a>
+                                </p>
+                                <hr class="style5">
+                                <label>{{'studentLoginPage.studentLogin.connectWith' | translate}}</label>
+                                <br>
+                                <i class="fa fa-facebook-square socialIcons facebook-icon" aria-hidden="true" (click)="socialSignIn('facebook')"></i>
+                                <i class="fa fa-google-plus-square socialIcons google-icon" aria-hidden="true" (click)="socialSignIn('google')"></i>
+                            </div>
+                            <!-- </div>
+                        <div class="tab-content"> -->
+                            <div id="reg" class="tab-pane fade">
+                                
+                                <input type="text" class="login-lost-regester" placeholder="{{'studentLoginPage.studentRegister.userName' | translate}}" autofocus>
+                                <br>
+                                <input type="text" class="login-lost-regester" placeholder="{{'studentLoginPage.studentRegister.mobile' | translate}}">
+                                <br>
+                                <input type="text" class="login-lost-regester" placeholder="{{'studentLoginPage.studentRegister.email' | translate}}">
+                                <br>
+                                <input type="text" class="login-lost-regester" placeholder="{{'studentLoginPage.studentRegister.rollNumber' | translate}}">
+                                <br>
+                                <input type="text" class="login-lost-regester" placeholder="{{'studentLoginPage.studentRegister.institute' | translate}}">
+                                <br>
+                                <input type="text" class="login-lost-regester" placeholder="{{'studentLoginPage.studentRegister.plan' | translate}}">
+                                <br>
+                                <input type="submit" value="{{'studentLoginPage.studentRegister.register' | translate}}" class="login-button">
+                                <br>
+                                <p class="login-lost">
+                                    <!-- <a href="">Forgot Password?</a> -->
+                                    <label style="margin-right: 5px">{{'studentLoginPage.studentRegister.message' | translate}}</label>
+                                    <a data-toggle="tab" href="#sign" (click)="login()">{{'studentLoginPage.studentRegister.signhere' | translate}}</a>
+                                </p>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <!-- <div class="panel-footer">
+                        <ul class="social-network social-circle">
+                            <li>
+                                <a href="https://www.youtube.com/" title="Facebook">
+                                    <i class="fa fa-facebook"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" title="Google +">
+                                    <i class="fa fa-google-plus"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div> -->
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>

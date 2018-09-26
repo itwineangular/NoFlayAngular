@@ -1,0 +1,217 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" routerLink="/coursecategory">
+          <!-- <img class="crLogo" src="../../assets/img/noflaylogo4.png" style="height: 50px;" /> -->
+          <img class="crLogo" src="./assets/img/noflaylogo4.png" style="height: 50px;" />
+          <span>{{ 'adminConfigarationPage.commonFields.title' | translate }}</span>
+        </a>
+      <!-- <div class="logo" style="width:100%; margin-top: 5px">
+        <a routerLink="/coursecategory">
+          <img src="../../assets/img/logo.png" alt="logo">
+        </a>
+      </div> -->
+      <!-- <div class="col-lg-6">
+        <div class="col-lg-1">
+          <img src="../../assets/img/noflaylogo1.jpg" class="crLogo" alt="logo">
+        </div>
+        <div class="col-lg-5" class="title">
+          <h1>No Flay</h1>
+        </div>
+      </div> -->
+
+    </div>
+
+    <!-- lan -->
+    <!-- <div id="lang-menu"> -->
+    <!-- <select class="selectpicker" data-width="fit">
+            <option data-content='<span class="flag-icon flag-icon-us"></span> English'>English</option>
+          <option  data-content='<span class="flag-icon flag-icon-mx"></span> Español'>Español</option>
+        </select> -->
+    <!-- </div> -->
+
+    <!-- lan -->
+
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <!-- <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <i class="glyphicon glyphicon-envelope"></i>
+              </a>
+              <ul class="dropdown-menu ">
+                  <a href="#nl"><li><img src="http://i65.tinypic.com/2d0kyno.png"/>Nederlands</li></a>
+                    <a href="#en"><li><img src="http://i64.tinypic.com/fd60km.png"/>English</li></a>
+                </ul>
+            </li> -->
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="glyphicon glyphicon-envelope" style="font-size:18px"></i>
+            <span class="badge badpos" style="background-color: #00A65A">4</span>
+          </a>
+          <ul class="dropdown-menu mymenu1">
+            <a routerLink="#" class="list-group-item">
+              Notification Received
+            </a>
+            <a routerLink="#" class="list-group-item">
+              Notification Received
+            </a>
+            <a routerLink="#" class="list-group-item">
+              Notification Received
+            </a>
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            <!-- <i class="glyphicon glyphicon-bell"></i> -->
+            <i class="glyphicon glyphicon-bell" style="font-size:18px"></i>
+            <span class="badge badpos" style="background-color: #F39C12">5</span>
+          </a>
+          <ul class="dropdown-menu mymenu1">
+            <a routerLink="#" class="list-group-item">
+              Notification Received
+            </a>
+            <a routerLink="#" class="list-group-item">
+              Notification Received
+            </a>
+            <a routerLink="#" class="list-group-item">
+              Notification Received
+            </a>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            <!-- <i class="fa fa-flag-o"></i> -->
+            <i class="fa fa-language fa-lg" style="font-size:18px"></i>
+
+            <!-- <span class="badge badpos" style="background-color: #DD4B39">5</span> -->
+          </a>
+          <ul class="dropdown-menu ">
+            <button class="list-group-item" (click)="switchLanguage('en')">
+              <img src="./assets/img/english.png" alt="english" style="height: 20px; width: 20px;"> ENGLISH
+            </button>
+            <button class="list-group-item" (click)="switchLanguage('fr')">
+              <img src="./assets/img/french.png" alt="french" style="height: 20px; width: 20px;"> FRENCH
+            </button>
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ 'adminMasterPage.myAccount' | translate }}
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu mymenu">
+            <li>
+              <a routerLink="#">My Profile</a>
+            </li>
+            <li>
+              <a routerLink="#">Change Password</a>
+            </li>
+            <!-- <li>
+              <a routerLink="#">Language</a>
+            </li> -->
+            <li>
+              <a routerLink="">Logout</a>
+              <!-- <button class="list-group-item" (click)="logout()">
+                Logout
+              </button> -->
+            </li>
+
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- <div class="horz-main-menu">
+  <a class="horz-main-menu-a iactive" (click)="gotopage('dashboard')">Dashboard</a>
+  <a class="horz-main-menu-a" (click)="gotopage('config')">Configurations</a>
+  <a class="horz-main-menu-a" (click)="gotopage('reports')">Reports</a>
+</div> -->
+
+<ul class="nav nav-tabs">
+  <li>
+    <a data-toggle="tab" (click)="gotopage('dashboard')">{{ 'adminMasterPage.dashboard' | translate }}</a>
+  </li>
+  <li class="active">
+    <a data-toggle="tab" (click)="gotopage('config')">{{ 'adminMasterPage.configarations' | translate }}</a>
+  </li>
+  <li>
+    <a data-toggle="tab" (click)="gotopage('reports')">{{ 'adminMasterPage.reports' | translate }}</a>
+  </li>
+</ul>
+
+
+<div class="sidebar">
+  <div class="panel-group" id="accordion">
+    <div class="panel panel-default custompanel" *ngFor="let mmenus of menus.menuitems;let i = index;">
+      <div *ngIf="mmenus.submenu; else nosubmenus">
+        <div class="panel panel-default">
+          <a class="atag" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{ i+1 }}">
+            <div class="panel-heading custompanel">
+              {{ mmenus.mainmenu }}
+              <i class="fa fa-plus pull-right tIcon"></i>
+            </div>
+          </a>
+          <div id="collapse-{{ i+1 }}" class="panel-collapse collapse">
+            <div *ngFor="let smenus of mmenus.submenu">
+              <a routerLink="/{{ smenus.url }}" class="list-group-item">{{ smenus.name }}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #nosubmenus>
+        <a class="atag" routerLink="/{{ mmenus.url }}">
+          <div class="panel-heading custompanel">
+            {{ mmenus.mainmenu }}
+          </div>
+        </a>
+      </ng-template>
+    </div>
+  </div>
+</div>
+<!--
+<div class="sidebar">
+  <div class="panel-group" id="accordion"> 
+    <div class="panel panel-default">
+        <a routerLink="/accesscontrol" class="atag">
+            <div class="panel-heading white">
+              Dashboard
+            </div>
+          </a>
+    </div>  
+
+    <div class="panel panel-default">
+        <a class="atag" data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+          <div class="panel-heading white">
+            Institutions<i class="fa fa-plus pull-right tIcon"></i>
+          </div>
+        </a>
+      <div id="collapse1" class="panel-collapse collapse in">
+          <a routerLink="" class="list-group-item">Course Category</a>
+          <a routerLink="" class="list-group-item">Courses</a>
+          <a routerLink="" class="list-group-item">Educational Institute</a>
+      </div>
+    </div>
+    <div class="panel panel-default">
+        <a class="atag" data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+            <div class="panel-heading white">
+              Business Entities<i class="fa fa-plus pull-right tIcon"></i>
+            </div>
+          </a>
+      <div id="collapse2" class="panel-collapse collapse">
+          <a routerLink="" class="list-group-item">Course Category</a>
+          <a routerLink="" class="list-group-item">Courses</a>
+          <a routerLink="" class="list-group-item">Educational Institute</a>
+      </div>
+    </div>
+  </div>
+</div>-->

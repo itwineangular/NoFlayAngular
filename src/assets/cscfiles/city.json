@@ -1,0 +1,115 @@
+
+[
+    {
+    "id": "BN",
+   "name": "Bangalore",
+   "stateCode":"KA",
+   "countryCode":"IN"
+    
+},
+
+{
+    "id": "MY",
+   "name": "Mysore",
+   "stateCode":"KA",
+   "countryCode":"IN"
+    
+},
+{
+    "id": "SH",
+   "name": "Shimoga",
+   "stateCode":"KA",
+   "countryCode":"IN"
+    
+},
+{
+    "id": "CN",
+   "name": "Chennai",
+   "stateCode":"TN",
+   "countryCode":"IN"
+    
+},
+{
+    "id": "CBE",
+   "name": "Coimbatore",
+   "stateCode":"TN",
+   "countryCode":"IN"
+    
+},
+{
+    "id": "MDU",
+   "name": "Madurai",
+   "stateCode":"TN",
+   "countryCode":"IN"
+    
+},
+
+{
+    "id": "ATP",
+   "name": "Anantapur",
+   "stateCode":"AP",
+   "countryCode":"IN"
+    
+},
+{
+    "id": "CTO",
+   "name": "Chittoor",
+   "stateCode":"AP",
+   "countryCode":"IN"
+    
+},
+{
+    "id": "VSKP",
+   "name": "Visakhapatnam",
+   "stateCode":"AP",
+   "countryCode":"IN"
+    
+},
+
+
+{
+    "id": "WD",
+   "name": "WOODLAND",
+   "stateCode":"CA",
+   "countryCode":"USA"
+    
+},
+{
+    "id": "BWP",
+   "name": "Baldwin Park",
+   "stateCode":"CA",
+   "countryCode":"USA"
+    
+},
+
+{
+    "id": "SMCS",
+   "name": "San Marcos",
+   "stateCode":"CA",
+   "countryCode":"USA"
+    
+},
+{
+    "id": "BHX",
+   "name": "Birmingham",
+   "stateCode":"AL",
+   "countryCode":"USA"
+    
+},
+{
+    "id": "HSV",
+   "name": "Huntsville",
+   "stateCode":"AL",
+   "countryCode":"USA"
+    
+},
+{
+    "id": "TCL",
+   "name": "Tuscaloosa",
+   "stateCode":"AL",
+   "countryCode":"USA"
+    
+}
+]
+
+

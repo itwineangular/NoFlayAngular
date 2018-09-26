@@ -1,1 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+.mycontent{
+    padding-left: 250px;
+    /* padding-top: 60px; */
+}
+.com-btn{
+    background: #2C74E1 !important;
+    border-color: #2C74E1 !important;
+    color:#ffffff !important;
+    margin-right: 3px;
+}

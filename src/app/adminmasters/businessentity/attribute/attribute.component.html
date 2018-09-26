@@ -1,0 +1,206 @@
+<div class="mycontent">
+        <!-- <div class="container"> -->
+                <!-- <div class="row"> -->
+    <div class="col-md-12">
+        <hr />
+        <h3 class="text-center">{{'adminConfigarationPage.attributes.attribute' | translate}}</h3>
+        <hr />
+    </div>
+    <!-- </div> -->
+    <div class="col-md-12">
+    <div class="rcorners2">
+            <form class="form-horizontal" #attributeForm="ngForm" (ngSubmit)="searchAttribute(attributeForm)">
+
+                   <div class="col-md-3">
+                    <label for="attributeName">{{'adminConfigarationPage.attributes.attributeName'
+                            | translate}}</label>
+                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.attributes.attributeName' | translate}}" name="attributeName"
+                        #attributeNameControl="ngModel" [(ngModel)]="attribute.attributeName" />
+                </div>
+                <div class="col-md-3">
+                    <label for="attributeCode">{{'adminConfigarationPage.attributes.attributeCode'
+                            | translate}}</label>
+                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.attributes.attributeCode' | translate}}" name="attributeCode"
+                        #attributeCodeControl="ngModel" [(ngModel)]="attribute.attributeCode" />
+                </div>
+                <div class="col-md-3">
+                    <label for="businessCatCode">{{'adminConfigarationPage.attributes.businessCategoryName' | translate }}</label>
+                    <select class="form-control" name="businessCatCode" #businessCatCode="ngModel" [(ngModel)]="attribute.businessCatCode">
+                        <option *ngFor="let item of businessCategoryList" value={{item.businessCategoryName}}>{{item.businessCategoryName}} </option>
+                    </select>
+                </div>
+                <div class="col-md-12">
+                    <button class="btn btn-info btn-outline pull-right cssButtonPadding" data-toggle="modal" data-target="#addModal" type="button"
+                        (click)="addNew()">{{'adminConfigarationPage.commonFields.addNew' | translate}}</button>
+                    <button class="btn btn-warning btn-outline pull-right cssButtonPadding" type="button" (click)="searchClear()">{{'adminConfigarationPage.commonFields.clear' | translate}}</button>
+                    <button class="btn btn-primary btn-outline pull-right cssButtonPadding" type="submit">{{'adminConfigarationPage.commonFields.search' | translate}}</button>
+                </div>
+            </form>
+        </div>
+        <!-- </div> -->
+        <!-- <div class="container">
+                <div class="row"> -->
+    
+        <!-- <input type="search" [(ngModel)]="searchText" placeholder="Search"> -->
+        <!-- <button class="btn btn-info pull-right" data-toggle="modal" data-target="#addModal" (click)="addNew()">{{
+            'adminConfigarationPage.commonFields.addNew' | translate }}</button> -->
+        <div class="alert alert-warning fade in myAlert" *ngIf="alertMassege">
+            <a class="close" href="#" data-dismiss="alert" (click)="clickedAlert()">X</a>
+            <h4>{{alertMassege}}</h4>
+        </div>
+        <div class="table-responsive">
+        <table class="table table-bordered myTable">
+            <thead>
+            <tr class="text-center">
+                <th>{{'adminConfigarationPage.commonFields.index' | translate}}
+                </th>
+                <th [class.active]="key === 'attributeName'" (click)=" sort('attributeName')">{{'adminConfigarationPage.attributes.attribute'
+                    | translate}}
+                    <span [hidden]="reverse">▼</span>
+                    <span [hidden]="!reverse">▲</span>
+                </th>
+                <th [class.active]="key === 'attributeCode'" (click)=" sort('attributeCode')">{{'adminConfigarationPage.attributes.attributeCode'
+                    | translate}}
+                    <span [hidden]="reverse">▼</span>
+                    <span [hidden]="!reverse">▲</span>
+                </th>
+                <th [class.active]="key === 'businessCatCode'" (click)=" sort('businessCatCode')">{{'adminConfigarationPage.businessCategory.businessCategoryName'
+                    | translate}}
+                    <span [hidden]="reverse">▼</span>
+                    <span [hidden]="!reverse">▲</span>
+                </th>
+                <th>{{ 'adminConfigarationPage.commonFields.edit' | translate }}</th>
+                <th>{{ 'adminConfigarationPage.commonFields.delete' | translate }}</th>
+            </tr>
+        </thead>
+            <tbody>
+                <tr *ngFor="let item of attributeList  | orderBy: key : reverse : caseInsensitive : comparator |  paginate: { itemsPerPage: pagenumber, currentPage: p }; let i=index">
+                    <td>{{((p-1)*itemsPerPage2)+i+1}}</td>
+                    <td>{{item.attributeName}}</td>
+                    <td>{{item.attributeCode}} </td>
+                    <td>{{item.businessCatCode}}</td>
+                    <td>
+                        <button class="btn btn-warning" data-toggle="modal" data-target="#addModal" (click)="selectUser(item)">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size:15px"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" (click)="selectUser(item)">
+                            <i class="fa fa-trash-o" aria-hidden="true" style="font-size:15px"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+        <div class="form-group">
+            <div class="col-md-4">
+                Show
+                <select (change)="pageChange($event.target.value)" style="border: none;">
+
+                    <option>5</option>
+                    <option>10</option>
+                    <option>15</option>
+                </select>
+                Entries
+            </div>
+            <div class="col-md-2"></div>
+
+            <div class=" col-md-6 text-right">
+                <pagination-controls (pageChange)="customPageChange($event)"></pagination-controls>
+            </div>
+            <div class="clearfix"></div>
+
+        </div>
+    </div>
+    <!-- </div>
+    </div> -->
+
+    <!-- Add Modal-->
+    <div class="modal fade" id="addModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form class="form-horizontal" #attributeForm="ngForm" (ngSubmit)="saveAttribute(attributeForm)">
+                    <div>
+                        <div class="modal-header">
+                            <button class="close" type="button" data-dismiss="modal">X</button>
+                            <h4 class="modal-title">{{ 'adminConfigarationPage.commonFields.addNew' | translate }}</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="Enter Name">{{'adminConfigarationPage.attributes.attributeName'
+                                        | translate}}
+                                        <span class="reqMark">*</span>
+                                    </label>
+                                    <div class="col-sm-3">
+                                        <input class="form-control" type="text" placeholder="{{ 'adminConfigarationPage.commonFields.enterName' | translate }}"
+                                            name="attributeName" #attributeNameControl="ngModel" [(ngModel)]="attribute.attributeName"
+                                            required />
+                                        <div class="validation-error" *ngIf="attributeNameControl.invalid && attributeNameControl.touched">{{'adminConfigarationPage.commonFields.nameFieldRequired'
+                                            | translate}}</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="Enter Code">{{'adminConfigarationPage.attributes.attributeCode'
+                                        | translate}}
+                                        <span class="reqMark">*</span>
+                                    </label>
+                                    <div class="col-sm-3">
+                                        <input class="form-control" type="text" placeholder="{{ 'adminConfigarationPage.commonFields.enterCode' | translate }}"
+                                            name="attributeCode" #attributeCodeControl="ngModel" [(ngModel)]="attribute.attributeCode"
+                                            required />
+                                        <div class="validation-error" *ngIf="attributeCodeControl.invalid && attributeCodeControl.touched">{{'adminConfigarationPage.commonFields.codeFieldRequired'
+                                            | translate}}</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="full name">{{
+                                        'adminConfigarationPage.attributes.businessCategoryName' | translate }}
+                                        <span class="reqMark">*</span>
+                                    </label>
+                                    <div class="col-sm-3">
+                                        <select class="form-control" name="businessCatCode" #businessCatCode="ngModel"
+                                            [(ngModel)]="attribute.businessCatCode" required>
+                                            <option *ngFor="let item of businessCategoryList" value={{item.businessCategoryName}}>{{item.businessCategoryName}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-success" type="submit" [disabled]="attributeForm.invalid" (click)="saveAttribute(attribute)"
+                                data-dismiss="modal">{{ 'adminConfigarationPage.commonFields.save' | translate }}</button>
+                            <button class="btn btn-default" type="button" data-dismiss="modal">{{
+                                'adminConfigarationPage.commonFields.close' | translate }}</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Delete Modal-->
+    <div class="modal fade" id="deleteModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal">X</button>
+                    <h4 class="modal-title">{{ 'adminConfigarationPage.commonFields.delete' | translate }}</h4>
+                </div>
+                <div class="modal-body">
+                    <h3>Are you sure to delete
+                        <span>{{attribute.attributeName}}</span>????</h3>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger" type="button" (click)="deleteAttribute(attribute.attributeId)"
+                        data-dismiss="modal">{{ 'adminConfigarationPage.commonFields.yes' | translate }}</button>
+                    <button class="btn btn-primary" type="button" data-dismiss="modal">{{
+                        'adminConfigarationPage.commonFields.no' | translate }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

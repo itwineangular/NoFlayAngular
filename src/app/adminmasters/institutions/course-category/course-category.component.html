@@ -1,0 +1,199 @@
+<div class="mycontent">
+
+    <div class="col-md-12">
+        <hr />
+        <h3 class="text-center">{{ 'adminConfigarationPage.courseCategoryPage.courseCategory' | translate }}</h3>
+        <hr />
+    </div>
+
+    <div class="col-md-12">
+        <div class="rcorners2">
+            <form class="form-horizontal" #courseCatagoryForm="ngForm" (ngSubmit)="searchCourseCategory(courseCatagoryForm)">
+                <div class="col-md-3">
+                    <label for="categoryName">{{
+                            'adminConfigarationPage.courseCategoryPage.categoryName' | translate }}</label>
+                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.commonFields.enterName' | translate}}"
+                        name="categoryName" #categoryNameControl="ngModel" [(ngModel)]="courseCategory.categoryName" />
+                </div>
+                <div class="col-md-3">
+                    <label for="categoryCode">{{
+                            'adminConfigarationPage.courseCategoryPage.categoryCode' | translate }}</label>
+                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.commonFields.enterCode' | translate}}"
+                        name="categoryCode" #categoryCodeControl="ngModel" [(ngModel)]="courseCategory.categoryCode" />
+                </div>
+                <div class="col-md-3">
+                    <label class="control-label col-sm-2" for="status">Status</label><br> <br>
+                    <input type="radio" name="status" #status="ngModel" [(ngModel)]="courseCategory.status" value=true>
+                    {{ 'adminConfigarationPage.courseCategoryPage.active' | translate }}
+                    <input type="radio" name="status" #status="ngModel" [(ngModel)]="courseCategory.status" value=false>
+                    {{ 'adminConfigarationPage.courseCategoryPage.inactive' | translate }}
+
+                </div>
+                <div class="col-md-12">
+                    <button class="btn btn-info btn-outline pull-right cssButtonPadding" data-toggle="modal"
+                        data-target="#addModal" type="button" (click)="addNew()">{{'adminConfigarationPage.commonFields.addNew'
+                        | translate}}</button>
+                    <button class="btn btn-warning btn-outline pull-right cssButtonPadding" type="button" (click)="searchClear()">{{'adminConfigarationPage.commonFields.clear'
+                        | translate}}</button>
+                    <button class="btn btn-primary btn-outline pull-right cssButtonPadding" type="submit">{{'adminConfigarationPage.commonFields.search'
+                        | translate}}</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="alert alert-warning fade in myAlert" *ngIf="alertMassege">
+            <a class="close" href="#" data-dismiss="alert" (click)="clickedAlert()">X</a>
+            <h4>{{alertMassege}}</h4>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered myTable">
+                <thead>
+                    <tr class="text-center">
+                        <th>{{'adminConfigarationPage.commonFields.index' | translate}}</th>
+                        <th [class.active]="key === 'categoryName'" (click)=" sort('categoryName')">{{
+                            'adminConfigarationPage.courseCategoryPage.categoryName' | translate }} <span class="abc"
+                                [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span></th>
+                        <th [class.active]="key === 'categoryCode'" (click)=" sort('categoryCode')">{{
+                            'adminConfigarationPage.courseCategoryPage.categoryCode' | translate }} <span [hidden]="reverse">▼</span><span
+                                [hidden]="!reverse">▲</span></th>
+                        <th [class.active]="key === 'status'" (click)=" sort('status')">{{
+                            'adminConfigarationPage.commonFields.status' | translate }} <span [hidden]="reverse">▼</span><span
+                                [hidden]="!reverse">▲</span></th>
+                        <th>{{ 'adminConfigarationPage.commonFields.edit' | translate }}</th>
+                        <th>{{ 'adminConfigarationPage.commonFields.delete' | translate }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of courseCategoryList | filterCourseCategory : searchText | orderBy: key : reverse : caseInsensitive : comparator |  paginate: { itemsPerPage: pagenumber, currentPage: p };let i=index">
+                        <td>{{((p-1)*itemsPerPage2)+i+1}}</td>
+                        <td>{{item.categoryName}}</td>
+                        <td>{{item.categoryCode}}</td>
+                        <td *ngIf="item.status=='true'">{{ 'adminConfigarationPage.courseCategoryPage.active' |
+                            translate }}</td>
+                        <td *ngIf="item.status=='false'">{{ 'adminConfigarationPage.courseCategoryPage.inactive' |
+                            translate }}</td>
+                        <td>
+                            <button class="btn btn-warning" data-toggle="modal" data-target="#addModal" (click)="selectedUser(item)">
+                                <i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size:15px"></i>
+                            </button>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" (click)="selectedUser(item)">
+                                <i class="fa fa-trash-o" aria-hidden="true" style="font-size:15px"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-4">
+            Show
+            <select (change)="pageChange($event.target.value)" style="border: none;">
+
+                <option>5</option>
+                <option>10</option>
+                <option>15</option>
+            </select>
+            Entries
+        </div>
+        <div class="col-md-2"></div>
+
+        <div class=" col-md-6 text-right">
+            <pagination-controls (pageChange)="customPageChange($event)"></pagination-controls>
+        </div>
+        <div class="clearfix"></div>
+
+    </div>
+
+    <!-- Add Modal-->
+    <div class="modal fade" id="addModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form class="form-horizontal" #courseCatagoryForm="ngForm" (ngSubmit)="saveCourseCategory(courseCatagoryForm)">
+                    <div>
+                        <div class="modal-header">
+                            <button class="close" type="button" data-dismiss="modal">×</button>
+                            <h4 class="modal-title">{{ 'adminConfigarationPage.commonFields.addNew' | translate }}</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="categoryName">{{
+                                        'adminConfigarationPage.courseCategoryPage.categoryName' | translate }}
+                                        <span class="reqMark">*</span>
+                                    </label>
+                                    <div class="col-sm-3">
+                                        <input class="form-control" type="text" placeholder="{{ 'adminConfigarationPage.commonFields.enterName' | translate }}"
+                                            name="categoryName" #categoryNameControl="ngModel" [(ngModel)]="courseCategory.categoryName"
+                                            required />
+                                        <div class="validation-error" *ngIf="categoryNameControl.invalid && categoryNameControl.touched">{{'adminConfigarationPage.commonFields.nameFieldRequired'
+                                            | translate}}</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="Enter Code">{{
+                                        'adminConfigarationPage.courseCategoryPage.categoryCode' | translate }}
+                                        <span class="reqMark">*</span>
+                                    </label>
+                                    <div class="col-sm-3">
+                                        <input class="form-control" type="text" placeholder="{{ 'adminConfigarationPage.commonFields.enterCode' | translate }}"
+                                            name="categoryCode" #categoryCodeControl="ngModel" [(ngModel)]="courseCategory.categoryCode"
+                                            required />
+                                        <div class="validation-error" *ngIf="categoryCodeControl.invalid && categoryCodeControl.touched">{{'adminConfigarationPage.commonFields.codeFieldRequired'
+                                            | translate}}</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="Status">{{
+                                        'adminConfigarationPage.commonFields.status' | translate }}
+                                        <span class="reqMark">*</span>
+                                    </label>
+                                    <div class="col-sm-3">
+                                        <input type="radio" name="status" #status="ngModel" [(ngModel)]="courseCategory.status"
+                                            value=true> {{ 'adminConfigarationPage.courseCategoryPage.active' |
+                                        translate }}
+                                        <input type="radio" name="status" #status="ngModel" [(ngModel)]="courseCategory.status"
+                                            value=false> {{ 'adminConfigarationPage.courseCategoryPage.inactive' |
+                                        translate }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-success" type="submit" [disabled]="courseCatagoryForm.invalid"
+                                (click)="saveCourseCategory(courseCatagoryForm)" data-dismiss="modal">{{
+                                'adminConfigarationPage.commonFields.save' | translate }}</button>
+                            <button class="btn btn-default" type="button" data-dismiss="modal">{{
+                                'adminConfigarationPage.commonFields.close' | translate }}</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Delete Modal-->
+    <div class="modal fade" id="deleteModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal">X</button>
+                    <h4 class="modal-title">{{ 'adminConfigarationPage.commonFields.delete' | translate }}</h4>
+                </div>
+                <div class="modal-body">
+                    <h3>Are you sure to delete
+                        <span>{{courseCategory.categoryName}}</span>??</h3>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger" type="button" (click)="deleteCourseCaterory(courseCategory.categoryId)"
+                        data-dismiss="modal">{{ 'adminConfigarationPage.commonFields.yes' | translate }}</button>
+                    <button class="btn btn-primary" type="button" data-dismiss="modal">{{
+                        'adminConfigarationPage.commonFields.no' | translate }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

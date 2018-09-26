@@ -1,0 +1,265 @@
+{
+    "adminMasterPage": {
+        "myAccount": "Mon compte",
+        "dashboard": "Tableau de bord",
+        "configarations": "Configurations",
+        "reports": "Rapports"
+     },
+ 
+     "adminConfigarationPage": {
+
+        "courseCategoryPage": {
+            "courseCategory": "Catégorie de cours",
+            "categoryName": "Nom de catégorie",
+            "categoryCode" : "Code de catégorie",            
+            "active" : "actif",
+            "inactive" : "Inactif"
+        },
+        "coursePage": {
+            "courses": "Cours",
+            "courseName" : "Nom du cours",
+            "enterName" : "Entrez le nom",
+            "enterCode" : "Entrez le code",
+            "courseCode" : "Code de cours",
+            "categoryName" : "Nom de catégorie",
+            "duration"  : "Durée"
+        },
+        "educationalInstitutesPage" :{
+            "educationalInstitutes" : "Instituts de formation",
+            "instituteName" : "Nom de l'Institut",
+            "shortName" : "Nom court",
+            "coursesOffered"    : "Cours offerts",
+            "registrationNumber" : "Numéro d'enregistrement",
+            "branch" : "Branche",   
+            "contactPerson" : "Contact",
+            "designation" : "La désignation",
+            "address1" : "Adresse 1",
+            "address2" : "Adresse 2",
+            "pinCode" : "Code PIN",
+            "email" : "Email",
+            "mobile" : "Mobile",
+            "phone" : "Téléphone",
+            "fax" : "Fax",           
+            "accountHolderName" : "Nom du titulaire du compte",
+            "accountNumber" : "Numéro de compte",
+            "ifscCode" : "code ifsc",
+            "accountType" : "Type de compte",
+            "bankName" : "Nom de banque",
+            "uploads" : "Les téléchargements",
+            "country" : "Pays",
+            "state" : "Etat",
+            "city" : "Ville"
+        },
+        "studentPage": {
+            "student": "Étudiant",
+            "studentName": "prénom",
+            "gender": "Le genre",
+            "mobile": "Mobile",
+            "email": "Email",
+            "rollNumber": "Numéro de rôle",
+            "address1": "Adresse 1",
+            "address2": "Adresse 2",
+            "pinCode": "Code PIN",
+            "status": "Statut",
+            "individual": "Étudiant célibataire",
+            "bulk": "Transfert groupé",
+            "plan": "Des plans",
+            "addStudent": "Ajouter un étudiant",
+            "uploadStudent": "Télécharger l'étudiant",
+            "selectFile": "Choisir le dossier",
+            "planName": "Nom du plan",
+            "country": "Pays",
+            "state": "Etat",
+            "city": "Ville",
+            "institution": "nom de l'institution",
+            "courseCategory": "Catégorie de cours",
+            "courses": "Nom du cours",
+            "yearOfJoining": "Année académique",
+            "active": "actif",
+            "inactive": "Inactif"
+        },
+      
+        "commonFields": {
+            "titleShort":"NoFlay",
+            "title":"NoFlay",
+            "punchline":"VIVRE DANS LE BIEN-ÊTRE - VIE ÉQUILIBRÉE",
+            "primaryDetails" : "Détails primaires",
+            "contactDetails" : "Détails du contact",
+            "bankDetails" : "Coordonnées bancaires",
+            "clear" : "Clair",
+            "addNew" : "Ajouter un nouveau",
+            "save" : "sauvegarder",
+            "edit" : "modifier",
+            "delete" : "Effacer",
+            "status" : "Statut",
+            "search" : "Chercher",
+            "index" : "Indice",
+            "close" : "Fermer",
+            "no" : "NON",
+            "yes" : "Oui",
+            "enterName" : "Entrez le nom",  
+            "enterCode" : "Entrez le code",
+            "nameFieldRequired":"Le nom est requis",
+            "codeFieldRequired":"Le code est requis",
+            "shortNameRequired": "Nom abrégé requis",
+            "contactPersonRequired":"ContactPersonName requis",
+            "DesignationRequired":" Desigantion requis",
+            "Address1Required":"Adresse1 requise ",
+            "Address2Required":"Adresse2 requise",
+            "PincodeRequired":" PinCode requis",
+            "MobileRequired":" Numéro Mobile requis",
+            "accountHolderName" : "AccountHolderName requis",
+            "accountNumber" : "Numéro de compte requis",
+            "ifscCode" : "ifscCode requis",
+            "accountType" : "AccountType requis",
+            "bankName" : "BankName requis",
+            "branchRequired":"Branche requise",
+            "countryRequired" : "Choisissez le pays",
+            "stateRequired" : "Sélectionnez l'état",
+            "cityRequired" : "Sélectionnez une ville",
+            "emailRequired" : "Email (requis",
+            "invalidEmailMessage" : "Identifiant non valide",
+            "mobileLength" : "Le numéro mobile doit comporter au moins 10 chiffres",
+            "invalidMobileMessage" : "Numéro de portable invalide",
+            "registerNumberRequired" : "Numéro de registre requis",
+            "addNewplan":"Ajouter un nouveau plan",
+            "deleteplan":"Supprimer le plan" ,
+            "enterPrice" : "Entrez le prix",
+            "enterDate" : "Entrez la date",
+            "priceFieldRequired":"Le prix est requis",
+            "datetFieldRequired":"La date est requise"    
+        },
+
+        "businessCategory" : {
+            "businessCategory1" : "Catégorie Business",
+            "businessCategoryName" : "Nom de la catégorie d'entreprise",
+            "businessCategoryCode" : "Code de catégorie d'entreprise"
+        },
+        "businessEntity" : {
+            "businessEntity" : "Entité commerciale",
+            "businessName" : "Nom de l'entreprise",
+            "registrationNumber" : "Numéro d'enregistrement",
+            "shortName" : "Nom court",
+            "selectOffers" : "Sélectionner des offres",
+            "plans" : "Des plans"
+        },
+
+        "attributes" : {
+            "attribute" : "Les attributs",
+            "attributeName" : "Nom d'attribut",
+            "attributeCode" : "Code d'attribut",
+            "businessCategoryName" : "Nom de la catégorie d'entreprise"
+        },
+        "membershipPage" : {
+            "membership" : "Adhésion",
+            "membershipName" : "Nom de membre"
+        },
+        "plannamePage":
+        {
+            "plan" : "Des plans",
+            "planName":"Nom du plan"   
+        },
+        "studentFileUpload":
+        {
+        "studentUploadedfile" :"Fichier téléchargé étudiant",
+        "slno":"slno",
+        "studentName":"Nom d'étudiant",
+        "gender":"Le genre",
+        "address1":"Adresse 1",
+        "address2":"Adresse 2",
+        "country":"Pays",
+        "city":"Ville",
+        "zipCode":"Code postal",
+        "email":"Email",
+        "admissionNumber":"Numéro d'admission",
+        "institutionNumber":"nom de l'institution",
+        "course":"Cours",
+        "parentsPhone":"Numéro de téléphone",
+        "edit":"modifier",
+        "delete":"Effacer",
+        "deleteStudent" :"Supprimer un étudiant",
+        "state":"Etat",
+        "courseCategory":"Catégorie de cours",
+        "plan":"Plan",
+        "status":"Statut"
+        },
+        "plans" : {
+            "plans" : "Des plans",
+            "planName" : "Nom du plan",
+            "planPrice" : "PlanPrix",
+            "planMembership" : "Planifier l'adhésion",
+            "startDate" : "Date de début",
+            "endDate" : "Date de fin"
+        },
+        "statusPage":
+        {
+            "status" : "Statut",
+            "id" : "ID"
+
+        }
+     },
+     "studentLoginPage": {
+        "navbar" : {
+            "about" : "SUR",
+            "services" : "PRESTATIONS DE SERVICE",
+            "pricing" : "PRIX",
+            "login" : "S'IDENTIFIER"
+        },
+        "aboutSection" : {
+            "aboutMcm" : "À PROPOS DE NoFlay",
+            "aboutMcmDesc1" : "La vie étudiante est une période critique pour développer des attitudes, des compétences et des connaissances pour mener une vie saine. Pendant ce temps, ils remarquent, évaluent et jugent ce qui est normal et souhaitable. Leurs choix dépendent d'une multitude de variables, telles que ce qui est facilement accessible, ce qui est rentable, ce que leurs pairs choisissent, ce qui est une pratique courante à la maison et leur environnement. Ils font des choix à partir de ce qu'ils savent.",
+            "aboutMcmDesc2" : "Les établissements d’apprentissage ont un rôle essentiel à jouer pour aider les élèves à faire des choix de vie sains et à comprendre les conséquences sur la santé et le bien-être à vie. Le lien entre santé et bien-être et performance académique positive est bien documenté:",
+            "ourValues" : "NOS VALEURS",
+            "missionTitle" : "MISSION:",
+            "missionDesc1" : "Chaque aspect de la vie influence l’état de bien-être de chacun. Les chercheurs qui étudient le bonheur ont découvert que les facteurs suivants améliorent le bien-être d'une personne. La vie étudiante est une période critique pour développer des attitudes, des compétences et des connaissances pour mener une vie saine. Pendant ce temps, ils remarquent, évaluent et jugent ce qui est normal et souhaitable. Leurs choix dépendent d'une multitude de variables, telles que ce qui est facilement accessible, ce qui est rentable, ce que leurs pairs choisissent, ce qui est une pratique courante à la maison et leur environnement. Ils font des choix à partir de ce qu'ils savent.",
+            "visionTitle" : "VISION:",
+            "visionDesc1" : "Bonnes relations avec des amis",
+            "visionDesc2" : "Réseau d'amis proches",
+            "visionDesc3" : "Carrière agréable et épanouissante",
+            "visionDesc4" : "Croyances spirituelles ou religieuses",
+            "visionDesc5" : "Loisirs amusants et loisirs",
+            "visionDesc6" : "Perspectives optimistes",
+            "visionDesc7" : "Sens du but et du sens",
+            "visionDesc8" : "Vivre dans une société juste et démocratique."
+        },
+        "services" : {
+            "servicesTitle" : "PRESTATIONS DE SERVICE",
+            "whatWeOffer" : "Ce que nous offrons",
+            "medicalInsurance" : "ASSURANCE MÉDICALE",
+            "wellness" : "BIEN-ÊTRE",
+            "socialChat" : "CHAT SOCIAL",
+            "sports" : "DES SPORTS",
+            "career" : "CARRIÈRE",
+            "caring" : "SOINS"
+        },
+        "pricingPage" : {
+            "pricing" : "PRIX",
+            "labelMsg" : "Choisissez un plan de paiement qui fonctionne pour vous",
+            "silver" : "argent",
+            "gold" : "Or",
+            "platinum" : "Platine",
+            "signup" : "S'inscrire"
+        },
+        "studentLogin" : {
+            "login" : "S'IDENTIFIER",
+            "userName" : "Nom d'utilisateur",
+            "password" : "Mot de passe",
+            "letsgo" : "Allons-y",
+            "noAccount" : "Vous n'avez pas de compte?",
+            "register" : "Inscrivez-vous ici",
+            "connectWith" : "ou se connecter avec"
+        },
+        "studentRegister" : {
+            "userName" : "Nom d'utilisateur",
+            "mobile" : "Mobile",
+            "email" : "Email",
+            "rollNumber" : "Numéro de rôle",
+            "institute" : "Institut",
+            "plan" : "Plan",
+            "register" : "registre",
+            "message" : "Vous avez déjà un compte ?",
+            "signhere" : "Signez ici"
+        }
+     }
+
+}
