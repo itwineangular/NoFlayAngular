@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { RouterModule,Routes } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from "@angular/common/http";
 import { HttpModule } from '@angular/http';
 import { Angular2TokenService } from 'angular2-token';
@@ -16,6 +16,7 @@ import { FilterPipeMembership } from "./adminmasters/businessentity/membership/m
 import { FilterPipePlanName } from "./adminmasters/businessentity/plan-name/plan-name-filter";
 import { OrderModule } from 'ngx-order-pipe';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { MyDatePickerModule } from 'mydatepicker';
 
 import {
   SocialLoginModule,
@@ -55,6 +56,7 @@ import { NgDatepickerModule } from 'ng2-datepicker';
 import { PlanNameComponent } from './adminmasters/businessentity/plan-name/plan-name.component';
 import { StatusComponent } from './adminmasters/status/status/status.component';
 import { StudentComponent } from './adminmasters/institutions/student/student.component';
+
 
 @NgModule({
   declarations: [
@@ -97,6 +99,7 @@ import { StudentComponent } from './adminmasters/institutions/student/student.co
     AppRoutingModule,
     RouterModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     HttpModule,
     TranslateModule.forRoot({
@@ -109,7 +112,8 @@ import { StudentComponent } from './adminmasters/institutions/student/student.co
     SocialLoginModule,
     NgDatepickerModule,
     OrderModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    MyDatePickerModule 
   ],
   providers: [Angular2TokenService, FileuploaderService,
     {

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './homepage/auth.guard';
 import { HomepageComponent } from './homepage/homepage.component';
 import { StudentloginComponent } from './studentlogin/studentlogin.component';
 import { InstituteloginComponent } from './institutelogin/institutelogin.component';
@@ -29,7 +30,8 @@ import { StudentComponent } from './adminmasters/institutions/student/student.co
 const appRoutes: Routes = [
   {
     path: '', children: [
-      { path: '', component: HomepageComponent },
+      { path:  '', redirectTo:  '/adminlogin', pathMatch:  'full' },
+      { path: 'adminlogin', component: HomepageComponent },
       { path: 'studentlogin', component: StudentloginComponent },
       { path: 'institutelogin', component: InstituteloginComponent },
       { path: 'businesslogin', component: BusinessloginComponent },
@@ -42,20 +44,20 @@ const appRoutes: Routes = [
   {
     path: '' ,children: [
       { path: '',component:AdminlayoutComponent,outlet:'Adminlayout'},
-      { path: 'dashboard', component: DashboardComponent },
-      { path: 'accesscontrol', component: AccesscontrolComponent },
-      { path: 'addaccesscontrol', component: AddaccesscontrolComponent },
-      { path: 'coursecategory', component: CourseCategoryComponent },
-      { path: 'courses', component: CoursesComponent },
-      { path: 'institute', component: EducationalInstituteComponent },
-      { path: 'businessCategory', component: BisunessCategoryComponent },
-      { path: 'attribute', component: AttributeComponent },
-      { path: 'businessEntity', component: BusinessEntityComponent },
-      { path: 'membership', component: MembershipComponent },
-      { path: 'planName', component: PlanNameComponent },
-      { path: 'plans', component: PlansComponent },
-      { path: 'status', component: StatusComponent },
-      { path: 'studentadd', component: StudentComponent },
+      { path: 'dashboard', component: DashboardComponent,canActivate: [AuthGuard] },
+      { path: 'accesscontrol', component: AccesscontrolComponent ,canActivate: [AuthGuard]},
+      { path: 'addaccesscontrol', component: AddaccesscontrolComponent ,canActivate: [AuthGuard]},
+      { path: 'coursecategory', component: CourseCategoryComponent,canActivate: [AuthGuard] },
+      { path: 'courses', component: CoursesComponent,canActivate: [AuthGuard] },
+      { path: 'institute', component: EducationalInstituteComponent,canActivate: [AuthGuard] },
+      { path: 'businessCategory', component: BisunessCategoryComponent ,canActivate: [AuthGuard]},
+      { path: 'attribute', component: AttributeComponent ,canActivate: [AuthGuard]},
+      { path: 'businessEntity', component: BusinessEntityComponent,canActivate: [AuthGuard] },
+      { path: 'membership', component: MembershipComponent,canActivate: [AuthGuard] },
+      { path: 'planName', component: PlanNameComponent ,canActivate: [AuthGuard]},
+      { path: 'plans', component: PlansComponent ,canActivate: [AuthGuard]},
+      { path: 'status', component: StatusComponent,canActivate: [AuthGuard] },
+      { path: 'studentadd', component: StudentComponent ,canActivate: [AuthGuard]},
     ]
   }
   /* ADMIN PART END*/
@@ -68,6 +70,7 @@ const appRoutes: Routes = [
     CommonModule,
     RouterModule.forRoot(appRoutes)
   ],
+  providers: [AuthGuard],
   declarations: []
 })
 export class AppRoutingModule { 

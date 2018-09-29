@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AdminMasterPage } from "./admin-object";
 import { AdminlayService } from "./adminlay.service";
 import { NgIf } from '../../../../node_modules/@angular/common';
+import { AuthService } from '../../homepage/auth.service';
 
 
 
@@ -32,14 +33,18 @@ export class AdminlayoutComponent implements OnInit {
   plans : string;
   status : string;
 
+  id: string;
+
   constructor(public router: Router,
     private translate: TranslateService,
-    private adminlayService: AdminlayService) {
+    private adminlayService: AdminlayService,
+    public authService: AuthService) {
     translate.setDefaultLang('en');
     this.englishMenuItems();
   }
   menus: any;
   ngOnInit() {
+    this.id = localStorage.getItem('token');
     // this.getSidebarMenuItemsFromJson();
 
     $("#collapse [data-toggle=collapse]:last").click()
@@ -66,7 +71,12 @@ export class AdminlayoutComponent implements OnInit {
 
   logout()
   {
-    window.location.replace('');
+    console.log("Logout");
+    this.authService.logout();
+    this.router.navigate(['/adminlogin']);
+    // this.authService.logout();
+    // this.router.navigate(['/adminlogin']);
+    // window.location.replace('');
   }
 
   // getSidebarMenuItemsFromJson() {

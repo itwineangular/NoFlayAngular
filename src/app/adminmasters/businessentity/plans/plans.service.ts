@@ -18,7 +18,7 @@ export class PlanService {
       "planName": data.planName,
       "planPrice": data.planPrice,
       "planMembership": data.planMembership,
-      "startDateTime": data.startDateTime
+      "startDateTime": data.startDateTime.formatted
 
       // "planName":"silver",
       // "planMembership":"annual",
@@ -41,14 +41,29 @@ export class PlanService {
   }
 
   searchPlan(data) {
-    let obj =
+    let obj;
+    if (data.startDateTime != null) 
     {
-      "planName": data.planName,
-      "planPrice": data.planPrice,
-      "planMembership": data.planMembership,
-      "startDateTime": data.startDateTime
-    };
-    console.log(obj);
+      console.log(data.startDateTime);
+       obj =
+      {
+        "planName": data.planName,
+        "planPrice": data.planPrice,
+        "planMembership": data.planMembership,
+        "startDateTime": data.startDateTime.formatted
+      };
+    }
+    else
+     {
+      console.log(data.startDateTime);
+       obj =
+      {
+        "planName": data.planName,
+        "planPrice": data.planPrice,
+        "planMembership": data.planMembership
+      };
+    }
+console.log(obj);
     let headers = new Headers({
       'Content-Type': 'application/json'
     });
@@ -56,7 +71,7 @@ export class PlanService {
     headers.append('Access-Control-Allow-Headers', 'Content-Type');
     headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
     let options = { headers: headers };
-    return this.http.post(this.url+'/plans/searchList', obj, options).pipe(map(res => res.json()));
+    return this.http.post(this.url + '/plans/searchList', obj, options).pipe(map(res => res.json()));
   }
 
   getPlan() {
@@ -107,7 +122,7 @@ export class PlanService {
     headers.append('Access-Control-Allow-Headers', 'Content-Type');
     headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
     let options = { headers: headers };
-    return this.http.get(this.url+'/membership/list', options).pipe(map(res => res.json()));
+    return this.http.get(this.url + '/membership/list', options).pipe(map(res => res.json()));
   }
 
   getPlanName() {
@@ -116,7 +131,7 @@ export class PlanService {
     headers.append('Access-Control-Allow-Headers', 'Content-Type');
     headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
     let options = { headers: headers };
-    return this.http.get(this.url+'/plan/list', options).pipe(map(res => res.json()));
+    return this.http.get(this.url + '/plan/list', options).pipe(map(res => res.json()));
   }
 
 }

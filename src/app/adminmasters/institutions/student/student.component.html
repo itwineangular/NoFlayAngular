@@ -6,7 +6,7 @@
     </div>
     <div class="col-md-12">
         <div class="rcorners2">
-            <form class="form-horizontal" #studentForm="ngForm" (ngSubmit)="searchStudent(studentForm)">
+            <form class="form-horizontal" #studentSearchForm="ngForm" (ngSubmit)="searchStudent(studentSearchForm)">
                 <div class="col-md-3">
                     <label for="institutionName">{{'adminConfigarationPage.studentPage.institution'
                         | translate}}</label>
@@ -22,24 +22,39 @@
                 <div class="col-md-3">
                     <label for="categoryCode">{{'adminConfigarationPage.studentPage.courseCategory'
                         | translate}}</label>
-                    <select class="form-control" type="text" name="courseCategory" #courseCategory="ngModel"
+                        <select class="form-control" type="text" name="courseCategory" #courseCategory="ngModel"
+                                    [(ngModel)]="student.courseCategory" (change)="onCourseCategorySelect($event.target.value)"
+                                    required>
+                                    <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.courseCategory'
+                                        | translate}}</option>
+                                    <option *ngFor="let item of courseCategoryList" value={{item.categoryId}}>{{item.categoryName}}
+                                    </option>
+                                </select>
+                    <!-- <select class="form-control" type="text" name="courseCategory" #courseCategory="ngModel"
                         [(ngModel)]="student.courseCategory" required>
                         <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.courseCategory'
                             | translate}}</option>
                         <option *ngFor="let item of courseCategoryList" value={{item.categoryCode}}>{{item.categoryCode}}
                         </option>
-                    </select>
+                    </select> -->
                 </div>
                 <div class="col-md-3">
                     <label for="courseName">{{'adminConfigarationPage.studentPage.courses'
                         | translate}}</label>
-                    <select class="form-control" type="text" name="course" #course="ngModel" [(ngModel)]="student.course"
+                        <select class="form-control" type="text" name="course" #course="ngModel" [(ngModel)]="student.course"
+                                    (change)="onCourseSelect($event.target.value)" required>
+                                    <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.courses'
+                                        | translate}}</option>
+                                    <option *ngFor="let item of courseList" value={{item.courseName}}>{{item.courseName}}
+                                    </option>
+                                </select>
+                    <!-- <select class="form-control" type="text" name="course" #course="ngModel" [(ngModel)]="student.course"
                         required>
                         <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.courses'
                             | translate}}</option>
                         <option *ngFor="let item of courseList" value={{item.courseName}}>{{item.courseName}}
                         </option>
-                    </select>
+                    </select> -->
                 </div>
                 <div class="col-md-3">
                     <label for="status">{{'adminConfigarationPage.studentPage.status'

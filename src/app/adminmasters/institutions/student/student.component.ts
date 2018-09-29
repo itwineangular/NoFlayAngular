@@ -540,8 +540,15 @@ onSelectPlan(i) {
 }
 
 searchStudent(studentParameters) {
-  // console.log(studentParameters.value);
-  this.studentService.searchStudent(studentParameters.value)
+   console.log(this.selectedCourse);
+  this.student = new Student();
+  this.student.institutionName=this.selectedInstitute;
+  this.student.courseCategory=this.selectedCategory;
+  this.student.course=this.selectedCourse;
+  this.student.status=studentParameters.value.status;
+ // this.student.stdEmail="david@gmail.com";
+
+  this.studentService.searchStudent(this.student)
     .subscribe(
       (data) => {
         this.studentList = data;
@@ -556,15 +563,17 @@ searchStudent(studentParameters) {
 
 searchClear() {
   this.student = new Student();
-  this.studentService.searchStudent(this.student)
-    .subscribe(
-      (data) => {
-        this.studentList = data;
-      },
-      (error) => {
-        console.log(error);
-        alert("Try again");
-      }
-    );
+  this.getStudent();
+  // this.studentService.searchStudent(this.student)
+  //   .subscribe(
+  //     (data) => {
+  //       console.log(data);
+  //       this.studentList = data;
+  //     },
+  //     (error) => {
+  //       console.log(error);
+  //       alert("Try again");
+  //     }
+  //   );
 }
 }

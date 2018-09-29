@@ -6,6 +6,7 @@ import { DatepickerOptions, NgDatepickerModule, NgDatepickerComponent } from 'ng
 import * as frLocale from 'date-fns/locale/fr';
 import * as enLocale from 'date-fns/locale/en';
 import Swal from 'sweetalert2';
+import {IMyDpOptions} from 'mydatepicker';
 // import { IMyDpOptions } from 'mydatepicker';
 // import {MatDatepickerModule} from '@angular/material/datepicker';
 
@@ -40,6 +41,17 @@ export class PlansComponent implements OnInit {
     // minDate:new Date(Date.now())
 
   };
+  public myDatePickerOptions: IMyDpOptions = {
+    // other options...
+    dateFormat: 'yyyy-mm-dd',
+    disableUntil: {year: this.d.getFullYear(), month: this.d.getMonth()+1, day: this.d.getDate()}
+};
+
+public myDatePickerOptions2: IMyDpOptions = {
+  // other options...
+  dateFormat: 'yyyy-mm-dd',
+};
+
   enableaddpopup: boolean;
 
   // public myDatePickerOptions: IMyDpOptions = {
@@ -185,15 +197,13 @@ export class PlansComponent implements OnInit {
   }
 
   searchPlan(planParameters) {
-   // console.log(planParameters.value);
     this.service.searchPlan(planParameters.value)
         .subscribe(
       (data) => {
         this.planList = data;
-        console.log(this.planList);
+        console.log(data);
       },
       (error) => {
-        console.log(error);
         alert("Try again");
       }
     );
@@ -201,16 +211,17 @@ export class PlansComponent implements OnInit {
 
   searchClear() {
     this.plan = new PlansObject( );
-    this.service.searchPlan(this.plan)
-      .subscribe(
-        (data) => {
-          this.planList = data;
-        },
-        (error) => {
-          console.log( error);
-          alert("Try again");
-        }
-      );
+    this.getPlan();
+    // this.service.searchPlan(this.plan)
+    //   .subscribe(
+    //     (data) => {
+    //       this.planList = data;
+    //     },
+    //     (error) => {
+    //       console.log( error);
+    //       alert("Try again");
+    //     }
+    //   );
   }
   pageChange(pagenumber){
   

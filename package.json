@@ -32,6 +32,7 @@
     "bootstrap": "^3.3.7",
     "core-js": "^2.5.4",
     "jquery": "^3.3.1",
+    "mydatepicker": "^2.6.6",
     "ng2-datepicker": "^3.1.1",
     "ngx-order-pipe": "^2.0.1",
     "ngx-pagination": "^3.2.0",

@@ -208,9 +208,10 @@ searchStudent(studentsData) {
   {
     "institutionName": studentsData.institutionName,
     "courseCategory": studentsData.courseCategory,
-    "courseName": studentsData.courseName,
+    "course": studentsData.course,
     "status": studentsData.status
   };
+  console.log(obj);
   let headers = new Headers({
     'Content-Type': 'application/json'
   });

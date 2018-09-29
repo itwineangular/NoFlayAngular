@@ -23,18 +23,19 @@
                 </div>
                 <div class="col-md-3">
                     <label for="planMembership">{{
-                            'adminConfigarationPage.plans.planMembership' | translate }}</label>
+                        'adminConfigarationPage.plans.planMembership' | translate }}</label>
                     <select class="form-control" name="planMembership" #planMembership="ngModel" [(ngModel)]="plan.planMembership">
                         <option *ngFor="let item of membershipList" value={{item.memberName}}> {{item.memberName}}
                         </option>
                     </select>
                 </div>
-                 <div class="col-md-3">
-                        <label class="control-label col-sm-2" for="startDate">StartDate</label>
-                        <input class="form-control" type="date" placeholder="{{'adminConfigarationPage.plans.startDate' | translate}}" name="startDate"
-                            #startDateTimeControl="ngModel" [(ngModel)]="plan.startDate" />
-                        <!-- <my-date-picker [options]="options" name="startDateTime" #startDateTime="ngModel" [(ngModel)]="plan.startDateTime" aria-required="true"></my-date-picker> -->
-                <!-- <ng-datepicker [options]="options" name="startDateTime" #startDateTime="ngModel" [(ngModel)]="plan.startDateTime" aria-required="true"></ng-datepicker> -->
+                <div class="col-md-3">
+                    <label class="control-label col-sm-2" for="startDate">StartDate</label>
+                    <!-- <input class="form-control" type="date" placeholder="{{'adminConfigarationPage.plans.startDate' | translate}}" name="startDate"
+                            #startDateTimeControl="ngModel" [(ngModel)]="plan.startDate" /> -->
+                    <my-date-picker [options]="myDatePickerOptions2" name="startDateTime" #startDateTime="ngModel"
+                        [(ngModel)]="plan.startDateTime"></my-date-picker>
+
                 </div>
                 <div class="col-md-12">
                     <button class="btn btn-info btn-outline pull-right cssButtonPadding" data-toggle="modal"
@@ -45,6 +46,7 @@
                     <button class="btn btn-primary btn-outline pull-right cssButtonPadding" type="submit">{{'adminConfigarationPage.commonFields.search'
                         | translate}}</button>
                 </div>
+                <div class="clearfix"></div>
             </form>
         </div>
         <!-- <div class="row"> -->
@@ -204,6 +206,18 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="control-label col-sm-2" for="full name">{{
+                                        'adminConfigarationPage.plans.startDate' | translate }}
+                                        <span class="reqMark">*</span>
+                                    </label>
+                                    <div class="col-sm-3">
+                                        <!-- <ng-datepicker [options]="options" name="startDateTime" #startDateTime="ngModel"
+                                                [(ngModel)]="plan.startDateTime" aria-required="true"></ng-datepicker> -->
+                                        <my-date-picker [options]="myDatePickerOptions" name="startDateTime"
+                                            #startDateTime="ngModel" [(ngModel)]="plan.startDateTime" required></my-date-picker>
+                                    </div>
+                                </div>
+                                <!-- <div class="form-group">
                                     <label for="Date">{{'adminConfigarationPage.plans.startDate'
                                         | translate}}
                                         <span class="reqMark">*</span>
@@ -212,14 +226,14 @@
                                         <ng-datepicker [options]="options" name="startDateTime" #startDateTime="ngModel"
                                             [(ngModel)]="plan.startDateTime" aria-required="true"></ng-datepicker>
                                         <!-- <div class="validation-error" *ngIf="startDateTime.invalid && startDateTime.touched">{{'adminConfigarationPage.commonFields.priceFieldRequired' | translate}}</div> -->
-                                        <!-- <input type="date" id="dateofbirth" name="startDateTime" #startDateTime="ngModel" [(ngModel)]="plan.startDateTime"> -->
-                                        <!-- <input class="form-control" type="text" placeholder="{{ 'adminConfigarationPage.commonFields.enterDate' | translate }}" name="startDate"
+                                <!-- <input type="date" id="dateofbirth" name="startDateTime" #startDateTime="ngModel" [(ngModel)]="plan.startDateTime"> -->
+                                <!-- <input class="form-control" type="text" placeholder="{{ 'adminConfigarationPage.commonFields.enterDate' | translate }}" name="startDate"
                                         #startDateControl="ngModel" [(ngModel)]="plan.startDate" required />
                                         <div class="validation-error" *ngIf="startDateControl.invalid && startDateControl.touched">{{'adminConfigarationPage.commonFields.datetFieldRequired' | translate}}</div> -->
-                                        <!-- <my-date-picker [options]="options" name="startDateTime" #startDateTime="ngModel" [(ngModel)]="plan.startDateTime" aria-required="true"></my-date-picker> -->
-                                    </div>
+                                <!-- <my-date-picker [options]="options" name="startDateTime" #startDateTime="ngModel" [(ngModel)]="plan.startDateTime" aria-required="true"></my-date-picker> -->
+                                <!-- </div> -->
 
-                                </div>
+                                <!-- </div> -->
                             </div>
                         </div>
                         <div class="modal-footer">
