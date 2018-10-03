@@ -32,6 +32,7 @@ export class StudentComponent implements OnInit {
   pagenumber : string ;
   p: number = 1;
   itemsPerPage2: number = 1;
+  checkedval: boolean;
 
   countries = [];
   statesLocal = [];
@@ -517,27 +518,73 @@ getPlanName() {
   });
 }
 
-// check box
-planname: any;
-errormsg: any;
-onSelectPlan(i) {
-  this.planname = $('#planName').val();
-  if (this.planname == null) {
+  // check box
+  planname: any;
+  errormsg: any;
+
+  onSelectPlan(i, checked) {
+    this.planname = $('#planName').val();
+    if (this.planname == null) {
       this.errormsg = "Please Select Plan Name First..!";
       $('#mycheck-' + i).prop("checked", false);
       $('#planName').focus();
-  } else {
+    } else {
       this.errormsg = "";
       if ($('#mycheck-' + i).prop("checked") == true) {
-          i--;
-          this.studentBulkList[i].plan = this.planname;
+        i--;
+        this.studentBulkList[i].plan = this.planname;
+        this.studentBulkList[i].institutionName = this.selectedInstitute;
+        this.studentBulkList[i].courseCategory = this.selectedCategory;
+        this.studentBulkList[i].course = this.selectedCourse;
       } else if ($('#mycheck-' + i).prop("checked") == false) {
-          i--;
-          this.studentBulkList[i].plan = '';
+        i--;
+        this.studentBulkList[i].plan = '';
+        this.studentBulkList[i].institutionName = '';
+        this.studentBulkList[i].courseCategory = '';
+        this.studentBulkList[i].course = '';
       }
-  }
+    }
 
-}
+  }
+  
+  toggleSelect(checked) {
+    this.planname = $('#planName').val();
+    if (this.planname == null) {
+      this.errormsg = "Please Select Plan Name First..!";
+      $('#mycheck-' + checked).prop("checked", false);
+      $('#planName').focus();
+    } else {
+      if (checked) {
+        this.checkedval = true;
+        this.studentBulkList.forEach(element => {
+          element.plan = this.planname;
+        });
+        this.studentBulkList.forEach(element => {
+          element.institutionName = this.selectedInstitute;
+        });
+        this.studentBulkList.forEach(element => {
+          element.courseCategory = this.selectedCategory;
+        });
+        this.studentBulkList.forEach(element => {
+          element.course = this.selectedCourse;
+        });
+      } else {
+        this.checkedval = null;
+        this.studentBulkList.forEach(element => {
+          element.plan = "";
+        });
+        this.studentBulkList.forEach(element => {
+          element.institutionName = "";
+        });
+        this.studentBulkList.forEach(element => {
+          element.courseCategory = "";
+        });
+        this.studentBulkList.forEach(element => {
+          element.course = "";
+        });
+      }
+    }
+  }
 
 searchStudent(studentParameters) {
    console.log(this.selectedCourse);

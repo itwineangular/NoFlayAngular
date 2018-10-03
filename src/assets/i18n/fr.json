@@ -76,7 +76,11 @@
             "courses": "Nom du cours",
             "yearOfJoining": "Année académique",
             "active": "actif",
-            "inactive": "Inactif"
+            "inactive": "Inactif",
+            "selectPlan" : "Sélectionnez le plan",
+            "selectinstitution": "Sélectionner une institution",
+            "selectCourseCategory": "Sélectionnez une catégorie de cours",
+            "selectCourse": "Sélectionner un cours"
         },
       
         "commonFields": {

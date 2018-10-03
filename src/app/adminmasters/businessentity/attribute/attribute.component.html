@@ -25,7 +25,11 @@
                 </div>
                 <div class="col-md-3">
                     <label for="businessCatCode">{{'adminConfigarationPage.attributes.businessCategoryName' | translate }}</label>
-                    <select class="form-control" name="businessCatCode" #businessCatCode="ngModel" [(ngModel)]="attribute.businessCatCode">
+                    <select class="form-control" name="businessCatCode" #businessCatCode="ngModel" [(ngModel)]="attribute.businessCatCode"
+                    (change)="onBusinessCategoryNameSelect($event.target.value)"
+                    required>
+                    <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.attributes.businessCategoryName'
+                            | translate}}</option>
                         <option *ngFor="let item of businessCategoryList" value={{item.businessCategoryName}}>{{item.businessCategoryName}} </option>
                     </select>
                 </div>

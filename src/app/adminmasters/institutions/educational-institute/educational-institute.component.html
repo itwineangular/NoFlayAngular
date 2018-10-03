@@ -113,11 +113,12 @@
                     <div class="modal-body">
                         <div class="container">
                             <div class="form-group">
-                                <label class="control-label col-sm-2" for="Name">{{'adminConfigarationPage.commonFields.primaryDetails'
-                                    | translate}}</label>
+                               <h4><label for="Name">{{'adminConfigarationPage.commonFields.primaryDetails'
+                                    | translate}}</label></h4>
                             </div>
                             <div class="form-group">
                                 <div class="col-md-3">
+                                        <label for="instituteName">{{'adminConfigarationPage.educationalInstitutesPage.instituteName' | translate}}</label>
                                     <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.instituteName' | translate}}"
                                         name="instName" #instNameControl="ngModel" [(ngModel)]="institute.instName"
                                         required />
@@ -126,6 +127,7 @@
 
                                 </div>
                                 <div class="col-md-3">
+                                        <label for="shortName">{{'adminConfigarationPage.businessEntity.shortName' | translate}}</label>
                                     <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.businessEntity.shortName' | translate}}"
                                         name="instShortName" #instShortNameControl="ngModel" [(ngModel)]="institute.instShortName"
                                         required />
@@ -134,6 +136,7 @@
 
                                 </div>
                                 <div class="col-md-3">
+                                        <label for="registrationNumber">{{'adminConfigarationPage.businessEntity.registrationNumber' | translate}}</label>
                                     <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.businessEntity.registrationNumber' | translate}}"
                                         name="instRegistrationCode" #instRegistrationCodeControl="ngModel" [(ngModel)]="institute.instRegistrationCode"
                                         required />
@@ -141,6 +144,7 @@
                                         | translate}}</div>
                                 </div>
                                 <div class="col-md-3">
+                                        <label for="branch">{{'adminConfigarationPage.educationalInstitutesPage.branch' | translate}}</label>
                                     <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.branch' | translate}}"
                                         name="instBranch" #instBranchControl="ngModel" [(ngModel)]="institute.instBranch"
                                         required />
@@ -191,10 +195,11 @@
 
                                     <div class="tab-content">
                                         <div class="tab-pane active" role="tabpanel" id="step1">
-                                            <h3>{{ 'adminConfigarationPage.commonFields.contactDetails' | translate }}</h3>
+                                            <h4><label for="contactDetails"></label>{{ 'adminConfigarationPage.commonFields.contactDetails' | translate }}</h4>
                                             <form #contactDetails="ngForm" novalidate>
                                                 <div class="form-group">
                                                     <div class="col-md-3">
+                                                            <label for="contactPerson">{{'adminConfigarationPage.educationalInstitutesPage.contactPerson' | translate}}</label>
                                                         <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.contactPerson' | translate}}"
                                                             name="instContactPerson" #instContactPersonControl="ngModel"
                                                             [(ngModel)]="institute.instContactPerson" required />
@@ -202,6 +207,7 @@
                                                             | translate}}</div>
                                                     </div>
                                                     <div class="col-md-3">
+                                                            <label for="designation">{{'adminConfigarationPage.educationalInstitutesPage.designation' | translate}}</label>
                                                         <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.designation' | translate}}"
                                                             name="instDesignation" #instDesignationControl="ngModel"
                                                             [(ngModel)]="institute.instDesignation" required />
@@ -209,6 +215,7 @@
                                                             | translate}}</div>
                                                     </div>
                                                     <div class="col-md-3">
+                                                            <label for="address1">{{'adminConfigarationPage.educationalInstitutesPage.address1' | translate}}</label>
                                                         <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.address1' | translate}}"
                                                             name="instAddressone" #instAddressoneControl="ngModel"
                                                             [(ngModel)]="institute.instAddressone" required />
@@ -216,6 +223,7 @@
                                                             | translate}}</div>
                                                     </div>
                                                     <div class="col-md-3">
+                                                            <label for="address2">{{'adminConfigarationPage.educationalInstitutesPage.address2' | translate}}</label>
                                                         <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.address2' | translate}}"
                                                             name="instAddresstwo" #instAddresstwoControl="ngModel"
                                                             [(ngModel)]="institute.instAddresstwo" required />
@@ -225,6 +233,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="col-md-3">
+                                                            <label for="country">{{'adminConfigarationPage.educationalInstitutesPage.country' | translate}}</label>
                                                         <select class="form-control" name="instCountryname"
                                                             #instCountrynameControl="ngModel" [(ngModel)]="institute.instCountryname"
                                                             (change)="onSelect($event.target.value)" required>
@@ -238,6 +247,7 @@
                                                             | translate}}</div>
                                                     </div>
                                                     <div class="col-md-3">
+                                                            <label for="state">{{'adminConfigarationPage.educationalInstitutesPage.state' | translate}}</label>
                                                         <select class="form-control" name="institute" #instituteControl="ngModel"
                                                             [(ngModel)]="institute.instState" (change)="onStateSelect($event.target.value)"
                                                             required>
@@ -253,6 +263,7 @@
                                                             | translate}}</div>
                                                     </div>
                                                     <div class="col-md-3">
+                                                            <label for="city">{{'adminConfigarationPage.educationalInstitutesPage.city' | translate}}</label>
                                                         <select class="form-control" name="instCity" #instCityControl="ngModel"
                                                             [(ngModel)]="institute.instCity" required>
                                                             <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.educationalInstitutesPage.city'
@@ -265,6 +276,7 @@
                                                             | translate}}</div>
                                                     </div>
                                                     <div class="col-md-3">
+                                                            <label for="pinCode">{{'adminConfigarationPage.educationalInstitutesPage.pinCode' | translate}}</label>
                                                         <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.pinCode' | translate}}"
                                                             name="instPincode" #instPincodeControl="ngModel"
                                                             [(ngModel)]="institute.instPincode" required />
@@ -274,6 +286,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="col-md-3">
+                                                            <label for="email">{{'adminConfigarationPage.educationalInstitutesPage.email' | translate}}</label>
                                                         <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.email' | translate}}"
                                                             name="instEmail" #instEmailControl="ngModel" [(ngModel)]="institute.instEmail"
                                                             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$" required />
@@ -289,6 +302,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
+                                                            <label for="mobile">{{'adminConfigarationPage.educationalInstitutesPage.mobile' | translate}}</label>
                                                         <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.mobile' | translate}}"
                                                             name="instMobile" #instMobileControl="ngModel" [(ngModel)]="institute.instMobile"
                                                             pattern="\d*" minlength=10 maxlength=15 required />
@@ -308,10 +322,12 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
+                                                            <label for="phone">{{'adminConfigarationPage.educationalInstitutesPage.phone' | translate}}</label>
                                                         <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.phone' | translate}}"
                                                             name="instPhone" #instPhone="ngModel" [(ngModel)]="institute.instPhone" />
                                                     </div>
                                                     <div class="col-md-3">
+                                                            <label for="fax">{{'adminConfigarationPage.educationalInstitutesPage.fax' | translate}}</label>
                                                         <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.fax' | translate}}"
                                                             name="instFax" #instFax="ngModel" [(ngModel)]="institute.instFax" />
                                                     </div>
@@ -328,6 +344,7 @@
                                             <form #bankDetails="ngForm">
                                                 <div class="form-group">
                                                     <div class="col-md-3">
+                                                            <label for="accountHolderName">{{'adminConfigarationPage.educationalInstitutesPage.accountHolderName' | translate}}</label>
                                                         <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.accountHolderName' | translate}}"
                                                             name="instAccountHolderName" #instAccountHolderNameControl="ngModel"
                                                             [(ngModel)]="institute.instAccountHolderName" required />
@@ -335,6 +352,7 @@
                                                             | translate}}</div>
                                                     </div>
                                                     <div class="col-md-3">
+                                                            <label for="accountNumber">{{'adminConfigarationPage.educationalInstitutesPage.accountNumber' | translate}}</label>
                                                         <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.accountNumber' | translate}}"
                                                             name="instAccountNumber" #instAccountNumberControl="ngModel"
                                                             [(ngModel)]="institute.instAccountNumber" required />
@@ -342,6 +360,7 @@
                                                             | translate}}</div>
                                                     </div>
                                                     <div class="col-md-3">
+                                                            <label for="ifscCode">{{'adminConfigarationPage.educationalInstitutesPage.ifscCode' | translate}}</label>
                                                         <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.ifscCode' | translate}}"
                                                             name="instIfscCode" #instIfscCodeControl="ngModel"
                                                             [(ngModel)]="institute.instIfscCode" required />
@@ -349,6 +368,7 @@
                                                             | translate}}</div>
                                                     </div>
                                                     <div class="col-md-3">
+                                                            <label for="accountType">{{'adminConfigarationPage.educationalInstitutesPage.accountType' | translate}}</label>
                                                         <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.accountType' | translate}}"
                                                             name="instAccountType" #instAccountTypeControl="ngModel"
                                                             [(ngModel)]="institute.instAccountType" required />
@@ -358,6 +378,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="col-md-3">
+                                                            <label for="bankName">{{'adminConfigarationPage.educationalInstitutesPage.bankName' | translate}}</label>
                                                         <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.bankName' | translate}}"
                                                             name="instBankName" #instBankNameControl="ngModel"
                                                             [(ngModel)]="institute.instBankName" required />
@@ -365,6 +386,7 @@
                                                             | translate}}</div>
                                                     </div>
                                                     <div class="col-md-3">
+                                                            <label for="branch">{{'adminConfigarationPage.educationalInstitutesPage.branch' | translate}}</label>
                                                         <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.branch' | translate}}"
                                                             name="instBankBranch" #instBankBranchControl="ngModel"
                                                             [(ngModel)]="institute.instBankBranch" required />

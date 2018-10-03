@@ -10,25 +10,35 @@
     <div class="col-md-12">
         <div class="rcorners2">
             <form class="form-horizontal" #planForm="ngForm" (ngSubmit)="searchPlan(planForm)">
+                
                 <div class="col-md-3">
-                    <label for="planName">{{'adminConfigarationPage.plans.planName' | translate}}</label>
-                    <select class="form-control" name="planName" #planName="ngModel" [(ngModel)]="plan.planName">
-                        <option *ngFor="let item of planNameList" value={{item.planName}}> {{item.planName}} </option>
-                    </select>
-                </div>
+                        <label for="planName">{{'adminConfigarationPage.plans.planName' | translate}}</label>
+                        <select class="form-control" name="planName" #planName="ngModel" [(ngModel)]="plan.planName"
+                         (change)="onPlanNameSelect($event.target.value)"
+                        required>
+                        <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.plans.planName'
+                                | translate}}</option>
+                            <option *ngFor="let item of planNameList" value={{item.planName}}> {{item.planName}} </option>
+                        </select>
+                    </div>
                 <div class="col-md-3">
                     <label for="planPrice">{{'adminConfigarationPage.plans.planPrice' | translate}}</label>
                     <input class="form-control" type="number" placeholder="{{'adminConfigarationPage.plans.planPrice' | translate}}"
                         name="planPrice" #planPriceControl="ngModel" [(ngModel)]="plan.planPrice" />
                 </div>
+                
                 <div class="col-md-3">
-                    <label for="planMembership">{{
-                        'adminConfigarationPage.plans.planMembership' | translate }}</label>
-                    <select class="form-control" name="planMembership" #planMembership="ngModel" [(ngModel)]="plan.planMembership">
-                        <option *ngFor="let item of membershipList" value={{item.memberName}}> {{item.memberName}}
-                        </option>
-                    </select>
-                </div>
+                        <label for="planMembership">{{
+                            'adminConfigarationPage.plans.planMembership' | translate }}</label>
+                        <select class="form-control" name="planMembership" #planMembership="ngModel" [(ngModel)]="plan.planMembership"
+                         (change)="onPlanMembershipSelect($event.target.value)"
+                        required>
+                        <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.plans.planMembership'
+                                | translate}}</option>
+                            <option *ngFor="let item of membershipList" value={{item.memberName}}> {{item.memberName}}
+                            </option>
+                        </select>
+                    </div>
                 <div class="col-md-3">
                     <label class="control-label col-sm-2" for="startDate">StartDate</label>
                     <!-- <input class="form-control" type="date" placeholder="{{'adminConfigarationPage.plans.startDate' | translate}}" name="startDate"

@@ -77,7 +77,11 @@
             "planName":"Plan Name"  ,
             "country" : "Country",
             "state" : "State",
-            "city" : "City"
+            "city" : "City",
+            "selectPlan" : "Select Plan",
+            "selectinstitution": "Select Institution",
+            "selectCourseCategory": "Select CourseCategory",
+            "selectCourse": "Select Course"
            
 
         },

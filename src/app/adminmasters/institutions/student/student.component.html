@@ -175,6 +175,7 @@
 
                         <div class="form-group">
                             <div class="col-md-3">
+                                    <label for="studentName">{{'adminConfigarationPage.studentPage.studentName' | translate}}</label>
                                 <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentPage.studentName' | translate}}"
                                     name="stdName" #stdName="ngModel" [(ngModel)]="student.stdName" required />
                                 <div class="validation-error" *ngIf="stdName.invalid && stdName.touched">{{'adminConfigarationPage.commonFields.nameFieldRequired'
@@ -183,6 +184,7 @@
 
                             </div>
                             <div class="col-md-3">
+                                    <label for="gender">{{'adminConfigarationPage.studentPage.gender' | translate}}</label>
                                 <select class="form-control" class="form-control" type="text" name="gender" #gender="ngModel"
                                     [(ngModel)]="student.gender" required>
                                     <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.gender'
@@ -197,6 +199,7 @@
 
 
                             <div class="col-md-3">
+                                    <label for="address1">{{'adminConfigarationPage.studentPage.address1' | translate}}</label>
                                 <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentPage.address1' | translate}}"
                                     name="addressOne" #addressOne="ngModel" [(ngModel)]="student.addressOne" required />
                                 <div class="validation-error" *ngIf="addressOne.invalid && addressOne.touched">{{'adminConfigarationPage.commonFields.Address1Required'
@@ -204,6 +207,7 @@
 
                             </div>
                             <div class="col-md-3">
+                                    <label for="address2">{{'adminConfigarationPage.studentPage.address2' | translate}}</label>
                                 <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentPage.address2' | translate}}"
                                     name="addressTwo" #addressTwo="ngModel" [(ngModel)]="student.addressTwo" required />
                                 <div class="validation-error" *ngIf="addressTwo.invalid && addressTwo.touched">{{'adminConfigarationPage.commonFields.Address2Required'
@@ -214,6 +218,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-3">
+                                    <label for="country">{{'adminConfigarationPage.studentPage.country' | translate}}</label>
                                 <select class="form-control" name="countryName" #countryName="ngModel" [(ngModel)]="student.countryName"
                                     (change)="onSelect($event.target.value)" required>
                                     <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.country'
@@ -227,6 +232,7 @@
 
                             </div>
                             <div class="col-md-3">
+                                    <label for="state">{{'adminConfigarationPage.studentPage.state' | translate}}</label>
                                 <select class="form-control" name="state" #state="ngModel" [(ngModel)]="student.state"
                                     (change)="onStateSelect($event.target.value)" required>
                                     <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.state'
@@ -241,6 +247,7 @@
 
                             </div>
                             <div class="col-md-3">
+                                    <label for="city">{{'adminConfigarationPage.studentPage.city' | translate}}</label>
                                 <select class="form-control" name="city" #city="ngModel" [(ngModel)]="student.city"
                                     required>
                                     <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.city'
@@ -255,6 +262,7 @@
 
                             </div>
                             <div class="col-md-3">
+                                    <label for="pinCode">{{'adminConfigarationPage.studentPage.pinCode' | translate}}</label>
                                 <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentPage.pinCode' | translate}}"
                                     name="zipcode" #zipcode="ngModel" [(ngModel)]="student.zipcode" required />
                                 <div class="validation-error" *ngIf="zipcode.invalid && zipcode.touched">{{'adminConfigarationPage.commonFields.PincodeRequired'
@@ -268,6 +276,7 @@
 
 
                             <div class="col-md-3">
+                                    <label for="mobile">{{'adminConfigarationPage.studentPage.mobile' | translate}}</label>
                                 <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentPage.mobile' | translate}}"
                                     name="stdPhone" #stdPhone="ngModel" [(ngModel)]="student.stdPhone" pattern="\d*"
                                     minlength=10 maxlength=15 required />
@@ -285,6 +294,7 @@
                             </div>
 
                             <div class="col-sm-3">
+                                    <label for="institution">{{'adminConfigarationPage.studentPage.institution' | translate}}</label>
                                 <select class="form-control" name="institutionName" #institutionName="ngModel"
                                     [(ngModel)]="student.institutionName" (change)="onInstituteSelect($event.target.value)"
                                     required>
@@ -298,6 +308,7 @@
 
                             </div>
                             <div class="col-sm-3">
+                                    <label for="courseCategory">{{'adminConfigarationPage.studentPage.courseCategory' | translate}}</label>
                                 <select class="form-control" type="text" name="courseCategory" #courseCategory="ngModel"
                                     [(ngModel)]="student.courseCategory" (change)="onCourseCategorySelect($event.target.value)"
                                     required>
@@ -311,6 +322,7 @@
 
                             </div>
                             <div class="col-sm-3">
+                                    <label for="courses">{{'adminConfigarationPage.studentPage.courses' | translate}}</label>
                                 <select class="form-control" type="text" name="course" #course="ngModel" [(ngModel)]="student.course"
                                     (change)="onCourseSelect($event.target.value)" required>
                                     <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.courses'
@@ -329,7 +341,7 @@
 
 
                             <div class="col-sm-3">
-
+                                    <label for="yearofjoining">{{'adminConfigarationPage.studentPage.yearofjoining' | translate}}</label>
                                 <select class="form-control" class="form-control" type="text" name="yearofjoining"
                                     #yearofjoining="ngModel" [(ngModel)]="student.yearofjoining" required>
                                     <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.yearofjoining'
@@ -343,6 +355,7 @@
 
                             </div>
                             <div class="col-md-3">
+                                    <label for="email">{{'adminConfigarationPage.studentPage.email' | translate}}</label>
                                 <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentPage.email' | translate}}"
                                     name="stdEmail" #stdEmail="ngModel" [(ngModel)]="student.stdEmail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$"
                                     required />
@@ -358,6 +371,7 @@
                             </div>
 
                             <div class="col-md-3">
+                                    <label for="rollNumber">{{'adminConfigarationPage.studentPage.rollNumber' | translate}}</label>
                                 <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentPage.rollNumber' | translate}}"
                                     name="stdAdmissionNumber" #stdAdmissionNumber="ngModel" [(ngModel)]="student.stdAdmissionNumber"
                                     required />
@@ -368,6 +382,7 @@
                             </div>
 
                             <div class="col-sm-3">
+                                    <label for="status">{{'adminConfigarationPage.studentPage.status' | translate}}</label>
                                 <select class="form-control" name="status" #status="ngModel" [(ngModel)]="student.status"
                                     required>
                                     <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.status'
@@ -385,6 +400,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-3">
+                                    <label for="plan">{{'adminConfigarationPage.studentPage.plan' | translate}}</label>
                                 <select class="form-control" type="text" name="plan" #plan="ngModel" [(ngModel)]="student.plan"
                                     required>
                                     <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.plan'
@@ -394,6 +410,7 @@
                                 </select>
                                 <div class="validation-error" *ngIf="plan.invalid && plan.touched">{{'adminConfigarationPage.commonFields.planMessage'
                                     | translate}}</div>
+
 
                             </div>
                             <div class="clearfix"></div>
@@ -483,17 +500,59 @@
                             translate}}</h4>
                     </div>
                     <div class="modal-body">
-                        <h4>Select Plans </h4>
+                        <div class="form-group">
+                        <!-- <h4>Select Plans </h4> -->
                         <div class="col-md-2">
+                                <label>{{'adminConfigarationPage.studentPage.selectPlan' | translate}}</label>
                             <select class="form-control" name="planName" id="planName" #planName="ngModel" [(ngModel)]="plan.planId">
-                                <option *ngFor="let item of planNameList" value={{item.planName}}
-                                    -{{item.planMembership}}> {{item.planName}}
-                                    - {{item.planMembership}} </option>
+                                    <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.selectPlan' | translate}}</option>
+                                <option *ngFor="let item of planNameList"  value={{item.planName}}-{{item.planMembership}}>
+                                    {{item.planName}} - {{item.planMembership}} </option>
+                                   
                             </select>
                             {{ errormsg }}
                         </div>
+
+                         <!-- <h5>Select Institution </h5> -->
+                         <div class="col-md-2">
+                             <label>{{'adminConfigarationPage.studentPage.selectinstitution' | translate}}</label>
+                            <select class="form-control" type="text"  name="institutionName"  #institutionName="ngModel" [(ngModel)]="student.institutionName"
+                                (change)="onInstituteSelect($event.target.value)">
+                                <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.institution' | translate}}</option>
+                                <option *ngFor="let item of institutionList" value={{item.institutionId}}>{{item.instName}}
+                                </option>
+                            </select>
+
+                        </div>
+
+                        <!-- <h4>Select Course Category </h4> -->
+                        <div class="col-md-2">
+                                <label>{{'adminConfigarationPage.studentPage.selectCourseCategory' | translate}}</label>
+                            <select class="form-control" type="text" name="courseCategory" #courseCategory="ngModel" [(ngModel)]="student.courseCategory"
+                                (change)="onCourseCategorySelect($event.target.value)" required>
+                                <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.courseCategory' | translate}}</option>
+                                <option *ngFor="let item of courseCategoryList" value={{item.categoryId}}>{{item.categoryName}}
+                                </option>
+                            </select>
+                        </div>
+
+                        <!-- <h4>Select Course </h4> -->
+                        <div class="col-md-2">
+                                <label>{{'adminConfigarationPage.studentPage.selectCourse' | translate}}</label>
+                            <select class="form-control" type="text" name="course" #course="ngModel" [(ngModel)]="student.course" (change)="onCourseSelect($event.target.value)"
+                                required>
+                                <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.courses' | translate}}</option>
+                                <option *ngFor="let item of courseList" value={{item.courseName}}>{{item.courseName}}
+                                </option>
+                            </select>
+                        </div>
                         <br>
                         <br>
+                    </div>
+
+                        <h5>Select All</h5>
+                        <input type="checkbox" id="mycheck-{{ i+1 }}" value="{{ i+1 }}" (click)="toggleSelect($event.target.checked)">
+                        <label for="mycheck-{{ i+1 }}"></label>
                         <table class="table table-bordered myTable">
                             <tr class="text-center">
                                 <th>checkbox</th>
@@ -520,7 +579,7 @@
                             <tbody>
                                 <tr *ngFor="let item of studentBulkList;let i=index">
                                     <td style="color:#cccccc">
-                                        <input type="checkbox" id="mycheck-{{ i+1 }}" value="{{ i+1 }}" (change)="onSelectPlan($event.target.value)">
+                                        <input type="checkbox" id="mycheck-{{ i+1 }}" value="{{ i+1 }}" (change)="onSelectPlan( i+1 , $event.target.checked)" checked={{checkedval}}>
                                         <label for="mycheck-{{ i+1 }}"></label>
                                     </td>
                                     <td>{{i+1}}</td>
