@@ -20,6 +20,9 @@ import {IMyDpOptions} from 'mydatepicker';
 export class PlansComponent implements OnInit {
   startDate = new Date(1990, 0, 1);
   alertMassege = "";
+  isListContainsData: boolean;
+  isSearchClicked: boolean;
+  caseInsensitive: boolean = true;
 
   plan: PlansObject = new PlansObject();
   planList: PlansObject[];
@@ -61,7 +64,10 @@ public myDatePickerOptions2: IMyDpOptions = {
   constructor(private service: PlanService) { }
 
   ngOnInit() {
-    this.getPlan();
+    // this.getPlan();
+    this.isListContainsData = false;
+    this.isSearchClicked = false;
+
     this.getMembership();
     this.getPlanName();
     //this.getBusinessCategory();
@@ -197,21 +203,42 @@ public myDatePickerOptions2: IMyDpOptions = {
   }
 
   searchPlan(planParameters) {
+    if (typeof planParameters.value.planName != "undefined"
+      || typeof planParameters.value.planPrice != "undefined"
+      || typeof planParameters.value.planMembership != "undefined"
+      || typeof planParameters.value.startDateTime != "undefined") {
+        this.isSearchClicked=true;
+        if(planParameters.value.planName === null
+        ||  planParameters.value.planMembership === null
+        || planParameters.value.startDateTime === null)
+        {
+
+        }
+        else{
     this.service.searchPlan(planParameters.value)
         .subscribe(
       (data) => {
         this.planList = data;
-        console.log(data);
+        if (typeof this.planList !== 'undefined' && this.planList.length > 0) {
+          this.isListContainsData = true;
+        }
+        else {
+          this.isListContainsData = false;
+        }
       },
       (error) => {
+        console.log(error);
         alert("Try again");
       }
     );
-  }
 
+}
+      }
+
+}
   searchClear() {
     this.plan = new PlansObject( );
-    this.getPlan();
+    // this.getPlan();
     // this.service.searchPlan(this.plan)
     //   .subscribe(
     //     (data) => {

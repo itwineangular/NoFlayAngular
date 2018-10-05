@@ -18,6 +18,9 @@ import { Attribute } from "../attribute/attribute";
 export class BusinessEntityComponent implements OnInit {
 
   alertMassege = "";
+  isListContainsData: boolean;
+  isSearchClicked: boolean;
+  caseInsensitive: boolean = true;
   countries = [];
   statesLocal = [];
   citiesLocal = [];
@@ -46,7 +49,10 @@ export class BusinessEntityComponent implements OnInit {
     this.getStates();
     this.getCities();
     this.getBusinessEntity();
-    this.getBusinessCategory();
+    // this.getBusinessCategory();
+    this.isListContainsData = false;
+    this.isSearchClicked=false;
+
     this.getAttribute();
     this.pageChange(5);
   }
@@ -243,13 +249,25 @@ export class BusinessEntityComponent implements OnInit {
 
 
   searchBusinessEntity(businessParameters) {
-    console.log("sdf");
-     console.log(businessParameters.value);
+    if (typeof businessParameters.value.name != "undefined"
+      || typeof businessParameters.value.registrationCode != "undefined"){
+        this.isSearchClicked=true;
+        if(businessParameters.value.name === null
+        || businessParameters.value.registrationCode === null)
+        {
+
+        }
+        else {
     this.service.searchBusinessEntity(businessParameters.value)
         .subscribe(
       (data) => {
         this.businessEntityList = data;
-        console.log(this.businessEntityList);
+        if (typeof this.businessEntityList !== 'undefined' && this.businessEntityList.length > 0) {
+          this.isListContainsData = true;
+        }
+        else {
+          this.isListContainsData = false;
+        }
       },
       (error) => {
         console.log(error);
@@ -257,18 +275,21 @@ export class BusinessEntityComponent implements OnInit {
       }
     );
   }
+}
+
+}
 
   searchClear() {
     this.business = new BusinessEntity();
-    this.service.searchBusinessEntity(this.business)
-      .subscribe(
-        (data) => {
-          this.businessEntityList = data;
-        },
-        (error) => {
-          console.log(error);
-          alert("Try again");
-        }
-      );
+    // this.service.searchBusinessEntity(this.business)
+    //   .subscribe(
+    //     (data) => {
+    //       this.businessEntityList = data;
+    //     },
+    //     (error) => {
+    //       console.log(error);
+    //       alert("Try again");
+    //     }
+    //   );
   }
 }

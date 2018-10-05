@@ -25,7 +25,7 @@
             "duration"  : "Durée"
         },
         "educationalInstitutesPage" :{
-            "educationalInstitutes" : "Instituts de formation",
+            "educationalInstitutes" : "Les établissements d'enseignement",
             "instituteName" : "Nom de l'Institut",
             "shortName" : "Nom court",
             "coursesOffered"    : "Cours offerts",
@@ -131,7 +131,9 @@
             "enterPrice" : "Entrez le prix",
             "enterDate" : "Entrez la date",
             "priceFieldRequired":"Le prix est requis",
-            "datetFieldRequired":"La date est requise"    
+            "datetFieldRequired":"La date est requise",
+            "noRecordFound":"Aucun Enregistrement Trouvé",
+            "instituteDetails": "Détails de l'institut"
         },
 
         "businessCategory" : {

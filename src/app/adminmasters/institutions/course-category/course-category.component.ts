@@ -12,6 +12,8 @@ import { CourseCategoryService } from './course-category.service';
 export class CourseCategoryComponent implements OnInit {
 
   alertMassege = "";
+  isSearchClicked: boolean;
+  isListContainsData: boolean;
   courseCategory: CourseCategory = new CourseCategory();
   courseCategoryList: CourseCategory[];
   saveOrUpdate: string;
@@ -20,11 +22,14 @@ export class CourseCategoryComponent implements OnInit {
   pagenumber: string;
   p: number = 1;
   itemsPerPage2: number = 1;
+  caseInsensitive: boolean = true;
 
   constructor(private service: CourseCategoryService) { }
 
   ngOnInit() {
-    this.getCourseCaterory();
+    this.isListContainsData = false;
+    this.isSearchClicked=false;
+    // this.getCourseCaterory();
     this.pageChange(5);
   }
 
@@ -101,16 +106,13 @@ export class CourseCategoryComponent implements OnInit {
 
     this.pagenumber = pagenumber;
   }
-  customPageChange(number)
-  {
-    this.p=number;
+  customPageChange(number) {
+    this.p = number;
     this.itemsPerPage2 = number;
-    if(this.p==1)
-    {
+    if (this.p == 1) {
       this.itemsPerPage2 = 1;
     }
-    else
-    {
+    else {
       this.itemsPerPage2 = +this.pagenumber;
     }
   }
@@ -121,32 +123,50 @@ export class CourseCategoryComponent implements OnInit {
   }
 
   searchCourseCategory(courseCategoryParameters) {
-    console.log(courseCategoryParameters.value);
-   this.service.searchCourseCategory(courseCategoryParameters.value)
-       .subscribe(
-     (data) => {
-       this.courseCategoryList = data;
-       console.log(this.courseCategoryList);
-     },
-     (error) => {
-       console.log(error);
-       alert("Try again");
-     }
-   );
- }
+    if (typeof courseCategoryParameters.value.categoryName != "undefined"
+      || typeof courseCategoryParameters.value.categoryCode != "undefined"
+      || typeof courseCategoryParameters.value.status != "undefined") {
+        this.isSearchClicked=true;
+        if(courseCategoryParameters.value.categoryName === null
+        || courseCategoryParameters.value.categoryCode === null
+        || courseCategoryParameters.value.status === null)
+        {
+        }
+        else{
+      this.service.searchCourseCategory(courseCategoryParameters.value)
+        .subscribe(
+          (data) => {
+            this.courseCategoryList = data;
+            if (typeof this.courseCategoryList !== 'undefined' && this.courseCategoryList.length > 0) {
+              this.isListContainsData = true;
+            }
+            else {
+              this.isListContainsData = false;
+            }
+          },
+          (error) => {
+            console.log(error);
+            alert("Try again");
+          }
+        );
+      }
 
- searchClear() {
-   this.courseCategory = new CourseCategory();
-   this.service.searchCourseCategory(this.courseCategory)
-     .subscribe(
-       (data) => {
-         this.courseCategoryList = data;
-       },
-       (error) => {
-         console.log(error);
-         alert("Try again");
-       }
-     );
- }
+    }
+
+  }
+
+  searchClear() {
+    this.courseCategory = new CourseCategory();
+    // this.service.searchCourseCategory(this.courseCategory)
+    //   .subscribe(
+    //     (data) => {
+    //       this.courseCategoryList = data;
+    //     },
+    //     (error) => {
+    //       console.log(error);
+    //       alert("Try again");
+    //     }
+    //   );
+  }
 
 }

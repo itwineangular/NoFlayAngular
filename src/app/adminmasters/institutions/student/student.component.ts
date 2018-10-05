@@ -26,6 +26,9 @@ export class StudentComponent implements OnInit {
 
   startDate = new Date(1990, 0, 1);
   alertMassege = "";
+  isListContainsData: boolean;
+  isSearchClicked: boolean;
+  caseInsensitive: boolean = true;
   saveOrUpdate: string;
   key: string;
   reverse: boolean = false;
@@ -106,7 +109,9 @@ export class StudentComponent implements OnInit {
     this.getCities();
     this.getStatus();
     this.getPlans();
-    this.getStudent();
+    this.isListContainsData = false;
+    this.isSearchClicked=false;
+
     this.pageChange(5);
     this.getPlanName();
    
@@ -587,30 +592,44 @@ getPlanName() {
   }
 
 searchStudent(studentParameters) {
-   console.log(this.selectedCourse);
-  this.student = new Student();
-  this.student.institutionName=this.selectedInstitute;
-  this.student.courseCategory=this.selectedCategory;
-  this.student.course=this.selectedCourse;
-  this.student.status=studentParameters.value.status;
- // this.student.stdEmail="david@gmail.com";
+  if (typeof studentParameters.value.institutionName != "undefined"
+    || typeof studentParameters.value.courseCategory != "undefined"
+    || typeof studentParameters.value.course != "undefined" 
+    || typeof studentParameters.value.status != "undefined"){
+      this.isSearchClicked=true;
+      if(studentParameters.value.institutionName === null
+      || studentParameters.value.courseCategory === null
+      || studentParameters.value.course === null
+      || studentParameters.value.status === null)
+      {
 
-  this.studentService.searchStudent(this.student)
-    .subscribe(
-      (data) => {
-        this.studentList = data;
-        console.log(this.studentList);
-      },
-      (error) => {
-        console.log(error);
-        alert("Try again");
       }
-    );
-}
+      else{
+      this.studentService.searchStudent(studentParameters.value)
+        .subscribe(
+          (data) => {
+            this.studentList = data;
+            if (typeof this.studentList !== 'undefined' && this.studentList.length > 0) {
+              this.isListContainsData = true;
+            }
+            else {
+              this.isListContainsData = false;
+            }
+          },
+          (error) => {
+            console.log(error);
+            alert("Try again");
+          }
+        );
+      }
+    }
+
+  }
+
 
 searchClear() {
   this.student = new Student();
-  this.getStudent();
+  // this.getStudent();
   // this.studentService.searchStudent(this.student)
   //   .subscribe(
   //     (data) => {

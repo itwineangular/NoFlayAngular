@@ -25,7 +25,7 @@
             "duration"  : "Duration"
         },
         "educationalInstitutesPage" :{
-            "educationalInstitutes" : "Educational Institutes",
+            "educationalInstitutes" : "Educational Institutions",
             "instituteName" : "Institute Name",
             "shortName" : "Short Name",
             "coursesOffered"    : "Courses offered",
@@ -165,7 +165,9 @@
             "institution": "Institution Name Required",
             "stdAdmissionNumber":"Roll Number Required",
             "statusMesaage": "Status Required",
-            "planMessage":"Plan Required"
+            "planMessage":"Plan Required",
+            "noRecordFound":"No Record Found",
+            "instituteDetails": "Institute Details"
         },
 
         "businessCategory" : {

@@ -8,6 +8,7 @@ import { CourseCategoryService } from '../course-category/course-category.servic
 import { CourseService } from '../courses/courses.service';
 import { Course } from '../courses/courses.module';
 // import { CourseCategory } from "../course-category/course-category.module";
+import * as $ from 'jquery';
 
 @Component({
     selector: 'app-educational-institute',
@@ -18,6 +19,10 @@ import { Course } from '../courses/courses.module';
 export class EducationalInstituteComponent implements OnInit {
 
     alertMassege = "";
+    isListContainsData: boolean;
+    isSearchClicked: boolean;
+    caseInsensitive: boolean = true;
+
     countries = [];
     statesLocal = [];
     citiesLocal = [];
@@ -62,35 +67,117 @@ export class EducationalInstituteComponent implements OnInit {
         this.getCities();
         this.getCourseCategory();
         // this.getCourses();
-        this.getInstitutes();
+        // this.getInstitutes();
+        this.isListContainsData = false;
+        this.isSearchClicked=false;
+
+
         this.pageChange(5);
+
+        
+        $('.btnNext').click(function(){
+            $('.nav-tabs > .active').next('li').find('a').trigger('click');
+            });
+            
+            $('.btnPrevious').click(function(){
+            $('.nav-tabs > .active').prev('li').find('a').trigger('click');
+            });
+    }
+    activeChange(value){
+        if(value == "first"){
+            $('#test1').removeClass("active");
+            $('#test2').addClass("active");
+            $('#test3').removeClass("active");
+            $('#test4').removeClass("active");
+            $('#test1 > a').removeClass('disableTab');
+            $('#test1 > a').addClass('enableTab');
+        }else if(value == "second"){
+            $('#test1').removeClass("active");
+            $('#test2').removeClass("active");
+            $('#test3').addClass("active");
+            $('#test4').removeClass("active");
+            $('#test2 > a').removeClass('disableTab');
+            $('#test2 > a').addClass('enableTab');
+
+        }else if(value == "third"){
+            $('#test1').removeClass("active");
+            $('#test2').removeClass("active");
+            $('#test3').removeClass("active");
+            $('#test4').addClass("active");
+            $('#test3 > a').removeClass('disableTab');
+            $('#test3 > a').addClass('enableTab');
+        }
+        
+    }
+    activeChangePrevious(value){
+        if(value == "second"){
+            $('#test1').addClass("active");
+            $('#test2').removeClass("active");
+            $('#test3').removeClass("active");
+            $('#test4').removeClass("active");
+        }else if(value == "third"){
+            $('#test1').removeClass("active");
+            $('#test2').addClass("active");
+            $('#test3').removeClass("active");
+            $('#test4').removeClass("active");
+
+        }else if(value == "fourth"){
+            $('#test1').removeClass("active");
+            $('#test2').removeClass("active");
+            $('#test3').addClass("active");
+            $('#test4').removeClass("active");
+
+        }
+
     }
 
-    searchInstitute(instituteParameters) {
-        this.service.searchEducationalInstitute(instituteParameters.value)
+    searchEducationalInstitute(instituteParameters) {
+        if (typeof instituteParameters.value.instName != "undefined"
+          || typeof instituteParameters.value.instShortName != "undefined"
+          || typeof instituteParameters.value.instRegistrationCode != "undefined"
+          || typeof instituteParameters.value.instBranch != "undefined") {
+            this.isSearchClicked=true;
+            if(instituteParameters.value.instName === null
+            ||  instituteParameters.value.instShortName === null
+            ||  instituteParameters.value.instRegistrationCode === null
+            ||  instituteParameters.value.instBranch === null)
+            {
+
+            } 
+            else{
+              this.service.searchEducationalInstitute(instituteParameters.value)
             .subscribe(
                 (data) => {
                     this.instituteList = data;
-                },
-                (error) => {
-                    console.log(error);
-                    alert("Try again");
-                }
-            );
-    }
-
+                    if (typeof this.instituteList !== 'undefined' && this.instituteList.length > 0) {
+                        this.isListContainsData = true;
+                      }
+                      else {
+                        this.isListContainsData = false;
+                      }
+                    },
+                    (error) => {
+                      console.log(error);
+                      alert("Try again");
+                    }
+                  );
+          
+              }
+            }
+          
+            }
     searchClear() {
         this.institute = new EducationalInstitute();
-        this.service.searchEducationalInstitute(this.institute)
-            .subscribe(
-                (data) => {
-                    this.instituteList = data;
-                },
-                (error) => {
-                    console.log(error);
-                    alert("Try again");
-                }
-            );
+        // this.service.searchEducationalInstitute(this.institute)
+        //     .subscribe(
+        //         (data) => {
+        //             this.instituteList = data;
+        //         },
+        //         (error) => {
+        //             console.log(error);
+        //             alert("Try again");
+        //         }
+        //     );
     }
 
     addNew() {
@@ -103,6 +190,10 @@ export class EducationalInstituteComponent implements OnInit {
         this.onSelect(this.institute.instCountryname);
         this.onStateSelect(this.institute.instState);
     }
+    clickedAlert = function () {
+        this.alertMassege = "";
+      };
+    
 
     getCountries() {
         this.commonService.getCountries().subscribe(data => {
@@ -172,8 +263,14 @@ export class EducationalInstituteComponent implements OnInit {
 
     }
 
+    checkboxActivated:boolean = false;
     courseCheckboxSelect(id)
     {
+        if($('#'+id).prop('checked')){
+            this.checkboxActivated = true;
+        }else{
+            this.checkboxActivated = false;
+        }
         if (this.selectedCoursecourseList.findIndex(x => x === id) >= 0)
         {
             this.selectedCoursecourseList.splice(this.selectedCoursecourseList.indexOf(id),1);

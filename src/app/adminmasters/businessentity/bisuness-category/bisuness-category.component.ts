@@ -10,6 +10,10 @@ import { BusinessCategory } from "./business-category";
 export class BisunessCategoryComponent implements OnInit {
 
   alertMassege = "";
+  isListContainsData: boolean;
+  isSearchClicked: boolean;
+  caseInsensitive: boolean = true;
+
   saveOrUpdate: string;
   key: string ;
   reverse: boolean = false;
@@ -23,7 +27,11 @@ export class BisunessCategoryComponent implements OnInit {
   constructor(private service: BusinessCategoryServicesService) { }
 
   ngOnInit() {
-    this.getBusinessCategory();
+    // this.getBusinessCategory();
+    this.isListContainsData = false;
+    this.isSearchClicked= false;
+
+
     this.pageChange(5);
   }
   selectUser(item) {
@@ -113,13 +121,27 @@ export class BisunessCategoryComponent implements OnInit {
   }
 
 
-  searchBusinessCategory(businesscategoryParameters) {
-    // console.log(businesscategoryParameters.value);
+  searchBusinessCategory(businesscategoryParameters)  {
+    if (typeof businesscategoryParameters.value.businessCategoryName != "undefined"
+      || typeof businesscategoryParameters.value.businessCategoryCode != "undefined")  {
+        this.isSearchClicked=true;
+        if(businesscategoryParameters.value.businessCategoryName === null
+        || businesscategoryParameters.value.businessCategoryCode=== null)
+        {
+
+        }
+        else{
+
     this.service.searchBusinessCategory(businesscategoryParameters.value)
         .subscribe(
       (data) => {
         this.businesscategoryList = data;
-        console.log(this.businesscategoryList);
+        if (typeof this.businesscategoryList !== 'undefined' && this.businesscategoryList.length > 0) {
+          this.isListContainsData = true;
+        }
+        else {
+          this.isListContainsData = false;
+        }
       },
       (error) => {
         console.log(error);
@@ -127,18 +149,25 @@ export class BisunessCategoryComponent implements OnInit {
       }
     );
   }
-  
-  searchClear() {
-    this.businesscategory = new BusinessCategory();
-    this.service.searchBusinessCategory(this.businesscategory)
-      .subscribe(
-        (data) => {
-          this.businesscategoryList = data;
-        },
-        (error) => {
-          console.log(error);
-          alert("Try again");
-        }
-      );
-  }
 }
+}
+
+    searchClear() {
+      this.businesscategory = new BusinessCategory();
+    //   this.service.searchBusinessCategory(this.businesscategory)
+    //     .subscribe(
+    //       (data) => {
+    //         this.businesscategoryList = data;
+    //       },
+    //       (error) => {
+    //         console.log(error);
+    //         alert("Try again");
+    //       }
+    //     );
+    // }
+}
+
+  
+  
+
+  }

@@ -23,6 +23,7 @@
                             <button class="btn btn-primary btn-outline pull-right cssButtonPadding" type="submit">{{'adminConfigarationPage.commonFields.search' | translate}}</button>
                         </div>
                     </form>
+                    </div>
                 </div>
         <!-- </div> -->
     
@@ -32,12 +33,20 @@
                     <!-- <input type="search" [(ngModel)]="searchText" placeholder="Search">
                 <button class="btn btn-info pull-right" data-toggle="modal" data-target="#addModal" (click)="addNew()">{{ 'adminConfigarationPage.commonFields.addNew' | translate }}
                 </button> -->
-                <div class="alert alert-warning fade in myAlert" *ngIf="alertMassege">
-                    <a class="close" href="#" data-dismiss="alert">X</a>
-                    <h4>{{alertMassege}}</h4>
+                <div class="col-md-12">
+                    <div class="alert alert-warning fade in myAlert" *ngIf="alertMassege">
+                        <a class="close" href="#" data-dismiss="alert" (click)="clickedAlert()">X</a>
+                        <h4>{{alertMassege}}</h4>
+                    </div>
+                    <div *ngIf="isSearchClicked">
+                    <div *ngIf="!isListContainsData">
+                        <h3 class="text-center noRecord">{{ 'adminConfigarationPage.commonFields.noRecordFound' | translate }}</h3>
+                    </div>
+                    </div>
                 </div>
+                <div class="col-md-12" *ngIf="isListContainsData">
                 <div class="table-responsive">
-                <table class="table table-bordered myTable">
+                <table class="table table-bordered myTable table-condensed table-striped">
                     <thead>
                     <tr class="text-center">
                         <th>{{'adminConfigarationPage.commonFields.index' | translate}}</th>
@@ -52,12 +61,12 @@
                             <td>{{((p-1)*itemsPerPage2)+i+1}}</td>
                             <td>{{item.memberName}}</td>
                             <td>
-                                <button class="btn btn-warning" data-toggle="modal" data-target="#addModal" (click)="selectUser(item)">
+                                <button class="btn btn-warning buttonStyle" data-toggle="modal" data-target="#addModal" (click)="selectUser(item)">
                                     <i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size:15px"></i>
                                 </button>
                             </td>
                             <td>
-                                <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" (click)="selectUser(item)">
+                                <button class="btn btn-danger buttonStyle" data-toggle="modal" data-target="#deleteModal" (click)="selectUser(item)">
                                     <i class="fa fa-trash-o" aria-hidden="true" style="font-size:15px"></i>
                                 </button>
                             </td>
@@ -82,9 +91,10 @@
                         <pagination-controls (pageChange)="customPageChange($event)"></pagination-controls>
                 </div>
                 <div class="clearfix"></div>
+                </div>
 
             </div>
-            </div>
+            <!-- </div> -->
         <!-- </div>
     </div> -->
 

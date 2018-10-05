@@ -10,6 +10,9 @@ import { MembershipServicesService } from './membership-services.service';
 export class MembershipComponent implements OnInit {
 
   alertMassege = "";
+  isListContainsData: boolean;
+  isSearchClicked: boolean;
+  caseInsensitive: boolean = true;
   saveOrUpdate: string;
   key: string;
   reverse: boolean = false;
@@ -21,7 +24,10 @@ export class MembershipComponent implements OnInit {
   constructor(private membershipService: MembershipServicesService) { }
 
   ngOnInit() {
-    this.getMembership();
+    // this.getMembership();
+    this.isListContainsData = false;
+    this.isSearchClicked = false;
+
     this.pageChange(5);
   }
 
@@ -108,31 +114,46 @@ export class MembershipComponent implements OnInit {
 
 
   searchMembership(membership) {
-    // console.log(membership.value);
+    if (typeof membership.value.memberName != "undefined") {
+      this.isSearchClicked=true;
+      if(membership.value.memberName === null)
+      {
+
+      }
+      else{
      this.membershipService.searchMembership(membership.value)
          .subscribe(
        (data) => {
-         this.membershipList = data;
-         console.log(this.membershipList);
-       },
-       (error) => {
-         console.log(error);
-         alert("Try again");
-       }
-     );
-   }
+        this.membershipList = data;
+        if (typeof this.membershipList !== 'undefined' && this.membershipList.length > 0) {
+          this.isListContainsData = true;
+        }
+        else {
+          this.isListContainsData = false;
+        }
+      },
+      (error) => {
+        console.log(error);
+        alert("Try again");
+      }
+    );
+
+}
+    }
+
+}
  
    searchClear() {
      this.membership = new MembershipObject( );
-     this.membershipService.searchMembership(this.membership)
-       .subscribe(
-         (data) => {
-           this.membershipList = data;
-         },
-         (error) => {
-           console.log( error);
-           alert("Try again");
-         }
-       );
+    //  this.membershipService.searchMembership(this.membership)
+    //    .subscribe(
+    //      (data) => {
+    //        this.membershipList = data;
+    //      },
+    //      (error) => {
+    //        console.log( error);
+    //        alert("Try again");
+    //      }
+    //    );
    }
 }

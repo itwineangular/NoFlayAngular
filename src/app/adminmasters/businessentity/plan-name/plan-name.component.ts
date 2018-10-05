@@ -10,6 +10,9 @@ import { PlanNameServicesService } from "./plan-name-services.service";
 export class PlanNameComponent implements OnInit {
 
   alertMassege = "";
+  isListContainsData: boolean;
+  isSearchClicked: boolean;
+  caseInsensitive: boolean = true;
   saveOrUpdate: string;
   planName: PlanName = new PlanName();
   planNameList: PlanName[];
@@ -22,7 +25,9 @@ export class PlanNameComponent implements OnInit {
   constructor(private planNameService: PlanNameServicesService) { }
 
   ngOnInit() {
-    this.getplanName();
+    // this.getplanName();
+    this.isListContainsData = false;
+    this.isSearchClicked=false;
     this.pageChange(5);
   }
 
@@ -109,31 +114,46 @@ export class PlanNameComponent implements OnInit {
   }
 
   searchPlanName(planNameParameters) {
-    // console.log(planNameParameters.value);
+    if (typeof planNameParameters.value.planName != "undefined") {
+      this.isSearchClicked=true;
+      if(planNameParameters.value.planName === null)
+      {
+      }
+      else{
      this.planNameService.searchPlanName(planNameParameters.value)
          .subscribe(
        (data) => {
-         this.planNameList = data;
-         console.log(this.planNameList);
-       },
-       (error) => {
-         console.log(error);
-         alert("Try again");
-       }
-     );
-   }
- 
-   searchClear() {
-     this.planName = new PlanName( );
-     this.planNameService.searchPlanName(this.planName)
-       .subscribe(
-         (data) => {
-           this.planNameList = data;
-         },
-         (error) => {
-           console.log( error);
-           alert("Try again");
-         }
-       );
-   }
+        this.planNameList = data;
+        if (typeof this.planNameList !== 'undefined' && this.planNameList.length > 0) {
+          this.isListContainsData = true;
+        }
+        else {
+          this.isListContainsData = false;
+        }
+      },
+      (error) => {
+        console.log(error);
+        alert("Try again");
+      }
+    );
+
+}
+
+}
+}
+
+  searchClear() {
+    this.planName = new PlanName();
+    // this.service.searchCourseCategory(this.courseCategory)
+    //   .subscribe(
+    //     (data) => {
+    //       this.courseCategoryList = data;
+    //     },
+    //     (error) => {
+    //       console.log(error);
+    //       alert("Try again");
+    //     }
+    //   );
+  }
+
 }

@@ -84,7 +84,7 @@ updateAttribute(data)
       "businessCatCode": data.businessCatCode,
      
     };
-    console.log(obj);
+   
     let headers = new Headers({
       'Content-Type': 'application/json'
     });

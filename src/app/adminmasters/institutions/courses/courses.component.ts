@@ -13,6 +13,10 @@ import { CourseCategory } from "../course-category/course-category.module";
 export class CoursesComponent implements OnInit {
 
   alertMassege = "";
+  isListContainsData: boolean;
+  isSearchClicked: boolean;
+
+
   course: Course = new Course();
   courseList: Course[];
   courseCategoryList: CourseCategory[];
@@ -22,12 +26,14 @@ export class CoursesComponent implements OnInit {
   pagenumber : string ;
   p: number = 1;
   itemsPerPage2: number = 1;
+  caseInsensitive: boolean = true;
 
   constructor(private service: CourseService,
     private courseCategoryService: CourseCategoryService) { }
 
   ngOnInit() {
-    this.getCourse();
+    this.isListContainsData = false;
+    // this.getCourse();
     this.getCourseCategory();
     this.pageChange(5);
   }
@@ -126,32 +132,54 @@ export class CoursesComponent implements OnInit {
   }
 
   searchCourse(courseParameters) {
-    // console.log(courseParameters.value);
-    this.service.searchCourse(courseParameters.value)
-      .subscribe(
-        (data) => {
-          this.courseList = data;
-          console.log(this.courseList);
-        },
-        (error) => {
-          console.log(error);
-          alert("Try again");
-        }
-      );
-  }
+    if (typeof courseParameters.value.courseName != "undefined"
+    || typeof courseParameters.value.courseCode != "undefined"
+    || typeof courseParameters.value.categoryName != "undefined"
+    || typeof courseParameters.value.duration != "undefined") { 
+      this.isSearchClicked=true;
+      if(courseParameters.value.courseName === null
+      || courseParameters.value.courseCode === null
+      || courseParameters.value.categoryName === null
+      || courseParameters.value.duration === null)
+      {
 
-  searchClear() {
-    this.course = new Course();
-    this.service.searchCourse(this.course)
-      .subscribe(
-        (data) => {
-          this.courseList = data;
-        },
-        (error) => {
-          console.log(error);
-          alert("Try again");
+      }
+      else{    
+      this.service.searchCourse(courseParameters.value)
+    .subscribe(
+      (data) => {
+        this.courseList = data;
+        if (typeof this.courseList !== 'undefined' && this.courseList.length > 0) {
+          this.isListContainsData = true;
         }
-      );
+        else {
+          this.isListContainsData = false;
+        }
+      },
+      (error) => {
+        console.log(error);
+        alert("Try again");
+      }
+    );
   }
+}
+  }
+searchClear() {
+  this.course = new Course();
+  // this.service.searchCourseCategory(this.courseCategory)
+  //   .subscribe(
+  //     (data) => {
+  //       this.courseCategoryList = data;
+  //     },
+  //     (error) => {
+  //       console.log(error);
+  //       alert("Try again");
+  //     }
+  //   );
+}
+
 
 }
+
+
+

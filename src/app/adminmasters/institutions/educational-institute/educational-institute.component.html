@@ -7,7 +7,7 @@
     </div>
     <div class="col-md-12">
         <div class="rcorners2">
-            <form class="form-horizontal" #educationalInstituteSearchForm="ngForm" (ngSubmit)="searchInstitute(educationalInstituteSearchForm)">
+            <form class="form-horizontal" #educationalInstituteSearchForm="ngForm" (ngSubmit)="searchEducationalInstitute(educationalInstituteSearchForm)">
                 <div class="col-md-3">
                     <label  for="instName">{{'adminConfigarationPage.educationalInstitutesPage.instituteName' | translate}}</label>
                     <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.instituteName' | translate}}"
@@ -39,12 +39,21 @@
                 </div>
             </form>
         </div>
-        <div class="alert alert-warning fade in myAlert" *ngIf="alertMassege">
-            <a class="close" href="#" data-dismiss="alert">×</a>
-            <h4>{{alertMassege}}</h4>
         </div>
+        <div class="col-md-12">
+            <div class="alert alert-warning fade in myAlert" *ngIf="alertMassege">
+                <a class="close" href="#" data-dismiss="alert" (click)="clickedAlert()">X</a>
+                <h4>{{alertMassege}}</h4>
+            </div>
+            <div *ngIf="isSearchClicked">
+            <div *ngIf="!isListContainsData">
+                <h3 class="text-center noRecord">{{ 'adminConfigarationPage.commonFields.noRecordFound' | translate }}</h3>
+            </div>
+            </div>
+        </div>
+        <div class="col-md-12" *ngIf="isListContainsData">
         <div class="table-responsive">
-        <table class="table table-bordered myTable">
+        <table class="table table-bordered myTable table-condensed table-striped">
             <thead>
             <tr class="text-center">
                 <th>{{'adminConfigarationPage.commonFields.index' | translate}}</th>
@@ -68,12 +77,12 @@
                     <td>{{item.instRegistrationCode}}</td>
                     <td>{{item.instBranch}}</td>
                     <td>
-                        <button class="btn btn-warning" data-toggle="modal" data-target="#addModal" (click)="selectedUser(item)">
+                        <button class="btn btn-warning buttonStyle" data-toggle="modal" data-target="#addModal" (click)="selectedUser(item)">
                             <i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size:15px"></i>
                         </button>
                     </td>
                     <td>
-                        <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" (click)="selectedUser(item)">
+                        <button class="btn btn-danger buttonStyle" data-toggle="modal" data-target="#deleteModal" (click)="selectedUser(item)">
                             <i class="fa fa-trash-o" aria-hidden="true" style="font-size:15px"></i>
                         </button>
                     </td>
@@ -98,14 +107,15 @@
                 <pagination-controls (pageChange)="customPageChange($event)"></pagination-controls>
             </div>
             <div class="clearfix"></div>
+            </div>
 
         </div>
-    </div>
+    <!-- </div> -->
     <!-- Add Modal-->
     <div class="modal fade" id="addModal" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <form class="form-horizontal" #educationalInstituteForm="ngForm" (ngSubmit)="saveInstitute(educationalInstituteForm)">
+                
                     <div class="modal-header">
                         <button class="close" type="button" data-dismiss="modal">X</button>
                         <h4 class="modal-title">{{'adminConfigarationPage.commonFields.addNew' | translate}}</h4>
@@ -113,12 +123,13 @@
                     <div class="modal-body">
                         <div class="container">
                             <div class="form-group">
-                               <h4><label for="Name">{{'adminConfigarationPage.commonFields.primaryDetails'
+                               <h4><label for="Name">{{'adminConfigarationPage.commonFields.instituteDetails'
                                     | translate}}</label></h4>
                             </div>
+                            <form class="form-horizontal" #educationalInstituteForm="ngForm" (ngSubmit)="saveInstitute(educationalInstituteForm)">
                             <div class="form-group">
                                 <div class="col-md-3">
-                                        <label for="instituteName">{{'adminConfigarationPage.educationalInstitutesPage.instituteName' | translate}}</label>
+                                        <label for="instituteName">{{'adminConfigarationPage.educationalInstitutesPage.instituteName' | translate}} <span class="reqMark">*</span></label>
                                     <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.instituteName' | translate}}"
                                         name="instName" #instNameControl="ngModel" [(ngModel)]="institute.instName"
                                         required />
@@ -127,7 +138,7 @@
 
                                 </div>
                                 <div class="col-md-3">
-                                        <label for="shortName">{{'adminConfigarationPage.businessEntity.shortName' | translate}}</label>
+                                        <label for="shortName">{{'adminConfigarationPage.businessEntity.shortName' | translate}} <span class="reqMark">*</span></label>
                                     <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.businessEntity.shortName' | translate}}"
                                         name="instShortName" #instShortNameControl="ngModel" [(ngModel)]="institute.instShortName"
                                         required />
@@ -136,7 +147,7 @@
 
                                 </div>
                                 <div class="col-md-3">
-                                        <label for="registrationNumber">{{'adminConfigarationPage.businessEntity.registrationNumber' | translate}}</label>
+                                        <label for="registrationNumber">{{'adminConfigarationPage.businessEntity.registrationNumber' | translate}} <span class="reqMark">*</span></label>
                                     <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.businessEntity.registrationNumber' | translate}}"
                                         name="instRegistrationCode" #instRegistrationCodeControl="ngModel" [(ngModel)]="institute.instRegistrationCode"
                                         required />
@@ -144,7 +155,7 @@
                                         | translate}}</div>
                                 </div>
                                 <div class="col-md-3">
-                                        <label for="branch">{{'adminConfigarationPage.educationalInstitutesPage.branch' | translate}}</label>
+                                        <label for="branch">{{'adminConfigarationPage.educationalInstitutesPage.branch' | translate}} <span class="reqMark">*</span></label>
                                     <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.branch' | translate}}"
                                         name="instBranch" #instBranchControl="ngModel" [(ngModel)]="institute.instBranch"
                                         required />
@@ -152,46 +163,47 @@
                                         | translate}}</div>
                                 </div>
                             </div>
+                            </form>
                             <div class="wizard">
                                 <div class="wizard-inner">
                                     <div class="connecting-line"></div>
                                     <ul class="nav nav-tabs" role="tablist">
 
-                                        <li role="presentation" class="active">
-                                            <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="Contact Details">
-                                                <span class="round-tab">
-                                                    <i class="glyphicon glyphicon-phone-alt"></i>
-                                                </span>
-                                            </a>
-                                        </li>
-
-                                        <li role="presentation">
-                                            <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Bank Details">
-                                                <span class="round-tab">
-                                                    <i class="glyphicon glyphicon-piggy-bank"></i>
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li role="presentation">
-                                            <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab" title="Course offered">
-                                                <span class="round-tab">
-                                                    <i class="glyphicon glyphicon-education"></i>
-                                                </span>
-                                            </a>
-                                        </li>
-
-                                        <li role="presentation">
-                                            <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab"
-                                                title="Upload photo">
-                                                <span class="round-tab">
-                                                    <i class="glyphicon glyphicon-picture"></i>
-                                                </span>
-                                            </a>
-                                        </li>
+                                            <li id="test1" role="presentation" class="active" >
+                                                    <a class="disableTab" href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="Contact Details">
+                                                        <span class="round-tab">
+                                                            <i class="glyphicon glyphicon-phone-alt"></i>
+                                                        </span>
+                                                    </a>
+                                                </li>
+        
+                                                <li id="test2" role="presentation">
+                                                    <a class="disableTab" href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Bank Details">
+                                                        <span class="round-tab">
+                                                            <i class="glyphicon glyphicon-piggy-bank"></i>
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                <li id="test3" role="presentation">
+                                                    <a class="disableTab" href="#step3" data-toggle="tab" aria-controls="step3" role="tab" title="Course offered">
+                                                        <span class="round-tab">
+                                                            <i class="glyphicon glyphicon-education"></i>
+                                                        </span>
+                                                    </a>
+                                                </li>
+        
+                                                <li id="test4" role="presentation" (click)="glyphiback('fourth')">
+                                                    <a class="disableTab" href="#complete" data-toggle="tab" aria-controls="complete" role="tab"
+                                                        title="Upload photo">
+                                                        <span class="round-tab">
+                                                            <i class="glyphicon glyphicon-picture"></i>
+                                                        </span>
+                                                    </a>
+                                                </li>
                                     </ul>
                                 </div>
 
-                                <form role="form">
+                                <!-- <form role="form"> -->
 
                                     <div class="tab-content">
                                         <div class="tab-pane active" role="tabpanel" id="step1">
@@ -199,7 +211,7 @@
                                             <form #contactDetails="ngForm" novalidate>
                                                 <div class="form-group">
                                                     <div class="col-md-3">
-                                                            <label for="contactPerson">{{'adminConfigarationPage.educationalInstitutesPage.contactPerson' | translate}}</label>
+                                                            <label for="contactPerson">{{'adminConfigarationPage.educationalInstitutesPage.contactPerson' | translate}} <span class="reqMark">*</span></label>
                                                         <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.contactPerson' | translate}}"
                                                             name="instContactPerson" #instContactPersonControl="ngModel"
                                                             [(ngModel)]="institute.instContactPerson" required />
@@ -207,7 +219,7 @@
                                                             | translate}}</div>
                                                     </div>
                                                     <div class="col-md-3">
-                                                            <label for="designation">{{'adminConfigarationPage.educationalInstitutesPage.designation' | translate}}</label>
+                                                            <label for="designation">{{'adminConfigarationPage.educationalInstitutesPage.designation' | translate}} <span class="reqMark">*</span></label>
                                                         <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.designation' | translate}}"
                                                             name="instDesignation" #instDesignationControl="ngModel"
                                                             [(ngModel)]="institute.instDesignation" required />
@@ -215,7 +227,7 @@
                                                             | translate}}</div>
                                                     </div>
                                                     <div class="col-md-3">
-                                                            <label for="address1">{{'adminConfigarationPage.educationalInstitutesPage.address1' | translate}}</label>
+                                                            <label for="address1">{{'adminConfigarationPage.educationalInstitutesPage.address1' | translate}} <span class="reqMark">*</span></label>
                                                         <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.address1' | translate}}"
                                                             name="instAddressone" #instAddressoneControl="ngModel"
                                                             [(ngModel)]="institute.instAddressone" required />
@@ -223,7 +235,7 @@
                                                             | translate}}</div>
                                                     </div>
                                                     <div class="col-md-3">
-                                                            <label for="address2">{{'adminConfigarationPage.educationalInstitutesPage.address2' | translate}}</label>
+                                                            <label for="address2">{{'adminConfigarationPage.educationalInstitutesPage.address2' | translate}} <span class="reqMark">*</span></label>
                                                         <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.address2' | translate}}"
                                                             name="instAddresstwo" #instAddresstwoControl="ngModel"
                                                             [(ngModel)]="institute.instAddresstwo" required />
@@ -233,7 +245,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="col-md-3">
-                                                            <label for="country">{{'adminConfigarationPage.educationalInstitutesPage.country' | translate}}</label>
+                                                            <label for="country">{{'adminConfigarationPage.educationalInstitutesPage.country' | translate}} <span class="reqMark">*</span></label>
                                                         <select class="form-control" name="instCountryname"
                                                             #instCountrynameControl="ngModel" [(ngModel)]="institute.instCountryname"
                                                             (change)="onSelect($event.target.value)" required>
@@ -247,7 +259,7 @@
                                                             | translate}}</div>
                                                     </div>
                                                     <div class="col-md-3">
-                                                            <label for="state">{{'adminConfigarationPage.educationalInstitutesPage.state' | translate}}</label>
+                                                            <label for="state">{{'adminConfigarationPage.educationalInstitutesPage.state' | translate}} <span class="reqMark">*</span></label>
                                                         <select class="form-control" name="institute" #instituteControl="ngModel"
                                                             [(ngModel)]="institute.instState" (change)="onStateSelect($event.target.value)"
                                                             required>
@@ -263,7 +275,7 @@
                                                             | translate}}</div>
                                                     </div>
                                                     <div class="col-md-3">
-                                                            <label for="city">{{'adminConfigarationPage.educationalInstitutesPage.city' | translate}}</label>
+                                                            <label for="city">{{'adminConfigarationPage.educationalInstitutesPage.city' | translate}} <span class="reqMark">*</span></label>
                                                         <select class="form-control" name="instCity" #instCityControl="ngModel"
                                                             [(ngModel)]="institute.instCity" required>
                                                             <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.educationalInstitutesPage.city'
@@ -276,7 +288,7 @@
                                                             | translate}}</div>
                                                     </div>
                                                     <div class="col-md-3">
-                                                            <label for="pinCode">{{'adminConfigarationPage.educationalInstitutesPage.pinCode' | translate}}</label>
+                                                            <label for="pinCode">{{'adminConfigarationPage.educationalInstitutesPage.pinCode' | translate}} <span class="reqMark">*</span></label>
                                                         <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.pinCode' | translate}}"
                                                             name="instPincode" #instPincodeControl="ngModel"
                                                             [(ngModel)]="institute.instPincode" required />
@@ -286,7 +298,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="col-md-3">
-                                                            <label for="email">{{'adminConfigarationPage.educationalInstitutesPage.email' | translate}}</label>
+                                                            <label for="email">{{'adminConfigarationPage.educationalInstitutesPage.email' | translate}} <span class="reqMark">*</span></label>
                                                         <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.email' | translate}}"
                                                             name="instEmail" #instEmailControl="ngModel" [(ngModel)]="institute.instEmail"
                                                             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$" required />
@@ -302,7 +314,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
-                                                            <label for="mobile">{{'adminConfigarationPage.educationalInstitutesPage.mobile' | translate}}</label>
+                                                            <label for="mobile">{{'adminConfigarationPage.educationalInstitutesPage.mobile' | translate}} <span class="reqMark">*</span></label>
                                                         <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.mobile' | translate}}"
                                                             name="instMobile" #instMobileControl="ngModel" [(ngModel)]="institute.instMobile"
                                                             pattern="\d*" minlength=10 maxlength=15 required />
@@ -333,9 +345,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-12 text-right">
-                                                    <button class="btn btn-primary next-step" type="button" [disabled]="contactDetails.invalid"
-                                                        data-toggle="pill" href="#step2">Continue</button>
-                                                </div>
+                                                        <button class="btn btn-primary btnNext" type="button"  [disabled]="contactDetails.invalid"
+                                                            data-toggle="pill" href="#step2" (click)="activeChange('first')">Continue</button>                                                          
+                                                    </div>
                                             </form>
                                         </div>
 
@@ -344,7 +356,7 @@
                                             <form #bankDetails="ngForm">
                                                 <div class="form-group">
                                                     <div class="col-md-3">
-                                                            <label for="accountHolderName">{{'adminConfigarationPage.educationalInstitutesPage.accountHolderName' | translate}}</label>
+                                                            <label for="accountHolderName">{{'adminConfigarationPage.educationalInstitutesPage.accountHolderName' | translate}} <span class="reqMark">*</span></label>
                                                         <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.accountHolderName' | translate}}"
                                                             name="instAccountHolderName" #instAccountHolderNameControl="ngModel"
                                                             [(ngModel)]="institute.instAccountHolderName" required />
@@ -352,7 +364,7 @@
                                                             | translate}}</div>
                                                     </div>
                                                     <div class="col-md-3">
-                                                            <label for="accountNumber">{{'adminConfigarationPage.educationalInstitutesPage.accountNumber' | translate}}</label>
+                                                            <label for="accountNumber">{{'adminConfigarationPage.educationalInstitutesPage.accountNumber' | translate}} <span class="reqMark">*</span></label>
                                                         <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.accountNumber' | translate}}"
                                                             name="instAccountNumber" #instAccountNumberControl="ngModel"
                                                             [(ngModel)]="institute.instAccountNumber" required />
@@ -360,7 +372,7 @@
                                                             | translate}}</div>
                                                     </div>
                                                     <div class="col-md-3">
-                                                            <label for="ifscCode">{{'adminConfigarationPage.educationalInstitutesPage.ifscCode' | translate}}</label>
+                                                            <label for="ifscCode">{{'adminConfigarationPage.educationalInstitutesPage.ifscCode' | translate}} <span class="reqMark">*</span></label>
                                                         <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.ifscCode' | translate}}"
                                                             name="instIfscCode" #instIfscCodeControl="ngModel"
                                                             [(ngModel)]="institute.instIfscCode" required />
@@ -368,7 +380,7 @@
                                                             | translate}}</div>
                                                     </div>
                                                     <div class="col-md-3">
-                                                            <label for="accountType">{{'adminConfigarationPage.educationalInstitutesPage.accountType' | translate}}</label>
+                                                            <label for="accountType">{{'adminConfigarationPage.educationalInstitutesPage.accountType' | translate}} <span class="reqMark">*</span></label>
                                                         <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.accountType' | translate}}"
                                                             name="instAccountType" #instAccountTypeControl="ngModel"
                                                             [(ngModel)]="institute.instAccountType" required />
@@ -378,7 +390,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="col-md-3">
-                                                            <label for="bankName">{{'adminConfigarationPage.educationalInstitutesPage.bankName' | translate}}</label>
+                                                            <label for="bankName">{{'adminConfigarationPage.educationalInstitutesPage.bankName' | translate}} <span class="reqMark">*</span></label>
                                                         <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.bankName' | translate}}"
                                                             name="instBankName" #instBankNameControl="ngModel"
                                                             [(ngModel)]="institute.instBankName" required />
@@ -386,7 +398,7 @@
                                                             | translate}}</div>
                                                     </div>
                                                     <div class="col-md-3">
-                                                            <label for="branch">{{'adminConfigarationPage.educationalInstitutesPage.branch' | translate}}</label>
+                                                            <label for="branch">{{'adminConfigarationPage.educationalInstitutesPage.branch' | translate}} <span class="reqMark">*</span></label>
                                                         <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.branch' | translate}}"
                                                             name="instBankBranch" #instBankBranchControl="ngModel"
                                                             [(ngModel)]="institute.instBankBranch" required />
@@ -395,41 +407,43 @@
                                                     </div>
 
                                                 </div>
-                                                <div class="col-lg-12 text-right">
-                                                    <button type="button" class="btn btn-default prev-step" data-toggle="pill"
-                                                        href="#step1">Previous</button>
-                                                    <button type="button" [disabled]="bankDetails.invalid" class="btn btn-primary next-step"
-                                                        data-toggle="pill" href="#step3">Continue</button>
+                                                 <div class="col-lg-12 text-right">
+                                                    <button type="button" class="btn btn-default btnPrevious" data-toggle="pill"
+                                                        href="#step1" (click)="activeChangePrevious('second')">Previous</button>
+                                                    <button type="button" class="btn btn-primary btnNext" [disabled]="bankDetails.invalid"
+                                                        data-toggle="pill" href="#step3"  (click)="activeChange('second')">Continue</button>
                                                 </div>
                                             </form>
                                         </div>
                                         <div class="tab-pane" role="tabpanel" id="step3">
-                                            <div class="col-sm-12">
-                                                <div class="col-sm-6">
-                                                    <h3>Course Category</h3>
-                                                    <form #courseCategory="ngForm">
-                                                        <div class="boxes" *ngFor="let item of courseCategoryList">
-                                                            <input type="checkbox" id="{{item.categoryId}}" name="courseCategoryList[]" value={{item.categoryId}} (click)="courseCategoryCheckboxSelect(item.categoryId)">
-                                                            <label for="{{item.categoryId}}">{{item.categoryName }}</label>
+                                                <form #courseoffered="ngForm">
+                                                <div class="col-sm-12">
+                                                    <div class="col-sm-6">
+                                                        <h3>Course Category <span class="reqMark">*</span></h3>
+                                                      
+                                                            <div class="boxes" *ngFor="let item of courseCategoryList">
+                                                                <input  type="checkbox" id="{{item.categoryId}}" name="courseCategoryList[]" value={{item.categoryId}} (click)="courseCategoryCheckboxSelect(item.categoryId)" required />
+                                                                <label for="{{item.categoryId}}">{{item.categoryName }}</label>
+                                                            </div>
+                                                        
+                                                    </div>
+                                                    
+                                                    <div class="col-sm-6">
+                                                        <h3>Courses <span class="reqMark">*</span></h3>
+                                                      
+                                                            <div class="boxes" *ngFor="let item of courseListLocal">
+                                                                <input type="checkbox" id="{{item.courseId}}" name="courses[]" value={{item.courseId}} (click)="courseCheckboxSelect(item.courseId)" required/>
+                                                                <label for="{{item.courseId}}">{{item.courseName}}</label>
+                                                            </div>
                                                         </div>
-                                                    </form>
+                                                   
                                                 </div>
-                                                <div class="col-sm-6">
-                                                    <h3>Courses</h3>
-                                                    <form #courses="ngForm">
-                                                        <div class="boxes" *ngFor="let item of courseListLocal">
-                                                            <input type="checkbox" id="{{item.courseId}}" name="courses[]" value={{item.courseId}} (click)="courseCheckboxSelect(item.courseId)">
-                                                            <label for="{{item.courseId}}">{{item.courseName}}</label>
-                                                        </div>
-
-                                                        <div class="col-lg-12 text-right">
-                                                            <button type="button" class="btn btn-default prev-step" data-toggle="pill" href="#step2">Previous</button>
-                                                            <button type="button" [disabled]="courses.invalid" class="btn btn-primary next-step" data-toggle="pill" href="#complete">Continue</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
+                                                <div class="col-lg-12 text-right">
+                                                        <button type="button" class="btn btn-default btnPrevious" data-toggle="pill" href="#step2" (click)="activeChangePrevious('third')">Previous</button>
+                                                        <button type="button" [disabled]="checkboxActivated != true" class="btn btn-primary btnNext" data-toggle="pill" href="#complete" (click)="activeChange('third')">Continue</button>
+                                                    </div>
+                                            </form>
                                             </div>
-                                        </div>
                                         <div class="tab-pane" role="tabpanel" id="complete">
                                             <h3>{{'adminConfigarationPage.educationalInstitutesPage.uploads' |
                                                 translate}}</h3>
@@ -445,18 +459,19 @@
                                         </div>
                                         <div class="clearfix"></div>
                                     </div>
-                                </form>
+                                <!-- </form> -->
                             </div>
 
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-success" type="submit" data-dismiss="modal" (click)="saveInstitute(institute)">{{'adminConfigarationPage.commonFields.save'
+                        <button class="btn btn-success" type="submit" data-dismiss="modal" (click)="saveInstitute(institute)"
+                         [disabled]="educationalInstituteForm.invalid || contactDetails.invalid || bankDetails.invalid || checkboxActivated != true || upload.invalid">{{'adminConfigarationPage.commonFields.save'
                             | translate}}</button>
                         <button class="btn btn-default" type="button" data-dismiss="modal">{{'adminConfigarationPage.commonFields.close'
                             | translate}}</button>
                     </div>
-                </form>
+               
             </div>
 
         </div>

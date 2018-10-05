@@ -12,13 +12,16 @@ import { BusinessCategoryServicesService } from '../bisuness-category/business-c
 })
 export class AttributeComponent implements OnInit {
   alertMassege = "";
+  isListContainsData: boolean;
+  isSearchClicked: boolean;
+  caseInsensitive: boolean = true;
 
   saveOrUpdate: string;
-  pagenumber : string ;
+  pagenumber: string;
   p: number = 1;
   itemsPerPage2: number = 1;
   // key: string = 'attributeId';
-  key: string ;
+  key: string;
   reverse: boolean = false;
 
   attribute: Attribute = new Attribute();
@@ -29,7 +32,10 @@ export class AttributeComponent implements OnInit {
     private BusinessCategoryServicesService: BusinessCategoryServicesService) { }
 
   ngOnInit() {
-    this.getAttribute();
+    // this.getAttribute();
+    this.isListContainsData = false;
+    this.isSearchClicked = false;
+
     this.getBusinessCategory();
     this.pageChange(5);
   }
@@ -108,53 +114,69 @@ export class AttributeComponent implements OnInit {
     });
   }
 
-  pageChange(pagenumber){
-  
-    this.pagenumber=pagenumber;
+  pageChange(pagenumber) {
+
+    this.pagenumber = pagenumber;
   }
-  customPageChange(number)
-  {
-    this.p=number;
+  customPageChange(number) {
+    this.p = number;
     this.itemsPerPage2 = number;
-    if(this.p==1)
-    {
+    if (this.p == 1) {
       this.itemsPerPage2 = 1;
     }
-    else
-    {
+    else {
       this.itemsPerPage2 = +this.pagenumber;
     }
   }
-  sort(key){
+  sort(key) {
     this.key = key;
     this.reverse = !this.reverse;
   }
   searchAttribute(attributeParameters) {
-    // console.log(planParameters.value);
-     this.service.searchAttribute(attributeParameters.value)
-         .subscribe(
-       (data) => {
-         this.attributeList = data;
-         console.log(this.attributeList);
-       },
-       (error) => {
-         console.log(error);
-         alert("Try again");
-       }
-     );
-   }
+    
+    if (typeof attributeParameters.value.attributeName != "undefined"
+      || typeof attributeParameters.value.attributeCode != "undefined"
+      || typeof attributeParameters.value.businessCatCode != "undefined") {
+      this.isSearchClicked = true;
+      if (attributeParameters.value.attributeName === null
+        || attributeParameters.value.attributeCode === null
+        || attributeParameters.value.businessCatCode === null) {
+
+      }
+      else {
+
+        this.service.searchAttribute(attributeParameters.value)
+          .subscribe(
+            (data) => {
+              this.attributeList = data;
+              if (typeof this.attributeList !== 'undefined' && this.attributeList.length > 0) {
+                this.isListContainsData = true;
+              }
+              else {
+                this.isListContainsData = false;
+              }
+            },
+            (error) => {
+              console.log(error);
+              alert("Try again");
+            }
+          );
+      }
+    }
+
+  }
 
   searchClear() {
     this.attribute = new Attribute();
-    this.service.searchAttribute(this.attribute)
-      .subscribe(
-        (data) => {
-          this.attributeList = data;
-        },
-        (error) => {
-          console.log(error);
-          alert("Try again");
-        }
-      );
+    // this.service.searchAttribute(this.attribute)
+    //   .subscribe(
+    //     (data) => {
+    //       this.attributeList = data;
+    //     },
+    //     (error) => {
+    //       console.log(error);
+    //       alert("Try again");
+    //     }
+    //   );
   }
 }
