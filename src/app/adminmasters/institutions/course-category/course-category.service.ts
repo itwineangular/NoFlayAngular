@@ -32,12 +32,11 @@ export class CourseCategoryService {
   updateCourseCategory(courseCategory)
   {
     let obj = {
-      "categoryId":courseCategory.categoryId,
       "categoryName": courseCategory.categoryName,
       "categoryCode": courseCategory.categoryCode,
       "status": courseCategory.status
       };
-      // console.log(obj);
+      console.log(obj);
     let headers = new Headers({ 
       'Content-Type': 'application/json'
       });
@@ -95,6 +94,6 @@ export class CourseCategoryService {
     headers.append('Access-Control-Allow-Headers', 'Content-Type');
     headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
     let options = { headers: headers };
-    return this.http.post(this.url+'/coursecategory/searchList', obj, options).pipe(map(res => res.json()));
+    return this.http.post(this.url+'/coursecategory/searchByCriteria', obj, options).pipe(map(res => res.json()));
   }
 }

@@ -32,6 +32,9 @@ export class EducationalInstituteComponent implements OnInit {
     courseCategoryList: CourseCategory[] = [];
     selectedCourseCategoryList: string[] = [];
     courseListLocalDummy: CourseCategory[] = [];
+
+    courseList : CourseProfile[] = [];
+
     courseListLocal: CourseProfile[] = [];
     selectedCoursecourseList: string[] = [];
 
@@ -66,7 +69,7 @@ export class EducationalInstituteComponent implements OnInit {
         this.getStates();
         this.getCities();
         this.getCourseCategory();
-        // this.getCourses();
+        this.getCourses();
         // this.getInstitutes();
         this.isListContainsData = false;
         this.isSearchClicked=false;
@@ -151,6 +154,8 @@ export class EducationalInstituteComponent implements OnInit {
                     this.instituteList = data;
                     if (typeof this.instituteList !== 'undefined' && this.instituteList.length > 0) {
                         this.isListContainsData = true;
+                        console.log("list check");
+                        console.log(this.instituteList);
                       }
                       else {
                         this.isListContainsData = false;
@@ -183,9 +188,10 @@ export class EducationalInstituteComponent implements OnInit {
     addNew() {
         this.saveOrUpdate = "save";
         this.institute = new EducationalInstitute();
+        
     }
     selectedUser(data) {
-        this.saveOrUpdate = "update";
+        this.saveOrUpdate = "update";       
         this.institute = data;
         this.onSelect(this.institute.instCountryname);
         this.onStateSelect(this.institute.instState);
@@ -211,16 +217,16 @@ export class EducationalInstituteComponent implements OnInit {
         });
     }
     getCourseCategory() {
-        this.courseCategoryService.fetchCourseCategory().subscribe(data => {
+        this.courseCategoryService.getCourseCategory().subscribe(data => {
             this.courseCategoryList = data;
             console.log(this.courseCategoryList);
         });
     }
     getCourses() {
-        // this.courseservice.getCourse().subscribe(data => {
-        //     this.courseList = data;
-        //     console.log(this.courseList);
-        // });
+        this.courseservice.getCourse().subscribe(data => {
+            this.courseList = data;
+            console.log(this.courseList);
+        });
     }
 
     onSelect(countryid) {
@@ -303,6 +309,7 @@ export class EducationalInstituteComponent implements OnInit {
 
         }
         else if (this.saveOrUpdate == "update") {
+            console.log("update");
             // var selectedCourses = [];
             // var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
             // for (var i = 0; i < checkboxes.length; i++) {
@@ -313,6 +320,7 @@ export class EducationalInstituteComponent implements OnInit {
                     (data) => {
                         this.alertMassege = "Item updated on list successfully!!";
                         this.getInstitutes();
+                       
                     },
                     (error) => {
                         console.log(error);

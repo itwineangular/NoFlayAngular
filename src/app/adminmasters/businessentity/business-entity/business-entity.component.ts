@@ -9,6 +9,7 @@ import { BusinessCategory } from "../bisuness-category/business-category";
 
 import { AttributeService } from "../attribute/attribute.service";
 import { Attribute } from "../attribute/attribute";
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-business-entity',
@@ -32,6 +33,8 @@ export class BusinessEntityComponent implements OnInit {
   p: number = 1;
   itemsPerPage2: number = 1;
   business: BusinessEntity = new BusinessEntity();
+  saveOrUpdate: string;
+  checkboxActivated:boolean = false;
 
   businessEntityList: BusinessEntity[];
   businessCategoryList: BusinessCategory[];
@@ -49,48 +52,90 @@ export class BusinessEntityComponent implements OnInit {
     this.getStates();
     this.getCities();
     this.getBusinessEntity();
-    // this.getBusinessCategory();
+    this.getBusinessCategory();
     this.isListContainsData = false;
     this.isSearchClicked=false;
 
     this.getAttribute();
     this.pageChange(5);
+
+    $('.btnNext').click(function(){
+      $('.nav-tabs > .active').next('li').find('a').trigger('click');
+      });
+      
+      $('.btnPrevious').click(function(){
+      $('.nav-tabs > .active').prev('li').find('a').trigger('click');
+      });
   }
+
+  activeChange(value){
+    if(value == "first"){
+        $('#test1').removeClass("active");
+        $('#test2').addClass("active");
+        $('#test3').removeClass("active");
+        $('#test4').removeClass("active");
+        $('#test1 > a').removeClass('disableTab');
+        $('#test1 > a').addClass('enableTab');
+    }else if(value == "second"){
+        $('#test1').removeClass("active");
+        $('#test2').removeClass("active");
+        $('#test3').addClass("active");
+        $('#test4').removeClass("active");
+        $('#test2 > a').removeClass('disableTab');
+        $('#test2 > a').addClass('enableTab');
+
+    }else if(value == "third"){
+        $('#test1').removeClass("active");
+        $('#test2').removeClass("active");
+        $('#test3').removeClass("active");
+        $('#test4').addClass("active");
+        $('#test3 > a').removeClass('disableTab');
+        $('#test3 > a').addClass('enableTab');
+    }
+    
+}
+activeChangePrevious(value){
+    if(value == "second"){
+        $('#test1').addClass("active");
+        $('#test2').removeClass("active");
+        $('#test3').removeClass("active");
+        $('#test4').removeClass("active");
+    }else if(value == "third"){
+        $('#test1').removeClass("active");
+        $('#test2').addClass("active");
+        $('#test3').removeClass("active");
+        $('#test4').removeClass("active");
+
+    }else if(value == "fourth"){
+        $('#test1').removeClass("active");
+        $('#test2').removeClass("active");
+        $('#test3').addClass("active");
+        $('#test4').removeClass("active");
+
+    }
+
+}
+selectCheckbox(id){
+  if($('#'+id).prop('checked')){    
+    this.checkboxActivated = true;
+  }else{
+    this.checkboxActivated = false;
+  }
+
+}
 
 
   addNew() {
-    this.business.name = "",
-      this.business.registrationCode = "",
-      this.business.businessCategoryCode = "",
-      this.business.shortname = "",
-      this.business.contactPerson = "",
-      this.business.designation = "",
-      this.business.address1 = "",
-      this.business.address2 = "",
-      this.business.country = "",
-      this.business.state = "",
-      this.business.city = "",
-      this.business.pincode = "",
-      this.business.mobile = "",
-      this.business.phone = "",
-      this.business.fax = "",
-      this.business.accountHolderName = "",
-      this.business.accountNumber = "",
-      this.business.ifscCode = "",
-      this.business.accountType = "",
-      this.business.bankName = "",
-      this.business.bankBranch = ""
+    this.saveOrUpdate = "save";
+    this.business= new BusinessEntity();
   }
 
   saveBusinessEntity(data) {
-    //  console.log(data);
-    this.service.saveBusinessEntity(data)
+    if (this.saveOrUpdate == "save") {
+      this.service.saveBusinessEntity(data)
       .subscribe(
         (data) => {
-          this.alertMassege = "New item add on list successfully!!";
-          // if(form!=null)
-          // form.reset();
-          // this.courseCategory=null;
+          this.alertMassege = "New item add on list successfully!!";         
           this.getBusinessEntity();
         },
         (error) => {
@@ -98,7 +143,41 @@ export class BusinessEntityComponent implements OnInit {
           alert("Try again");
         }
       );
-  }
+
+    }
+    else if (this.saveOrUpdate == "update") {
+       
+        this.service.updateBusinessEntity(this.business)
+      .subscribe(
+        (data) => {
+          this.alertMassege = "Item updated on list successfully!!";
+          this.getBusinessEntity();
+        },
+        (error) => {
+          console.log(error);
+          alert("Try again");
+        }
+      );
+
+    }
+}
+  // saveBusinessEntity(data) {
+  //   //  console.log(data);
+  //   this.service.saveBusinessEntity(data)
+  //     .subscribe(
+  //       (data) => {
+  //         this.alertMassege = "New item add on list successfully!!";
+  //         // if(form!=null)
+  //         // form.reset();
+  //         // this.courseCategory=null;
+  //         this.getBusinessEntity();
+  //       },
+  //       (error) => {
+  //         console.log(error);
+  //         alert("Try again");
+  //       }
+  //     );
+  // }
 
   // countries = [
   //   new country(1, 'USA' ),
@@ -169,8 +248,8 @@ export class BusinessEntityComponent implements OnInit {
   }
 
 
-
   selectUser(item) {
+    this.saveOrUpdate = "update";
     this.business = item;
     this.onSelect(this.business.country);
     this.onStateSelect(this.business.state);
@@ -190,25 +269,26 @@ export class BusinessEntityComponent implements OnInit {
       });
   }
 
-  updateBusinessEntity() {
-    console.log(this.business);
-    this.service.updateBusinessEntity(this.business)
-      .subscribe(
-        (data) => {
-          this.alertMassege = "Item updated on list successfully!!";
+  // updateBusinessEntity() {
+  //   console.log(this.business);
+  //   this.service.updateBusinessEntity(this.business)
+  //     .subscribe(
+  //       (data) => {
+  //         this.alertMassege = "Item updated on list successfully!!";
 
-          this.getBusinessEntity();
-        },
-        (error) => {
-          console.log(error);
-          alert("Try again");
-        }
-      );
-  }
+  //         this.getBusinessEntity();
+  //       },
+  //       (error) => {
+  //         console.log(error);
+  //         alert("Try again");
+  //       }
+  //     );
+  // }
 
   getBusinessCategory() {
     this.businessCategoryService.getBusinessCategory().subscribe(data => {
       this.businessCategoryList = data;
+      console.log(this.businessCategoryList);
     });
   }
 

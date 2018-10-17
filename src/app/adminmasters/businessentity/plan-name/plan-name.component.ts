@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { PlanName } from "./plan-name";
 import { PlanNameServicesService } from "./plan-name-services.service";
 
+declare var jquery: any;
+declare var $: any;
+
 @Component({
   selector: 'app-plan-name',
   templateUrl: './plan-name.component.html',
@@ -34,6 +37,10 @@ export class PlanNameComponent implements OnInit {
   addNew() {
     this.saveOrUpdate = "save";
     this.planName = new PlanName();
+    $('#addModal').modal({
+      backdrop: 'static',
+      keyboard: false
+  });
   }
 
   selectUser(planNameData) {

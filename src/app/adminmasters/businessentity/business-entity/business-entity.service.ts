@@ -128,7 +128,7 @@ export class BusinessEntityService {
     headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
     let options = { headers: headers };
     // return this.http.post(this.url + '/businessentity/searchList', obj, options).pipe(map(res => res.json()));
-    return this.http.post(this.url+'/businessentity/searchList', obj, options).pipe(map(res => res.json()));
+    return this.http.post(this.url+'/businessentity/searchByCriteria', obj, options).pipe(map(res => res.json()));
   }
 
 

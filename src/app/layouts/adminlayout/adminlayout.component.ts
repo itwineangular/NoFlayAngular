@@ -33,6 +33,9 @@ export class AdminlayoutComponent implements OnInit {
   plans : string;
   status : string;
 
+  membershipManagement : string;
+  membershipCard : string;
+
   id: string;
 
   constructor(public router: Router,
@@ -107,6 +110,9 @@ export class AdminlayoutComponent implements OnInit {
       this.status = "Status",
       this.student = "Students",
 
+      this.membershipManagement = "Membership Management",
+      this.membershipCard = "Membership Card",
+
       this.gotopage(this.selectedFlag)
   }
   frenchMenuitems() {
@@ -124,6 +130,10 @@ export class AdminlayoutComponent implements OnInit {
       this.plans = "Des plans",
       this.status = "Statut",
       this.student = "Élèves",
+
+      this.membershipManagement = "Gestion des membres",
+      this.membershipCard = "Carte de membre",
+
       this.gotopage(this.selectedFlag);
   }
 
@@ -163,13 +173,22 @@ export class AdminlayoutComponent implements OnInit {
                   { 'name': this.businessCategory, 'url': 'businessCategory' },
                   { 'name': this.businessEntities, 'url': 'businessEntity' },
                   { 'name': this.attribute, 'url': 'attribute' },
-                  { 'name': this.membership, 'url': 'membership' },
-                  { 'name': this.planName,'url':'planName'},
-                  { 'name': this.plans, 'url': 'plans' }
+                  // { 'name': this.membership, 'url': 'membership' },
+                  // { 'name': this.planName,'url':'planName'},
+                  // { 'name': this.plans, 'url': 'plans' }
                 ]
               },
               {
-                'menuid': '4', 'mainmenu': this.status,
+                'menuid': '4', 'mainmenu': this.membershipManagement,
+                'submenu': [
+                  { 'name': this.membership, 'url': 'membership' },
+                  { 'name': this.planName,'url':'planName'},
+                  { 'name': this.plans, 'url': 'plans' },
+                  { 'name': this.membershipCard, 'url': 'membershipCard' }
+                ]
+              },
+              {
+                'menuid': '5', 'mainmenu': this.status,
                 'submenu': [
                   { 'name': this.status, 'url': 'status' }
                 ]

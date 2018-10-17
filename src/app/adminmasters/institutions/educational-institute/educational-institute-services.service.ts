@@ -3,6 +3,7 @@ import { Constants } from "../../../Constants";
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { map } from "rxjs/operators";
 import { Angular2TokenService } from 'angular2-token';
+import { SelectedCourses } from "./educational-institute";
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,9 @@ import { Angular2TokenService } from 'angular2-token';
 export class EducationalInstituteServicesService {
 
   url = Constants.HOME_URL;
+  selectedCourses : SelectedCourses = new SelectedCourses();
+  arrayCC = ["9","10","11"];
+   array = ["4","5","6"];
   
   constructor(private http: Http,
     private tokenService: Angular2TokenService) {
@@ -18,8 +22,34 @@ export class EducationalInstituteServicesService {
 
   saveEducationalInstitute(institute,courseCategory ,courses) {
 
-    let obj =
-    {
+    // let obj =
+    // {
+    //   "instName": institute.instName,
+    //   "instShortName": institute.instShortName,
+    //   "instRegistrationCode": institute.instRegistrationCode,
+    //   "instBranch": institute.instBranch,
+    //   "instContactPerson": institute.instContactPerson,
+    //   "instDesignation": institute.instDesignation,
+    //   "instAddressone": institute.instAddressone,
+    //   "instAddresstwo": institute.instAddresstwo,
+    //   "instCountryname": institute.instCountryname,
+    //   "instState": institute.instState,
+    //   "instCity": institute.instCity,
+    //   "instPincode": institute.instPincode,
+    //   "instEmail": institute.instNainstEmailme,
+    //   "instMobile": institute.instMobile,
+    //   "instPhone": institute.instPhone,
+    //   "instFax": institute.instFax,
+    //   "instAccountHolderName": institute.instAccountHolderName,
+    //   "instAccountNumber": institute.instAccountNumber,
+    //   "instIfscCode": institute.instIfscCode,
+    //   "instAccountType": institute.instAccountType,
+    //   "instBankName": institute.instBankName,
+    //   "instBankBranch": institute.instBankBranch
+
+    // };
+
+    let obj ={
       "instName": institute.instName,
       "instShortName": institute.instShortName,
       "instRegistrationCode": institute.instRegistrationCode,
@@ -41,10 +71,23 @@ export class EducationalInstituteServicesService {
       "instIfscCode": institute.instIfscCode,
       "instAccountType": institute.instAccountType,
       "instBankName": institute.instBankName,
-      "instBankBranch": institute.instBankBranch
-      // "courseProfiles": courses
+      "instBankBranch": institute.instBankBranch,
+      "courseCategoryList": []
+      }
+      
+      this.arrayCC.forEach(element => {
+        let objLocal=  {
+          "categoryId":element,
+          "courseProfileList": []
+          }
+          this.array.forEach(element2 =>{
+            this.selectedCourses = new SelectedCourses();
+            this.selectedCourses.courseId = element2;
+            objLocal.courseProfileList.push(this.selectedCourses);
+          })
+        obj.courseCategoryList.push(objLocal);
+      });
 
-    };
     console.log(obj);
     var myJsonString = JSON.stringify(obj);
     console.log(myJsonString);
@@ -134,44 +177,5 @@ export class EducationalInstituteServicesService {
     let options = { headers: headers };
     return this.http.post(this.url + '/institutions/searchList', obj, options).pipe(map(res => res.json()));
   }
-
-  // uploadImage(imageFile) {
-  //   console.log("here");
-  //   let headers = new Headers();
-  //   headers.append('Access-Control-Allow-Origin', '*');
-  //   headers.append('Access-Control-Allow-Credentials', 'true');
-  //   headers.append('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
-  //   headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
-
-  //   // headers.append('file',imageFile);
-  //   // headers.append('name',imageFile.name);
-
-  //   let options = { headers: headers };
-
-  //   return this.http.post(this.url + '/uploadFile', imageFile, options);
-  // }
-
-  // upload(formData) {
-  //   let headers = this.tokenService.currentAuthHeaders;
-  //   headers.delete('Content-Type');
-  //   let options = new RequestOptions({ headers: headers });
-
-  //   return this.tokenService.request({
-  //     method: 'post',
-  //     url: `http://192.168.1.55:8080/mcmwebservices/uploadFile`,
-  //     body: formData,
-  //     headers: options.headers
-  //   }).pipe(map(res => res.json()));
-  // }
-
-  // getCoursesWithCourseCategory() {
-  //   let headers = new Headers();
-  //   headers.append('Access-Control-Allow-Origin', '*');
-  //   headers.append('Access-Control-Allow-Headers', 'Content-Type');
-  //   headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
-  //   let options = { headers: headers };
-
-  //   return this.http.get(this.url + '/coursecategory/fetch', options).pipe(map(res => res.json()));
-  // }
 
 }

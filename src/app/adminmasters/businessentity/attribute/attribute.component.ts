@@ -4,6 +4,8 @@ import { Attribute } from "../attribute/attribute";
 import { BusinessCategory } from "../bisuness-category/business-category";
 import { BusinessCategoryServicesService } from '../bisuness-category/business-category-services.service';
 
+declare var jquery: any;
+declare var $: any;
 
 @Component({
   selector: 'app-attribute',
@@ -42,6 +44,10 @@ export class AttributeComponent implements OnInit {
   addNew() {
     this.saveOrUpdate = "save";
     this.attribute = new Attribute();
+    $('#addModal').modal({
+      backdrop: 'static',
+      keyboard: false
+  });
   }
 
   saveAttribute(attributeValue) {

@@ -120,6 +120,7 @@
             "save" : "Save",
             "edit" : "Edit",
             "delete" : "Delete",
+            "view":"View",
             "status" : "Status",
             "search" : "Search",
             "index" : "Index",
@@ -167,7 +168,8 @@
             "statusMesaage": "Status Required",
             "planMessage":"Plan Required",
             "noRecordFound":"No Record Found",
-            "instituteDetails": "Institute Details"
+            "instituteDetails": "Institute Details",
+            "invalidAccNumberMessage": "Invalid Account Number"
         },
 
         "businessCategory" : {
@@ -181,7 +183,8 @@
             "registrationNumber" : "Registration Number",
             "shortName" : "ShortName",
             "selectOffers" : "select Offers",
-            "plans" : "Plans"
+            "plans" : "Plans",
+            "selectBusiness" : "Select Business Category"
         },
 
         "attributes" : {
@@ -207,6 +210,17 @@
             "planMembership" : "Plan Membership",
             "startDate" : "StartDate",
             "endDate" : "EndDate"
+        },
+        "membershipCardPage" : {
+            "membershipCard": "Membership Card",
+            "institutionName":"Institutiuon Name",
+            "courseCategory": "Course Category",
+            "course":"Course",
+            "studentName":"Student Name",
+            "planName":"Plans ",
+            "checkbox": "Checkbox",
+            "proceed": "Proceed",
+            "mcmId": "MCM ID"
         },
         "statusPage":
         {

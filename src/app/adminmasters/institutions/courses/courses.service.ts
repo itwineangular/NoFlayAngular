@@ -11,15 +11,19 @@ export class CourseService {
   url = Constants.HOME_URL;
 
   constructor(private http : Http) { }
-  
+  // CourseCategoryVo: any;
   saveCourse(course)
   {
-    let obj = {
-      "courseName": course.courseName,
-      "courseCode": course.courseCode,
-      "categoryName": course.categoryName,
-      "duration": course.duration
-      };
+    console.log(course);
+    let obj=  {
+      "courseName":course.courseName,
+      "courseCode":course.courseCode,
+      "duration": course.duration,
+      "courseCategoryList": [{
+                      "categoryId":course.categoryName
+                  }]   
+      }
+      
    console.log(obj);
     let headers = new Headers({ 
       'Content-Type': 'application/json'
@@ -33,14 +37,17 @@ export class CourseService {
 
   updateCourse(course)
   {
-    let obj = {
-      "courseName": course.courseName,
-      "courseCode": course.courseCode,
-      "categoryName": course.categoryName,
-      "duration": course.duration
-      };
-
-      // console.log(obj);
+    console.log(course);
+    let obj=  {
+      "courseName":course.courseName,
+      "courseCode":course.courseCode,
+      "duration": course.duration,
+      "courseCategoryList": [{
+                      "categoryId":course.categoryName
+                  }]   
+      }
+      
+      console.log(obj);
     let headers = new Headers({ 
       'Content-Type': 'application/json'
       });
@@ -48,6 +55,7 @@ export class CourseService {
       headers.append('Access-Control-Allow-Headers','Content-Type');
       headers.append('Access-Control-Allow-Methods','GET,POST,OPTIONS,DELETE,PUT');
     let options = { headers: headers };
+    // return this.http.put(this.url+'/courseprofile/update/'+course.courseId, obj, options);
     return this.http.put(this.url+'/courseprofile/update/'+course.courseId, obj, options);
   }
 
@@ -75,13 +83,6 @@ export class CourseService {
   }
 
   searchCourse(course) {
-    let obj =
-    {
-      "courseName": course.courseName,
-      "courseCode": course.courseCode,
-      "categoryName": course.categoryName,
-      "duration": course.duration
-    };
     let headers = new Headers({
       'Content-Type': 'application/json'
     });
@@ -89,6 +90,8 @@ export class CourseService {
     headers.append('Access-Control-Allow-Headers', 'Content-Type');
     headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
     let options = { headers: headers };
-    return this.http.post(this.url+'/courseprofile/searchList', obj, options).pipe(map(res => res.json()));
+    
+    return this.http.get(this.url+'/courseprofile/searchCourse?courseName='+course.courseName+'&courseCode='+course.courseCode+'&categoryId='+course.categoryName+'&duration='+course.duration+'',options).pipe(map(res => res.json()));
+
   }
 }

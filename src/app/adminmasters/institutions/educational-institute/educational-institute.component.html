@@ -43,7 +43,7 @@
         <div class="col-md-12">
             <div class="alert alert-warning fade in myAlert" *ngIf="alertMassege">
                 <a class="close" href="#" data-dismiss="alert" (click)="clickedAlert()">X</a>
-                <h4>{{alertMassege}}</h4>
+                <h4 style="text-align: center">{{alertMassege}}</h4>
             </div>
             <div *ngIf="isSearchClicked">
             <div *ngIf="!isListContainsData">
@@ -67,6 +67,7 @@
                     | translate}} <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span></th>
                 <th>{{ 'adminConfigarationPage.commonFields.edit' | translate }}</th>
                 <th>{{ 'adminConfigarationPage.commonFields.delete' | translate }}</th>
+        
             </tr>
         </thead>
             <tbody>
@@ -162,6 +163,7 @@
                                     <div class="validation-error" *ngIf="instBranchControl.invalid && instBranchControl.touched">{{'adminConfigarationPage.commonFields.branchRequired'
                                         | translate}}</div>
                                 </div>
+                                
                             </div>
                             </form>
                             <div class="wizard">
@@ -242,6 +244,7 @@
                                                         <div class="validation-error" *ngIf="instAddresstwoControl.invalid && instAddresstwoControl.touched">{{'adminConfigarationPage.commonFields.Address2Required'
                                                             | translate}}</div>
                                                     </div>
+                                                    <div class="clearfix"></div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="col-md-3">
@@ -295,6 +298,7 @@
                                                         <div class="validation-error" *ngIf="instPincodeControl.invalid && instPincodeControl.touched">{{'adminConfigarationPage.commonFields.PincodeRequired'
                                                             | translate}}</div>
                                                     </div>
+                                                    <div class="clearfix"></div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="col-md-3">
@@ -343,9 +347,10 @@
                                                         <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.fax' | translate}}"
                                                             name="instFax" #instFax="ngModel" [(ngModel)]="institute.instFax" />
                                                     </div>
+                                                    <div class="clearfix"></div>
                                                 </div>
                                                 <div class="col-lg-12 text-right">
-                                                        <button class="btn btn-primary btnNext" type="button"  [disabled]="contactDetails.invalid"
+                                                        <button class="btn btn-primary btnNext" type="button"  
                                                             data-toggle="pill" href="#step2" (click)="activeChange('first')">Continue</button>                                                          
                                                     </div>
                                             </form>
@@ -366,10 +371,15 @@
                                                     <div class="col-md-3">
                                                             <label for="accountNumber">{{'adminConfigarationPage.educationalInstitutesPage.accountNumber' | translate}} <span class="reqMark">*</span></label>
                                                         <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.accountNumber' | translate}}"
-                                                            name="instAccountNumber" #instAccountNumberControl="ngModel"
+                                                            name="instAccountNumber" #instAccountNumberControl="ngModel"  pattern="\d*"
                                                             [(ngModel)]="institute.instAccountNumber" required />
                                                         <div class="validation-error" *ngIf="instAccountNumberControl.invalid && instAccountNumberControl.touched">{{'adminConfigarationPage.commonFields.accountNumber'
-                                                            | translate}}</div>
+                                                            | translate}}
+                                                            <div class="validation-error" *ngIf="instAccountNumberControl.errors.pattern">
+                                                                {{'adminConfigarationPage.commonFields.invalidAccNumberMessage'
+                                                                | translate}}
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     <div class="col-md-3">
                                                             <label for="ifscCode">{{'adminConfigarationPage.educationalInstitutesPage.ifscCode' | translate}} <span class="reqMark">*</span></label>
@@ -387,6 +397,7 @@
                                                         <div class="validation-error" *ngIf="instAccountTypeControl.invalid && instAccountTypeControl.touched">{{'adminConfigarationPage.commonFields.accountType'
                                                             | translate}}</div>
                                                     </div>
+                                                    <div class="clearfix"></div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="col-md-3">
@@ -405,12 +416,13 @@
                                                         <div class="validation-error" *ngIf="instBankBranchControl.invalid && instBankBranchControl.touched">{{'adminConfigarationPage.commonFields.branchRequired'
                                                             | translate}}</div>
                                                     </div>
+                                                    <div class="clearfix"></div>
 
                                                 </div>
                                                  <div class="col-lg-12 text-right">
-                                                    <button type="button" class="btn btn-default btnPrevious" data-toggle="pill"
+                                                    <button type="button" class="btn btn-default btnPrevious preConButton" data-toggle="pill"
                                                         href="#step1" (click)="activeChangePrevious('second')">Previous</button>
-                                                    <button type="button" class="btn btn-primary btnNext" [disabled]="bankDetails.invalid"
+                                                    <button type="button" class="btn btn-primary btnNext" 
                                                         data-toggle="pill" href="#step3"  (click)="activeChange('second')">Continue</button>
                                                 </div>
                                             </form>
@@ -439,8 +451,8 @@
                                                    
                                                 </div>
                                                 <div class="col-lg-12 text-right">
-                                                        <button type="button" class="btn btn-default btnPrevious" data-toggle="pill" href="#step2" (click)="activeChangePrevious('third')">Previous</button>
-                                                        <button type="button" [disabled]="checkboxActivated != true" class="btn btn-primary btnNext" data-toggle="pill" href="#complete" (click)="activeChange('third')">Continue</button>
+                                                        <button type="button" class="btn btn-default btnPrevious preConButton" data-toggle="pill" href="#step2" (click)="activeChangePrevious('third')">Previous</button>
+                                                        <button type="button" class="btn btn-primary btnNext" data-toggle="pill" href="#complete" (click)="activeChange('third')">Continue</button>
                                                     </div>
                                             </form>
                                             </div>
@@ -466,7 +478,7 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-success" type="submit" data-dismiss="modal" (click)="saveInstitute(institute)"
-                         [disabled]="educationalInstituteForm.invalid || contactDetails.invalid || bankDetails.invalid || checkboxActivated != true || upload.invalid">{{'adminConfigarationPage.commonFields.save'
+                         >{{'adminConfigarationPage.commonFields.save'
                             | translate}}</button>
                         <button class="btn btn-default" type="button" data-dismiss="modal">{{'adminConfigarationPage.commonFields.close'
                             | translate}}</button>

@@ -20,8 +20,8 @@
                         name="businessCategoryCode" #businessCategoryCode="ngModel" [(ngModel)]="businesscategory.businessCategoryCode" />
                 </div>
                 <div class="col-md-12">
-                    <button class="btn btn-info btn-outline pull-right cssButtonPadding" data-toggle="modal"
-                        data-target="#addModal" type="button" (click)="addNew()">{{'adminConfigarationPage.commonFields.addNew'
+                    <button class="btn btn-info btn-outline pull-right cssButtonPadding"
+                         type="button" (click)="addNew()">{{'adminConfigarationPage.commonFields.addNew'
                         | translate}}</button>
                     <button class="btn btn-warning btn-outline pull-right cssButtonPadding" type="button" (click)="searchClear()">{{'adminConfigarationPage.commonFields.clear'
                         | translate}}</button>
@@ -34,7 +34,7 @@
         <div class="col-md-12">
             <div class="alert alert-warning fade in myAlert" *ngIf="alertMassege">
                 <a class="close" href="#" data-dismiss="alert" (click)="clickedAlert()">X</a>
-                <h4>{{alertMassege}}</h4>
+                <h4 style="text-align: center">{{alertMassege}}</h4>
             </div>
             <div *ngIf="isSearchClicked">
 

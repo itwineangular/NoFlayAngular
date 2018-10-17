@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { BusinessCategoryServicesService } from './business-category-services.service';
 import { BusinessCategory } from "./business-category";
 
+declare var jquery: any;
+declare var $: any;
 @Component({
   selector: 'app-bisuness-category',
   templateUrl: './bisuness-category.component.html',
@@ -42,6 +44,10 @@ export class BisunessCategoryComponent implements OnInit {
   addNew() {
     this.saveOrUpdate = "save";
     this.businesscategory = new BusinessCategory();
+    $('#addModal').modal({
+      backdrop: 'static',
+      keyboard: false
+  });
   }
 
   saveBusinessCategory(businessValue) {

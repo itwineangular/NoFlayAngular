@@ -26,6 +26,7 @@ import { PlansComponent } from './adminmasters/businessentity/plans/plans.compon
 import { PlanNameComponent } from './adminmasters/businessentity/plan-name/plan-name.component';
 import { StatusComponent } from './adminmasters/status/status/status.component';
 import { StudentComponent } from './adminmasters/institutions/student/student.component';
+import { MembershipCardComponent } from './adminmasters/businessentity/membership-card/membership-card.component'
 
 const appRoutes: Routes = [
   {
@@ -58,6 +59,7 @@ const appRoutes: Routes = [
       { path: 'plans', component: PlansComponent ,canActivate: [AuthGuard]},
       { path: 'status', component: StatusComponent,canActivate: [AuthGuard] },
       { path: 'studentadd', component: StudentComponent ,canActivate: [AuthGuard]},
+      { path: 'membershipCard', component: MembershipCardComponent ,canActivate: [AuthGuard]},
     ]
   }
   /* ADMIN PART END*/

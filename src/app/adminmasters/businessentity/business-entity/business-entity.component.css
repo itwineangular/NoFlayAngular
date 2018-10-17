@@ -348,3 +348,20 @@ th>span{
 	width: 30px;
 	padding: 0px;
 }
+
+.disableTab{
+    pointer-events: none;
+}
+.enableTab{
+    pointer-events: auto;
+}
+
+.validation-error
+{
+    color: red;
+    text-align: center;
+}
+
+.preConButton{
+    margin: 10px;
+}

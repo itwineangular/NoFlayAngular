@@ -24,8 +24,12 @@ declare var $: any;
 })
 export class StudentComponent implements OnInit {
 
+  viewdisable:boolean = true;
   startDate = new Date(1990, 0, 1);
   alertMassege = "";
+  errorMessage : string = "";
+  successMessage : string = "";
+  warningMessage : string = "";
   isListContainsData: boolean;
   isSearchClicked: boolean;
   caseInsensitive: boolean = true;
@@ -130,18 +134,81 @@ export class StudentComponent implements OnInit {
     //   });
     // });
   }
+
+  openbulkuploadpopup(){
+    $('#bulk').modal({
+      backdrop: 'static',
+      keyboard: false
+  });
+  }
+
+  viewuploadedlistinpopup(){
+    $('#bulk').modal('toggle');
+    $('#studentFileUploadModal').modal({
+      backdrop: 'static',
+      keyboard: false
+  });
+  }
   completeItem = (item: FileQueueObject, response: any) => {
     this.onCompleteItem.emit({ item, response });
 }
-
+  resetmodal(){
+  var $el = $('#uid');
+  $el.wrap('<form>').closest('form').get(0).reset();
+  $el.unwrap();
+  this.successMessage = "";
+  this.errorMessage = "";
+  this.viewdisable = true;
+  $('#bulk').modal('toggle');
+}
 
   clickedAlert = function () {
     this.alertMassege = "";
   };
+  abc: string="xlsx";
+  onFileChange(event) {
+    
+    let reader = new FileReader();
+ 
+    if(event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+      let fileName = file.name;
+      let fileExtension = fileName.substr((fileName.lastIndexOf('.') + 1));
+      console.log(fileExtension);
+
+      if(this.abc == fileExtension){
+        this.viewdisable = false;
+        this.onFileChanged;
+        this.errorMessage = "";
+        this.warningMessage = "";
+        this.successMessage = "File Uploaded Successfully";
+      }
+       else  {
+        this.successMessage="";
+        this.errorMessage = "File format should be xlsx";        
+      }
+
+
+
+    } else {
+      this.successMessage = "";
+      this.errorMessage = ""; 
+      this.warningMessage = "Please Select File"; 
+    }
+
+
+ 
+  }
+
 
   addNew() {
     this.saveOrUpdate = "save";
     this.student = new Student();
+    $('#addModal').modal({
+      backdrop: 'static',
+      keyboard: false
+  });
   }
 
   getCountries() {
@@ -493,7 +560,8 @@ onCourseSelect(courseId)
     this.studentService.uploadCsvFile(this.studentBulkList)
     .subscribe(
     (data) => {
-    alert("success");
+         alert("success");
+        this.resetmodal();
     },
     (error) => {
     console.log(error);
@@ -611,6 +679,9 @@ searchStudent(studentParameters) {
             this.studentList = data;
             if (typeof this.studentList !== 'undefined' && this.studentList.length > 0) {
               this.isListContainsData = true;
+            this.studentList = data;
+            this.studentList = data;
+                        // console.log(this.studentList);
             }
             else {
               this.isListContainsData = false;

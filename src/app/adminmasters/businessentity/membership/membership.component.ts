@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MembershipObject } from './membership-object';
 import { MembershipServicesService } from './membership-services.service';
 
+declare var jquery: any;
+declare var $: any;
+
 @Component({
   selector: 'app-membership',
   templateUrl: './membership.component.html',
@@ -34,6 +37,10 @@ export class MembershipComponent implements OnInit {
   addNew() {
     this.saveOrUpdate = "save";
     this.membership = new MembershipObject();
+    $('#addModal').modal({
+      backdrop: 'static',
+      keyboard: false
+  });
   }
 
   selectUser(membershipData) {

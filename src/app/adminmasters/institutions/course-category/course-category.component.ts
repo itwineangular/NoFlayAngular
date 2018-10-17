@@ -2,7 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { CourseCategory } from './course-category.module';
 import { CourseCategoryService } from './course-category.service';
+import Swal from 'sweetalert2';
+import { ViewChild } from '@angular/core';
+import { SelectDropDownComponent } from "ngx-select-dropdown";
 
+declare var jquery: any;
+declare var $: any;
 
 @Component({
   selector: 'app-course-category',
@@ -16,6 +21,7 @@ export class CourseCategoryComponent implements OnInit {
   isListContainsData: boolean;
   courseCategory: CourseCategory = new CourseCategory();
   courseCategoryList: CourseCategory[];
+  courseCategoryListLocal: CourseCategory[];
   saveOrUpdate: string;
   key: string;
   reverse: boolean = false;
@@ -24,23 +30,62 @@ export class CourseCategoryComponent implements OnInit {
   itemsPerPage2: number = 1;
   caseInsensitive: boolean = true;
 
+  @ViewChild('categoryName') public ngSelectCategoryName: SelectDropDownComponent;
+  @ViewChild('categoryCode') public ngSelectCategoryCode: SelectDropDownComponent;
+
   constructor(private service: CourseCategoryService) { }
 
   ngOnInit() {
     this.isListContainsData = false;
     this.isSearchClicked=false;
-    // this.getCourseCaterory();
+    this.getCourseCaterory();
     this.pageChange(5);
   }
+
+  selectedValue : any;
+  config = {
+    displayKey: "categoryName", //if objects array passed which key to be displayed defaults to description
+    search: true,
+    limitTo: 10
+  };
+  changeValue($event: any) {
+    if(this.selectedValue.length>0)
+    {
+      this.courseCategory.status=this.selectedValue[0].status;
+    }
+    else
+    {
+      this.courseCategory = new CourseCategory();
+    }
+    this.ngSelectCategoryCode.value=this.selectedValue;
+    this.ngSelectCategoryCode.ngOnInit();
+  }
+
+  selectedCategoryCodeValue : any;
+  CategoryCodeconfig = {
+    displayKey: "categoryCode", //if objects array passed which key to be displayed defaults to description
+    search: true,
+    limitTo: 10
+  };
+  // CategoryCodeChangeValue($event: any) {
+  //   console.log(this.selectedCategoryCodeValue);
+  //   this.isListContainsData = true;
+  //   this.courseCategoryList = this.selectedCategoryCodeValue;
+  // }
 
   addNew() {
     this.saveOrUpdate = "save";
     this.courseCategory = new CourseCategory();
+    $('#addModal').modal({
+      backdrop: 'static',
+      keyboard: false
+  });
   }
 
   getCourseCaterory() {
     this.service.getCourseCategory().subscribe(data => {
-      this.courseCategoryList = data;
+      // this.courseCategoryList = data;
+      this.courseCategoryListLocal = data;
     });
   }
 
@@ -87,14 +132,13 @@ export class CourseCategoryComponent implements OnInit {
   deleteCourseCaterory(id) {
     this.service.deleteCourseCategory(id).subscribe(
       (data) => {
-        alert(data.message);
-        console.log(data.message);
         this.alertMassege = "Deleted successfully!!";
         this.getCourseCaterory();
+        var categoryListLocal = this.courseCategoryList.filter(x=>x.categoryId!==id);
+        this.courseCategoryList=categoryListLocal;
       },
       (error) => {
-        console.log(error);
-        alert("You can't delete this data");
+         alert("You can't delete this data");
       });
   }
 
@@ -123,50 +167,59 @@ export class CourseCategoryComponent implements OnInit {
   }
 
   searchCourseCategory(courseCategoryParameters) {
-    if (typeof courseCategoryParameters.value.categoryName != "undefined"
-      || typeof courseCategoryParameters.value.categoryCode != "undefined"
-      || typeof courseCategoryParameters.value.status != "undefined") {
-        this.isSearchClicked=true;
-        if(courseCategoryParameters.value.categoryName === null
-        || courseCategoryParameters.value.categoryCode === null
-        || courseCategoryParameters.value.status === null)
-        {
-        }
-        else{
-      this.service.searchCourseCategory(courseCategoryParameters.value)
-        .subscribe(
-          (data) => {
-            this.courseCategoryList = data;
-            if (typeof this.courseCategoryList !== 'undefined' && this.courseCategoryList.length > 0) {
-              this.isListContainsData = true;
-            }
-            else {
-              this.isListContainsData = false;
-            }
-          },
-          (error) => {
-            console.log(error);
-            alert("Try again");
-          }
-        );
-      }
+    var courseCategoryLocal: CourseCategory = new CourseCategory();
+    this.isSearchClicked=true;
+    courseCategoryLocal.status = courseCategoryParameters.status;
+    if (typeof this.selectedValue !== 'undefined'  && this.selectedValue.length>0) 
+    {
+      courseCategoryLocal.categoryName = this.selectedValue[0].categoryName;
+    }
+    if (typeof this.selectedCategoryCodeValue !== 'undefined' && this.selectedCategoryCodeValue.length>0) 
+    {
+      courseCategoryLocal.categoryCode = this.selectedCategoryCodeValue[0].categoryCode
+    }
 
+    if (typeof courseCategoryLocal.categoryName === 'undefined'  && typeof courseCategoryLocal.categoryCode === 'undefined' && typeof courseCategoryLocal.status === 'undefined') 
+    {
+      Swal({
+        title: 'Invalid!!',
+        text: 'Atleast enter any one field.',
+        showCancelButton: false,
+        confirmButtonText: 'Ok',
+      });
+      this.isListContainsData = false;
+      this.courseCategoryList=[];
+     
+    }
+    else
+    {
+      this.service.searchCourseCategory(courseCategoryLocal)
+      .subscribe(
+        (data) => {
+          this.courseCategoryList = data;
+          if (typeof this.courseCategoryList !== 'undefined' && this.courseCategoryList.length > 0) {
+            this.isListContainsData = true;
+          }
+          else {
+            this.isListContainsData = false;
+          }
+        },
+        (error) => {
+          console.log(error);
+          alert("Try again");
+        }
+      );
     }
 
   }
 
   searchClear() {
     this.courseCategory = new CourseCategory();
-    // this.service.searchCourseCategory(this.courseCategory)
-    //   .subscribe(
-    //     (data) => {
-    //       this.courseCategoryList = data;
-    //     },
-    //     (error) => {
-    //       console.log(error);
-    //       alert("Try again");
-    //     }
-    //   );
+    this.ngSelectCategoryName.deselectItem(this.selectedValue,0);
+    this.ngSelectCategoryName.ngOnInit();
+
+    this.ngSelectCategoryCode.deselectItem(this.selectedCategoryCodeValue,0);
+    this.ngSelectCategoryCode.ngOnInit();
   }
 
 }

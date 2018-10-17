@@ -56,6 +56,10 @@ import { NgDatepickerModule } from 'ng2-datepicker';
 import { PlanNameComponent } from './adminmasters/businessentity/plan-name/plan-name.component';
 import { StatusComponent } from './adminmasters/status/status/status.component';
 import { StudentComponent } from './adminmasters/institutions/student/student.component';
+import { MembershipCardComponent } from './adminmasters/businessentity/membership-card/membership-card.component'
+
+import { QRCodeModule } from 'angularx-qrcode';
+import { SelectDropDownModule } from 'ngx-select-dropdown'
 
 
 @NgModule({
@@ -92,7 +96,8 @@ import { StudentComponent } from './adminmasters/institutions/student/student.co
     PlansComponent,
     PlanNameComponent,
     StatusComponent,
-    StudentComponent
+    StudentComponent,
+    MembershipCardComponent
   ],
   imports: [
     BrowserModule,
@@ -113,7 +118,9 @@ import { StudentComponent } from './adminmasters/institutions/student/student.co
     NgDatepickerModule,
     OrderModule,
     NgxPaginationModule,
-    MyDatePickerModule 
+    MyDatePickerModule ,
+    QRCodeModule,
+    SelectDropDownModule
   ],
   providers: [Angular2TokenService, FileuploaderService,
     {

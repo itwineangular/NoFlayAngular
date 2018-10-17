@@ -81,8 +81,7 @@ updateAttribute(data)
     {
       "attributeName": data.attributeName,
       "attributeCode": data.attributeCode,
-      "businessCatCode": data.businessCatCode,
-     
+      "businessCatCode": data.businessCatCode
     };
    
     let headers = new Headers({
@@ -92,7 +91,7 @@ updateAttribute(data)
     headers.append('Access-Control-Allow-Headers', 'Content-Type');
     headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
     let options = { headers: headers };
-    return this.http.post(this.url+'/attribute/searchList', obj, options).pipe(map(res => res.json()));
+    return this.http.post(this.url+'/attribute/searchByCriteria', obj, options).pipe(map(res => res.json()));
   }
 // getBusinessCategory()
 //   {

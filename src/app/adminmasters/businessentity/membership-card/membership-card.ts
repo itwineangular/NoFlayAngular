@@ -1,53 +1,9 @@
-export class Student {
-
-    stdId: number;
-    stdName: string;
-    addressOne: string;
-    addressTwo: string;
-    city: string;
-    state: string;
-    zipcode: string;
-    countryName: string;
-    stdPhone?: any;
-    gender: string;
-    parentPhone: string;
-    stdEmail: string;
-    stdAdmissionNumber: string;
+export class MembershipCard {
     institutionName: string;
-    course: string;
-    stdPassword?: any;
-    mcmId?: any;
-    yearofjoining?: any;
-    courseCategory: string;
-    plan: string;
-    status: string;
-    creationDate?: number;
-    createdBy: string;
-    modifiedDate?: number;
-    modifiedBy: string;
-    studentStatusId: number;
-
-    planPrice : any;
-    planStartDate : any;
-    planEndEnd : any;
-    
-  
+    courseCategory : string;
+    course : string;
+    stdName : string;
 }
-
-
-export class PlanNameObject {
-    planId: number;
-    planName: string;
-    planPrice: number;
-    planMembership: string;
-    createDateTime: any;
-    createdBy?: any;
-    modifiedDateTime: any;
-    modifiedBy?: any;
-    startDateTime: any;
-    endDateTime: any;
-}
-
 
 export class CourseProfile {
     courseId: number;
@@ -106,7 +62,3 @@ export class Institution {
     courseCategory: CourseCategory[];
     instContactPerson: string;
 }
-
-
-
-

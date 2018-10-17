@@ -95,6 +95,7 @@
             "save" : "sauvegarder",
             "edit" : "modifier",
             "delete" : "Effacer",
+            "view":"Vue",
             "status" : "Statut",
             "search" : "Chercher",
             "index" : "Indice",
@@ -133,7 +134,8 @@
             "priceFieldRequired":"Le prix est requis",
             "datetFieldRequired":"La date est requise",
             "noRecordFound":"Aucun Enregistrement Trouvé",
-            "instituteDetails": "Détails de l'institut"
+            "instituteDetails": "Détails de l'institut",
+            "invalidAccNumberMessage": "Numéro de compte invalide"
         },
 
         "businessCategory" : {
@@ -147,7 +149,8 @@
             "registrationNumber" : "Numéro d'enregistrement",
             "shortName" : "Nom court",
             "selectOffers" : "Sélectionner des offres",
-            "plans" : "Des plans"
+            "plans" : "Des plans",
+            "selectBusiness" : "Sélectionner une catégorie d'activité"
         },
 
         "attributes" : {
@@ -196,6 +199,17 @@
             "planMembership" : "Planifier l'adhésion",
             "startDate" : "Date de début",
             "endDate" : "Date de fin"
+        },
+        "membershipCardPage" : {
+            "membershipCard": "Carte de membre",
+            "institutionName":"Nom de l'institutiuon",
+            "courseCategory": "Catégorie de cours",
+            "course":"Cours",
+            "studentName":"Nom d'étudiant",
+            "planName":"Des plans",
+            "checkbox": "Case à cocher",
+            "proceed": "Procéder",
+            "mcmId": "ID MCM"
         },
         "statusPage":
         {

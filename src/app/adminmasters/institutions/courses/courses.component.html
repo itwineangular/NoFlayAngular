@@ -7,32 +7,40 @@
     </div>
 
     <div class="col-md-12">
-        <div class="rcorners2">
-            <form class="form-horizontal" #courseForm="ngForm" (ngSubmit)="searchCourse(courseForm)">
+        <div class="panel panel-default">
+           
+            <div class="panel-body">
+            <form class="form-horizontal" #courseForm="ngForm" (ngSubmit)="FnSearchCourse(courseForm)">
                 <div class="col-md-3">
                     <label for="courseName">{{
                             'adminConfigarationPage.coursePage.courseName' | translate }}</label>
-                    <input class="form-control" type="text" placeholder="{{ 'adminConfigarationPage.commonFields.enterName' | translate }}"
-                        name="courseName" #courseName="ngModel" [(ngModel)]="course.courseName" />
+                    <!-- <input class="form-control" type="text" placeholder="{{ 'adminConfigarationPage.commonFields.enterName' | translate }}"
+                        name="courseName" #courseName="ngModel" [(ngModel)]="courseSearch.courseName" /> -->
+                        <ngx-select-dropdown  #courseName (change)="changeValue($event)" [multiple]="false" [(value)]="selectedValue"
+                        [config]="config" [options]="courseListLocal"></ngx-select-dropdown>
                 </div>
                 <div class="col-md-3">
                     <label for="courseCode">{{
                             'adminConfigarationPage.coursePage.courseCode' | translate }}</label>
-                    <input class="form-control" type="text" placeholder="{{ 'adminConfigarationPage.commonFields.enterCode' | translate }}"
-                        name="courseCode" #courseCode="ngModel" [(ngModel)]="course.courseCode" />
+                    <!-- <input class="form-control" type="text" placeholder="{{ 'adminConfigarationPage.commonFields.enterCode' | translate }}"
+                        name="courseCode" #courseCode="ngModel" [(ngModel)]="courseSearch.courseCode" /> -->
+                        <ngx-select-dropdown  #courseCode [multiple]="false" [(value)]="selectedcourseCodeValue"
+                        [config]="courseCodeconfig" [options]="courseListLocal"></ngx-select-dropdown>
                 </div>
                 <div class="col-md-3">
                     <label for="categoryName">{{
                             'adminConfigarationPage.courseCategoryPage.categoryName' | translate }}</label>
-                    <select class="form-control" name="categoryName" #categoryName="ngModel" [(ngModel)]="course.categoryName">
-                        <option *ngFor="let item of courseCategoryList" value={{item.categoryName}}>{{item.categoryName}}
+                    <!-- <select class="form-control" name="categoryName" #categoryName="ngModel" [(ngModel)]="courseSearch.categoryName">
+                        <option *ngFor="let item of courseCategoryList" value={{item.categoryId}}>{{item.categoryName}}
                         </option>
-                    </select>
+                    </select> -->
+                    <ngx-select-dropdown  #categotyName [multiple]="false" [(value)]="selectedcategoryNameValue"
+                    [config]="categoryNameconfig" [options]="courseCategoryListLocal"></ngx-select-dropdown>
                 </div>
                 <div class="col-md-3">
                     <label for="duration">{{
                             'adminConfigarationPage.coursePage.duration' | translate }}</label>
-                    <select class="form-control" name="duration" #duration="ngModel" [(ngModel)]="course.duration">
+                    <select class="form-control" name="duration" #duration="ngModel" [(ngModel)]="courseSearch.duration">
                         <option value="2"> 2 </option>
                         <option value="3"> 3 </option>
                         <option value="4"> 4 </option>
@@ -40,21 +48,24 @@
                     </select>
                 </div>
                 <div class="col-md-12">
-                    <button class="btn btn-info btn-outline pull-right cssButtonPadding" data-toggle="modal"
-                        data-target="#addModal" type="button" (click)="addNew()">{{'adminConfigarationPage.commonFields.addNew'
+                    <button class="btn btn-info btn-outline pull-right cssButtonPadding" 
+                        type="button" (click)="addNew()">{{'adminConfigarationPage.commonFields.addNew'
                         | translate}}</button>
                     <button class="btn btn-warning btn-outline pull-right cssButtonPadding" type="button" (click)="searchClear()">{{'adminConfigarationPage.commonFields.clear'
                         | translate}}</button>
-                    <button class="btn btn-primary btn-outline pull-right cssButtonPadding" type="submit">{{'adminConfigarationPage.commonFields.search'
+                    <button class="btn btn-primary btn-outline pull-right cssButtonPadding" type="button" (click)="FnSearchCourse(courseSearch)">{{'adminConfigarationPage.commonFields.search'
                         | translate}}</button>
                 </div>
+                <div class="clearfix"></div>
             </form>
-            </div>
+            <div class="clearfix"></div>
         </div>
+    </div>
+    </div>
         <div class="col-md-12">
             <div class="alert alert-warning fade in myAlert" *ngIf="alertMassege">
                 <a class="close" href="#" data-dismiss="alert" (click)="clickedAlert()">X</a>
-                <h4>{{alertMassege}}</h4>
+                <h4 style="text-align: center">{{alertMassege}}</h4>
             </div>
             <div *ngIf="isSearchClicked">
             <div *ngIf="!isListContainsData">
@@ -89,7 +100,8 @@
                     <td>{{((p-1)*itemsPerPage2)+i+1}}</td>
                     <td>{{item.courseName}}</td>
                     <td>{{item.courseCode}}</td>
-                    <td>{{item.categoryName}}</td>
+                    <!-- <td>{{item.categoryName}}</td> -->
+                    <td>{{item.courseCategoryVos[0].categoryName}}</td>
                     <td>{{item.duration}}</td>
                     <td>
                         <button class="btn btn-warning buttonStyle" data-toggle="modal" data-target="#addModal" (click)="selectedUser(item)">

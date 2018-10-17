@@ -16,8 +16,8 @@ export class BusinessCategoryServicesService {
     let obj ={
        "businessCategoryName": businessCategory.businessCategoryName,
        "businessCategoryCode": businessCategory.businessCategoryCode,
-       "createdBy":"admin",
-       "modifiedBy":"admin",
+      //  "createdBy":"admin",
+      //  "modifiedBy":"admin",
      
     };
     // console.log(obj);
@@ -92,6 +92,6 @@ searchBusinessCategory(businessCategory) {
   headers.append('Access-Control-Allow-Headers', 'Content-Type');
   headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
   let options = { headers: headers };
-  return this.http.post(this.url+'/businesscategory/searchList', obj, options).pipe(map(res => res.json()));
+  return this.http.post(this.url+'/businesscategory/searchByCriteria', obj, options).pipe(map(res => res.json()));
 }
 }

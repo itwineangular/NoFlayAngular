@@ -56,8 +56,8 @@
                     </select>
                 </div>
                 <div class="col-md-12">
-                    <button class="btn btn-info btn-outline pull-right cssButtonPadding" data-toggle="modal" data-target="#addModal" (click)="addNew()">{{'adminConfigarationPage.studentPage.individual' | translate}}</button>
-                    <button class="btn btn-info btn-outline pull-right cssButtonPadding" data-toggle="modal" data-target="#bulk">{{'adminConfigarationPage.studentPage.bulk' | translate}}</button>
+                    <button class="btn btn-info btn-outline pull-right cssButtonPadding"  (click)="addNew()">{{'adminConfigarationPage.studentPage.individual' | translate}}</button>
+                    <button class="btn btn-info btn-outline pull-right cssButtonPadding"  (click)="openbulkuploadpopup()">{{'adminConfigarationPage.studentPage.bulk' | translate}}</button>
                     <button class="btn btn-warning btn-outline pull-right cssButtonPadding" type="button" (click)="searchClear()">{{'adminConfigarationPage.commonFields.clear' | translate}}</button>
                     <button class="btn btn-primary btn-outline pull-right cssButtonPadding" type="submit">{{'adminConfigarationPage.commonFields.search' | translate}}</button>
                 </div>
@@ -67,7 +67,7 @@
     <div class="col-md-12">
         <div class="alert alert-warning fade in myAlert table-condensed table-striped" *ngIf="alertMassege">
             <a class="close" href="#" data-dismiss="alert" (click)="clickedAlert()">X</a>
-            <h4>{{alertMassege}}</h4>
+            <h4 style="text-align: center">{{alertMassege}}</h4>
         </div>
         <div *ngIf="isSearchClicked">
 
@@ -180,7 +180,7 @@
                             <div class="form-group">
                                 
                                 <div class="col-md-3">
-                                    <label for="studentName">{{'adminConfigarationPage.studentPage.studentName' | translate}}</label>
+                                    <label for="studentName">{{'adminConfigarationPage.studentPage.studentName' | translate}}<span class="reqMark">*</span></label>
                                     <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentPage.studentName' | translate}}" name="stdName"
                                         #stdName="ngModel" [(ngModel)]="student.stdName" required />
                                     <div class="validation-error" *ngIf="stdName.invalid && stdName.touched">{{'adminConfigarationPage.commonFields.nameFieldRequired' | translate}}</div>
@@ -188,7 +188,7 @@
 
                                 </div>
                                 <div class="col-md-3">
-                                    <label for="gender">{{'adminConfigarationPage.studentPage.gender' | translate}}</label>
+                                    <label for="gender">{{'adminConfigarationPage.studentPage.gender' | translate}}<span class="reqMark">*</span></label>
                                     <select class="form-control" class="form-control" type="text" name="gender" #gender="ngModel" [(ngModel)]="student.gender"
                                         required>
                                         <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.gender' | translate}}</option>
@@ -201,14 +201,14 @@
 
 
                                 <div class="col-md-3">
-                                    <label for="address1">{{'adminConfigarationPage.studentPage.address1' | translate}}</label>
+                                    <label for="address1">{{'adminConfigarationPage.studentPage.address1' | translate}}<span class="reqMark">*</span></label>
                                     <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentPage.address1' | translate}}" name="addressOne"
                                         #addressOne="ngModel" [(ngModel)]="student.addressOne" required />
                                     <div class="validation-error" *ngIf="addressOne.invalid && addressOne.touched">{{'adminConfigarationPage.commonFields.Address1Required' | translate}}</div>
 
                                 </div>
                                 <div class="col-md-3">
-                                    <label for="address2">{{'adminConfigarationPage.studentPage.address2' | translate}}</label>
+                                    <label for="address2">{{'adminConfigarationPage.studentPage.address2' | translate}}<span class="reqMark">*</span></label>
                                     <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentPage.address2' | translate}}" name="addressTwo"
                                         #addressTwo="ngModel" [(ngModel)]="student.addressTwo" required />
                                     <div class="validation-error" *ngIf="addressTwo.invalid && addressTwo.touched">{{'adminConfigarationPage.commonFields.Address2Required' | translate}}</div>
@@ -218,7 +218,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-3">
-                                    <label for="country">{{'adminConfigarationPage.studentPage.country' | translate}}</label>
+                                    <label for="country">{{'adminConfigarationPage.studentPage.country' | translate}}<span class="reqMark">*</span></label>
                                     <select class="form-control" name="countryName" #countryName="ngModel" [(ngModel)]="student.countryName" (change)="onSelect($event.target.value)"
                                         required>
                                         <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.country' | translate}}</option>
@@ -230,7 +230,7 @@
 
                                 </div>
                                 <div class="col-md-3">
-                                    <label for="state">{{'adminConfigarationPage.studentPage.state' | translate}}</label>
+                                    <label for="state">{{'adminConfigarationPage.studentPage.state' | translate}}<span class="reqMark">*</span></label>
                                     <select class="form-control" name="state" #state="ngModel" [(ngModel)]="student.state" (change)="onStateSelect($event.target.value)"
                                         required>
                                         <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.state' | translate}}</option>
@@ -243,7 +243,7 @@
 
                                 </div>
                                 <div class="col-md-3">
-                                    <label for="city">{{'adminConfigarationPage.studentPage.city' | translate}}</label>
+                                    <label for="city">{{'adminConfigarationPage.studentPage.city' | translate}}<span class="reqMark">*</span></label>
                                     <select class="form-control" name="city" #city="ngModel" [(ngModel)]="student.city" required>
                                         <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.city' | translate}}</option>
                                         <option *ngFor="let city of cities" value={{city.id}}>
@@ -255,7 +255,7 @@
 
                                 </div>
                                 <div class="col-md-3">
-                                    <label for="pinCode">{{'adminConfigarationPage.studentPage.pinCode' | translate}}</label>
+                                    <label for="pinCode">{{'adminConfigarationPage.studentPage.pinCode' | translate}}<span class="reqMark">*</span></label>
                                     <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentPage.pinCode' | translate}}" name="zipcode"
                                         #zipcode="ngModel" [(ngModel)]="student.zipcode" required />
                                     <div class="validation-error" *ngIf="zipcode.invalid && zipcode.touched">{{'adminConfigarationPage.commonFields.PincodeRequired' | translate}}</div>
@@ -267,7 +267,7 @@
                             <div class="form-group">
 
                                 <div class="col-md-3">
-                                    <label for="email">{{'adminConfigarationPage.studentPage.email' | translate}}</label>
+                                    <label for="email">{{'adminConfigarationPage.studentPage.email' | translate}}<span class="reqMark">*</span></label>
                                     <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentPage.email' | translate}}" name="stdEmail"
                                         #stdEmail="ngModel" [(ngModel)]="student.stdEmail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$"
                                         required />
@@ -283,7 +283,7 @@
                                 </div>
 
                                 <div class="col-md-3">
-                                    <label for="mobile">{{'adminConfigarationPage.studentPage.mobile' | translate}}</label>
+                                    <label for="mobile">{{'adminConfigarationPage.studentPage.mobile' | translate}}<span class="reqMark">*</span></label>
                                     <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentPage.mobile' | translate}}" name="stdPhone"
                                         #stdPhone="ngModel" [(ngModel)]="student.stdPhone" pattern="\d*" minlength=10 maxlength=15
                                         required />
@@ -301,7 +301,7 @@
                                 </div>
 
                                 <div class="col-sm-3">
-                                    <label for="plan">{{'adminConfigarationPage.studentPage.plan' | translate}}</label>
+                                    <label for="plan">{{'adminConfigarationPage.studentPage.plan' | translate}}<span class="reqMark">*</span></label>
                                     <select class="form-control" type="text" name="plan" #plan="ngModel" [(ngModel)]="student.plan" required>
                                         <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.plan' | translate}}</option>
                                         <option *ngFor="let item of planList" value={{item.planId}}>{{item.planName}}
@@ -313,7 +313,7 @@
                                 </div>
 
                                 <div class="col-sm-3">
-                                    <label for="status">{{'adminConfigarationPage.studentPage.status' | translate}}</label>
+                                    <label for="status">{{'adminConfigarationPage.studentPage.status' | translate}}<span class="reqMark">*</span></label>
                                     <select class="form-control" name="status" #status="ngModel" [(ngModel)]="student.status" required>
                                         <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.status' | translate}}</option>
                                         <option *ngFor="let item of statusList" value={{item.status}}>{{item.status}}
@@ -329,7 +329,7 @@
                                 <h3>Institution Details</h3>
                                 <div class="form-group">
                                     <div class="col-sm-3">
-                                        <label for="institution">{{'adminConfigarationPage.studentPage.institution' | translate}}</label>
+                                        <label for="institution">{{'adminConfigarationPage.studentPage.institution' | translate}}<span class="reqMark">*</span></label>
                                         <select class="form-control" name="institutionName" #institutionName="ngModel" [(ngModel)]="student.institutionName" (change)="onInstituteSelect($event.target.value)"
                                             required>
                                             <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.institution' | translate}}</option>
@@ -340,7 +340,7 @@
 
                                     </div>
                                     <div class="col-sm-3">
-                                        <label for="courseCategory">{{'adminConfigarationPage.studentPage.courseCategory' | translate}}</label>
+                                        <label for="courseCategory">{{'adminConfigarationPage.studentPage.courseCategory' | translate}}<span class="reqMark">*</span></label>
                                         <select class="form-control" type="text" name="courseCategory" #courseCategory="ngModel" [(ngModel)]="student.courseCategory"
                                             (change)="onCourseCategorySelect($event.target.value)" required>
                                             <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.courseCategory' | translate}}</option>
@@ -351,7 +351,7 @@
 
                                     </div>
                                     <div class="col-sm-3">
-                                        <label for="courses">{{'adminConfigarationPage.studentPage.courses' | translate}}</label>
+                                        <label for="courses">{{'adminConfigarationPage.studentPage.courses' | translate}}<span class="reqMark">*</span></label>
                                         <select class="form-control" type="text" name="course" #course="ngModel" [(ngModel)]="student.course" (change)="onCourseSelect($event.target.value)"
                                             required>
                                             <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.courses' | translate}}</option>
@@ -363,7 +363,7 @@
                                     </div>
 
                                     <div class="col-sm-3">
-                                        <label for="yearofjoining">{{'adminConfigarationPage.studentPage.yearofjoining' | translate}}</label>
+                                        <label for="yearofjoining">{{'adminConfigarationPage.studentPage.yearofjoining' | translate}}<span class="reqMark">*</span></label>
                                         <select class="form-control" class="form-control" type="text" name="yearofjoining" #yearofjoining="ngModel" [(ngModel)]="student.yearofjoining"
                                             required>
                                             <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.yearofjoining' | translate}}</option>
@@ -380,7 +380,7 @@
 
                                 <div class="form-group">
                                     <div class="col-md-3">
-                                        <label for="rollNumber">{{'adminConfigarationPage.studentPage.rollNumber' | translate}}</label>
+                                        <label for="rollNumber">{{'adminConfigarationPage.studentPage.rollNumber' | translate}}<span class="reqMark">*</span></label>
                                         <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentPage.rollNumber' | translate}}" name="stdAdmissionNumber"
                                             #stdAdmissionNumber="ngModel" [(ngModel)]="student.stdAdmissionNumber" required />
                                         <div class="validation-error" *ngIf="stdAdmissionNumber.invalid && stdAdmissionNumber.touched">{{'adminConfigarationPage.commonFields.stdAdmissionNumber' | translate}}</div>
@@ -435,18 +435,24 @@
     <div class="modal fade" id="bulk" role="dialog">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
-                <form role="form" class="form-horizontal">
+                <form role="form" class="form-horizontal" id="myform" action="#" >
                     <div class="modal-header">
-                        <button class="close" type="button" data-dismiss="modal">X</button>
+                        <button class="close" type="button" (click)="resetmodal()">X</button>
                         <h4 class="modal-title">{{'adminConfigarationPage.studentPage.uploadStudent' | translate}}</h4>
                     </div>
-                    <div class="modal-body">
+                    <div id="div1" class="modal-body">
                         <h4 class="modal-title">{{'adminConfigarationPage.studentPage.selectFile' | translate}}</h4>
 
-                        <input type="file" #fileInput multiple (change)="addToFileToServer($event.target.files)" />
+                        <input type="file" id="uid"  (change)="onFileChange($event)"/> 
+                       
+                    <label style="color:red">{{errorMessage}}</label>
+                    <label style="color:green">{{successMessage}}</label>
+                    <label style="color:orange">{{warningMessage}}</label>
+                    
                         <br>
                         <div class="col-lg-12 text-left">
-                            <button class="btn btn-warning" data-toggle="modal" data-target="#studentFileUploadModal" (click)="displayStudentsForUpdate()">View</button>
+                            <button class="btn btn-warning" (click)="viewuploadedlistinpopup()" [disabled]="viewdisable"
+                               >View</button>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -467,7 +473,7 @@
             <div class="modal-content">
                 <form class="form-horizontal" #studentUploadFileForm="ngForm">
                     <div class="modal-header">
-                        <button class="close" type="button" data-dismiss="modal">X</button>
+                        <button class="close" type="button" data-dismiss="modal" >X</button>
                         <h4 class="modal-title">{{'adminConfigarationPage.studentFileUpload.studentUploadedfile'| translate}}
                         </h4>
                     </div>

@@ -360,3 +360,7 @@ th>span{
 .enableTab{
     pointer-events: auto;
 }
+
+.preConButton{
+    margin: 10px;
+}

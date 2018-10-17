@@ -7,6 +7,9 @@ import * as frLocale from 'date-fns/locale/fr';
 import * as enLocale from 'date-fns/locale/en';
 import Swal from 'sweetalert2';
 import {IMyDpOptions} from 'mydatepicker';
+
+declare var jquery: any;
+declare var $: any;
 // import { IMyDpOptions } from 'mydatepicker';
 // import {MatDatepickerModule} from '@angular/material/datepicker';
 
@@ -79,6 +82,10 @@ public myDatePickerOptions2: IMyDpOptions = {
     this.plan = new PlansObject();
     this.enableaddpopup = true;
     this.addOrEdit = "add";
+    $('#addModal').modal({
+      backdrop: 'static',
+      keyboard: false
+  });
   }
 
   savePlans(planValue) {
