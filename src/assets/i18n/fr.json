@@ -160,8 +160,8 @@
             "businessCategoryName" : "Nom de la catégorie d'entreprise"
         },
         "membershipPage" : {
-            "membership" : "Adhésion",
-            "membershipName" : "Nom de membre"
+            "membership" : "Type d'abonnement",
+            "membershipName" : "Nom de l'abonnement"
         },
         "plannamePage":
         {
@@ -195,8 +195,8 @@
         "plans" : {
             "plans" : "Des plans",
             "planName" : "Nom du plan",
-            "planPrice" : "PlanPrix",
-            "planMembership" : "Planifier l'adhésion",
+            "planPrice" : "Prix ​​de l'abonnement",
+            "planMembership" : "Type d'abonnement",
             "startDate" : "Date de début",
             "endDate" : "Date de fin"
         },

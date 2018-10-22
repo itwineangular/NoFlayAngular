@@ -34,7 +34,7 @@
                         <option *ngFor="let item of courseCategoryList" value={{item.categoryId}}>{{item.categoryName}}
                         </option>
                     </select> -->
-                    <ngx-select-dropdown  #categotyName [multiple]="false" [(value)]="selectedcategoryNameValue"
+                    <ngx-select-dropdown  #categotyName [multiple]="false" (change)="changeCategoryValue($event)" [(value)]="selectedcategoryNameValue"
                     [config]="categoryNameconfig" [options]="courseCategoryListLocal"></ngx-select-dropdown>
                 </div>
                 <div class="col-md-3">

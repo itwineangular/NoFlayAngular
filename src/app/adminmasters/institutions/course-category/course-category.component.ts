@@ -21,7 +21,7 @@ export class CourseCategoryComponent implements OnInit {
   isListContainsData: boolean;
   courseCategory: CourseCategory = new CourseCategory();
   courseCategoryList: CourseCategory[];
-  courseCategoryListLocal: CourseCategory[];
+  courseCategoryListLocal: CourseCategory[]=[];
   saveOrUpdate: string;
   key: string;
   reverse: boolean = false;
@@ -46,7 +46,7 @@ export class CourseCategoryComponent implements OnInit {
   config = {
     displayKey: "categoryName", //if objects array passed which key to be displayed defaults to description
     search: true,
-    limitTo: 10
+    limitTo: this.courseCategoryListLocal.length
   };
   changeValue($event: any) {
     if(this.selectedValue.length>0)
@@ -65,7 +65,7 @@ export class CourseCategoryComponent implements OnInit {
   CategoryCodeconfig = {
     displayKey: "categoryCode", //if objects array passed which key to be displayed defaults to description
     search: true,
-    limitTo: 10
+    limitTo: this.courseCategoryListLocal.length
   };
   // CategoryCodeChangeValue($event: any) {
   //   console.log(this.selectedCategoryCodeValue);

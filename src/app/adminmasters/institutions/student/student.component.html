@@ -5,45 +5,41 @@
         <hr />
     </div>
     <div class="col-md-12">
-        <div class="rcorners2">
+        <!-- <div class="rcorners2"> -->
+                <div class="panel panel-default">
+           
+                        <div class="panel-body">
             <form class="form-horizontal" #studentSearchForm="ngForm" (ngSubmit)="searchStudent(studentSearchForm)">
                 <div class="col-md-3">
                     <label for="institutionName">{{'adminConfigarationPage.studentPage.institution' | translate}}</label>
-                    <select class="form-control" name="institutionName" #institutionName="ngModel" [(ngModel)]="student.institutionName" (change)="onInstituteSelect($event.target.value)"
+                    <ngx-select-dropdown #instituteName (change)="changeValueInstitute($event)" [multiple]="false" [(value)]="selectedInstituteValue"
+                        [config]="instituteNameconfig" [options]="institutionList"></ngx-select-dropdown>
+                    <!-- <select class="form-control" name="institutionName" #institutionName="ngModel" [(ngModel)]="student.institutionName" (change)="onInstituteSelect($event.target.value)"
                         required>
                         <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.institution' | translate}}</option>
                         <option *ngFor="let item of institutionList" value={{item.institutionId}}>{{item.instName}}
                         </option>
-                    </select>
+                    </select> -->
                 </div>
                 <div class="col-md-3">
                     <label for="categoryCode">{{'adminConfigarationPage.studentPage.courseCategory' | translate}}</label>
-                    <select class="form-control" type="text" name="courseCategory" #courseCategory="ngModel" [(ngModel)]="student.courseCategory"
+                    <ngx-select-dropdown #categoryName (change)="changeValueCourseCategory($event)" [multiple]="false" [(value)]="selectedCourseCategoryValue"
+                        [config]="courseCategorNameconfig" [options]="courseCategoryListForSearch"></ngx-select-dropdown>
+                    <!-- <select class="form-control" type="text" name="courseCategory" #courseCategory="ngModel" [(ngModel)]="student.courseCategory"
                         (change)="onCourseCategorySelect($event.target.value)" required>
                         <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.courseCategory' | translate}}</option>
                         <option *ngFor="let item of courseCategoryList" value={{item.categoryId}}>{{item.categoryName}}
                         </option>
-                    </select>
-                    <!-- <select class="form-control" type="text" name="courseCategory" #courseCategory="ngModel"
-                        [(ngModel)]="student.courseCategory" required>
-                        <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.courseCategory'
-                            | translate}}</option>
-                        <option *ngFor="let item of courseCategoryList" value={{item.categoryCode}}>{{item.categoryCode}}
-                        </option>
                     </select> -->
+                   
                 </div>
                 <div class="col-md-3">
                     <label for="courseName">{{'adminConfigarationPage.studentPage.courses' | translate}}</label>
-                    <select class="form-control" type="text" name="course" #course="ngModel" [(ngModel)]="student.course" (change)="onCourseSelect($event.target.value)"
+                    <ngx-select-dropdown  #courseName (change)="changeValueCourse($event)" [multiple]="false" [(value)]="selectedCourseValue"
+                        [config]="courseNameconfig" [options]="courseListLocal"></ngx-select-dropdown>
+                    <!-- <select class="form-control" type="text" name="course" #course="ngModel" [(ngModel)]="student.course" (change)="onCourseSelect($event.target.value)"
                         required>
                         <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.courses' | translate}}</option>
-                        <option *ngFor="let item of courseList" value={{item.courseName}}>{{item.courseName}}
-                        </option>
-                    </select>
-                    <!-- <select class="form-control" type="text" name="course" #course="ngModel" [(ngModel)]="student.course"
-                        required>
-                        <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.courses'
-                            | translate}}</option>
                         <option *ngFor="let item of courseList" value={{item.courseName}}>{{item.courseName}}
                         </option>
                     </select> -->
@@ -62,6 +58,7 @@
                     <button class="btn btn-primary btn-outline pull-right cssButtonPadding" type="submit">{{'adminConfigarationPage.commonFields.search' | translate}}</button>
                 </div>
             </form>
+            </div>
         </div>
     </div>
     <div class="col-md-12">

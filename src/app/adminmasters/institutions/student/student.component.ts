@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Student,PlanNameObject, Institution, CourseCategory, CourseProfile } from './student';
+import { Student, PlanNameObject, Institution, CourseCategory, CourseProfile } from './student';
 import { StudentService } from "./student.service";
 import { CommonServicesService } from "../../../common-services.service";
 import { DatepickerOptions, NgDatepickerModule, NgDatepickerComponent } from 'ng2-datepicker';
@@ -9,6 +9,10 @@ import * as enLocale from 'date-fns/locale/en';
 import { FileQueueObject, FileuploaderService } from '../educational-institute/fileuploader.service';
 import { Observable } from 'rxjs';
 import { ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
+import { SelectDropDownComponent } from "ngx-select-dropdown";
+import { CourseCategoryService } from "../course-category/course-category.service";
+import { Course } from '../courses/courses.module';
+import { CourseService } from "../courses/courses.service";
 
 declare var jquery: any;
 declare var $: any;
@@ -24,19 +28,19 @@ declare var $: any;
 })
 export class StudentComponent implements OnInit {
 
-  viewdisable:boolean = true;
+  viewdisable: boolean = true;
   startDate = new Date(1990, 0, 1);
   alertMassege = "";
-  errorMessage : string = "";
-  successMessage : string = "";
-  warningMessage : string = "";
+  errorMessage: string = "";
+  successMessage: string = "";
+  warningMessage: string = "";
   isListContainsData: boolean;
   isSearchClicked: boolean;
   caseInsensitive: boolean = true;
   saveOrUpdate: string;
   key: string;
   reverse: boolean = false;
-  pagenumber : string ;
+  pagenumber: string;
   p: number = 1;
   itemsPerPage2: number = 1;
   checkedval: boolean;
@@ -49,32 +53,32 @@ export class StudentComponent implements OnInit {
   courseCategoryLocal = [];
   courseLocal = [];
   courseCategory = [];
-  courses = [];  
+  courses = [];
   statusList: Student[];
   planList: Student[];
   studentList: Student[];
-  studentBulkList:Student[] = [];
- 
+  studentBulkList: Student[] = [];
+
   retresult: any;
   student: Student = new Student();
-  
-  selectedStudentName: string;
-  
-  plan: PlanNameObject = new PlanNameObject();
-    planNameList: PlanNameObject[] = [];
 
-    
+  selectedStudentName: string;
+
+  plan: PlanNameObject = new PlanNameObject();
+  planNameList: PlanNameObject[] = [];
+
+
   institution: Institution = new Institution();
 
 
-    institutionList: Institution[] = [];
-    selectedInstitute: string;
-    
-    courseCategoryList: CourseCategory[] = [];
-    selectedCategory: string;
-    
-    courseList: CourseProfile[]=[];
-    selectedCourse : string;
+  institutionList: Institution[] = [];
+  selectedInstitute: string;
+
+  courseCategoryList: CourseCategory[] = [];
+  selectedCategory: string;
+
+  courseList: CourseProfile[] = [];
+  selectedCourse: string;
 
   academicYear: string;
   academicYearsList: string[] = [];
@@ -88,15 +92,24 @@ export class StudentComponent implements OnInit {
 
   input;
 
-    // tslint:disable-next-line:no-output-on-prefix
-    @Output() onCompleteItem = new EventEmitter();
+  // tslint:disable-next-line:no-output-on-prefix
+  @Output() onCompleteItem = new EventEmitter();
 
 
-    @ViewChild('fileInput') fileInput;
-    queue: Observable<FileQueueObject[]>;
+  @ViewChild('fileInput') fileInput;
+  queue: Observable<FileQueueObject[]>;
+
+  @ViewChild('instituteName') public ngSelectInstituteName: SelectDropDownComponent;
+  @ViewChild('categoryName') public ngSelectinstCategoryName: SelectDropDownComponent;
+  @ViewChild('courseName') public ngSelectCourseName: SelectDropDownComponent;
+
+  courseCategoryListForSearch: CourseCategory[]=[];
+  courseListLocal: Course[]=[];
 
   constructor(private commonService: CommonServicesService,
     private studentService: StudentService,
+    private courseCategoryService: CourseCategoryService,
+    private courseservice: CourseService,
     private uploader: FileuploaderService) { }
 
   ngOnInit() {
@@ -104,101 +117,132 @@ export class StudentComponent implements OnInit {
     var currentYear = this.d.getFullYear();
     var nextYear = currentYear + 1;
     this.academicYear = currentYear.toString() + " - " + nextYear.toString();
-    // console.log( this.academicYear);
 
-    
+
     this.getInstitution();
+    this.getCourseCaterory();
+    this.getCourse();
     this.getCountries();
     this.getStates();
     this.getCities();
     this.getStatus();
     this.getPlans();
     this.isListContainsData = false;
-    this.isSearchClicked=false;
+    this.isSearchClicked = false;
 
     this.pageChange(5);
     this.getPlanName();
-   
+
     this.getBulkStudents();
 
     this.queue = this.uploader.queue;
     this.uploader.onCompleteItem = this.completeItem;
-    
+
     // add button jquery fumction
     // $(document).ready(function () {
     //   $(".btnns").hide();
     //   $("#show").click(function () {
     //     $(".btnns").show();
     //     $("#show").hide();
-    //     console.log('here');
     //   });
     // });
   }
 
-  openbulkuploadpopup(){
+  selectedInstituteValue : any;
+  instituteNameconfig = {
+    displayKey: "instName",
+    search: true,
+    limitTo: this.institutionList.length
+  };
+  changeValueInstitute($event: any) {
+    
+  }
+
+  selectedCourseCategoryValue : any;
+  courseCategorNameconfig = {
+    displayKey: "categoryName",
+    search: true,
+    limitTo: this.courseCategoryListForSearch.length
+  };
+  changeValueCourseCategory($event: any) {
+    
+  }
+
+  selectedCourseValue : any;
+  courseNameconfig = {
+    displayKey: "courseName", //if objects array passed which key to be displayed defaults to description
+    search: true,
+    limitTo: this.courseListLocal.length
+  };
+  changeValueCourse($event: any)
+   {
+    
+  }
+
+  openbulkuploadpopup() {
     $('#bulk').modal({
       backdrop: 'static',
       keyboard: false
-  });
+    });
   }
 
-  viewuploadedlistinpopup(){
+  viewuploadedlistinpopup() {
     $('#bulk').modal('toggle');
     $('#studentFileUploadModal').modal({
       backdrop: 'static',
       keyboard: false
-  });
+    });
   }
   completeItem = (item: FileQueueObject, response: any) => {
     this.onCompleteItem.emit({ item, response });
-}
-  resetmodal(){
-  var $el = $('#uid');
-  $el.wrap('<form>').closest('form').get(0).reset();
-  $el.unwrap();
-  this.successMessage = "";
-  this.errorMessage = "";
-  this.viewdisable = true;
-  $('#bulk').modal('toggle');
-}
+  }
+  resetmodal() {
+    var $el = $('#uid');
+    $el.wrap('<form>').closest('form').get(0).reset();
+    $el.unwrap();
+    this.successMessage = "";
+    this.errorMessage = "";
+    this.viewdisable = true;
+    $('#bulk').modal('toggle');
+  }
 
   clickedAlert = function () {
     this.alertMassege = "";
   };
-  abc: string="xlsx";
+  abc: string = "xlsx";
   onFileChange(event) {
-    
+
     let reader = new FileReader();
- 
-    if(event.target.files && event.target.files.length) {
+
+    if (event.target.files && event.target.files.length) {
       const [file] = event.target.files;
       reader.readAsDataURL(file);
       let fileName = file.name;
       let fileExtension = fileName.substr((fileName.lastIndexOf('.') + 1));
-      console.log(fileExtension);
+   
 
-      if(this.abc == fileExtension){
+      if (this.abc == fileExtension) {
         this.viewdisable = false;
         this.onFileChanged;
         this.errorMessage = "";
         this.warningMessage = "";
         this.successMessage = "File Uploaded Successfully";
       }
-       else  {
-        this.successMessage="";
-        this.errorMessage = "File format should be xlsx";        
+      else {
+        this.successMessage = "";
+        this.errorMessage = "File format should be xlsx";
       }
 
 
 
     } else {
       this.successMessage = "";
-      this.errorMessage = ""; 
-      this.warningMessage = "Please Select File"; 
+      this.errorMessage = "";
+      this.warningMessage = "Please Select File";
     }
 
 
- 
+
   }
 
 
@@ -208,7 +252,7 @@ export class StudentComponent implements OnInit {
     $('#addModal').modal({
       backdrop: 'static',
       keyboard: false
-  });
+    });
   }
 
   getCountries() {
@@ -234,71 +278,66 @@ export class StudentComponent implements OnInit {
 
   getBulkStudents() {
     this.studentService.getBulkStudentsdata().subscribe(data => {
-        this.studentBulkList = data;
-        
-        console.log(this.studentBulkList);
+      this.studentBulkList = data;
+
     });
-}
+  }
 
-onInstituteSelect(institutionId) {
-  
-  this.courseCategoryList = [];
-  this.courseList = [];
-  var institutionListLocal : Institution[] = [];
-  institutionListLocal = this.institutionList.filter((item)=> item.institutionId == institutionId);
-  for(let item of institutionListLocal[0].courseCategory)
-  {
+  onInstituteSelect(institutionId) {
+
+    this.courseCategoryList = [];
+    this.courseList = [];
+    var institutionListLocal: Institution[] = [];
+    institutionListLocal = this.institutionList.filter((item) => item.institutionId == institutionId);
+    for (let item of institutionListLocal[0].courseCategory) {
       this.courseCategoryList.push(item);
-  }
-
-  this.selectedInstitute = institutionListLocal[0].instName.toString();
-
-}
-
-
-onCourseCategorySelect(categoryId) {
-
- this.courseList = [];
-  var courseCategoryListLocal : CourseCategory[] = [];
-  courseCategoryListLocal = this.courseCategoryList.filter((item)=> item.categoryId == categoryId); 
-  for(let item of courseCategoryListLocal[0].courseProfile)
-  {
-      this.courseList.push(item);
-  }
-  this.selectedCategory = courseCategoryListLocal[0].categoryName.toString();
-
-}
-
-onCourseSelect(courseId)
-{
-  this.selectedCourse = courseId.toString();
-}
-
-  displayStudentsForUpdate()
-    {
-     
-        this.getBulkStudents();
-        let email = [];
-        for (let i = 0; i < this.studentBulkList.length; i++) {
-            if (!email.includes(this.studentBulkList[i].stdEmail)) {
-                email.push(this.studentBulkList[i].stdEmail);
-                this.studentBulkList[i].stdEmail = this.studentBulkList[i].stdEmail;
-
-            }
-            else {
-                this.studentBulkList[i].stdEmail = "";
-            }
-
-        }
-        console.log(email);
     }
 
- 
+    this.selectedInstitute = institutionListLocal[0].instName.toString();
+
+  }
 
 
- 
+  onCourseCategorySelect(categoryId) {
 
-  
+    this.courseList = [];
+    var courseCategoryListLocal: CourseCategory[] = [];
+    courseCategoryListLocal = this.courseCategoryList.filter((item) => item.categoryId == categoryId);
+    for (let item of courseCategoryListLocal[0].courseProfile) {
+      this.courseList.push(item);
+    }
+    this.selectedCategory = courseCategoryListLocal[0].categoryName.toString();
+
+  }
+
+  onCourseSelect(courseId) {
+    this.selectedCourse = courseId.toString();
+  }
+
+  displayStudentsForUpdate() {
+
+    this.getBulkStudents();
+    let email = [];
+    for (let i = 0; i < this.studentBulkList.length; i++) {
+      if (!email.includes(this.studentBulkList[i].stdEmail)) {
+        email.push(this.studentBulkList[i].stdEmail);
+        this.studentBulkList[i].stdEmail = this.studentBulkList[i].stdEmail;
+
+      }
+      else {
+        this.studentBulkList[i].stdEmail = "";
+      }
+
+    }
+    
+  }
+
+
+
+
+
+
+
   onSelect(countryid) {
     this.states = this.statesLocal.filter((item) => item.countryCode == countryid);
     this.cities = [];
@@ -310,6 +349,7 @@ onCourseSelect(courseId)
 
   getStatus() {
     this.studentService.getStatus().subscribe(data => {
+      console.log(data);
       this.statusList = data;
 
     });
@@ -322,10 +362,10 @@ onCourseSelect(courseId)
     });
   }
   saveStudent(studentValue) {
-    
+
     if (this.saveOrUpdate == "save") {
-      console.log("save");
-      this.studentService.saveStudent(studentValue,this.selectedInstitute,this.selectedCategory,this.selectedCourse)
+   
+      this.studentService.saveStudent(studentValue, this.selectedInstitute, this.selectedCategory, this.selectedCourse)
         .subscribe(
           (data) => {
             this.alertMassege = "New item add on list successfully!!";
@@ -339,8 +379,8 @@ onCourseSelect(courseId)
 
     }
     else if (this.saveOrUpdate == "update") {
-      console.log("update");
-      this.studentService.updateStudent(this.student,this.selectedInstitute,this.selectedCategory,this.selectedCourse)
+     
+      this.studentService.updateStudent(this.student, this.selectedInstitute, this.selectedCategory, this.selectedCourse)
         .subscribe(
           (data) => {
             this.alertMassege = "Item updated on list successfully!!";
@@ -357,19 +397,19 @@ onCourseSelect(courseId)
 
 
   }
-  saveStudentBulk(studentValue){
+  saveStudentBulk(studentValue) {
     this.studentService.uploadCsvFile(this.studentBulkList)
-    .subscribe(
+      .subscribe(
         (data) => {
-            alert("success");
+          alert("success");
         },
         (error) => {
-            console.log(error);
-            alert("try again");
+          console.log(error);
+          alert("try again");
         }
-    );
+      );
   }
- 
+
 
 
   getStudent() {
@@ -377,13 +417,12 @@ onCourseSelect(courseId)
       .subscribe(
         (data) => {
           this.studentList = data;
-          console.log(this.studentList);
         }
       );
 
   }
 
- 
+
   getInstitution() {
     this.studentService.getInstitution()
       .subscribe(
@@ -392,6 +431,19 @@ onCourseSelect(courseId)
         }
       );
 
+  }
+
+  getCourseCaterory() {
+    this.courseCategoryService.getCourseCategory().subscribe(data => {
+      
+      this.courseCategoryListForSearch = data;
+    });
+  }
+
+  getCourse() {
+    this.courseservice.getCourse().subscribe(data => {
+      this.courseListLocal = data;
+    });
   }
 
   deleteStudent(stdId) {
@@ -404,34 +456,30 @@ onCourseSelect(courseId)
   getAcademicYears() {
     var firstYear = this.d.getFullYear() - 3;
     var currentYear = this.d.getFullYear();
-    for (let i = firstYear; i < currentYear; i++) 
-    {
+    for (let i = firstYear; i < currentYear; i++) {
       this.academicYearsList.push(i.toString() + " - " + (i + 1).toString());
     }
 
 
   }
 
-  pageChange(pagenumber){
-  
-    this.pagenumber=pagenumber;
+  pageChange(pagenumber) {
+
+    this.pagenumber = pagenumber;
   }
 
-  customPageChange(number)
-  {
-    this.p=number;
+  customPageChange(number) {
+    this.p = number;
     this.itemsPerPage2 = number;
-    if(this.p==1)
-    {
+    if (this.p == 1) {
       this.itemsPerPage2 = 1;
     }
-    else
-    {
+    else {
       this.itemsPerPage2 = +this.pagenumber;
     }
   }
 
-  sort(key){
+  sort(key) {
     this.key = key;
     this.reverse = !this.reverse;
   }
@@ -439,20 +487,17 @@ onCourseSelect(courseId)
   selectedStudent(data) {
     this.student = data;
     // this.selectedStudentName = this.studentBulk.stdName;
-    // console.log(this.selectedStudentData);
-    
-    }
-    
+
+  }
+
   onFileChanged(event) {
-    // console.log("here");
     const file = event.target.files[0]
-    console.log(file);
     if (event.target.files && event.target.files[0]) {
-        var reader = new FileReader();
-        reader.readAsDataURL(event.target.files[0]); // read file as data url
-        reader.onload = (event) => {
-            //    this.url = event.target.result;
-        }
+      var reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]); // read file as data url
+      reader.onload = (event) => {
+        //    this.url = event.target.result;
+      }
 
     }
 
@@ -460,136 +505,127 @@ onCourseSelect(courseId)
     let fileBrowser = this.fileInput.nativeElement;
 
     if (fileBrowser.files && fileBrowser.files[0]) {
-        const formData = new FormData();
-        formData.append("image", file);
-        console.log(formData);
-        // this.service.uploadImage(formData).subscribe(res => {
-        //     console.log("succed");
-        //   });
+      const formData = new FormData();
+      formData.append("image", file);
+     
+      // this.service.uploadImage(formData).subscribe(res => {
+      //     console.log("succed");
+      //   });
     }
 
     this.studentService.uploadImage(file)
-        .subscribe(
-            (data) => {
-                alert("success");
-            },
-            (error) => {
-                console.log(error);
-                alert("Try again");
-            }
-        );
-}
+      .subscribe(
+        (data) => {
+          alert("success");
+        },
+        (error) => {
+          console.log(error);
+          alert("Try again");
+        }
+      );
+  }
 
-    //convert to csv to json
-    addToFileToQueue(item) {
-      this.input = this.fileInput.nativeElement;
-      const reader = new FileReader();
-      reader.onload = () => {
-          const text = reader.result;
-          this.retresult = this.csvJSON(text);
-          //    console.log('JSON: ', JSON.parse(JSON.stringify(this.retresult)));
-          this.studentBulkList = JSON.parse(JSON.stringify(this.retresult));
-          //console.log(this.studentBulkList);
-      };
-      reader.readAsText(this.input.files[0]);
-  }                    
+  //convert to csv to json
+  addToFileToQueue(item) {
+    this.input = this.fileInput.nativeElement;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const text = reader.result;
+      this.retresult = this.csvJSON(text);
+      this.studentBulkList = JSON.parse(JSON.stringify(this.retresult));
+    };
+    reader.readAsText(this.input.files[0]);
+  }
   csvJSON(csv) {
-      const lines = csv.split('\n');
-      const result = [];
-      const headers = lines[0].split(',');
-      for (let i = 1; i < lines.length; i++) {
-          const obj = {};
-          const currentline = lines[i].split(',');
+    const lines = csv.split('\n');
+    const result = [];
+    const headers = lines[0].split(',');
+    for (let i = 1; i < lines.length; i++) {
+      const obj = {};
+      const currentline = lines[i].split(',');
 
-          for (let j = 0; j < headers.length; j++) {
-             
+      for (let j = 0; j < headers.length; j++) {
 
-              try {
-                  obj[headers[j].replace(/[^a-zA-Z0-9._%+-@ ]/g, "")] = currentline[j].replace(/[^a-zA-Z0-9._%+-@ ]/g, "");
 
-              }
-              catch
-              {
+        try {
+          obj[headers[j].replace(/[^a-zA-Z0-9._%+-@ ]/g, "")] = currentline[j].replace(/[^a-zA-Z0-9._%+-@ ]/g, "");
 
-              }
-             
-          }
-          result.push(obj);
+        }
+        catch
+        {
+
+        }
+
       }
-     
-      console.log(result);
-      return result;
+      result.push(obj);
+    }
+
+    return result;
 
   }
   jsonemail: any;
- 
+
 
 
   convertToCSVKiran(objArray) {
-      console.log(objArray);
-      var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
-      var str = '';
+    var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+    var str = '';
 
-      for (var i = 0; i < array.length; i++) {
-          var line = '';
-          for (var index in array[i]) {
-              if (line != '') line += ','
+    for (var i = 0; i < array.length; i++) {
+      var line = '';
+      for (var index in array[i]) {
+        if (line != '') line += ','
 
-              line += array[i][index];
-          }
-
-          str += line + '\r\n';
+        line += array[i][index];
       }
-      console.log("kiran");
-      console.log(str);
-      return str;
+
+      str += line + '\r\n';
+    }
+    
+    return str;
   }
 
 
   deleteStudentBulk(data) {
-      console.log(data.stdName);
 
-      const index: number = this.studentBulkList.indexOf(this.student);
-      console.log(index);
-      if (index !== -1) {
-          this.studentBulkList.splice(index, 1);
-      }
+    const index: number = this.studentBulkList.indexOf(this.student);
+    if (index !== -1) {
+      this.studentBulkList.splice(index, 1);
+    }
   }
 
   saveStudentuploadFile(studentsData) {
     this.studentService.uploadCsvFile(this.studentBulkList)
-    .subscribe(
-    (data) => {
-         alert("success");
-        this.resetmodal();
-    },
-    (error) => {
-    console.log(error);
-    alert("try again");
-    }
-    
-    );
-    }
-    
-    addToFileToServer(file: FileList) {
+      .subscribe(
+        (data) => {
+          alert("success");
+          this.resetmodal();
+        },
+        (error) => {
+          console.log(error);
+          alert("try again");
+        }
+
+      );
+  }
+
+  addToFileToServer(file: FileList) {
     //this.addToFileToQueue("");
-    console.log("before conversion")
-    console.log(file);
-    this.uploader.addToQueue(file);
-    this.uploader.uploadAll("1239","file");
-    // this.studentService.upload(file);
     
-    }
+    this.uploader.addToQueue(file);
+    this.uploader.uploadAll("1239", "file");
+    // this.studentService.upload(file);
+
+  }
 
 
-// Planname dropdown
-getPlanName() {
-  this.studentService.getPlanName().subscribe(data => {
+  // Planname dropdown
+  getPlanName() {
+    this.studentService.getPlanName().subscribe(data => {
       this.planNameList = data;
-      console.log("planNameList");
-      console.log(this.planNameList);
-  });
-}
+      
+    });
+  }
 
   // check box
   planname: any;
@@ -619,7 +655,7 @@ getPlanName() {
     }
 
   }
-  
+
   toggleSelect(checked) {
     this.planname = $('#planName').val();
     if (this.planname == null) {
@@ -659,58 +695,45 @@ getPlanName() {
     }
   }
 
-searchStudent(studentParameters) {
-  if (typeof studentParameters.value.institutionName != "undefined"
-    || typeof studentParameters.value.courseCategory != "undefined"
-    || typeof studentParameters.value.course != "undefined" 
-    || typeof studentParameters.value.status != "undefined"){
-      this.isSearchClicked=true;
-      if(studentParameters.value.institutionName === null
-      || studentParameters.value.courseCategory === null
-      || studentParameters.value.course === null
-      || studentParameters.value.status === null)
-      {
+  searchStudent(studentParameters) {
+    if (typeof studentParameters.value.institutionName != "undefined"
+      || typeof studentParameters.value.courseCategory != "undefined"
+      || typeof studentParameters.value.course != "undefined"
+      || typeof studentParameters.value.status != "undefined") {
+      this.isSearchClicked = true;
+      if (studentParameters.value.institutionName === null
+        || studentParameters.value.courseCategory === null
+        || studentParameters.value.course === null
+        || studentParameters.value.status === null) {
 
       }
-      else{
-      this.studentService.searchStudent(studentParameters.value)
-        .subscribe(
-          (data) => {
-            this.studentList = data;
-            if (typeof this.studentList !== 'undefined' && this.studentList.length > 0) {
-              this.isListContainsData = true;
-            this.studentList = data;
-            this.studentList = data;
-                        // console.log(this.studentList);
+      else {
+        this.studentService.searchStudent(studentParameters.value)
+          .subscribe(
+            (data) => {
+              this.studentList = data;
+              if (typeof this.studentList !== 'undefined' && this.studentList.length > 0) {
+                this.isListContainsData = true;
+                this.studentList = data;
+                this.studentList = data;
+              }
+              else {
+                this.isListContainsData = false;
+              }
+            },
+            (error) => {
+              console.log(error);
+              alert("Try again");
             }
-            else {
-              this.isListContainsData = false;
-            }
-          },
-          (error) => {
-            console.log(error);
-            alert("Try again");
-          }
-        );
+          );
       }
     }
 
   }
 
 
-searchClear() {
-  this.student = new Student();
-  // this.getStudent();
-  // this.studentService.searchStudent(this.student)
-  //   .subscribe(
-  //     (data) => {
-  //       console.log(data);
-  //       this.studentList = data;
-  //     },
-  //     (error) => {
-  //       console.log(error);
-  //       alert("Try again");
-  //     }
-  //   );
-}
+  searchClear() {
+    this.student = new Student();
+    
+  }
 }

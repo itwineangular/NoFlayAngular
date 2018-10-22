@@ -27,8 +27,10 @@ export class CoursesComponent implements OnInit {
   course: Course = new Course();
   courseSearch: courseSearchObject = new courseSearchObject();
   courseList: Course[];
-  courseListLocal: Course[];
-  courseCategoryListLocal: CourseCategoryVo[];
+  courseListLocal: Course[]=[];
+  
+  courseCategoryListData: CourseCategoryVo[] = [];
+  courseCategoryListLocal: CourseCategoryVo[]=[];
   courseCategoryList: CourseCategory[];
   parentCourseCategory: CourseCategory[];
   saveOrUpdate: string;
@@ -73,7 +75,7 @@ export class CoursesComponent implements OnInit {
   config = {
     displayKey: "courseName", //if objects array passed which key to be displayed defaults to description
     search: true,
-    limitTo: 10
+    limitTo: this.courseListLocal.length
   };
   changeValue($event: any)
    {
@@ -81,33 +83,44 @@ export class CoursesComponent implements OnInit {
     {
       if(this.selectedValue[0].courseCategoryVos.length>0)
       {
-        this.ngSelectCategoryName.value = this.selectedValue[0].courseCategoryVos[0];
-        this.ngSelectCategoryName.ngOnInit();
+         this.courseCategoryListData.push(this.selectedValue[0].courseCategoryVos[0]);
+         this.ngSelectCategoryName.value = this.courseCategoryListData;
+         this.ngSelectCategoryName.ngOnInit();
       }
+      this.courseSearch.duration = this.selectedValue[0].duration;
     }
     else
     {
-
+      this.courseSearch = new courseSearchObject();
     }
-    this.ngSelectCategoryName.value = this.selectedValue[0].courseCategoryVos[0];
-    this.ngSelectCategoryName.ngOnInit();
     this.ngSelectCourseCode.value=this.selectedValue;
     this.ngSelectCourseCode.ngOnInit();
+    console.log(this.selectedValue);
+  }
+
+  changeCategoryValue($event: any)
+  {
+    
+    console.log("adsggnd");
+    console.log(this.selectedcategoryNameValue);
+
   }
 
   selectedcourseCodeValue : any;
   courseCodeconfig = {
     displayKey: "courseCode", 
     search: true,
-    limitTo: 10
+    limitTo: this.courseListLocal.length
   };
 
   selectedcategoryNameValue : any;
   categoryNameconfig = {
     displayKey: "categoryName",
     search: true,
-    limitTo: 10
+    limitTo: this.courseCategoryListLocal.length
   };
+
+  
 
 
   saveCourse(form: NgForm) {

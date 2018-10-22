@@ -59,6 +59,7 @@ export class CourseProfile {
     createDateTime: any;
     modifiedBy: string;
     modifiedDateTime: any;
+    
 }
 
 export class CourseCategory {

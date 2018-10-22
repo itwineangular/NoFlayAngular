@@ -194,8 +194,8 @@
             "businessCategoryName" : "Business Category Name"
         },
         "membershipPage" : {
-            "membership" : "Membership",
-            "membershipName" : "Membership Name"
+            "membership" : "Subscription Type",
+            "membershipName" : "Subscription Name"
           
         },
         "plannamePage":
@@ -206,8 +206,8 @@
         "plans" : {
             "plans" : "Plans",
             "planName" : "Plan Name",
-            "planPrice" : "Plan Price",
-            "planMembership" : "Plan Membership",
+            "planPrice" : "Subscription Price",
+            "planMembership" : "Subscription Type",
             "startDate" : "StartDate",
             "endDate" : "EndDate"
         },

@@ -40,7 +40,9 @@ export class MembershipCardComponent implements OnInit {
   p: number = 1;
 
 
-
+  isListContainsData: boolean;
+  isSearchClicked=false;
+ // alertMassege = "";
 
   plan: PlanName = new PlanName();
     planNameList: PlansObject[] = [];
@@ -80,6 +82,8 @@ export class MembershipCardComponent implements OnInit {
   constructor(private membershipCardService:MembershipCardService,private studentService: StudentService) { }
 
   ngOnInit() {
+    this.isListContainsData = false;
+    this.isSearchClicked=false;
     this.myAngularxQrCode = 'Name:ROSS GELLER,Id:NFRVBECS0001,Card:SILVER-ANNUAL,Expiry:08-10-2019';
     this.getInstitution();
     this.getStudent();
@@ -214,11 +218,18 @@ searchStudent(studentParameters) {
  this.student.courseCategory=this.selectedCategory;
  this.student.course=this.selectedCourse;
  this.student.stdName=studentParameters.value.stdName;
+ this.isSearchClicked=true;
 
  this.membershipCardService.searchStudent(this.student)
    .subscribe(
      (data) => {
        this.studentList = data;
+       if (typeof this.studentList !== 'undefined' && this.studentList.length > 0) {
+        this.isListContainsData = true;
+      }
+      else {
+        this.isListContainsData = false;
+      }
      },
      (error) => {
        console.log(error);

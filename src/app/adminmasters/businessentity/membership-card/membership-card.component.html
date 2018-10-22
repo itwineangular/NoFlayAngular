@@ -59,6 +59,17 @@
                 </div>
     </div> -->
     <div class="col-md-12">
+        <!-- <div class="alert alert-warning fade in myAlert" *ngIf="alertMassege">
+            <a class="close" href="#" data-dismiss="alert" (click)="clickedAlert()">X</a>
+            <h4 style="text-align: center">{{alertMassege}}</h4>
+        </div> -->
+        <div *ngIf="isSearchClicked">
+        <div *ngIf="!isListContainsData">
+            <h3 class="text-center noRecord">{{ 'adminConfigarationPage.commonFields.noRecordFound' | translate }}</h3>
+        </div>
+        </div>
+    </div>
+    <div class="col-md-12" *ngIf="isListContainsData">
         <div class="table-responsive">
             <table class="table table-bordered myTable table-condensed table-striped">
                 <thead>
@@ -127,12 +138,15 @@
             <div class="clearfix"></div>
 
         </div>
+        <div class="col-lg-12 text-center">
+            <button class="btn btn-primary btnNext" type="button" (click)="proceedClick()" data-toggle="modal" data-target="#addModal">{{ 'adminConfigarationPage.membershipCardPage.proceed' | translate }}</button>
+        </div>
 
     </div>
 
-    <div class="col-lg-12 text-center">
+    <!-- <div class="col-lg-12 text-center">
         <button class="btn btn-primary btnNext" type="button" (click)="proceedClick()" data-toggle="modal" data-target="#addModal">{{ 'adminConfigarationPage.membershipCardPage.proceed' | translate }}</button>
-    </div>
+    </div> -->
 
     <div class="modal fade" id="addModal" role="dialog">
         <div class="modal-dialog">
