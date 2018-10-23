@@ -2,33 +2,33 @@ export class Student {
 
     stdId: number;
     stdName: string;
-    addressOne: string;
-    addressTwo: string;
-    city: string;
-    state: string;
-    zipcode: string;
-    countryName: string;
-    stdPhone?: any;
-    gender: string;
-    parentPhone: string;
-    stdEmail: string;
-    stdAdmissionNumber: string;
-    institutionName: string;
-    course: string;
-    stdPassword?: any;
-    mcmId?: any;
-    yearofjoining?: any;
+    stdMobile?: any;
+    stdEmail?: any;
+    stdRollnumber?: any;
+    addressOne?: any;
+    addressTwo?: any;
+    city?: any;
+    zipCode?: any;
+    countryName?: any;
+    state?: any;
+    createdBy?: any;
+    createDateTime?: any;
+    modifiedBy?: any;
+    modifiedDateTime?: any;
+    institutionName?: any;
+    courseName?: any;
     courseCategory: string;
-    plan: string;
-    status: string;
-    creationDate?: number;
-    createdBy: string;
-    modifiedDate?: number;
-    modifiedBy: string;
-    studentStatusId: number;
+    plan?: any;
+    status?: any;
+    parPhone?: any;
+    planAmount?: any;
+    planStartDate?: any;
+    planEndDate?: any;
+    mcmId: string;
+    qrImage?: any;
 
     planPrice : any;
-    planStartDate : any;
+   
     planEndEnd : any;
     
   
@@ -48,18 +48,16 @@ export class PlanNameObject {
     endDateTime: any;
 }
 
-
 export class CourseProfile {
     courseId: number;
     courseName: string;
     courseCode: string;
     duration: string;
-    categoryName: string;
-    createdBy: string;
-    createDateTime: any;
-    modifiedBy: string;
-    modifiedDateTime: any;
-    
+    createdBy?: any;
+    createDateTime: Date;
+    modifiedBy?: any;
+    modifiedDateTime: Date;
+    courseCategoryVos: CourseCategory[];
 }
 
 export class CourseCategory {
@@ -67,11 +65,11 @@ export class CourseCategory {
     categoryCode: string;
     categoryName: string;
     status: string;
-    creationDate: any;
-    createdBy: string;
-    modifiedDate: any;
-    modifiedBy: string;
-    courseProfile: CourseProfile[];
+    creationDate?: any;
+    createdBy?: any;
+    modifiedDate?: any;
+    modifiedBy?: any;
+    courseProfileVos: CourseProfile[];
 }
 
 export class Institution {
@@ -83,30 +81,90 @@ export class Institution {
     instState: string;
     instPincode: string;
     instCountryname: string;
-    instFax?: any;
+    instFax: string;
     instEmail: string;
-    instCourseOffered?: any;
-    instStatus?: any;
-    instCourseCode?: any;
+    instCourseOffered: string;
+    instStatus?: boolean;
+    instCourseCode: string;
     instMobile: string;
-    instPhone: number;
-    instCreatedBy?: any;
-    instCreateDateTime: any;
+    instPhone?: number;
     instBankBranch: string;
-    instModifiedBy?: any;
-    instModifiedDateTime: any;
-    instAccountHolderName?: any;
-    instAccountNumber?: any;
-    instIfscCode?: any;
+    instAccountHolderName: string;
+    instAccountNumber?: number;
+    instIfscCode: string;
     instAccountType: string;
     instBankName: string;
     instName: string;
-    instRegistrationCode?: any;
-    instBranch?: any;
+    instRegistrationCode: string;
+    instBranch: string;
     instShortName: string;
-    courseCategory: CourseCategory[];
-    instContactPerson: string;
+    instModifiedBy?: any;
+    instModifiedDateTime?: Date;
+    instCreatedBy?: any;
+    instCreateDateTime?: Date;
+    courseCategoryVos: CourseCategory[];
+    instContactPerson?: any;
 }
+
+
+// export class CourseProfile {
+//     courseId: number;
+//     courseName: string;
+//     courseCode: string;
+//     duration: string;
+//     categoryName: string;
+//     createdBy: string;
+//     createDateTime: any;
+//     modifiedBy: string;
+//     modifiedDateTime: any;
+    
+// }
+
+// export class CourseCategory {
+//     categoryId: number;
+//     categoryCode: string;
+//     categoryName: string;
+//     status: string;
+//     creationDate: any;
+//     createdBy: string;
+//     modifiedDate: any;
+//     modifiedBy: string;
+//     courseProfile: CourseProfile[];
+// }
+
+// export class Institution {
+//     institutionId: number;
+//     instDesignation: string;
+//     instAddressone: string;
+//     instAddresstwo: string;
+//     instCity: string;
+//     instState: string;
+//     instPincode: string;
+//     instCountryname: string;
+//     instFax?: any;
+//     instEmail: string;
+//     instCourseOffered?: any;
+//     instStatus?: any;
+//     instCourseCode?: any;
+//     instMobile: string;
+//     instPhone: number;
+//     instCreatedBy?: any;
+//     instCreateDateTime: any;
+//     instBankBranch: string;
+//     instModifiedBy?: any;
+//     instModifiedDateTime: any;
+//     instAccountHolderName?: any;
+//     instAccountNumber?: any;
+//     instIfscCode?: any;
+//     instAccountType: string;
+//     instBankName: string;
+//     instName: string;
+//     instRegistrationCode?: any;
+//     instBranch?: any;
+//     instShortName: string;
+//     courseCategory: CourseCategory[];
+//     instContactPerson: string;
+// }
 
 
 

@@ -27,7 +27,7 @@ export class StudentService {
     headers.append('Access-Control-Allow-Headers', 'Content-Type');
     headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
     let options = { headers: headers };
-    return this.http.get(this.url + '/studentStatus/list', options).pipe(map(res => res.json()));
+    return this.http.get(this.url +'/status/list', options).pipe(map(res => res.json()));
   }
 
   // getPlan() {
@@ -41,7 +41,7 @@ export class StudentService {
   //   return this.http.get(this.url + '/plans/list', options).pipe(map(res => res.json()));
   // }
 
-  saveStudent(data,institute,courseCategory,course) {
+  saveStudent(data,institute,courseCategory,courseName) {
     let obj = {
 
       "stdName": data.stdName,
@@ -49,14 +49,14 @@ export class StudentService {
       "addressTwo": data.addressTwo,
       "city": data.city,
       "state": data.state,
-      "zipcode": data.zipcode,
+      "zipCode": data.zipCode,
       "countryName": data.countryName,
-      "stdPhone": data.stdPhone,
+      "stdMobile": data.stdMobile,
       "gender": data.gender,
       "stdEmail": data.stdEmail,
-      "stdAdmissionNumber": data.stdAdmissionNumber,
+      "stdRollnumber": data.stdRollnumber,
       "institutionName": institute,
-      "course": course,
+      "courseName": courseName,
       "courseCategory": courseCategory,
       "plan": data.plan,
       "status": data.status
@@ -76,7 +76,7 @@ export class StudentService {
 
   }
 
-  updateStudent(data,institute,courseCategory,course) {
+  updateStudent(data,institute,courseCategory,courseName) {
     let obj = {
       "stdId": data.stdId,
       "stdName": data.stdName,
@@ -84,14 +84,14 @@ export class StudentService {
       "addressTwo": data.addressTwo,
       "city": data.city,
       "state": data.state,
-      "zipcode": data.zipcode,
+      "zipCode": data.zipCode,
       "countryName": data.countryName,
-      "stdPhone": data.stdPhone,
+      "stdMobile": data.stdMobile,
       "gender": data.gender,
       "stdEmail": data.stdEmail,
-      "stdAdmissionNumber": data.stdAdmissionNumber,
+      "stdRollnumber": data.stdRollnumber,
       "institutionName": institute,
-      "course": course,
+      "courseName": courseName,
       "courseCategory": courseCategory,
       "plan": data.plan,
       "status": data.status
@@ -208,7 +208,7 @@ searchStudent(studentsData) {
   {
     "institutionName": studentsData.institutionName,
     "courseCategory": studentsData.courseCategory,
-    "course": studentsData.course,
+    "courseName": studentsData.courseName,
     "status": studentsData.status
   };
   console.log(obj);
@@ -219,7 +219,7 @@ searchStudent(studentsData) {
   headers.append('Access-Control-Allow-Headers', 'Content-Type');
   headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
   let options = { headers: headers };
-  return this.http.post(this.url+'/students/searchList', obj, options).pipe(map(res => res.json()));
-}
+  return this.http.post(this.url+'/students/searchByCriteria', obj, options).pipe(map(res => res.json()));
+}  
 
 }

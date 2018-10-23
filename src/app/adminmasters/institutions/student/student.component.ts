@@ -13,6 +13,8 @@ import { SelectDropDownComponent } from "ngx-select-dropdown";
 import { CourseCategoryService } from "../course-category/course-category.service";
 import { Course } from '../courses/courses.module';
 import { CourseService } from "../courses/courses.service";
+import Swal from 'sweetalert2';
+
 
 declare var jquery: any;
 declare var $: any;
@@ -155,8 +157,8 @@ export class StudentComponent implements OnInit {
     limitTo: this.institutionList.length
   };
   changeValueInstitute($event: any) {
-    
-  }
+    console.log(this.selectedInstituteValue);
+    }
 
   selectedCourseCategoryValue : any;
   courseCategorNameconfig = {
@@ -178,6 +180,16 @@ export class StudentComponent implements OnInit {
    {
     
   }
+  // selectedStatusValue : any;
+  // courseNameconfig = {
+  //   displayKey: "courseName", //if objects array passed which key to be displayed defaults to description
+  //   search: true,
+  //   limitTo: this.courseListLocal.length
+  // };
+  // changeValueStatus($event: any)
+  //  {
+    
+  // }
 
   openbulkuploadpopup() {
     $('#bulk').modal({
@@ -283,32 +295,60 @@ export class StudentComponent implements OnInit {
     });
   }
 
-  onInstituteSelect(institutionId) {
+  // onInstituteSelect(institutionId) {
 
-    this.courseCategoryList = [];
-    this.courseList = [];
-    var institutionListLocal: Institution[] = [];
-    institutionListLocal = this.institutionList.filter((item) => item.institutionId == institutionId);
-    for (let item of institutionListLocal[0].courseCategory) {
+  //   this.courseCategoryList = [];
+  //   this.courseList = [];
+  //   var institutionListLocal: Institution[] = [];
+  //   institutionListLocal = this.institutionList.filter((item) => item.institutionId == institutionId);
+  //   for (let item of institutionListLocal[0].courseCategory) {
+  //     this.courseCategoryList.push(item);
+  //   }
+
+  //   this.selectedInstitute = institutionListLocal[0].instName.toString();
+
+  // }
+  
+onInstituteSelect(institutionId)
+{
+  this.courseCategoryList = [];
+  var institutionListLocal : Institution[] = [];
+  institutionListLocal = this.institutionList.filter((item)=> item.institutionId == institutionId);
+  for(let item of institutionListLocal[0].courseCategoryVos)
+  {
       this.courseCategoryList.push(item);
-    }
-
-    this.selectedInstitute = institutionListLocal[0].instName.toString();
-
   }
+  this.selectedInstitute = institutionListLocal[0].instName.toString();
+}
 
 
-  onCourseCategorySelect(categoryId) {
+  // onCourseCategorySelect(categoryId) {
 
+  //   this.courseList = [];
+  //   var courseCategoryListLocal: CourseCategory[] = [];
+  //   courseCategoryListLocal = this.courseCategoryList.filter((item) => item.categoryId == categoryId);
+  //   for (let item of courseCategoryListLocal[0].courseProfile) {
+  //     this.courseList.push(item);
+  //   }
+  //   this.selectedCategory = courseCategoryListLocal[0].categoryName.toString();
+
+  // }
+
+  onCourseCategorySelect(categoryId)
+ {
+   console.log(categoryId);
+   console.log(this.courseCategoryList);
     this.courseList = [];
-    var courseCategoryListLocal: CourseCategory[] = [];
-    courseCategoryListLocal = this.courseCategoryList.filter((item) => item.categoryId == categoryId);
-    for (let item of courseCategoryListLocal[0].courseProfile) {
-      this.courseList.push(item);
+    var courseCategoryListLocal : CourseCategory[] = [];
+    courseCategoryListLocal = this.courseCategoryList.filter((item)=> item.categoryId == categoryId); 
+    for(let item of courseCategoryListLocal[0].courseProfileVos)
+    {
+        this.courseList.push(item);
     }
     this.selectedCategory = courseCategoryListLocal[0].categoryName.toString();
 
-  }
+
+}
 
   onCourseSelect(courseId) {
     this.selectedCourse = courseId.toString();
@@ -644,13 +684,13 @@ export class StudentComponent implements OnInit {
         this.studentBulkList[i].plan = this.planname;
         this.studentBulkList[i].institutionName = this.selectedInstitute;
         this.studentBulkList[i].courseCategory = this.selectedCategory;
-        this.studentBulkList[i].course = this.selectedCourse;
+        this.studentBulkList[i].courseName = this.selectedCourse;
       } else if ($('#mycheck-' + i).prop("checked") == false) {
         i--;
         this.studentBulkList[i].plan = '';
         this.studentBulkList[i].institutionName = '';
         this.studentBulkList[i].courseCategory = '';
-        this.studentBulkList[i].course = '';
+        this.studentBulkList[i].courseName = '';
       }
     }
 
@@ -675,7 +715,7 @@ export class StudentComponent implements OnInit {
           element.courseCategory = this.selectedCategory;
         });
         this.studentBulkList.forEach(element => {
-          element.course = this.selectedCourse;
+          element.courseName = this.selectedCourse;
         });
       } else {
         this.checkedval = null;
@@ -689,51 +729,138 @@ export class StudentComponent implements OnInit {
           element.courseCategory = "";
         });
         this.studentBulkList.forEach(element => {
-          element.course = "";
+          element.courseName = "";
         });
       }
     }
   }
 
   searchStudent(studentParameters) {
-    if (typeof studentParameters.value.institutionName != "undefined"
-      || typeof studentParameters.value.courseCategory != "undefined"
-      || typeof studentParameters.value.course != "undefined"
-      || typeof studentParameters.value.status != "undefined") {
-      this.isSearchClicked = true;
-      if (studentParameters.value.institutionName === null
-        || studentParameters.value.courseCategory === null
-        || studentParameters.value.course === null
-        || studentParameters.value.status === null) {
-
-      }
-      else {
-        this.studentService.searchStudent(studentParameters.value)
-          .subscribe(
-            (data) => {
-              this.studentList = data;
-              if (typeof this.studentList !== 'undefined' && this.studentList.length > 0) {
-                this.isListContainsData = true;
-                this.studentList = data;
-                this.studentList = data;
-              }
-              else {
-                this.isListContainsData = false;
-              }
-            },
-            (error) => {
-              console.log(error);
-              alert("Try again");
-            }
-          );
-      }
+      var studentObject: Student = new Student();
+    this.isSearchClicked = true;
+    if (typeof this.selectedInstituteValue !== 'undefined' && this.selectedInstituteValue.length > 0) {
+      studentObject.institutionName = this.selectedInstituteValue[0].instName;
     }
 
+    if (typeof this.selectedCourseCategoryValue !== 'undefined' && this.selectedCourseCategoryValue.length > 0) {
+      console.log(this.selectedCourseCategoryValue);
+      studentObject.courseCategory = this.selectedCourseCategoryValue[0].categoryName;
+   
+    }
+
+    if (typeof this.selectedCourseValue !== 'undefined' && this.selectedCourseValue.length>0) 
+    {
+      studentObject.courseName = this.selectedCourseValue[0].courseName
+    }
+
+    studentObject.status = studentParameters.status;
+
+ 
+  
+
+    if (typeof studentObject.institutionName === 'undefined'  && typeof studentObject.courseCategory === 'undefined' && typeof studentObject.courseName === 'undefined' && typeof studentObject.status === 'undefined') 
+  {
+    Swal({
+      title: 'Invalid!!',
+      text: 'Atleast enter any one field.',
+      showCancelButton: false,
+      confirmButtonText: 'Ok',
+    });
+    this.isListContainsData = false;
+    this.studentList=[];
+   
   }
+
+  else
+  {
+    this.studentService.searchStudent(studentObject)
+    .subscribe(
+      (data) => {
+        this.studentList = data;
+        if (typeof this.studentList !== 'undefined' && this.studentList.length > 0) {
+          this.isListContainsData = true;
+          this.studentList = data;
+          this.studentList = data;
+        }
+        else {
+          this.isListContainsData = false;
+        }
+      },
+      (error) => {
+        console.log(error);
+        alert("Try again");
+      }
+    );
+  }
+}
+
+
+
+   //  console.log(studentObject);
+    //  this.studentService.searchStudent(studentObject)
+    //       .subscribe(
+    //         (data) => {
+    //           this.studentList = data;
+    //           if (typeof this.studentList !== 'undefined' && this.studentList.length > 0) {
+    //             this.isListContainsData = true;
+    //             this.studentList = data;
+    //             this.studentList = data;
+    //           }
+    //           else {
+    //             this.isListContainsData = false;
+    //           }
+    //         },
+    //         (error) => {
+    //           console.log(error);
+    //           alert("Try again");
+    //         }
+    //       );
+
+    // if (typeof studentParameters.value.institutionName != "undefined"
+    //   || typeof studentParameters.value.courseCategory != "undefined"
+    //   || typeof studentParameters.value.course != "undefined"
+    //   || typeof studentParameters.value.status != "undefined") {
+    //   this.isSearchClicked = true;
+    //   if (studentParameters.value.institutionName === null
+    //     || studentParameters.value.courseCategory === null
+    //     || studentParameters.value.course === null
+    //     || studentParameters.value.status === null) {
+
+    //   }
+    //   else {
+    //     this.studentService.searchStudent(studentParameters.value)
+    //       .subscribe(
+    //         (data) => {
+    //           this.studentList = data;
+    //           if (typeof this.studentList !== 'undefined' && this.studentList.length > 0) {
+    //             this.isListContainsData = true;
+    //             this.studentList = data;
+    //             this.studentList = data;
+    //           }
+    //           else {
+    //             this.isListContainsData = false;
+    //           }
+    //         },
+    //         (error) => {
+    //           console.log(error);
+    //           alert("Try again");
+    //         }
+    //       );
+    //   }
+    // }
+
+  
 
 
   searchClear() {
     this.student = new Student();
+
+    this.ngSelectInstituteName.deselectItem(this.selectedInstituteValue,0);
+    this.ngSelectInstituteName.ngOnInit();
+    this.ngSelectinstCategoryName.deselectItem(this.selectedCourseCategoryValue,0);
+    this.ngSelectinstCategoryName.ngOnInit();
+    this.ngSelectCourseName.deselectItem(this.selectedCourseValue,0);
+    this.ngSelectCourseName.ngOnInit();
     
   }
 }

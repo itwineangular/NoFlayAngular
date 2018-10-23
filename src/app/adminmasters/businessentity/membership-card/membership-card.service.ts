@@ -45,6 +45,6 @@ export class MembershipCardService {
     headers.append('Access-Control-Allow-Headers', 'Content-Type');
     headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
     let options = { headers: headers };
-    return this.http.post('http://192.168.1.57:9090/students/searchByCriteria', obj, options).pipe(map(res => res.json()));
+    return this.http.post(this.url+'/students/searchByCriteria', obj, options).pipe(map(res => res.json()));
   }
 }

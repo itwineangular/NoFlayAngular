@@ -1,8 +1,9 @@
 export class MembershipCard {
     institutionName: string;
     courseCategory : string;
-    course : string;
+    courseName : string;
     stdName : string;
+    status : string;
 }
 
 export class CourseProfile {
@@ -18,15 +19,25 @@ export class CourseProfile {
 }
 
 export class CourseCategory {
+    // categoryId: number;
+    // categoryCode: string;
+    // categoryName: string;
+    // status: string;
+    // creationDate: any;
+    // createdBy: string;
+    // modifiedDate: any;
+    // modifiedBy: string;
+    // courseProfile: CourseProfile[];
+
     categoryId: number;
     categoryCode: string;
     categoryName: string;
     status: string;
-    creationDate: any;
-    createdBy: string;
-    modifiedDate: any;
-    modifiedBy: string;
-    courseProfile: CourseProfile[];
+    creationDate?: any;
+    createdBy?: any;
+    modifiedDate?: any;
+    modifiedBy?: any;
+    courseProfileVos: any[];
 }
 
 export class Institution {

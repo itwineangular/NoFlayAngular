@@ -55,7 +55,7 @@
                     <button class="btn btn-info btn-outline pull-right cssButtonPadding"  (click)="addNew()">{{'adminConfigarationPage.studentPage.individual' | translate}}</button>
                     <button class="btn btn-info btn-outline pull-right cssButtonPadding"  (click)="openbulkuploadpopup()">{{'adminConfigarationPage.studentPage.bulk' | translate}}</button>
                     <button class="btn btn-warning btn-outline pull-right cssButtonPadding" type="button" (click)="searchClear()">{{'adminConfigarationPage.commonFields.clear' | translate}}</button>
-                    <button class="btn btn-primary btn-outline pull-right cssButtonPadding" type="submit">{{'adminConfigarationPage.commonFields.search' | translate}}</button>
+                    <button class="btn btn-primary btn-outline pull-right cssButtonPadding" type="button" (click)="searchStudent(student)">{{'adminConfigarationPage.commonFields.search' | translate}}</button>
                 </div>
             </form>
             </div>
@@ -84,7 +84,7 @@
                             <span [hidden]="reverse">▼</span>
                             <span [hidden]="!reverse">▲</span>
                         </th>
-                        <th [class.active]="key === 'stdPhone'" (click)=" sort('stdPhone')">{{ 'adminConfigarationPage.studentPage.mobile' | translate }}
+                        <th [class.active]="key === 'stdMobile'" (click)=" sort('stdMobile')">{{ 'adminConfigarationPage.studentPage.mobile' | translate }}
                             <span [hidden]="reverse">▼</span>
                             <span [hidden]="!reverse">▲</span>
                         </th>
@@ -92,7 +92,7 @@
                             <span [hidden]="reverse">▼</span>
                             <span [hidden]="!reverse">▲</span>
                         </th>
-                        <th [class.active]="key === 'stdAdmissionNumber'" (click)=" sort('stdAdmissionNumber')">{{ 'adminConfigarationPage.studentPage.rollNumber' | translate }}
+                        <th [class.active]="key === 'stdRollnumber'" (click)=" sort('stdRollnumber')">{{ 'adminConfigarationPage.studentPage.rollNumber' | translate }}
                             <span [hidden]="reverse">▼</span>
                             <span [hidden]="!reverse">▲</span>
                         </th>
@@ -104,7 +104,7 @@
                             <span [hidden]="reverse">▼</span>
                             <span [hidden]="!reverse">▲</span>
                         </th>
-                        <th [class.active]="key === 'course'" (click)=" sort('course')">{{ 'adminConfigarationPage.studentPage.courses' | translate }}
+                        <th [class.active]="key === 'courseName'" (click)=" sort('courseName')">{{ 'adminConfigarationPage.studentPage.courses' | translate }}
                             <span [hidden]="reverse">▼</span>
                             <span [hidden]="!reverse">▲</span>
                         </th>
@@ -120,12 +120,12 @@
                     <tr *ngFor="let item of studentList | orderBy: key : reverse : caseInsensitive : comparator |  paginate: { itemsPerPage: pagenumber, currentPage: p };let i=index">
                         <td>{{((p-1)*itemsPerPage2)+i+1}}</td>
                         <td>{{item.stdName}}</td>
-                        <td>{{item.stdPhone}}</td>
+                        <td>{{item.stdMobile}}</td>
                         <td>{{item.stdEmail}}</td>
-                        <td>{{item.stdAdmissionNumber}}</td>
+                        <td>{{item.stdRollnumber}}</td>
                         <td>{{item.institutionName}}</td>
                         <td>{{item.courseCategory}}</td>
-                        <td>{{item.course}}</td>
+                        <td>{{item.courseName}}</td>
                         <td>{{item.status}}</td>
                         <td>
                             <button class="btn btn-warning buttonStyle" data-toggle="modal" data-target="#addModal" (click)="selectUser(item)">
@@ -253,9 +253,9 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label for="pinCode">{{'adminConfigarationPage.studentPage.pinCode' | translate}}<span class="reqMark">*</span></label>
-                                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentPage.pinCode' | translate}}" name="zipcode"
-                                        #zipcode="ngModel" [(ngModel)]="student.zipcode" required />
-                                    <div class="validation-error" *ngIf="zipcode.invalid && zipcode.touched">{{'adminConfigarationPage.commonFields.PincodeRequired' | translate}}</div>
+                                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentPage.pinCode' | translate}}" name="zipCode"
+                                        #zipCode="ngModel" [(ngModel)]="student.zipCode" required />
+                                    <div class="validation-error" *ngIf="zipCode.invalid && zipCode.touched">{{'adminConfigarationPage.commonFields.PincodeRequired' | translate}}</div>
 
 
                                 </div>
@@ -281,17 +281,17 @@
 
                                 <div class="col-md-3">
                                     <label for="mobile">{{'adminConfigarationPage.studentPage.mobile' | translate}}<span class="reqMark">*</span></label>
-                                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentPage.mobile' | translate}}" name="stdPhone"
-                                        #stdPhone="ngModel" [(ngModel)]="student.stdPhone" pattern="\d*" minlength=10 maxlength=15
+                                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentPage.mobile' | translate}}" name="stdMobile"
+                                        #stdMobile="ngModel" [(ngModel)]="student.stdMobile" pattern="\d*" minlength=10 maxlength=15
                                         required />
-                                    <div class="validation-error" *ngIf="stdPhone.invalid && stdPhone.touched">
-                                        <div class="validation-error" *ngIf="stdPhone.errors.required ">
+                                    <div class="validation-error" *ngIf="stdMobile.invalid && stdMobile.touched">
+                                        <div class="validation-error" *ngIf="stdMobile.errors.required ">
                                             {{'adminConfigarationPage.commonFields.MobileRequired' | translate}}
                                         </div>
-                                        <div class="validation-error" *ngIf="stdPhone.errors.minlength">
+                                        <div class="validation-error" *ngIf="stdMobile.errors.minlength">
                                             {{'adminConfigarationPage.commonFields.mobileLength' | translate}}
                                         </div>
-                                        <div class="validation-error" *ngIf="stdPhone.errors.pattern">
+                                        <div class="validation-error" *ngIf="stdMobile.errors.pattern">
                                             {{'adminConfigarationPage.commonFields.invalidMobileMessage' | translate}}
                                         </div>
                                     </div>
@@ -378,9 +378,9 @@
                                 <div class="form-group">
                                     <div class="col-md-3">
                                         <label for="rollNumber">{{'adminConfigarationPage.studentPage.rollNumber' | translate}}<span class="reqMark">*</span></label>
-                                        <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentPage.rollNumber' | translate}}" name="stdAdmissionNumber"
-                                            #stdAdmissionNumber="ngModel" [(ngModel)]="student.stdAdmissionNumber" required />
-                                        <div class="validation-error" *ngIf="stdAdmissionNumber.invalid && stdAdmissionNumber.touched">{{'adminConfigarationPage.commonFields.stdAdmissionNumber' | translate}}</div>
+                                        <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentPage.rollNumber' | translate}}" name="stdRollnumber"
+                                            #stdRollnumber="ngModel" [(ngModel)]="student.stdRollnumber" required />
+                                        <div class="validation-error" *ngIf="stdRollnumber.invalid && stdRollnumber.touched">{{'adminConfigarationPage.commonFields.stdAdmissionNumber' | translate}}</div>
 
 
                                     </div>
@@ -394,7 +394,7 @@
                     </div>
                     <div class="modal-footer">
 
-                        <button class="btn btn-success" [disabled]="studentForm.invalid" (click)="saveStudent(student)" type="button" data-dismiss="modal">Save</button>
+                        <button class="btn btn-success"  (click)="saveStudent(student)" type="button" data-dismiss="modal">Save</button>
                         <button class="btn btn-default" type="button" data-dismiss="modal">{{ 'adminConfigarationPage.commonFields.close' | translate }}</button>
 
                     </div>
@@ -514,7 +514,7 @@
                             <!-- <h4>Select Course </h4> -->
                             <div class="col-md-2">
                                 <label>{{'adminConfigarationPage.studentPage.selectCourse' | translate}}</label>
-                                <select class="form-control" type="text" name="course" #course="ngModel" [(ngModel)]="student.course" (change)="onCourseSelect($event.target.value)"
+                                <select class="form-control" type="text" name="courseName" #courseName="ngModel" [(ngModel)]="student.courseName" (change)="onCourseSelect($event.target.value)"
                                     required>
                                     <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.courses' | translate}}</option>
                                     <option *ngFor="let item of courseList" value={{item.courseName}}>{{item.courseName}}
@@ -597,9 +597,9 @@
                                         <div class="validation-error" *ngIf="cityControl.invalid "> City is required</div>
                                     </td>
                                     <td>
-                                        <input type="text" id="studentzipcode-{{ i }}" name="zipcode[{{ i }}]" #zipcodeControl="ngModel" [(ngModel)]="item.zipcode"
+                                        <input type="text" id="studentzipCode-{{ i }}" name="zipCode[{{ i }}]" #zipCodeControl="ngModel" [(ngModel)]="item.zipCode"
                                             pattern="[0-9]*" maxlength="6" required>
-                                        <div class="validation-error" *ngIf="zipcodeControl.invalid"> ZipCode must be in digits</div>
+                                        <div class="validation-error" *ngIf="zipCodeControl.invalid"> ZipCode must be in digits</div>
                                     </td>
                                     <td>
                                         <input type="text" id="stdEmail-{{ i }}" name="stdEmail[{{ i }}]" #stdEmailControl="ngModel" [(ngModel)]="item.stdEmail"
@@ -610,9 +610,9 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <input type="text" id="stdAdmissionNumber-{{ i }}" name="stdAdmissionNumber[{{ i }}]" #stdAdmissionNumberControl="ngModel"
-                                            [(ngModel)]="item.stdAdmissionNumber" required>
-                                        <div class="validation-error" *ngIf="stdAdmissionNumberControl.invalid ">
+                                        <input type="text" id="stdRollnumber-{{ i }}" name="stdRollnumber[{{ i }}]" #stdRollnumberControl="ngModel"
+                                            [(ngModel)]="item.stdRollnumber" required>
+                                        <div class="validation-error" *ngIf="stdRollnumberControl.invalid ">
                                             Admission Number is required</div>
                                     </td>
                                     <td>
@@ -627,17 +627,14 @@
                                         <div class="validation-error" *ngIf="courseCategoryControl.invalid ">CourseCategory is required</div>
                                     </td>
                                     <td>
-                                        <input type="text" id="studentcourse-{{ i }}" name="course[{{ i }}]" #courseControl="ngModel" [(ngModel)]="item.course" required>
-                                        <div class="validation-error" *ngIf="courseControl.invalid ">Course is required</div>
+                                        <input type="text" id="studentcourseName-{{ i }}" name="courseName[{{ i }}]" #courseNameControl="ngModel" [(ngModel)]="item.course" required>
+                                        <div class="validation-error" *ngIf="courseNameControl.invalid ">Course is required</div>
                                     </td>
                                     <td>
-                                        <input type="text" id="studentparentPhone-{{ i }}" name="parentPhone[{{ i }}]" #parentPhoneControl="ngModel" [(ngModel)]="item.parentPhone"
-                                            minlength="10" maxlength="12" pattern="[0-9]*" required>
-                                        <div class="validation-error" *ngIf="parentPhoneControl.invalid ">Phone Number is not valid</div>
+                                            <input type="text" id="stdMobile-{{ i }}" name="stdMobile[{{ i }}]" #stdMobileControl="ngModel" [(ngModel)]="item.stdMobile"
+                                                minlength="10" maxlength="12" pattern="[0-9]*" required>
+                                            <div class="validation-error" *ngIf="stdMobileControl.invalid ">Phone Number is not valid</div>
                                     </td>
-
-
-
                                     <td>
                                         <input type="text" id="studentplan-{{ i+1 }}" name="plan[{{ i }}]" #planControl="ngModel" [(ngModel)]="item.plan" readonly
                                             required>
