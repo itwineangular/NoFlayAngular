@@ -15,7 +15,7 @@ export class Student {
     createDateTime?: any;
     modifiedBy?: any;
     modifiedDateTime?: any;
-    institutionName?: any;
+    institutionName?: string;
     courseName?: any;
     courseCategory: string;
     plan?: any;

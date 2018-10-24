@@ -5,17 +5,21 @@
         <hr />
     </div>
     <div class="col-md-12">
-        <div class="rcorners2">
-            <form class="form-horizontal" #businessEntitySearchForm="ngForm" (ngSubmit)="searchBusinessEntity(businessEntitySearchForm)">
+            <div class="panel panel-default">
+               
+                <div class="panel-body">
+            <form class="form-horizontal" #businessEntityForm="ngForm" (ngSubmit)="searchBusinessEntity(businessEntityForm)">
                 <div class="col-md-3">
                     <label for="name">{{'adminConfigarationPage.businessEntity.businessName' | translate}}</label>
-                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.businessEntity.businessName' | translate}}"
-                        name="name" #name="ngModel" [(ngModel)]="business.name" />
+                    
+                        <ngx-select-dropdown #businessName (change)="changeValue($event)" [multiple]="false" [(value)]="selectedValue"
+                        [config]="config" [options]="businessEntityListLocal"></ngx-select-dropdown>
                 </div>
                 <div class="col-md-3">
                     <label for="registrationCode">{{'adminConfigarationPage.businessEntity.registrationNumber' | translate}}</label>
-                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.businessEntity.registrationNumber' | translate}}"
-                        name="registrationCode" #registrationCode="ngModel" [(ngModel)]="business.registrationCode" />
+                    
+                        <ngx-select-dropdown #registrationNumber (change)="changeValue($event)" [multiple]="false" [(value)]="selectedregistrationNumberValue"
+                        [config]="registrationNumberconfig" [options]="businessEntityListLocal"></ngx-select-dropdown>
                 </div>
                 <div class="col-md-12">
                     <button class="btn btn-info btn-outline pull-right cssButtonPadding" data-toggle="modal"
@@ -23,12 +27,15 @@
                         | translate}}</button>
                     <button class="btn btn-warning btn-outline pull-right cssButtonPadding" type="button" (click)="searchClear()">{{'adminConfigarationPage.commonFields.clear'
                         | translate}}</button>
-                    <button class="btn btn-primary btn-outline pull-right cssButtonPadding" type="submit">{{'adminConfigarationPage.commonFields.search'
+                    <button class="btn btn-primary btn-outline pull-right cssButtonPadding"  type="button" (click)="searchBusinessEntity(business)">{{'adminConfigarationPage.commonFields.search'
                         | translate}}</button>
                 </div>
+                <div class="clearfix"></div>
             </form>
-            </div>
+            <div class="clearfix"></div>
         </div>
+    </div>
+    </div>
         <div class="col-md-12">
             <div class="alert alert-warning fade in myAlert" *ngIf="alertMassege">
                 <a class="close" href="#" data-dismiss="alert" (click)="clickedAlert()">X</a>

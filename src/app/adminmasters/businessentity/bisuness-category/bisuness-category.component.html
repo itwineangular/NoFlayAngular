@@ -5,32 +5,39 @@
         <hr />
     </div>
     <div class="col-md-12">
-        <div class="rcorners2">
+            <div class="panel panel-default">
+               
+                <div class="panel-body">
             <form class="form-horizontal" #businessCategoryForm="ngForm" (ngSubmit)="searchBusinessCategory(businessCategoryForm)">
                 <div class="col-md-3">
                     <label for="nabusinessCategoryNameme">{{'adminConfigarationPage.businessCategory.businessCategoryName'
                             | translate}}</label>
-                    <input class="form-control" type="text" placeholder="{{ 'adminConfigarationPage.commonFields.enterName' | translate }}"
-                        name="businessCategoryName" #businessCategoryName="ngModel" [(ngModel)]="businesscategory.businessCategoryName" />
+                    
+                        <ngx-select-dropdown #businessCategoryName (change)="changeValue($event)" [multiple]="false" [(value)]="selectedValue"
+                        [config]="config" [options]="businesscategoryListLocal"></ngx-select-dropdown>
                 </div>
                 <div class="col-md-3">
                     <label for="businessCategoryCode">{{'adminConfigarationPage.businessCategory.businessCategoryCode'
                             | translate}}</label>
-                    <input class="form-control" type="text" placeholder="{{ 'adminConfigarationPage.commonFields.enterCode' | translate }}"
-                        name="businessCategoryCode" #businessCategoryCode="ngModel" [(ngModel)]="businesscategory.businessCategoryCode" />
+                    
+                        <ngx-select-dropdown #businessCategoryCode (change)="changeValue($event)" [multiple]="false" [(value)]="selectedbusinessCategoryCodeValue"
+                        [config]="businessCategoryCodeconfig" [options]="businesscategoryListLocal"></ngx-select-dropdown>
                 </div>
                 <div class="col-md-12">
-                    <button class="btn btn-info btn-outline pull-right cssButtonPadding"
-                         type="button" (click)="addNew()">{{'adminConfigarationPage.commonFields.addNew'
+                    <button class="btn btn-info btn-outline pull-right cssButtonPadding" data-toggle="modal"
+                        data-target="#addModal" type="button" (click)="addNew()">{{'adminConfigarationPage.commonFields.addNew'
                         | translate}}</button>
                     <button class="btn btn-warning btn-outline pull-right cssButtonPadding" type="button" (click)="searchClear()">{{'adminConfigarationPage.commonFields.clear'
                         | translate}}</button>
-                    <button class="btn btn-primary btn-outline pull-right cssButtonPadding" type="submit">{{'adminConfigarationPage.commonFields.search'
+                    <button class="btn btn-primary btn-outline pull-right cssButtonPadding"  type="button" (click)="searchBusinessCategory(businesscategory)">{{'adminConfigarationPage.commonFields.search'
                         | translate}}</button>
                 </div>
+                <div class="clearfix"></div>
             </form>
+            <div class="clearfix"></div>
         </div>
-        </div>
+    </div>
+    </div>
         <div class="col-md-12">
             <div class="alert alert-warning fade in myAlert" *ngIf="alertMassege">
                 <a class="close" href="#" data-dismiss="alert" (click)="clickedAlert()">X</a>

@@ -5,16 +5,18 @@ import { BusinessCategory } from "../bisuness-category/business-category";
 import { DatepickerOptions, NgDatepickerModule, NgDatepickerComponent } from 'ng2-datepicker';
 import * as frLocale from 'date-fns/locale/fr';
 import * as enLocale from 'date-fns/locale/en';
-import Swal from 'sweetalert2';
 import {IMyDpOptions} from 'mydatepicker';
 
-declare var jquery: any;
-declare var $: any;
+import Swal from 'sweetalert2';
+import { ViewChild } from '@angular/core';
+import { SelectDropDownComponent } from "ngx-select-dropdown";
 // import { IMyDpOptions } from 'mydatepicker';
 // import {MatDatepickerModule} from '@angular/material/datepicker';
 
 // import { BusinessCategoryServicesService } from '../bisuness-category/business-category-services.service';
 
+declare var jquery: any;
+declare var $: any;
 @Component({
   selector: 'app-plans',
   templateUrl: './plans.component.html',
@@ -29,6 +31,7 @@ export class PlansComponent implements OnInit {
 
   plan: PlansObject = new PlansObject();
   planList: PlansObject[];
+  planListLocal: PlansObject[] = [];
   membershipList: MembershipObject[];
   planNameList: PlanNameObject[];
   key: string;
@@ -64,10 +67,13 @@ public myDatePickerOptions2: IMyDpOptions = {
   //   dateFormat: 'dd-mm-yyyy',
   //   editableDateField: false
   // };
+
+  @ViewChild('planName') public ngSelectplanName: SelectDropDownComponent;
+  @ViewChild('planMembership') public ngSelectplanMembership: SelectDropDownComponent;
   constructor(private service: PlanService) { }
 
   ngOnInit() {
-    // this.getPlan();
+    this.getPlan();
     this.isListContainsData = false;
     this.isSearchClicked = false;
 
@@ -78,6 +84,37 @@ public myDatePickerOptions2: IMyDpOptions = {
     this.pageChange(5);
 
   }
+
+  selectedValue : any;
+  config = {
+    displayKey: "planName", //if objects array passed which key to be displayed defaults to description
+    search: true,
+    limitTo: this.planListLocal.length
+    // limitTo: 10
+  };
+  changeValue($event: any) {
+    console.log(this.selectedValue)
+    
+    this.ngSelectplanMembership.value=this.selectedValue;
+    this.ngSelectplanMembership.ngOnInit();
+  }
+  // changeValue($event: any) {
+  //   this.isListContainsData = true;
+  //   this.planList = this.selectedValue;
+  // }
+
+  selectedplanMembershipValue : any;
+  planMembershipconfig = {
+    displayKey: "planMembership", //if objects array passed which key to be displayed defaults to description
+    search: true,
+    limitTo: this.planListLocal.length
+    // limitTo: 10
+  };
+  // planMembershipchangeValue($event: any) {
+  //   this.isListContainsData = true;
+  //   this.planList = this.selectedplanMembershipValue;
+  // }
+
   addNew() {
     this.plan = new PlansObject();
     this.enableaddpopup = true;
@@ -169,10 +206,11 @@ public myDatePickerOptions2: IMyDpOptions = {
     this.service.getPlan()
       .subscribe(
         (data) => {
-          this.planList = data;
-          console.log(this.planList[0].endDateTime);
-          let datyk = new Date(this.planList[0].endDateTime);
-          console.log(datyk);
+          // this.planList = data;
+          this.planListLocal = data;
+          // console.log(this.planList[0].endDateTime);
+          // let datyk = new Date(this.planList[0].endDateTime);
+          // console.log(datyk);
         }
       );
 
@@ -210,53 +248,59 @@ public myDatePickerOptions2: IMyDpOptions = {
   }
 
   searchPlan(planParameters) {
-    if (typeof planParameters.value.planName != "undefined"
-      || typeof planParameters.value.planPrice != "undefined"
-      || typeof planParameters.value.planMembership != "undefined"
-      || typeof planParameters.value.startDateTime != "undefined") {
-        this.isSearchClicked=true;
-        if(planParameters.value.planName === null
-        ||  planParameters.value.planMembership === null
-        || planParameters.value.startDateTime === null)
-        {
-
-        }
-        else{
-    this.service.searchPlan(planParameters.value)
-        .subscribe(
-      (data) => {
-        this.planList = data;
-        if (typeof this.planList !== 'undefined' && this.planList.length > 0) {
-          this.isListContainsData = true;
-        }
-        else {
-          this.isListContainsData = false;
-        }
-      },
-      (error) => {
-        console.log(error);
-        alert("Try again");
-      }
-    );
-
-}
-      }
-
-}
-  searchClear() {
-    this.plan = new PlansObject( );
-    // this.getPlan();
-    // this.service.searchPlan(this.plan)
-    //   .subscribe(
-    //     (data) => {
-    //       this.planList = data;
-    //     },
-    //     (error) => {
-    //       console.log( error);
-    //       alert("Try again");
-    //     }
-    //   );
-  }
+    var planLocal: PlansObject = new PlansObject();
+     this.isSearchClicked=true;
+     if (typeof this.selectedValue !== 'undefined'  && this.selectedValue.length>0) 
+     {
+       planLocal.planName = this.selectedValue[0].planName;
+     }
+     if (typeof this.selectedplanMembershipValue !== 'undefined' && this.selectedplanMembershipValue.length>0) 
+     {
+       planLocal.planMembership = this.selectedplanMembershipValue[0].planMembership
+     }
+ 
+     if (typeof planLocal.planName === 'undefined'  && typeof planLocal.planMembership === 'undefined') 
+     {
+       Swal({
+         title: 'Invalid!!',
+         text: 'Atleast enter any one field.',
+         showCancelButton: false,
+         confirmButtonText: 'Ok',
+       });
+       this.isListContainsData = false;
+       this.planList=[];
+      
+     }
+     else
+     {
+       this.service.searchPlan(planLocal)
+       .subscribe(
+         (data) => {
+           this.planList = data;
+           if (typeof this.planList !== 'undefined' && this.planList.length > 0) {
+             this.isListContainsData = true;
+           }
+           else {
+             this.isListContainsData = false;
+           }
+         },
+         (error) => {
+           console.log(error);
+           alert("Try again");
+         }
+       );
+     }
+   }
+ 
+   searchClear() {
+     this.plan = new PlansObject();
+     this.ngSelectplanName.deselectItem(this.selectedValue,0);
+     this.ngSelectplanName.ngOnInit();
+ 
+     this.ngSelectplanMembership.deselectItem(this.selectedplanMembershipValue,0);
+     this.ngSelectplanMembership.ngOnInit();
+     
+   }
   pageChange(pagenumber){
   
     this.pagenumber=pagenumber;

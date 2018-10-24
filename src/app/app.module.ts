@@ -17,6 +17,7 @@ import { FilterPipePlanName } from "./adminmasters/businessentity/plan-name/plan
 import { OrderModule } from 'ngx-order-pipe';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { MyDatePickerModule } from 'mydatepicker';
+import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 
 import {
   SocialLoginModule,
@@ -59,7 +60,8 @@ import { StudentComponent } from './adminmasters/institutions/student/student.co
 import { MembershipCardComponent } from './adminmasters/businessentity/membership-card/membership-card.component'
 
 import { QRCodeModule } from 'angularx-qrcode';
-import { SelectDropDownModule } from 'ngx-select-dropdown'
+import { SelectDropDownModule } from 'ngx-select-dropdown';
+import { EmailTemplateComponent } from './adminmasters/accesscontrol/email-template/email-template.component'
 
 
 @NgModule({
@@ -97,7 +99,8 @@ import { SelectDropDownModule } from 'ngx-select-dropdown'
     PlanNameComponent,
     StatusComponent,
     StudentComponent,
-    MembershipCardComponent
+    MembershipCardComponent,
+    EmailTemplateComponent
   ],
   imports: [
     BrowserModule,
@@ -120,7 +123,9 @@ import { SelectDropDownModule } from 'ngx-select-dropdown'
     NgxPaginationModule,
     MyDatePickerModule ,
     QRCodeModule,
-    SelectDropDownModule
+    SelectDropDownModule,
+    FroalaEditorModule.forRoot(),
+    FroalaViewModule.forRoot()
   ],
   providers: [Angular2TokenService, FileuploaderService,
     {

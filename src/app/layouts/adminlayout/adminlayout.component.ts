@@ -17,6 +17,8 @@ import { AuthService } from '../../homepage/auth.service';
 export class AdminlayoutComponent implements OnInit {
 
   accessControl: string;
+  emailTemplate: string;
+
   institutions: string;
   businessEntities: string;
   selectedFlag: string;
@@ -96,6 +98,7 @@ export class AdminlayoutComponent implements OnInit {
 
   englishMenuItems() {
     this.accessControl = "Access Control",
+    this.emailTemplate = "Email Templates",
       this.institutions = "Institutions",
       this.businessEntities = "Business Entities",
       this.courseCategory = "Course Categories",
@@ -117,6 +120,7 @@ export class AdminlayoutComponent implements OnInit {
   }
   frenchMenuitems() {
     this.accessControl = "Contrôle d'accès",
+    this.emailTemplate = "Modèles de courrier électronique",
       this.institutions = "Institutions",
       this.businessEntities = "Entités commerciales",
       this.courseCategory = "Catégories de cours",
@@ -156,7 +160,10 @@ export class AdminlayoutComponent implements OnInit {
           'menuitems':
             [
               // { 'menuid': '1', 'mainmenu': 'Access Control', 'url': 'accesscontrol' },
-              { 'menuid': '1', 'mainmenu': this.accessControl, 'url': 'accesscontrol' },
+              { 'menuid': '1', 'mainmenu': this.accessControl,'submenu': [
+                { 'name': this.emailTemplate, 'url': 'emailTemplate' }
+
+              ] },
               {
                 'menuid': '2', 'mainmenu': this.institutions,
                 'submenu': [
@@ -195,7 +202,7 @@ export class AdminlayoutComponent implements OnInit {
               }
             ]
         };
-        this.router.navigate(['/coursecategory']);
+        this.router.navigate(['/emailTemplate']);
         break;
 
       case 'reports':

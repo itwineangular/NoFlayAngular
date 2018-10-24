@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MembershipObject } from './membership-object';
 import { MembershipServicesService } from './membership-services.service';
+import { ViewChild } from '@angular/core'
+import { SelectDropDownComponent } from "ngx-select-dropdown";
 
 declare var jquery: any;
 declare var $: any;
@@ -24,15 +26,28 @@ export class MembershipComponent implements OnInit {
   itemsPerPage2: number = 1;
   membership: MembershipObject = new MembershipObject();
   membershipList: MembershipObject[];
+  membershipListLocal: MembershipObject[];
+
+  @ViewChild('chosenuser') public ngSelect: SelectDropDownComponent;
+
   constructor(private membershipService: MembershipServicesService) { }
 
   ngOnInit() {
-    // this.getMembership();
+    this.getMembership();
     this.isListContainsData = false;
     this.isSearchClicked = false;
 
     this.pageChange(5);
   }
+
+  membershipForm;
+  selectedValue : any = [];
+  config = {
+    displayKey: "memberName", //if objects array passed which key to be displayed defaults to description
+    search: true,
+    limitTo: 10
+  };
+  
 
   addNew() {
     this.saveOrUpdate = "save";
@@ -83,7 +98,8 @@ export class MembershipComponent implements OnInit {
 
   getMembership() {
     this.membershipService.getMembership().subscribe(data => {
-      this.membershipList = data;
+      // this.membershipList = data;
+      this.membershipListLocal = data;
     });
   }
 
@@ -120,47 +136,16 @@ export class MembershipComponent implements OnInit {
   }
 
 
-  searchMembership(membership) {
-    if (typeof membership.value.memberName != "undefined") {
-      this.isSearchClicked=true;
-      if(membership.value.memberName === null)
-      {
+  searchMembership(membership)
+  {
+    this.isListContainsData = true;
+    this.membershipList = this.selectedValue;
+  }
 
-      }
-      else{
-     this.membershipService.searchMembership(membership.value)
-         .subscribe(
-       (data) => {
-        this.membershipList = data;
-        if (typeof this.membershipList !== 'undefined' && this.membershipList.length > 0) {
-          this.isListContainsData = true;
-        }
-        else {
-          this.isListContainsData = false;
-        }
-      },
-      (error) => {
-        console.log(error);
-        alert("Try again");
-      }
-    );
 
-}
-    }
-
-}
- 
    searchClear() {
      this.membership = new MembershipObject( );
-    //  this.membershipService.searchMembership(this.membership)
-    //    .subscribe(
-    //      (data) => {
-    //        this.membershipList = data;
-    //      },
-    //      (error) => {
-    //        console.log( error);
-    //        alert("Try again");
-    //      }
-    //    );
+     this.ngSelect.deselectItem(this.selectedValue,0);
+     this.ngSelect.ngOnInit();
    }
 }

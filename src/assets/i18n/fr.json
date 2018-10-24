@@ -216,6 +216,12 @@
             "status" : "Statut",
             "id" : "ID"
 
+        },
+        "emailTemplatePage":
+        {
+            "emailTemplates" : "Modèles de courrier électronique",
+            "selectEmailTemplate" : "Sélectionner un modèle de courrier électronique"
+            
         }
      },
      "studentLoginPage": {

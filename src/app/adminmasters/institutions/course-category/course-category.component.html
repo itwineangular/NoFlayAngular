@@ -37,7 +37,8 @@
 
                 </div>
                 <div class="col-md-12">
-                    <button class="btn btn-info btn-outline pull-right cssButtonPadding"  type="button"
+                    <button class="btn btn-info btn-outline pull-right cssButtonPadding"  type="button" data-toggle="modal"
+                    data-target="#addModal"
                         (click)="addNew()">{{'adminConfigarationPage.commonFields.addNew' | translate}}</button>
                     <button class="btn btn-warning btn-outline pull-right cssButtonPadding" type="button" (click)="searchClear()">{{'adminConfigarationPage.commonFields.clear' | translate}}</button>
                     <button class="btn btn-primary btn-outline pull-right cssButtonPadding" type="button" (click)="searchCourseCategory(courseCategory)">{{'adminConfigarationPage.commonFields.search' | translate}}</button>

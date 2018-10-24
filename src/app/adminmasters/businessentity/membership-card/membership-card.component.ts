@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MembershipCard, Institution, CourseCategory, CourseProfile } from './membership-card';
+import { MembershipCard, Institution, CourseCategory, CourseProfile, selectedStudents } from './membership-card';
 import { MembershipCardService } from './membership-card.service';
 import { Student } from '../../institutions/student/student';
 import { StudentService } from '../../institutions/student/student.service';
@@ -41,6 +41,8 @@ export class MembershipCardComponent implements OnInit {
   itemsPerPage2: number = 1;
   pagenumber: string;
   p: number = 1;
+  pnamechangeflag:boolean;
+  cnamechangeflag:boolean;
 
 
   isListContainsData: boolean;
@@ -75,6 +77,8 @@ export class MembershipCardComponent implements OnInit {
   courseList: CourseProfile[] = [];
   selectedCourse: string;
 
+  statusList: Student[];
+
 
   @ViewChild('instituteName') public ngSelectInstituteName: SelectDropDownComponent;
   @ViewChild('courseCategoryName') public ngSelectCourseCategoryName: SelectDropDownComponent;
@@ -83,6 +87,8 @@ export class MembershipCardComponent implements OnInit {
   get values(): string[] {
     return this.value.split('\n');
   }
+
+  selectedStudentsForEmailOrId : selectedStudents[] = [];
 
   constructor(private membershipCardService: MembershipCardService, private studentService: StudentService) { }
 
@@ -94,7 +100,22 @@ export class MembershipCardComponent implements OnInit {
     this.getStudent();
     this.getPlanName();
     this.pageChange(5);
+    this.getStatus();
 
+
+  }
+
+  changelistview(value){
+    console.log(value);
+    if(value == 'created'){
+   
+      this.cnamechangeflag = true;
+      this.pnamechangeflag = false;
+    }else if(value == 'Payment'){
+      
+      this.cnamechangeflag = false;
+      this.pnamechangeflag = true;
+    }
   }
 
   selectedInstituteName: any;
@@ -176,36 +197,36 @@ export class MembershipCardComponent implements OnInit {
     popupWin.document.close();
   }
 
-  onInstituteSelect(institutionId) {
+  // onInstituteSelect(institutionId) {
 
-    this.courseCategoryList = [];
-    this.courseList = [];
-    var institutionListLocal: Institution[] = [];
-    institutionListLocal = this.institutionList.filter((item) => item.institutionId == institutionId);
-    for (let item of institutionListLocal[0].courseCategory) {
-      this.courseCategoryList.push(item);
-    }
+  //   this.courseCategoryList = [];
+  //   this.courseList = [];
+  //   var institutionListLocal: Institution[] = [];
+  //   institutionListLocal = this.institutionList.filter((item) => item.institutionId == institutionId);
+  //   for (let item of institutionListLocal[0].courseCategory) {
+  //     this.courseCategoryList.push(item);
+  //   }
 
-    this.selectedInstitute = institutionListLocal[0].instName.toString();
+  //   this.selectedInstitute = institutionListLocal[0].instName.toString();
 
-  }
+  // }
 
 
-  onCourseCategorySelect(categoryId) {
+  // onCourseCategorySelect(categoryId) {
 
-    this.courseList = [];
-    var courseCategoryListLocal: CourseCategory[] = [];
-    courseCategoryListLocal = this.courseCategoryList.filter((item) => item.categoryId == categoryId);
-    for (let item of courseCategoryListLocal[0].courseProfileVos) {
-      this.courseList.push(item);
-    }
-    this.selectedCategory = courseCategoryListLocal[0].categoryName.toString();
+  //   this.courseList = [];
+  //   var courseCategoryListLocal: CourseCategory[] = [];
+  //   courseCategoryListLocal = this.courseCategoryList.filter((item) => item.categoryId == categoryId);
+  //   for (let item of courseCategoryListLocal[0].courseProfileVos) {
+  //     this.courseList.push(item);
+  //   }
+  //   this.selectedCategory = courseCategoryListLocal[0].categoryName.toString();
 
-  }
+  // }
 
-  onCourseSelect(courseId) {
-    this.selectedCourse = courseId.toString();
-  }
+  // onCourseSelect(courseId) {
+  //   this.selectedCourse = courseId.toString();
+  // }
 
   getInstitution() {
     this.membershipCardService.getInstitution()
@@ -250,20 +271,49 @@ export class MembershipCardComponent implements OnInit {
       this.itemsPerPage2 = +this.pagenumber;
     }
   }
-
-
+  
   searchStudent(studentParameters) {
-    //  console.log(this.selectedCourse);
-    //console.log(studentParameters.value);
+       var membershipObject: Student=new Student();
+        this.isSearchClicked = true;
+       
 
-    this.student = new Student();
-    this.student.institutionName = this.selectedInstitute;
-    this.student.courseCategory = this.selectedCategory;
-    this.student.courseName = this.selectedCourse;
-    this.student.stdName = studentParameters.value.stdName;
-    this.isSearchClicked = true;
+    if (typeof this.selectedInstituteName !== 'undefined' && this.selectedInstituteName.length > 0) 
+    {
+      membershipObject.institutionName = this.selectedInstituteName[0].instName;;
+    }
 
-    this.membershipCardService.searchStudent(this.student)
+    if (typeof this.selectedCourseCategoryName !== 'undefined' && this.selectedCourseCategoryName.length > 0) 
+    {      
+      membershipObject.courseCategory = this.selectedCourseCategoryName[0].categoryName;;
+    }
+
+    if (typeof this.selectedCourseName !== 'undefined' && this.selectedCourseName.length>0) 
+     {
+        membershipObject.courseName = this.selectedCourseName[0].courseName;
+     }
+ 
+    
+      membershipObject.stdName = studentParameters.stdName;
+      membershipObject.status = studentParameters.status;
+      this.changelistview( membershipObject.status);
+    
+      
+    if (typeof membershipObject.institutionName === 'undefined'  && typeof membershipObject.courseCategory === 'undefined' && typeof membershipObject.courseName === 'undefined' && typeof membershipObject.stdName === 'undefined' && typeof membershipObject.status === 'undefined') 
+    {
+      Swal({
+        title: 'Invalid!!',
+        text: 'Atleast enter any one field.',
+        showCancelButton: false,
+        confirmButtonText: 'Ok',
+      });
+      this.isListContainsData = false;
+      this.studentList=[];
+     
+    }
+
+    else
+    {
+      this.studentService.searchStudent(membershipObject)
       .subscribe(
         (data) => {
           this.studentList = data;
@@ -280,7 +330,12 @@ export class MembershipCardComponent implements OnInit {
         }
       );
   }
+}
 
+
+
+
+  
   searchClear() {
     this.membershipCard = new MembershipCard();
 
@@ -290,6 +345,8 @@ export class MembershipCardComponent implements OnInit {
     this.ngSelectCourseCategoryName.ngOnInit();
     this.ngSelectCourseName.deselectItem(this.selectedCourseName,0);
     this.ngSelectCourseName.ngOnInit();
+   
+
 
   }
 
@@ -319,9 +376,31 @@ export class MembershipCardComponent implements OnInit {
   public endDateModule: any;
   localDate = new Date();
 
-  selectedStudent(student) {
+  selectedStudent(student, checked) {
     console.log(student);
     console.log(this.planNameList);
+
+    if(checked){
+    
+      var selectedStudent = new selectedStudents();
+      selectedStudent.stdName = student.stdName;      
+      selectedStudent.course = student.courseName;
+      selectedStudent.stdEmail = student.stdEmail;
+      selectedStudent.institutionName = student.institutionName;
+      selectedStudent.plan = student.plan;
+      selectedStudent.planAmount = student.planAmount;
+      selectedStudent.courseCategory = student.courseCategory;
+   
+       this.selectedStudentsForEmailOrId.push(selectedStudent);
+     
+      }
+      else
+      {
+        var data = this.selectedStudentsForEmailOrId.filter(x=>x.stdEmail != student.stdEmail);
+        this.selectedStudentsForEmailOrId=data;
+      }
+
+
     // if(this.selectedStudentData.stdId==student.stdId)
     // {
     //    this.selectedStudentData = new Student();
@@ -402,6 +481,59 @@ export class MembershipCardComponent implements OnInit {
   }
 
 
+  getStatus() {
+    this.studentService.getStatus().subscribe(data => {
+      console.log(data);
+      this.statusList = data;
+      console.log(this.statusList);
 
+    });
+  }
 
+  checkedval:boolean ;
+  toggleSelect(checked){
+    // this.planname = $('#planName').val();
+  
+    if (checked) {
+      this.checkedval = true;
+      this.studentList.forEach(element => {
+       // element.stdName = this.planname;
+        var selectedStudent = new selectedStudents();
+        selectedStudent.stdName = element.stdName;      
+        selectedStudent.course = element.courseName;
+        selectedStudent.stdEmail = element.stdEmail;
+        selectedStudent.institutionName = element.institutionName;
+        selectedStudent.plan = element.plan;
+        selectedStudent.planAmount = element.planAmount;
+        selectedStudent.courseCategory = element.courseCategory;
+
+        this.selectedStudentsForEmailOrId.push(selectedStudent);
+        console.log(selectedStudent);
+        
+      });
+      console.log( this.selectedStudentsForEmailOrId); 
+    }else{
+      this.checkedval = null;
+      this.studentList.forEach(element => {
+        element.plan = "";
+        // this.selectedStudentsForEmailOrId.push(element.stdId);
+        
+      });
+    }
+  }
+
+  sendEmail(){
+    console.log(this.selectedStudentsForEmailOrId);
+    this.membershipCardService.sendEmail(this.selectedStudentsForEmailOrId)
+    .subscribe(
+      (data) => {
+       // console.log( this.selectedStudentsForEmailOrId); 
+      },
+      (error) => {
+        console.log(error);
+       // alert("Try again");
+      }
+    );
+
+  }
 }

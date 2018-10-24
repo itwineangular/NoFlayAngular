@@ -73,3 +73,49 @@ export class Institution {
     courseCategory: CourseCategory[];
     instContactPerson: string;
 }
+export class Student {
+
+    stdId: number;
+    stdName: string;
+    stdMobile?: any;
+    stdEmail?: any;
+    stdRollnumber?: any;
+    addressOne?: any;
+    addressTwo?: any;
+    city?: any;
+    zipCode?: any;
+    countryName?: any;
+    state?: any;
+    createdBy?: any;
+    createDateTime?: any;
+    modifiedBy?: any;
+    modifiedDateTime?: any;
+    institutionName?: string;
+    courseName?: any;
+    courseCategory: string;
+    plan?: any;
+    status?: any;
+    parPhone?: any;
+    planAmount?: any;
+    planStartDate?: any;
+    planEndDate?: any;
+    mcmId: string;
+    qrImage?: any;
+
+    planPrice : any;
+   
+    planEndEnd : any;
+    
+  
+}
+
+export  class selectedStudents
+{
+    stdName:string;
+    course: string;
+    stdEmail:string;
+    institutionName:string;
+    plan:string;
+    planAmount:string;
+    courseCategory:string;
+}

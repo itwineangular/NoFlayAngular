@@ -227,6 +227,11 @@
             "status" : "Status",
             "id" : "ID"
 
+        },
+        "emailTemplatePage":
+        {
+            "emailTemplates" : "Email Templates",
+            "selectEmailTemplate" : "Select email template"
         }
      },
      "studentLoginPage": {

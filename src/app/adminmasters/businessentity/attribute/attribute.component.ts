@@ -4,8 +4,13 @@ import { Attribute } from "../attribute/attribute";
 import { BusinessCategory } from "../bisuness-category/business-category";
 import { BusinessCategoryServicesService } from '../bisuness-category/business-category-services.service';
 
+import Swal from 'sweetalert2';
+import { ViewChild } from '@angular/core';
+import { SelectDropDownComponent } from "ngx-select-dropdown";
+
 declare var jquery: any;
 declare var $: any;
+
 
 @Component({
   selector: 'app-attribute',
@@ -29,18 +34,71 @@ export class AttributeComponent implements OnInit {
   attribute: Attribute = new Attribute();
   attributeList: Attribute[];
   businessCategoryList: BusinessCategory[];
+  attributeListLocal: Attribute[]= [];
+
+  @ViewChild('attributeName') public ngSelectattributeName: SelectDropDownComponent;
+  @ViewChild('attributeCode') public ngSelectattributeCode: SelectDropDownComponent;
+  @ViewChild('businessCategoryName') public ngSelectbusinessCategoryName: SelectDropDownComponent;
 
   constructor(private service: AttributeService,
     private BusinessCategoryServicesService: BusinessCategoryServicesService) { }
 
   ngOnInit() {
-    // this.getAttribute();
+    this.getAttribute();
     this.isListContainsData = false;
     this.isSearchClicked = false;
 
     this.getBusinessCategory();
     this.pageChange(5);
   }
+
+  selectedValue : any;
+  config = {
+    displayKey: "attributeName", //if objects array passed which key to be displayed defaults to description
+    search: true,
+    limitTo: this.attributeListLocal.length
+    // limitTo: 10
+  };
+  changeValue($event: any) {
+    console.log(this.selectedValue)
+    
+    this.ngSelectattributeCode.value=this.selectedValue;
+    this.ngSelectattributeCode.ngOnInit();
+
+    this.ngSelectbusinessCategoryName.value=this.selectedValue;
+    this.ngSelectbusinessCategoryName.ngOnInit();
+  }
+  // changeValue($event: any) {
+  //   this.isListContainsData = true;
+  //   this.attributeList = this.selectedValue;
+  // }
+
+  selectedattributeCodeValue : any;
+  attributeCodeconfig = {
+    displayKey: "attributeCode", //if objects array passed which key to be displayed defaults to description
+    search: true,
+    limitTo: this.attributeListLocal.length
+    // limitTo: 10
+  };
+  // attributeCodeChangeValue($event: any) {
+  //   console.log(this.selectedattributeCodeValue);
+  //   this.isListContainsData = true;
+  //   this.attributeList = this.selectedattributeCodeValue;
+  // }
+
+  selectedbusinessCategoryNameValue : any;
+  businessCategoryNameconfig = {
+    displayKey: "businessCatName", //if objects array passed which key to be displayed defaults to description
+    search: true,
+    limitTo: this.attributeListLocal.length
+    // limitTo: 10
+  };
+  // businessCategoryNameChangeValue($event: any) {
+  //   console.log(this.selectedbusinessCategoryNameValue);
+  //   this.isListContainsData = true;
+  //   this.attributeList = this.selectedbusinessCategoryNameValue;
+  // }
+
   addNew() {
     this.saveOrUpdate = "save";
     this.attribute = new Attribute();
@@ -107,7 +165,8 @@ export class AttributeComponent implements OnInit {
     this.service.getAttribute()
       .subscribe(
         (data) => {
-          this.attributeList = data;
+          // this.attributeList = data;
+          this.attributeListLocal = data;
         }
       );
 
@@ -139,50 +198,66 @@ export class AttributeComponent implements OnInit {
     this.reverse = !this.reverse;
   }
   searchAttribute(attributeParameters) {
-    
-    if (typeof attributeParameters.value.attributeName != "undefined"
-      || typeof attributeParameters.value.attributeCode != "undefined"
-      || typeof attributeParameters.value.businessCatCode != "undefined") {
-      this.isSearchClicked = true;
-      if (attributeParameters.value.attributeName === null
-        || attributeParameters.value.attributeCode === null
-        || attributeParameters.value.businessCatCode === null) {
-
-      }
-      else {
-
-        this.service.searchAttribute(attributeParameters.value)
-          .subscribe(
-            (data) => {
-              this.attributeList = data;
-              if (typeof this.attributeList !== 'undefined' && this.attributeList.length > 0) {
-                this.isListContainsData = true;
-              }
-              else {
-                this.isListContainsData = false;
-              }
-            },
-            (error) => {
-              console.log(error);
-              alert("Try again");
-            }
-          );
-      }
+    var attributeLocal: Attribute = new Attribute();
+    this.isSearchClicked=true;
+    // attributeLocal.status = attributeParameters.status;
+    if (typeof this.selectedValue !== 'undefined'  && this.selectedValue.length>0) 
+    {
+      attributeLocal.attributeName = this.selectedValue[0].attributeName;
     }
-
+    if (typeof this.selectedattributeCodeValue !== 'undefined' && this.selectedattributeCodeValue.length>0) 
+    {
+      attributeLocal.attributeCode = this.selectedattributeCodeValue[0].attributeCode
+    }
+    if (typeof this.selectedbusinessCategoryNameValue !== 'undefined' && this.selectedbusinessCategoryNameValue.length>0) 
+    {
+      attributeLocal.businessCatName = this.selectedbusinessCategoryNameValue[0].businessCatName
+    }
+    console.log(attributeLocal);
+    
+    if (typeof attributeLocal.attributeName === 'undefined'  && typeof attributeLocal.attributeCode === 'undefined' && typeof attributeLocal.businessCatName === 'undefined') 
+    {
+      Swal({
+        title: 'Invalid!!',
+        text: 'Atleast enter any one field.',
+        showCancelButton: false,
+        confirmButtonText: 'Ok',
+      });
+      this.isListContainsData = false;
+      this.attributeList=[];
+     
+    }
+    else
+    {
+      this.service.searchAttribute(attributeLocal)
+      .subscribe(
+        (data) => {
+          this.attributeList = data;
+          if (typeof this.attributeList !== 'undefined' && this.attributeList.length > 0) {
+            this.isListContainsData = true;
+          }
+          else {
+            this.isListContainsData = false;
+          }
+        },
+        (error) => {
+          console.log(error);
+          alert("Try again");
+        }
+      );
+    }
   }
 
   searchClear() {
     this.attribute = new Attribute();
-    // this.service.searchAttribute(this.attribute)
-    //   .subscribe(
-    //     (data) => {
-    //       this.attributeList = data;
-    //     },
-    //     (error) => {
-    //       console.log(error);
-    //       alert("Try again");
-    //     }
-    //   );
+    this.ngSelectattributeName.deselectItem(this.selectedValue,0);
+    this.ngSelectattributeName.ngOnInit();
+
+    this.ngSelectattributeCode.deselectItem(this.selectedattributeCodeValue,0);
+    this.ngSelectattributeCode.ngOnInit();
+
+    this.ngSelectbusinessCategoryName.deselectItem(this.selectedbusinessCategoryNameValue,0);
+    this.ngSelectbusinessCategoryName.ngOnInit();
+    
   }
 }

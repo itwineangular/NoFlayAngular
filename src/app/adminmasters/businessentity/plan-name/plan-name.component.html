@@ -8,23 +8,30 @@
     </div>
     <!-- </div> -->
     <div class="col-md-12">
-    <div class="rcorners2">
+            <div class="panel panel-default">
+               
+                <div class="panel-body">
             <form class="form-horizontal" #planNameForm="ngForm" (ngSubmit)="searchPlanName(planNameForm)">
                 <div class="col-md-3">
                     <label for="planName">{{'adminConfigarationPage.plannamePage.planName' | translate }}</label>
-                    <input class="form-control" type="text" placeholder="PlanName" name="planName"
-                                        #planNameControl="ngModel" [(ngModel)]="planName.planName" required />
+                    <!-- <input class="form-control" type="text" placeholder="PlanName" name="planName"
+                                        #planNameControl="ngModel" [(ngModel)]="planName.planName" required /> -->
+                                        <ngx-select-dropdown #planName (change)="changeValue($event)" [multiple]="false" [(value)]="selectedValue"
+                                     [config]="config" [options]="planNameListLocal"></ngx-select-dropdown>
                 </div>
                 
                 <div class="col-md-12">
-                    <button class="btn btn-info btn-outline pull-right cssButtonPadding"  type="button"
+                    <button class="btn btn-info btn-outline pull-right cssButtonPadding" data-toggle="modal" data-target="#addModal" type="button"
                         (click)="addNew()">{{'adminConfigarationPage.commonFields.addNew' | translate}}</button>
                     <button class="btn btn-warning btn-outline pull-right cssButtonPadding" type="button" (click)="searchClear()">{{'adminConfigarationPage.commonFields.clear' | translate}}</button>
                     <button class="btn btn-primary btn-outline pull-right cssButtonPadding" type="submit">{{'adminConfigarationPage.commonFields.search' | translate}}</button>
                 </div>
+                <div class="clearfix"></div>
             </form>
-            </div>
+            <div class="clearfix"></div>
         </div>
+    </div>
+    </div>
      <!-- </div> -->
   
   <!-- <div class="container"> -->

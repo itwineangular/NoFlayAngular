@@ -9,7 +9,14 @@ import { BusinessCategory } from "../bisuness-category/business-category";
 
 import { AttributeService } from "../attribute/attribute.service";
 import { Attribute } from "../attribute/attribute";
-import * as $ from 'jquery';
+// import * as $ from 'jquery';
+
+import Swal from 'sweetalert2';
+import { ViewChild } from '@angular/core';
+import { SelectDropDownComponent } from "ngx-select-dropdown";
+
+declare var jquery: any;
+declare var $: any;
 
 @Component({
   selector: 'app-business-entity',
@@ -38,8 +45,12 @@ export class BusinessEntityComponent implements OnInit {
 
   businessEntityList: BusinessEntity[];
   businessCategoryList: BusinessCategory[];
+  businessEntityListLocal: BusinessEntity[]= [];
 
   attributeList: Attribute[];
+
+  @ViewChild('businessName') public ngSelectbusinessName: SelectDropDownComponent;
+  @ViewChild('registrationNumber') public ngSelectregistrationNumber: SelectDropDownComponent;
 
   constructor(private service: BusinessEntityService,
     private commonService: CommonServicesService,
@@ -130,6 +141,37 @@ selectCheckbox(id){
     this.business= new BusinessEntity();
   }
 
+  selectedValue : any;
+  config = {
+    displayKey: "name", //if objects array passed which key to be displayed defaults to description
+    search: true,
+    limitTo: this.businessEntityListLocal.length
+    // limitTo: 10
+  };
+  changeValue($event: any) {
+    console.log(this.selectedValue)
+    
+    this.ngSelectregistrationNumber.value=this.selectedValue;
+    this.ngSelectregistrationNumber.ngOnInit();
+  }
+  // changeValue($event: any) {
+  //   this.isListContainsData = true;
+  //   this.businessEntityList = this.selectedValue;
+  // }
+
+  selectedregistrationNumberValue : any;
+  registrationNumberconfig = {
+    displayKey: "registrationCode", //if objects array passed which key to be displayed defaults to description
+    search: true,
+    limitTo: this.businessEntityListLocal.length
+    // limitTo: 10
+  };
+  // registrationNumberChangeValue($event: any) {
+  //   console.log(this.selectedregistrationNumberValue);
+  //   this.isListContainsData = true;
+  //   this.businessEntityList = this.selectedregistrationNumberValue;
+  // }
+
   saveBusinessEntity(data) {
     if (this.saveOrUpdate == "save") {
       this.service.saveBusinessEntity(data)
@@ -218,7 +260,8 @@ selectCheckbox(id){
 
   getBusinessEntity() {
     this.service.getBusinessEntity().subscribe(data => {
-      this.businessEntityList = data;
+      // this.businessEntityList = data;
+      this.businessEntityListLocal = data;
     });
   }
 
@@ -329,47 +372,59 @@ selectCheckbox(id){
 
 
   searchBusinessEntity(businessParameters) {
-    if (typeof businessParameters.value.name != "undefined"
-      || typeof businessParameters.value.registrationCode != "undefined"){
-        this.isSearchClicked=true;
-        if(businessParameters.value.name === null
-        || businessParameters.value.registrationCode === null)
-        {
+    var businessLocal: BusinessEntity = new BusinessEntity();
+     // var businessLocal: businessEntity = new BusinessEntity();
+     this.isSearchClicked=true;
+     // courseCategoryLocal.status = businessParameters.status;
+     if (typeof this.selectedValue !== 'undefined'  && this.selectedValue.length>0) 
+     {
+       businessLocal.name = this.selectedValue[0].name;
+     }
+     if (typeof this.selectedregistrationNumberValue !== 'undefined' && this.selectedregistrationNumberValue.length>0) 
+     {
+       businessLocal.registrationCode = this.selectedregistrationNumberValue[0].registrationCode
+     }
+ 
+     if (typeof businessLocal.name === 'undefined'  && typeof businessLocal.registrationCode === 'undefined') 
+     {
+       Swal({
+         title: 'Invalid!!',
+         text: 'Atleast enter any one field.',
+         showCancelButton: false,
+         confirmButtonText: 'Ok',
+       });
+       this.isListContainsData = false;
+       this.businessEntityList=[];
+      
+     }
+     else
+     {
+       this.service.searchBusinessEntity(businessLocal)
+       .subscribe(
+         (data) => {
+           this.businessEntityList = data;
+           if (typeof this.businessEntityList !== 'undefined' && this.businessEntityList.length > 0) {
+             this.isListContainsData = true;
+           }
+           else {
+             this.isListContainsData = false;
+           }
+         },
+         (error) => {
+           console.log(error);
+           alert("Try again");
+         }
+       );
+     }
+   }
 
-        }
-        else {
-    this.service.searchBusinessEntity(businessParameters.value)
-        .subscribe(
-      (data) => {
-        this.businessEntityList = data;
-        if (typeof this.businessEntityList !== 'undefined' && this.businessEntityList.length > 0) {
-          this.isListContainsData = true;
-        }
-        else {
-          this.isListContainsData = false;
-        }
-      },
-      (error) => {
-        console.log(error);
-        alert("Try again");
-      }
-    );
-  }
-}
-
-}
-
-  searchClear() {
+   searchClear() {
     this.business = new BusinessEntity();
-    // this.service.searchBusinessEntity(this.business)
-    //   .subscribe(
-    //     (data) => {
-    //       this.businessEntityList = data;
-    //     },
-    //     (error) => {
-    //       console.log(error);
-    //       alert("Try again");
-    //     }
-    //   );
+    this.ngSelectbusinessName.deselectItem(this.selectedValue,0);
+    this.ngSelectbusinessName.ngOnInit();
+
+    this.ngSelectregistrationNumber.deselectItem(this.selectedregistrationNumberValue,0);
+    this.ngSelectregistrationNumber.ngOnInit();
+    
   }
 }

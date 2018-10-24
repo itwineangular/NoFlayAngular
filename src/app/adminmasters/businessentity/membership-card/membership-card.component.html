@@ -10,7 +10,7 @@
 
             <div class="panel-body">
                 <form class="form-horizontal" #membershipCardSearchForm="ngForm" (ngSubmit)="searchStudent(membershipCardSearchForm)">
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <label for="institutionName">{{'adminConfigarationPage.membershipCardPage.institutionName' | translate}}</label>
                         <ngx-select-dropdown #instituteName (change)="changeInstituteNameValue($event)" [multiple]="false" [(value)]="selectedInstituteName"
                             [config]="configInstituteName" [options]="institutionList"></ngx-select-dropdown>
@@ -21,7 +21,7 @@
                         </option>
                     </select> -->
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <label for="categoryCode">{{'adminConfigarationPage.membershipCardPage.courseCategory' | translate}}</label>
                         <ngx-select-dropdown #courseCategoryName (change)="changeCourseCategoryNameValue($event)" [multiple]="false" [(value)]="selectedCourseCategoryName"
                             [config]="configCourseCategoryName" [options]="courseCategoryList"></ngx-select-dropdown>
@@ -33,7 +33,7 @@
                         </select> -->
 
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <label for="courseName">{{'adminConfigarationPage.membershipCardPage.course' | translate}}</label>
                         <ngx-select-dropdown #courseName (change)="changeCourseNameValue($event)" [multiple]="false" [(value)]="selectedCourseName"
                             [config]="configCourseName" [options]="courseList"></ngx-select-dropdown>
@@ -45,34 +45,35 @@
                         </select> -->
                     </div>
 
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <label for="stdName">{{ 'adminConfigarationPage.membershipCardPage.studentName' | translate }}</label>
                         <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.membershipCardPage.studentName' | translate}}"
                             name="stdName" #studentNameControl="ngModel" [(ngModel)]="membershipCard.stdName" />
                     </div>
 
-                    <div class="col-md-2">
-                            <label for="status">{{ 'adminConfigarationPage.statusPage.status' | translate }}</label>
-                            <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.statusPage.status' | translate}}"
-                                name="status" #statusControl="ngModel" [(ngModel)]="membershipCard.status" />
+                   
+                    <div class="col-md-3">
+                        <label for="status">{{'adminConfigarationPage.studentPage.status' | translate}}</label>
+                        <select class="form-control" name="status" #status="ngModel" [(ngModel)]="membershipCard.status"  required>
+                            <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.status' | translate}}</option>
+                            <option *ngFor="let item of statusList" value={{item.status}}>{{item.status}} </option>
+                        </select>
                         </div>
                     <div class="col-md-12">
                         <button class="btn btn-warning btn-outline pull-right cssButtonPadding" type="button" (click)="searchClear()">{{'adminConfigarationPage.commonFields.clear' | translate}}</button>
-                        <button class="btn btn-primary btn-outline pull-right cssButtonPadding" type="submit">{{'adminConfigarationPage.commonFields.search' | translate}}</button>
+                        <button class="btn btn-primary btn-outline pull-right cssButtonPadding" type="button" (click)="searchStudent(membershipCard)">{{'adminConfigarationPage.commonFields.search' | translate}}</button>
+
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- <div class="col-md-12">
-            <div class="text-center">
-                   
-                    <label  for="mycheck-{{ i+1 }}">Select All</label>
-                    <input type="checkbox" id="mycheck-{{ i+1 }}" value="{{ i+1 }}" (click)="toggleSelect($event.target.checked)">
-                    <label  for="mycheck-{{ i+1 }}">Select All</label>
-                </div>
-    </div> -->
+    <div class="col-md-12 selectAll"  *ngIf="isListContainsData">
+        <input type="checkbox" id="mycheck-{{ i+1 }}" value="{{ i+1 }}" (click)="toggleSelect($event.target.checked)">
+        <label  for="mycheck-{{ i+1 }}">Select All</label>
+    
+   </div>
     <div class="col-md-12">
         <!-- <div class="alert alert-warning fade in myAlert" *ngIf="alertMassege">
             <a class="close" href="#" data-dismiss="alert" (click)="clickedAlert()">X</a>
@@ -116,7 +117,7 @@
                         <td style="color:#cccccc">
                             <!-- <input type="checkbox" id="mycheck-{{ i+1 }}"  (change)="onSelectPlan( i+1 , $event.target.checked)" checked={{checkedval}}>
                             <label for="mycheck-{{ i+1 }}"></label> -->
-                            <input type="checkbox" id="mycheck-{{ i+1 }}" (change)="selectedStudent(item)" checked={{checkedval}}>
+                            <input type="checkbox" id="mycheck-{{ i+1 }}" (change)="selectedStudent(item, $event.target.checked)" checked={{checkedval}}>
                             <label for="mycheck-{{ i+1 }}"></label>
                         </td>
                         <td>
@@ -154,7 +155,10 @@
 
         </div>
         <div class="col-lg-12 text-center">
-            <button class="btn btn-primary btnNext" type="button" (click)="proceedClick()" data-toggle="modal" data-target="#addModal">{{ 'adminConfigarationPage.membershipCardPage.proceed' | translate }}</button>
+            <button *ngIf="pnamechangeflag" class="btn btn-primary btnNext" type="button" (click)="proceedClick()" data-toggle="modal" data-target="#addModal">{{ 'adminConfigarationPage.membershipCardPage.proceed' | translate }}</button>
+        </div>
+        <div class="col-lg-12 text-center">
+            <button *ngIf="cnamechangeflag" class="btn btn-primary btnNext" type="button" (click)="sendEmail()"  >Send Email</button>
         </div>
 
     </div>
@@ -344,40 +348,45 @@
 
     <!-- custom id card design -->
     <div style="visibility: hidden;">
-            <div id="customMembershipCard">
-                    <div style="width: 55%;margin:0 auto;border:1px solid #ccc;border-radius: 3px;padding:15px;">
-                      <div style="width: 100%;">
-                        <div style="float: left; width: 15%">
-                          <img src="./assets/img/noflaylogo1.jpg" style="width: 60px" alt="logo">
-                        </div>
-                        <div style="float: left; width: 80%">
-                          <img src="./assets/img/noflayTitle.png" style="width: 100px" alt="NoFlay">
-                
-                          <small style="display: block;">LIVING IN WELLNESS - BALANCED LIFE</small>
-                        </div>
-                        <div style="clear: both;"></div>
-                      </div>
-                
-                
-                      <div style="width: 100%; margin-top: 15px">
-                        <div style="float: left; width: 25%">
-                          <qrcode [qrdata]="myAngularxQrCode" [size]="100" [level]="'M'"></qrcode>
-                        </div>
-                        <div style="float: left; width: 50%; text-align: center">
-                          <label>Name : ROSS GELLER</label>
+        <div id="customMembershipCard">
+            <div style="width: 55%;margin:0 auto;border:1px solid #ccc;border-radius: 3px;padding:15px;">
+                <div style="width: 100%;">
+                    <div style="float: left; width: 15%">
+                        <img src="./assets/img/noflaylogo1.jpg" style="width: 60px" alt="logo">
+                    </div>
+                    <div style="float: left; width: 80%">
+                        <img src="./assets/img/noflayTitle.png" style="width: 100px" alt="NoFlay">
+
+                        <small style="display: block;">LIVING IN WELLNESS - BALANCED LIFE</small>
+                    </div>
+                    <div style="clear: both;"></div>
+                </div>
+
+
+                <div style="width: 100%; margin-top: 15px">
+                    <div style="float: left; width: 25%">
+                        <qrcode [qrdata]="myAngularxQrCode" [size]="100" [level]="'M'"></qrcode>
+                    </div>
+                    <div style="float: left; width: 50%; text-align: center; margin-top: 10px">
+                        <!-- <label>Name : ROSS GELLER</label>
                           <br/>
                           <label>Id : NFRVBECS0001</label>
                           <br/>
-                          <label>Plan : SILVER-ANNUAL</label>
-                        </div>
-                        <div style="float: left; width: 25%">
-                          <img src="./assets/img/s2.jpg" style="height: 100px; width: 100px" alt="student">
-                        </div>
-                        <div style="clear: both;"></div>
-                      </div>
+                          <label>Plan : SILVER-ANNUAL</label> -->
+                        <p style="margin: 0px">Mr. ROSS GELLER</p>
+                        <p style="margin-top: 5px; margin-bottom: 5px">NFRVBECS0001</p>
+                        <p style="margin: 0px">SILVER-ANNUAL</p>
                     </div>
-                  </div>
+                    <div style="float: left; width: 25%">
+                        <img src="./assets/img/s2.jpg" style="height: 100px; width: 100px" alt="student">
+                    </div>
+                    <div style="clear: both;"></div>
+                </div>
+            </div>
+        </div>
 
     </div>
+
+    
 
 </div>

@@ -2,8 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { BusinessCategoryServicesService } from './business-category-services.service';
 import { BusinessCategory } from "./business-category";
 
+import Swal from 'sweetalert2';
+import { ViewChild } from '@angular/core';
+import { SelectDropDownComponent } from "ngx-select-dropdown";
+
 declare var jquery: any;
 declare var $: any;
+
 @Component({
   selector: 'app-bisuness-category',
   templateUrl: './bisuness-category.component.html',
@@ -25,11 +30,15 @@ export class BisunessCategoryComponent implements OnInit {
 
   businesscategory: BusinessCategory = new BusinessCategory();
   businesscategoryList: BusinessCategory[];
+  businesscategoryListLocal: BusinessCategory[]= [];
+
+  @ViewChild('businessCategoryName') public ngSelectbusinessCategoryName: SelectDropDownComponent;
+  @ViewChild('businessCategoryCode') public ngSelectbusinessCategoryCode: SelectDropDownComponent;
 
   constructor(private service: BusinessCategoryServicesService) { }
 
   ngOnInit() {
-    // this.getBusinessCategory();
+    this.getBusinessCategory();
     this.isListContainsData = false;
     this.isSearchClicked= false;
 
@@ -49,6 +58,38 @@ export class BisunessCategoryComponent implements OnInit {
       keyboard: false
   });
   }
+
+  selectedValue: any;
+  config = {
+    displayKey: "businessCategoryName", //if objects array passed which key to be displayed defaults to description
+    search: true,
+    limitTo: this.businesscategoryListLocal.length
+    // limitTo: 10
+  };
+  changeValue($event: any) {
+    console.log(this.selectedValue)
+    
+    this.ngSelectbusinessCategoryCode.value=this.selectedValue;
+    this.ngSelectbusinessCategoryCode.ngOnInit();
+  }
+
+  // changeValue($event: any) {
+  //   this.isListContainsData = true;
+  //   this.businesscategoryList = this.selectedValue;
+  // }
+
+  selectedbusinessCategoryCodeValue: any;
+  businessCategoryCodeconfig = {
+    displayKey: "businessCategoryCode", //if objects array passed which key to be displayed defaults to description
+    search: true,
+    limitTo: this.businesscategoryListLocal.length
+    // limitTo: 10
+  };
+  // businessCategoryCodechangeValue($event: any) {
+  //   console.log(this.businessCategoryCodechangeValue);
+  //   this.isListContainsData = true;
+  //   this.businesscategoryList = this.selectedbusinessCategoryCodeValue;
+  // }
 
   saveBusinessCategory(businessValue) {
     if (this.saveOrUpdate == "save") {
@@ -85,7 +126,8 @@ export class BisunessCategoryComponent implements OnInit {
     this.service.getBusinessCategory()
       .subscribe(
         (data) => {
-          this.businesscategoryList = data;
+          // this.businesscategoryList = data;
+          this.businesscategoryListLocal = data;
         }
       );
 
@@ -127,53 +169,56 @@ export class BisunessCategoryComponent implements OnInit {
   }
 
 
-  searchBusinessCategory(businesscategoryParameters)  {
-    if (typeof businesscategoryParameters.value.businessCategoryName != "undefined"
-      || typeof businesscategoryParameters.value.businessCategoryCode != "undefined")  {
-        this.isSearchClicked=true;
-        if(businesscategoryParameters.value.businessCategoryName === null
-        || businesscategoryParameters.value.businessCategoryCode=== null)
-        {
+  searchBusinessCategory(courseCategoryParameters) {
+    var businesscategoryLocal: BusinessCategory = new BusinessCategory();
+    this.isSearchClicked = true;
+    // businesscategoryLocal.status = courseCategoryParameters.status;
+    if (typeof this.selectedValue !== 'undefined' && this.selectedValue.length > 0) {
+      businesscategoryLocal.businessCategoryName = this.selectedValue[0].businessCategoryName;
+    }
+    if (typeof this.selectedbusinessCategoryCodeValue !== 'undefined' && this.selectedbusinessCategoryCodeValue.length > 0) {
+      businesscategoryLocal.businessCategoryCode = this.selectedbusinessCategoryCodeValue[0].businessCategoryCode
+    }
 
-        }
-        else{
+    if (typeof businesscategoryLocal.businessCategoryName === 'undefined' && typeof businesscategoryLocal.businessCategoryCode === 'undefined') {
+      Swal({
+        title: 'Invalid!!',
+        text: 'Atleast enter any one field.',
+        showCancelButton: false,
+        confirmButtonText: 'Ok',
+      });
+      this.isListContainsData = false;
+      this.businesscategoryList = [];
 
-    this.service.searchBusinessCategory(businesscategoryParameters.value)
+    }
+    else {
+      this.service.searchBusinessCategory(businesscategoryLocal)
         .subscribe(
-      (data) => {
-        this.businesscategoryList = data;
-        if (typeof this.businesscategoryList !== 'undefined' && this.businesscategoryList.length > 0) {
-          this.isListContainsData = true;
-        }
-        else {
-          this.isListContainsData = false;
-        }
-      },
-      (error) => {
-        console.log(error);
-        alert("Try again");
-      }
-    );
+          (data) => {
+            this.businesscategoryList = data;
+            if (typeof this.businesscategoryList !== 'undefined' && this.businesscategoryList.length > 0) {
+              this.isListContainsData = true;
+            }
+            else {
+              this.isListContainsData = false;
+            }
+          },
+          (error) => {
+            console.log(error);
+            alert("Try again");
+          }
+        );
+    }
   }
-}
-}
-
-    searchClear() {
-      this.businesscategory = new BusinessCategory();
-    //   this.service.searchBusinessCategory(this.businesscategory)
-    //     .subscribe(
-    //       (data) => {
-    //         this.businesscategoryList = data;
-    //       },
-    //       (error) => {
-    //         console.log(error);
-    //         alert("Try again");
-    //       }
-    //     );
-    // }
-}
-
   
-  
+  searchClear() {
+    this.businesscategory = new BusinessCategory();
+    this.ngSelectbusinessCategoryName.deselectItem(this.selectedValue, 0);
+    this.ngSelectbusinessCategoryName.ngOnInit();
+
+    this.ngSelectbusinessCategoryCode.deselectItem(this.selectedbusinessCategoryCodeValue, 0);
+    this.ngSelectbusinessCategoryCode.ngOnInit();
+
+  }
 
   }

@@ -8,23 +8,30 @@
                 </div>
             <!-- </div> -->
             <div class="col-md-12">
-            <div class="rcorners2">
-                    <form class="form-horizontal" #membershipForm="ngForm" (ngSubmit)="searchMembership(membershipForm)">
-                        <div class="col-md-3">
-                            <label for="planMembership">{{ 'adminConfigarationPage.membershipPage.membershipName' | translate }}</label>
-                            <input class="form-control" type="text" placeholder="Name" name="memberName" #memberNameControl="ngModel" [(ngModel)]="membership.memberName"
-                                     required />
-                        </div>
-                        
-                        <div class="col-md-12">
-                            <button class="btn btn-info btn-outline pull-right cssButtonPadding" type="button"
-                                (click)="addNew()">{{'adminConfigarationPage.commonFields.addNew' | translate}}</button>
-                            <button class="btn btn-warning btn-outline pull-right cssButtonPadding" type="button" (click)="searchClear()">{{'adminConfigarationPage.commonFields.clear' | translate}}</button>
-                            <button class="btn btn-primary btn-outline pull-right cssButtonPadding" type="submit">{{'adminConfigarationPage.commonFields.search' | translate}}</button>
-                        </div>
-                    </form>
+                    <div class="panel panel-default">
+                       
+                        <div class="panel-body">
+                <form class="form-horizontal" #membershipForm="ngForm" (ngSubmit)="searchMembership(membershipForm)">
+                    <div class="col-md-3">
+                        <label for="planMembership">{{ 'adminConfigarationPage.membershipPage.membershipName' | translate }}</label>
+                        <!-- <input class="form-control" type="text" placeholder="Name" name="memberName" #memberNameControl="ngModel" [(ngModel)]="membership.memberName"
+                                 required /> -->
+                                 <ngx-select-dropdown #chosenuser [multiple]="false" [(value)]="selectedValue"   
+                                 [config]="config" [options]="membershipListLocal"></ngx-select-dropdown>
                     </div>
-                </div>
+                    
+                    <div class="col-md-12">
+                        <button class="btn btn-info btn-outline pull-right cssButtonPadding" data-toggle="modal" data-target="#addModal" type="button"
+                            (click)="addNew()">{{'adminConfigarationPage.commonFields.addNew' | translate}}</button>
+                        <button class="btn btn-warning btn-outline pull-right cssButtonPadding" type="button" (click)="searchClear()">{{'adminConfigarationPage.commonFields.clear' | translate}}</button>
+                        <button class="btn btn-primary btn-outline pull-right cssButtonPadding" type="submit">{{'adminConfigarationPage.commonFields.search' | translate}}</button>
+                    </div>
+                    <div class="clearfix"></div>
+                </form>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        </div>
         <!-- </div> -->
     
     <!-- <div class="container"> -->

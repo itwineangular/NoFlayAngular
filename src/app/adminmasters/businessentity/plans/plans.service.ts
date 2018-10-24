@@ -71,7 +71,7 @@ console.log(obj);
     headers.append('Access-Control-Allow-Headers', 'Content-Type');
     headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
     let options = { headers: headers };
-    return this.http.post(this.url + '/plans/searchList', obj, options).pipe(map(res => res.json()));
+    return this.http.post(this.url + '/plans/searchByCriteria', obj, options).pipe(map(res => res.json()));
   }
 
   getPlan() {

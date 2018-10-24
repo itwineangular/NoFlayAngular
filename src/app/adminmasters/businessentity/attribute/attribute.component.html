@@ -6,49 +6,45 @@
         <h3 class="text-center">{{'adminConfigarationPage.attributes.attribute' | translate}}</h3>
         <hr />
     </div>
-    <!-- </div> -->
     <div class="col-md-12">
-    <div class="rcorners2">
+            <div class="panel panel-default">
+               
+                <div class="panel-body">
             <form class="form-horizontal" #attributeForm="ngForm" (ngSubmit)="searchAttribute(attributeForm)">
 
                    <div class="col-md-3">
                     <label for="attributeName">{{'adminConfigarationPage.attributes.attributeName'
                             | translate}}</label>
-                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.attributes.attributeName' | translate}}" name="attributeName"
-                        #attributeNameControl="ngModel" [(ngModel)]="attribute.attributeName" />
+                    
+                        <ngx-select-dropdown #attributeName (change)="changeValue($event)" [multiple]="false" [(value)]="selectedValue"
+                        [config]="config" [options]="attributeListLocal"></ngx-select-dropdown>
                 </div>
                 <div class="col-md-3">
                     <label for="attributeCode">{{'adminConfigarationPage.attributes.attributeCode'
                             | translate}}</label>
-                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.attributes.attributeCode' | translate}}" name="attributeCode"
-                        #attributeCodeControl="ngModel" [(ngModel)]="attribute.attributeCode" />
+                   
+                        <ngx-select-dropdown #attributeCode (change)="changeValue($event)" [multiple]="false" [(value)]="selectedattributeCodeValue"
+                        [config]="attributeCodeconfig" [options]="attributeListLocal"></ngx-select-dropdown>
                 </div>
                 <div class="col-md-3">
                     <label for="businessCatCode">{{'adminConfigarationPage.attributes.businessCategoryName' | translate }}</label>
-                    <select class="form-control" name="businessCatCode" #businessCatCode="ngModel" [(ngModel)]="attribute.businessCatCode"
                     
-                    required>
-                    <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.attributes.businessCategoryName'
-                            | translate}}</option>
-                        <option *ngFor="let item of businessCategoryList" value={{item.businessCategoryName}}>{{item.businessCategoryName}} </option>
-                    </select>
+                    <ngx-select-dropdown #businessCategoryName (change)="changeValue($event)" [multiple]="false" [(value)]="selectedbusinessCategoryNameValue"
+                        [config]="businessCategoryNameconfig" [options]="attributeListLocal"></ngx-select-dropdown>
                 </div>
                 <div class="col-md-12">
-                    <button class="btn btn-info btn-outline pull-right cssButtonPadding"  type="button"
+                    <button class="btn btn-info btn-outline pull-right cssButtonPadding" data-toggle="modal" data-target="#addModal" type="button"
                         (click)="addNew()">{{'adminConfigarationPage.commonFields.addNew' | translate}}</button>
                     <button class="btn btn-warning btn-outline pull-right cssButtonPadding" type="button" (click)="searchClear()">{{'adminConfigarationPage.commonFields.clear' | translate}}</button>
-                    <button class="btn btn-primary btn-outline pull-right cssButtonPadding" type="submit">{{'adminConfigarationPage.commonFields.search' | translate}}</button>
+                    <button class="btn btn-primary btn-outline pull-right cssButtonPadding" type="button" (click)="searchAttribute(attribute)">{{'adminConfigarationPage.commonFields.search' | translate}}</button>
                 </div>
+                <div class="clearfix"></div>
             </form>
-            </div>
+            <div class="clearfix"></div>
         </div>
-        <!-- </div> -->
-        <!-- <div class="container">
-                <div class="row"> -->
-    
-        <!-- <input type="search" [(ngModel)]="searchText" placeholder="Search"> -->
-        <!-- <button class="btn btn-info pull-right" data-toggle="modal" data-target="#addModal" (click)="addNew()">{{
-            'adminConfigarationPage.commonFields.addNew' | translate }}</button> -->
+    </div>
+    </div>
+        
             <div class="col-md-12">
                 <div class="alert alert-warning fade in myAlert" *ngIf="alertMassege">
                     <a class="close" href="#" data-dismiss="alert" (click)="clickedAlert()">X</a>
