@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ViewChild } from '@angular/core';
 import { SelectDropDownComponent } from "ngx-select-dropdown";
+import Swal from 'sweetalert2';
 
 import * as $ from 'jquery'; 
 window["$"] =$; 
@@ -21,8 +22,6 @@ export class EmailTemplateComponent implements OnInit {
   hospitalCredentials;
   studentRenewal;
 
-  editorContent;
-
   constructor(private service : EmailTemplateServicesService) { }
 
   ngOnInit() {
@@ -31,10 +30,7 @@ export class EmailTemplateComponent implements OnInit {
     this.passwordReset = document.getElementById('passwordReset');
     this.hospitalCredentials = document.getElementById('hospitalCredentials');
     this.studentRenewal = document.getElementById('studentRenewal');
-    //this.studentCredentials.style.display = 'none';
     this.hideAllEmailTemplates();
-
-    // this.editorContent = "hello";
   }
 
   @ViewChild('emailTemplateName') public ngSelectEmailTemplateName: SelectDropDownComponent;
@@ -69,23 +65,26 @@ export class EmailTemplateComponent implements OnInit {
   };
   changeValue($event: any) {
     this.hideAllEmailTemplates();
-
     if (this.selectedValue.length > 0) {
       if (this.selectedValue[0].id == 1) {
         this.studentPayment.style.display = 'block';
-       // (<any>$('div#'+'froalaEditorStudentPayment')).froalaEditor('html.set', '<p>My custom paragraph.</p>');
+        this.getEmailTemplate("froalaEditorStudentPayment","StudentPayment");
       }
       else if (this.selectedValue[0].id == 2) {
         this.studentCredentials.style.display = 'block';
+        this.getEmailTemplate("froalaEditorStudentCredentials","StudentCredentials");
       }
       else if (this.selectedValue[0].id == 3) {
         this.passwordReset.style.display = 'block';
+        this.getEmailTemplate("froalaEditorPasswordReset","PasswordReset");
       }
       else if (this.selectedValue[0].id == 4) {
         this.hospitalCredentials.style.display = 'block';
+        this.getEmailTemplate("froalaEditorHospitalCredentials","BusinessCredentials");
       }
       else if (this.selectedValue[0].id == 5) {
         this.studentRenewal.style.display = 'block';
+        this.getEmailTemplate("froalaEditorStudentRenewal","StudentRenewal");
       }
     }
 
@@ -99,17 +98,28 @@ export class EmailTemplateComponent implements OnInit {
     this.studentRenewal.style.display = 'none';
   }
 
-  sendEmailTemplateCodeToServer(emailTemplateType)
+  sendEmailTemplateCodeToServer(templateName , emailTemplateType)
   {
     var code = "<html><body>"+(<any>$('div#'+emailTemplateType)).froalaEditor('html.get')+"</body</html>";
-    this.service.saveEmailTemplate(code).subscribe(
+    this.service.saveEmailTemplate(templateName,code).subscribe(
       (data) => {
        console.log(data);
+       Swal({
+        title: 'Success',
+        text: data.message,
+        showCancelButton: false,
+        confirmButtonText: 'Ok',
+      });
       },
       (error) => {
         console.log(error);
       });
-    
+  }
+
+  getEmailTemplate(editorId,templateName) {
+    // this.service.getEmailTemplate(templateName).subscribe(data => {
+    //  (<any>$('div#'+editorId)).froalaEditor('html.set', data.emailContent); 
+    // });
   }
 
 }

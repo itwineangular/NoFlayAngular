@@ -12,14 +12,11 @@
     </div>
     <div class="col-md-6">
     </div>
-    <!-- <div class="col-md-3">
-        <button class="button">SAVE</button>
-    </div> -->
   </div>
 
   <div id="studentCredentials" class="col-md-12" style="margin-top: 20px">
     <div style="text-align: right">
-      <button class="button" type="button" (click)="sendEmailTemplateCodeToServer('froalaEditorStudentCredentials')">SAVE</button>
+      <button class="button" type="button" (click)="sendEmailTemplateCodeToServer('StudentCredentials','froalaEditorStudentCredentials')">SAVE</button>
     </div>
 
     <div id="froalaEditorStudentCredentials" [froalaEditor]>
@@ -38,9 +35,9 @@
 
   <div id="studentPayment" class="col-md-12" style="margin-top: 20px">
     <div style="text-align: right">
-      <button class="button" type="button" (click)="sendEmailTemplateCodeToServer('froalaEditorStudentPayment')">SAVE</button>
+      <button class="button" type="button" (click)="sendEmailTemplateCodeToServer('StudentPayment','froalaEditorStudentPayment')">SAVE</button>
     </div>
-    <div id="froalaEditorStudentPayment" [froalaEditor] [(froalaModel)]="editorContent">
+    <div id="froalaEditorStudentPayment" [froalaEditor]>
       <p>Dear [name],</p>
 
       <p>
@@ -132,7 +129,7 @@
 
   <div id="passwordReset" class="col-md-12" style="margin-top: 20px">
     <div style="text-align: right">
-      <button class="button" type="button" (click)="sendEmailTemplateCodeToServer('froalaEditorPasswordReset')">SAVE</button>
+      <button class="button" type="button" (click)="sendEmailTemplateCodeToServer('PasswordReset','froalaEditorPasswordReset')">SAVE</button>
     </div>
     <div id="froalaEditorPasswordReset" [froalaEditor]>
       <div style="
@@ -179,7 +176,7 @@
 
   <div id="hospitalCredentials" class="col-md-12" style="margin-top: 20px">
     <div style="text-align: right">
-      <button class="button" type="button" (click)="sendEmailTemplateCodeToServer('froalaEditorHospitalCredentials')">SAVE</button>
+      <button class="button" type="button" (click)="sendEmailTemplateCodeToServer('BusinessCredentials','froalaEditorHospitalCredentials')">SAVE</button>
     </div>
 
     <div id="froalaEditorHospitalCredentials" [froalaEditor]>
@@ -228,7 +225,7 @@
 
   <div id="studentRenewal" class="col-md-12" style="margin-top: 20px">
     <div style="text-align: right">
-      <button class="button" type="button" (click)="sendEmailTemplateCodeToServer('froalaEditorStudentRenewal')">SAVE</button>
+      <button class="button" type="button" (click)="sendEmailTemplateCodeToServer('StudentRenewal','froalaEditorStudentRenewal')">SAVE</button>
     </div>
 
     <div id="froalaEditorStudentRenewal" [froalaEditor]>

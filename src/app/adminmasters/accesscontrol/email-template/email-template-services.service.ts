@@ -12,22 +12,29 @@ export class EmailTemplateServicesService {
 
   constructor(private http: Http) { }
 
-  saveEmailTemplate(template) {
-    // "emailContent": "<html><body><h1 style='color:red;'>Hi [name],</h1><br/><p>Welcome to Spring Boot.</p><br/><br/><h3>Thanks & Regards,<h3><br/><h3>admin</h3></body</html>"
+  saveEmailTemplate(templateName, templateCode) {
     let obj = {
-      "emailTemplate": "Student Credentials",
-      "emailContent": template
+      "emailTemplate": templateName,
+      "emailContent": templateCode
     };
     console.log(obj);
     let headers = new Headers({
       'Content-Type': 'application/json'
     });
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Access-Control-Allow-Headers', 'Content-Type');
-    headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
     let options = { headers: headers };
-    // return this.http.post('http://192.168.1.60:9090/email/sendEmail', obj, options).pipe(map(res => res.json()));
-    return this.http.post(this.url + '/email/sendEmail', obj, options).pipe(map(res => res.json()));
+    return this.http.post('http://192.168.1.57:9090/email/saveEmailTemplate', obj, options).pipe(map(res => res.json()));
+    //return this.http.post(this.url + '/email/saveEmailTemplate', obj, options).pipe(map(res => res.json()));
+  }
+
+  getEmailTemplate(templateName)
+  {
+    // let headers = new Headers();
+    //   headers.append('Access-Control-Allow-Origin','*');
+    //   headers.append('Access-Control-Allow-Headers','Content-Type');
+    //   headers.append('Access-Control-Allow-Methods','GET,POST,OPTIONS,DELETE,PUT');
+    // let options = { headers: headers };
+    return this.http.get('http://192.168.1.57:9090/email/getEmailTemplate?templateName='+templateName).pipe(map(res => res.json()));
+    //  return this.http.get(this.url+'/coursecategory/list',options).pipe(map(res => res.json()));
   }
 
 }

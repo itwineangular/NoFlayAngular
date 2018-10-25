@@ -16,8 +16,10 @@ import { AuthService } from '../../homepage/auth.service';
 })
 export class AdminlayoutComponent implements OnInit {
 
-  accessControl: string;
+  generalSetup: string;
   emailTemplate: string;
+  initialConfiguration: string;
+  accessControl : string;
 
   institutions: string;
   businessEntities: string;
@@ -98,7 +100,9 @@ export class AdminlayoutComponent implements OnInit {
 
   englishMenuItems() {
     this.accessControl = "Access Control",
+    this.generalSetup = "General Setup",
     this.emailTemplate = "Email Templates",
+    this.initialConfiguration = "Initial Configuration",
       this.institutions = "Institutions",
       this.businessEntities = "Business Entities",
       this.courseCategory = "Course Categories",
@@ -120,7 +124,9 @@ export class AdminlayoutComponent implements OnInit {
   }
   frenchMenuitems() {
     this.accessControl = "Contrôle d'accès",
+    this.generalSetup = "General Setup",
     this.emailTemplate = "Modèles de courrier électronique",
+    this.initialConfiguration = "Initial Configuration",
       this.institutions = "Institutions",
       this.businessEntities = "Entités commerciales",
       this.courseCategory = "Catégories de cours",
@@ -160,8 +166,10 @@ export class AdminlayoutComponent implements OnInit {
           'menuitems':
             [
               // { 'menuid': '1', 'mainmenu': 'Access Control', 'url': 'accesscontrol' },
-              { 'menuid': '1', 'mainmenu': this.accessControl,'submenu': [
-                { 'name': this.emailTemplate, 'url': 'emailTemplate' }
+              { 'menuid': '1', 'mainmenu': this.generalSetup,'submenu': [
+                { 'name': this.emailTemplate, 'url': 'emailTemplate' },
+                { 'name': this.initialConfiguration, 'url': 'initialConfiguration' },
+                { 'name': this.accessControl, 'url': 'addaccesscontrol' }
 
               ] },
               {
@@ -193,13 +201,14 @@ export class AdminlayoutComponent implements OnInit {
                   { 'name': this.plans, 'url': 'plans' },
                   { 'name': this.membershipCard, 'url': 'membershipCard' }
                 ]
-              },
-              {
-                'menuid': '5', 'mainmenu': this.status,
-                'submenu': [
-                  { 'name': this.status, 'url': 'status' }
-                ]
               }
+              // ,
+              // {
+              //   'menuid': '5', 'mainmenu': this.status,
+              //   'submenu': [
+              //     { 'name': this.status, 'url': 'status' }
+              //   ]
+              // }
             ]
         };
         this.router.navigate(['/emailTemplate']);

@@ -1,34 +1,67 @@
 <div class="mycontent">
-    <div class="container-fluid">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="panel panel-default">
-              <div class="panel-heading">Category</div>
-              <div class="panel-body">
-                <div class="col-lg-4">
-                  <label>Name : </label>
-                  <input type="text" class="form-control" placeholder="" />
-                </div>
-                <div class="col-lg-4">
-                    <label>Code : </label>
-                    <input type="text" class="form-control" placeholder="" />
-                  </div>
-                <div class="col-lg-4">
-                    <label>Textbox : </label>
-                    <select class="form-control" placeholder="Textbox">
-                      <option>Select</option>
-                      <option>Active</option>
-                      <option>Inactive</option>
-                    </select>
-                  </div>
-    
-              </div>
-              <div class="panel-footer text-right">
-                <button class="btn btn-info btn-sm com-btn">Save</button>
-                <button class="btn btn-info btn-sm com-btn">Back</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-</div>>
+  <div class="col-md-12">
+    <hr />
+    <h3 class="text-center">Access Control</h3>
+    <hr />
+  </div>
+
+  <div class="col-md-12">
+    <div class="col-md-3">
+      <label for="categoryName">Select user</label>
+      <ngx-select-dropdown #userName (change)="changeValue($event)" [multiple]="false" [(value)]="selectedValue" [config]="config"
+        [options]="options"></ngx-select-dropdown>
+    </div>
+    <div class="col-md-6">
+    </div>
+    <!-- <div class="col-md-3">
+        <button class="button">SAVE</button>
+    </div> -->
+  </div>
+
+
+  <div id="modelsTable" class="col-md-12">
+    <div class="table-responsive">
+      <table class="table table-bordered myTable table-condensed table-striped">
+        <thead>
+          <tr class="text-center">
+            <th>Models</th>
+            <th>View</th>
+            <th>Create</th>
+            <th>Update</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr *ngFor="let item of models">
+            <td>{{item}}</td>
+            <td style="color:#cccccc">
+              <input type="checkbox" id="mycheck-{{ i+1 }}" value="{{ i+1 }}">
+              <label for="mycheck-{{ i+1 }}"></label>
+            </td>
+            <td style="color:#cccccc">
+              <input type="checkbox" id="mycheck-{{ i+1 }}" value="{{ i+1 }}">
+              <label for="mycheck-{{ i+1 }}"></label>
+            </td>
+            <td style="color:#cccccc">
+              <input type="checkbox" id="mycheck-{{ i+1 }}" value="{{ i+1 }}">
+              <label for="mycheck-{{ i+1 }}"></label>
+            </td>
+            <td style="color:#cccccc">
+              <input type="checkbox" id="mycheck-{{ i+1 }}" value="{{ i+1 }}">
+              <label for="mycheck-{{ i+1 }}"></label>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <div class="col-lg-12 text-center">
+      <button class="btn btn-primary" type="button">Save</button>
+    </div>
+
+  </div>
+
+
+</div>

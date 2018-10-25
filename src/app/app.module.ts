@@ -61,7 +61,8 @@ import { MembershipCardComponent } from './adminmasters/businessentity/membershi
 
 import { QRCodeModule } from 'angularx-qrcode';
 import { SelectDropDownModule } from 'ngx-select-dropdown';
-import { EmailTemplateComponent } from './adminmasters/accesscontrol/email-template/email-template.component'
+import { EmailTemplateComponent } from './adminmasters/accesscontrol/email-template/email-template.component';
+import { InitialConfigurationComponent } from './adminmasters/accesscontrol/initial-configuration/initial-configuration.component';
 
 
 @NgModule({
@@ -100,7 +101,8 @@ import { EmailTemplateComponent } from './adminmasters/accesscontrol/email-templ
     StatusComponent,
     StudentComponent,
     MembershipCardComponent,
-    EmailTemplateComponent
+    EmailTemplateComponent,
+    InitialConfigurationComponent
   ],
   imports: [
     BrowserModule,

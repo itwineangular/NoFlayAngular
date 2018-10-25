@@ -28,6 +28,7 @@ import { StatusComponent } from './adminmasters/status/status/status.component';
 import { StudentComponent } from './adminmasters/institutions/student/student.component';
 import { MembershipCardComponent } from './adminmasters/businessentity/membership-card/membership-card.component'
 import { EmailTemplateComponent } from './adminmasters/accesscontrol/email-template/email-template.component';
+import { InitialConfigurationComponent } from './adminmasters/accesscontrol/initial-configuration/initial-configuration.component';
 
 const appRoutes: Routes = [
   {
@@ -50,6 +51,7 @@ const appRoutes: Routes = [
       { path: 'accesscontrol', component: AccesscontrolComponent ,canActivate: [AuthGuard]},
       { path: 'addaccesscontrol', component: AddaccesscontrolComponent ,canActivate: [AuthGuard]},
       { path: 'emailTemplate', component: EmailTemplateComponent ,canActivate: [AuthGuard]},
+      { path: 'initialConfiguration', component: InitialConfigurationComponent ,canActivate: [AuthGuard]},
       { path: 'coursecategory', component: CourseCategoryComponent,canActivate: [AuthGuard] },
       { path: 'courses', component: CoursesComponent,canActivate: [AuthGuard] },
       { path: 'institute', component: EducationalInstituteComponent,canActivate: [AuthGuard] },
