@@ -15,7 +15,7 @@ export class InitialConfigurationComponent implements OnInit {
   ngOnInit() {
     this.smtp.host = "smtp.gmail.com";
     this.smtp.port = "587";
-    this.smtp.auth = "ssl";
+    this.smtp.auth = true;
     this.smtp.username = "mcmservice536@gmail.com";
     this.smtp.password = "mcm1234#";
     this.smtp.defaultFromEmail = "mcmservice536@gmail.com";

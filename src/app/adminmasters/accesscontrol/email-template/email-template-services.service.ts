@@ -22,8 +22,8 @@ export class EmailTemplateServicesService {
       'Content-Type': 'application/json'
     });
     let options = { headers: headers };
-    return this.http.post('http://192.168.1.57:9090/email/saveEmailTemplate', obj, options).pipe(map(res => res.json()));
-    //return this.http.post(this.url + '/email/saveEmailTemplate', obj, options).pipe(map(res => res.json()));
+   // return this.http.post('http://192.168.1.57:9090/email/saveEmailTemplate', obj, options).pipe(map(res => res.json()));
+    return this.http.post(this.url + '/email/saveEmailTemplate', obj, options).pipe(map(res => res.json()));
   }
 
   getEmailTemplate(templateName)
@@ -33,8 +33,8 @@ export class EmailTemplateServicesService {
     //   headers.append('Access-Control-Allow-Headers','Content-Type');
     //   headers.append('Access-Control-Allow-Methods','GET,POST,OPTIONS,DELETE,PUT');
     // let options = { headers: headers };
-    return this.http.get('http://192.168.1.57:9090/email/getEmailTemplate?templateName='+templateName).pipe(map(res => res.json()));
-    //  return this.http.get(this.url+'/coursecategory/list',options).pipe(map(res => res.json()));
+   // return this.http.get('http://192.168.1.57:9090/email/getEmailTemplate?templateName='+templateName).pipe(map(res => res.json()));
+     return this.http.get(this.url+'/email/getEmailTemplate?templateName='+templateName).pipe(map(res => res.json()));
   }
 
 }

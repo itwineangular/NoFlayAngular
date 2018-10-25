@@ -206,7 +206,7 @@
             "courseCategory": "Catégorie de cours",
             "course":"Cours",
             "studentName":"Nom d'étudiant",
-            "planName":"Des plans",
+            "planName":"plan",
             "checkbox": "Case à cocher",
             "proceed": "Procéder",
             "mcmId": "ID MCM"

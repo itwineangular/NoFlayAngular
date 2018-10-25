@@ -117,9 +117,9 @@ export class EmailTemplateComponent implements OnInit {
   }
 
   getEmailTemplate(editorId,templateName) {
-    // this.service.getEmailTemplate(templateName).subscribe(data => {
-    //  (<any>$('div#'+editorId)).froalaEditor('html.set', data.emailContent); 
-    // });
+    this.service.getEmailTemplate(templateName).subscribe(data => {
+     (<any>$('div#'+editorId)).froalaEditor('html.set', data.emailContent); 
+    });
   }
 
 }

@@ -33,8 +33,13 @@
             <input class="form-control" type="text" name="port" #port="ngModel" [(ngModel)]="smtp.port" />
           </div>
           <div class="col-md-3" style="margin-top: 20px">
+            <!-- <label for="auth">Smtp Auth</label>
+            <input class="form-control" type="text" name="auth" #auth="ngModel" [(ngModel)]="smtp.auth" /> -->
             <label for="auth">Smtp Auth</label>
-            <input class="form-control" type="text" name="auth" #auth="ngModel" [(ngModel)]="smtp.auth" />
+              <select class="form-control" name="auth" #auth="ngModel" [(ngModel)]="smtp.auth">
+                  <option value="true"> true </option>
+                  <option value="false"> false </option>
+              </select>
           </div>
           <div class="col-md-3" style="margin-top: 20px">
             <label for="connectionTimeout">Smtp Connection Timeout</label>
@@ -49,9 +54,27 @@
             <label for="writeTimeout">Smtp Write Timeout</label>
             <input class="form-control" type="text" name="writeTimeout" #writeTimeout="ngModel" [(ngModel)]="smtp.writeTimeout" />
           </div>
+          <div class="col-md-3" style="margin-top: 20px">
+              <label for="enable">Enable</label>
+              <select class="form-control" name="enable" #Enable="ngModel" [(ngModel)]="smtp.Enable">
+                  <option value="true"> true </option>
+                  <option value="false"> false </option>
+              </select>
+          </div>
+          <div class="col-md-3" style="margin-top: 20px">
+              <label for="Required">Required</label>
+              <select class="form-control" name="Required" #Required="ngModel" [(ngModel)]="smtp.Required">
+                  <option value="true"> true </option>
+                  <option value="false"> false </option>
+              </select>
+          </div>
+          <!-- <div class="col-md-3" style="margin-top: 20px">
+              
+            <input type="checkbox" id="1" value="1" (click)="toggleSelect($event.target.checked)">
+            <label  for="1">Enable</label>
+          </div> -->
           <div class="col-md-12">
             <button class="btn btn-primary btn-outline pull-right" type="button" (click)="addNew()">Save</button>
-           
           </div>
           <div class="clearfix"></div>
         </form>

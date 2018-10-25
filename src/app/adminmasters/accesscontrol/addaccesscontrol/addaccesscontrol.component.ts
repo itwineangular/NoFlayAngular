@@ -10,7 +10,7 @@ import { SelectDropDownComponent } from "ngx-select-dropdown";
 export class AddaccesscontrolComponent implements OnInit {
 
   name : string;
-  models = ["Email Template","Course Categories","Courses", "Educational Institutions", "Students" ,
+  models = ["Email Template","Initial Configuration","Access Control","Course Categories","Courses", "Educational Institutions", "Students" ,
   "Business Categories", "Business Entities", "Attributes", "Subscription Type","Plan Names", "Plans", "Membership Card"] ; 
   
   modelsTable :any;

@@ -514,11 +514,11 @@ export class MembershipCardComponent implements OnInit {
       console.log( this.selectedStudentsForEmailOrId); 
     }else{
       this.checkedval = null;
-      this.studentList.forEach(element => {
-        element.plan = "";
-        // this.selectedStudentsForEmailOrId.push(element.stdId);
+      // this.studentList.forEach(element => {
+      //   element.plan = "";
+      //   // this.selectedStudentsForEmailOrId.push(element.stdId);
         
-      });
+      // });
     }
   }
 
