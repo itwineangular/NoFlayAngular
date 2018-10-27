@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { smtpObject } from "./smtpModel";
 
 @Component({
   selector: 'app-initial-configuration',
@@ -8,22 +7,40 @@ import { smtpObject } from "./smtpModel";
 })
 export class InitialConfigurationComponent implements OnInit {
 
-  smtp : smtpObject = new smtpObject();
+  smtpPage: any;
+  cronSettingsPage: any;
 
   constructor() { }
 
   ngOnInit() {
-    this.smtp.host = "smtp.gmail.com";
-    this.smtp.port = "587";
-    this.smtp.auth = true;
-    this.smtp.username = "mcmservice536@gmail.com";
-    this.smtp.password = "mcm1234#";
-    this.smtp.defaultFromEmail = "mcmservice536@gmail.com";
-    this.smtp.connectionTimeout = "5000";
-    this.smtp.timeout = "5000";
-    this.smtp.writeTimeout = "5000";
-    this.smtp.Enable = true;
-    this.smtp.Required =true;
+    this.smtpPage = document.getElementById('smtpPage');
+    this.cronSettingsPage = document.getElementById('cronSettingsPage');
+    this.hideCronPage();
+  }
+
+  hideCronPage(): void {
+    this.smtpPage.style.display = 'block';
+    this.cronSettingsPage.style.display = 'none';
+  }
+
+  hideSmtpPage(): void {
+    this.smtpPage.style.display = 'none';
+    this.cronSettingsPage.style.display = 'block';
+  }
+
+  ChangePage(key): void {
+    switch (key) {
+      case "smtp":
+        this.hideCronPage();
+        break;
+      case "corn":
+        this.hideSmtpPage();
+        break;
+
+      default:
+        break;
+    }
+
   }
 
 }

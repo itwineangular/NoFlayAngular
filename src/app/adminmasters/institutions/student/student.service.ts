@@ -209,7 +209,9 @@ searchStudent(studentsData) {
     "institutionName": studentsData.institutionName,
     "courseCategory": studentsData.courseCategory,
     "courseName": studentsData.courseName,
-    "status": studentsData.status
+    "status": studentsData.status,
+    "stdName": studentsData.stdName
+
   };
   console.log(obj);
   let headers = new Headers({

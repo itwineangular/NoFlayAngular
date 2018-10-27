@@ -8,7 +8,7 @@ import { map } from "rxjs/operators";
 export class MembershipCardService {
   url = Constants.HOME_URL;
 
-  constructor(private http : Http) { }
+  constructor(private http: Http) { }
 
   getInstitution() {
     let headers = new Headers({
@@ -27,7 +27,7 @@ export class MembershipCardService {
     headers.append('Access-Control-Allow-Headers', 'Content-Type');
     headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
     let options = { headers: headers };
-    return this.http.get(this.url+'/plans/list', options).pipe(map(res => res.json()));
+    return this.http.get(this.url + '/plans/list', options).pipe(map(res => res.json()));
   }
 
   getStatus() {
@@ -38,18 +38,18 @@ export class MembershipCardService {
     headers.append('Access-Control-Allow-Headers', 'Content-Type');
     headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
     let options = { headers: headers };
-    return this.http.get(this.url +'/status/list', options).pipe(map(res => res.json()));
+    return this.http.get(this.url + '/status/list', options).pipe(map(res => res.json()));
   }
 
   searchStudent(studentsData) {
     let obj =
     {
-    "institutionName": studentsData.institutionName,
-    "courseCategory": studentsData.courseCategory,
-    "courseName": studentsData.courseName,
-    "stdName": studentsData.stdName,
-    "status": studentsData.status
-   
+      "institutionName": studentsData.institutionName,
+      "courseCategory": studentsData.courseCategory,
+      "courseName": studentsData.courseName,
+      // "stdName": studentsData.stdName,
+      "status": studentsData.status
+
     };
     let headers = new Headers({
       'Content-Type': 'application/json'
@@ -58,7 +58,7 @@ export class MembershipCardService {
     headers.append('Access-Control-Allow-Headers', 'Content-Type');
     headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
     let options = { headers: headers };
-    return this.http.post(this.url+'/students/searchByCriteria', obj, options).pipe(map(res => res.json()));
+    return this.http.post(this.url + '/students/searchByCriteria', obj, options).pipe(map(res => res.json()));
   }
 
   sendEmail(students) {
@@ -69,6 +69,21 @@ export class MembershipCardService {
     headers.append('Access-Control-Allow-Headers', 'Content-Type');
     headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
     let options = { headers: headers };
-    return this.http.post(this.url +'/students/EmailStudProfile',students, options).pipe(map(res => res.json()));
+    return this.http.post(this.url + '/students/EmailStudProfile', students, options).pipe(map(res => res.json()));
   }
+
+  sendStudentPaymentRequestMail(template) {
+    let obj =
+    {
+      "emailTemplate": "Student Credentials",
+      "emailContent": template
+    };
+    let headers = new Headers({
+      'Content-Type': 'application/json'
+    });
+
+    let options = { headers: headers };
+    return this.http.post(this.url + '/email/sendEmail', obj, options).pipe(map(res => res.json()));
+  }
+
 }

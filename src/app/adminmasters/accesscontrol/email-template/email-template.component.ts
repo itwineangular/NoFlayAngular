@@ -22,6 +22,7 @@ export class EmailTemplateComponent implements OnInit {
   hospitalCredentials;
   studentRenewal;
 
+
   constructor(private service : EmailTemplateServicesService) { }
 
   ngOnInit() {

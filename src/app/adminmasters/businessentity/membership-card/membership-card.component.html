@@ -100,7 +100,8 @@
                         <th>{{ 'adminConfigarationPage.membershipCardPage.planName' | translate }}
 
                         </th>
-                        <th>{{ 'adminConfigarationPage.membershipCardPage.mcmId' | translate }} </th>
+                        <th>{{ 'adminConfigarationPage.statusPage.status' | translate }}</th>
+                        <!-- <th>{{ 'adminConfigarationPage.membershipCardPage.mcmId' | translate }} </th> -->
 
                         <th>{{ 'adminConfigarationPage.membershipCardPage.checkbox' | translate }}</th>
                         <th>{{ 'adminConfigarationPage.commonFields.edit' | translate }}</th>
@@ -113,7 +114,8 @@
                         <td>{{item.stdName}}</td>
                         <td>{{item.institutionName}}</td>
                         <td>{{item.plan}}</td>
-                        <td></td>
+                        <td>{{item.status}}</td>
+                        <!-- <td></td> -->
                         <td style="color:#cccccc">
                             <!-- <input type="checkbox" id="mycheck-{{ i+1 }}"  (change)="onSelectPlan( i+1 , $event.target.checked)" checked={{checkedval}}>
                             <label for="mycheck-{{ i+1 }}"></label> -->

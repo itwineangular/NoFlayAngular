@@ -63,6 +63,8 @@ import { QRCodeModule } from 'angularx-qrcode';
 import { SelectDropDownModule } from 'ngx-select-dropdown';
 import { EmailTemplateComponent } from './adminmasters/accesscontrol/email-template/email-template.component';
 import { InitialConfigurationComponent } from './adminmasters/accesscontrol/initial-configuration/initial-configuration.component';
+import { CornJobSettingsComponent } from './adminmasters/accesscontrol/corn-job-settings/corn-job-settings.component';
+import { SmtpDetailsComponent } from './adminmasters/accesscontrol/smtp-details/smtp-details.component';
 
 
 @NgModule({
@@ -102,7 +104,9 @@ import { InitialConfigurationComponent } from './adminmasters/accesscontrol/init
     StudentComponent,
     MembershipCardComponent,
     EmailTemplateComponent,
-    InitialConfigurationComponent
+    InitialConfigurationComponent,
+    CornJobSettingsComponent,
+    SmtpDetailsComponent
   ],
   imports: [
     BrowserModule,

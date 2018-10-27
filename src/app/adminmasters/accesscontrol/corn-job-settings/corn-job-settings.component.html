@@ -1,0 +1,23 @@
+<div class="col-md-12">
+  <div class="panel panel-default">
+
+    <div class="panel-body">
+      <form class="form-horizontal">
+        <div class="col-md-3">
+          <label for="renewalEmailBefore">Renewal email days before</label>
+          <input class="form-control" type="number" name="renewalEmailBefore" #renewalEmailBefore="ngModel" [(ngModel)]="cornJob.renewalEmailBefore"
+          />
+        </div>
+        <div class="col-md-3">
+          <label for="renewalEmailTime">Renewal email time</label>
+          <input class="form-control" type="time" name="renewalEmailTime" #renewalEmailTime="ngModel" [(ngModel)]="cornJob.renewalEmailTime"
+          />
+        </div>
+        <div class="col-md-12">
+          <button class="btn btn-primary btn-outline pull-right" type="button" (click)="SaveCornJob(cornJob)">Save</button>
+        </div>
+        <div class="clearfix"></div>
+      </form>
+    </div>
+  </div>
+</div>
