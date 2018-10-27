@@ -1,6 +1,9 @@
 <div class="col-md-12">
   <div class="panel panel-default">
-
+    <div class="alert alert-warning fade in myAlert" *ngIf="alertMassege">
+      <a class="close" href="#" data-dismiss="alert" (click)="clickedAlert()">X</a>
+      <h4 style="text-align: center">{{alertMassege}}</h4>
+    </div>
     <div class="panel-body">
       <form class="form-horizontal">
         <div class="col-md-3">
@@ -14,7 +17,7 @@
           />
         </div>
         <div class="col-md-12">
-          <button class="btn btn-primary btn-outline pull-right" type="button" (click)="SaveCornJob(cornJob)">Save</button>
+          <button id="btnSave" class="btn btn-primary btn-outline pull-right" type="button" (click)="SaveCornJob(cornJob)">Save</button>
         </div>
         <div class="clearfix"></div>
       </form>

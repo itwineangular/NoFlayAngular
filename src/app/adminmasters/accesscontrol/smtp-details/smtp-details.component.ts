@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { smtpObject } from "./smtpModel";
+import { SmtpDetailsService } from "./smtp-details.service";
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-smtp-details',
@@ -8,21 +10,36 @@ import { smtpObject } from "./smtpModel";
 })
 export class SmtpDetailsComponent implements OnInit {
 
-  smtp : smtpObject = new smtpObject();
-  constructor() { }
+  smtp: smtpObject = new smtpObject();
+  alertMassege = "";
+
+  constructor(private service: SmtpDetailsService) { }
 
   ngOnInit() {
-    this.smtp.host = "smtp.gmail.com";
-    this.smtp.port = "587";
-    this.smtp.auth = true;
-    this.smtp.username = "mcmservice536@gmail.com";
-    this.smtp.password = "mcm1234#";
-    this.smtp.defaultFromEmail = "mcmservice536@gmail.com";
-    this.smtp.connectionTimeout = "5000";
-    this.smtp.timeout = "5000";
-    this.smtp.writeTimeout = "5000";
-    this.smtp.Enable = true;
-    this.smtp.Required =true;
+    this.getIntialConfiguration();
+  }
+  clickedAlert = function () {
+    this.alertMassege = "";
+  };
+
+  saveIntialConfiguration(form: NgForm) {
+    this.service.saveIntialConfiguration(this.smtp)
+      .subscribe(
+        (data) => {
+          this.alertMassege = "New Details added Successfully!!";
+          this.getIntialConfiguration();
+        },
+        (error) => {
+          console.log(error);
+          alert("Try again");
+        }
+      );
+  }
+
+  getIntialConfiguration() {
+    this.service.getIntialConfiguration().subscribe(data => {
+      this.smtp = data[0];
+    });
   }
 
 }

@@ -1,7 +1,81 @@
 <div class="col-md-12">
   <div class="panel panel-default">
+    <div class="alert alert-warning fade in myAlert" *ngIf="alertMassege">
+      <a class="close" href="#" data-dismiss="alert" (click)="clickedAlert()">X</a>
+      <h4 style="text-align: center">{{alertMassege}}</h4>
+    </div>
     <div class="panel-body">
-      <form class="form-horizontal" #courseCatagoryForm="ngForm" (ngSubmit)="searchCourseCategory(courseCatagoryForm)">
+      <form class="form-horizontal" #intitalConfigurationForm="ngForm" (ngSubmit)="saveIntialConfiguration(intitalConfigurationForm)">
+        <div class="col-md-3">
+          <label for="host">Smtp Host</label>
+          <input class="form-control" type="text" name="host" #host="ngModel" [(ngModel)]="smtp.host" />
+        </div>
+        <div class="col-md-3">
+          <label for="username">Smtp Username</label>
+          <input class="form-control" type="text" name="username" #username="ngModel" [(ngModel)]="smtp.username" />
+        </div>
+        <div class="col-md-3">
+          <label for="password">Smtp Password</label>
+          <input class="form-control" type="text" placeholder="{{ 'adminConfigarationPage.commonFields.enterCode' | translate }}" name="password"
+            #password="ngModel" [(ngModel)]="smtp.password" />
+        </div>
+        <!-- <div class="col-md-3">
+          <label for="defaultFromEmail">default From Email</label>
+          <input class="form-control" type="text" name="defaultFromEmail" #defaultFromEmail="ngModel" [(ngModel)]="smtp.defaultFromEmail"
+          />
+        </div> -->
+        <div class="col-md-3">
+          <label for="port">Smtp Port</label>
+          <input class="form-control" type="text" name="port" #port="ngModel" [(ngModel)]="smtp.port" />
+        </div>
+        <div class="col-md-3" style="margin-top: 20px">
+          <label for="auth">Smtp Auth</label>
+          <select class="form-control" name="auth" #auth="ngModel" [(ngModel)]="smtp.auth">
+            <option value="true"> true </option>
+            <option value="false"> false </option>
+          </select>
+        </div>
+        <div class="col-md-3" style="margin-top: 20px">
+          <label for="connectionTimeout">Smtp Connection Timeout</label>
+          <input class="form-control" type="text" name="connectionTimeout" #connectionTimeout="ngModel" [(ngModel)]="smtp.connectionTimeout"
+          />
+        </div>
+        <div class="col-md-3" style="margin-top: 20px">
+          <label for="timeout">Smtp Timeout</label>
+          <input class="form-control" type="text" name="timeout" #timeout="ngModel" [(ngModel)]="smtp.timeout" />
+        </div>
+        <div class="col-md-3" style="margin-top: 20px">
+          <label for="writeTimeout">Smtp Write Timeout</label>
+          <input class="form-control" type="text" name="writeTimeout" #writeTimeout="ngModel" [(ngModel)]="smtp.writeTimeout" />
+        </div>
+        <div class="col-md-3" style="margin-top: 20px">
+          <label for="enable">Enable</label>
+          <select class="form-control" name="enable" #enable="ngModel" [(ngModel)]="smtp.enable">
+            <option value="true"> true </option>
+            <option value="false"> false </option>
+          </select>
+        </div>
+        <div class="col-md-3" style="margin-top: 20px">
+          <label for="Required">Required</label>
+          <select class="form-control" name="required" #required="ngModel" [(ngModel)]="smtp.required">
+            <option value="true"> true </option>
+            <option value="false"> false </option>
+          </select>
+        </div>
+        <div class="col-md-12">
+          <button class="btn btn-primary btn-outline pull-right" type="button" (click)="saveIntialConfiguration(intitalConfigurationForm)">Save</button>
+        </div>
+        <div class="clearfix"></div>
+      </form>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="col-md-12">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <form class="form-horizontal" #courseCatagoryForm="ngForm" (ngSubmit)="saveIntialConfiguration(courseCatagoryForm)">
         <div class="col-md-3">
           <label for="host">Smtp Host</label>
           <input class="form-control" type="text" name="host" #host="ngModel" [(ngModel)]="smtp.host" />
@@ -59,11 +133,11 @@
           </select>
         </div>
         <div class="col-md-12">
-          <button class="btn btn-primary btn-outline pull-right" type="button" (click)="addNew()">Save</button>
+          <button class="btn btn-primary btn-outline pull-right" type="submit" (click)="addNew()">Save</button>
         </div>
         <div class="clearfix"></div>
       </form>
       <div class="clearfix"></div>
     </div>
   </div>
-</div>
+</div> -->

@@ -69,7 +69,7 @@
         </div>
     </div>
 
-    <div class="col-md-12 selectAll"  *ngIf="isListContainsData">
+    <div class="col-md-12 text-right"  *ngIf="isListContainsData">
         <input type="checkbox" id="mycheck-{{ i+1 }}" value="{{ i+1 }}" (click)="toggleSelect($event.target.checked)">
         <label  for="mycheck-{{ i+1 }}">Select All</label>
     
@@ -119,11 +119,11 @@
                         <td style="color:#cccccc">
                             <!-- <input type="checkbox" id="mycheck-{{ i+1 }}"  (change)="onSelectPlan( i+1 , $event.target.checked)" checked={{checkedval}}>
                             <label for="mycheck-{{ i+1 }}"></label> -->
-                            <input type="checkbox" id="mycheck-{{ i+1 }}" (change)="selectedStudent(item, $event.target.checked)" checked={{checkedval}}>
+                            <input type="checkbox" id="mycheck-{{ i+1 }}" (change)="selectedStudent(item.status,item, $event.target.checked)" checked={{checkedval}}>
                             <label for="mycheck-{{ i+1 }}"></label>
                         </td>
                         <td>
-                            <button class="btn btn-warning buttonStyle" data-toggle="modal" data-target="#addModal" (click)="selectedUser(item)">
+                            <button class="btn btn-warning buttonStyle" data-toggle="modal" data-target="#addModal" (click)="editUser(item)">
                                 <i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size:15px"></i>
                             </button>
                         </td>
@@ -198,7 +198,7 @@
                                     <label class="control-label col-sm-2">Amount</label>
                                     <div class="col-sm-3">
 
-                                        <input class="form-control" type="text" placeholder="Amount" name="planPrice" readonly [(ngModel)]="selectedStudentData.planPrice"
+                                        <input class="form-control" type="text" placeholder="Amount" name="planPrice" readonly [(ngModel)]="selectedStudentData.planAmount"
                                         />
 
                                     </div>
@@ -218,7 +218,7 @@
                                     <label class="control-label col-sm-2">End Date</label>
                                     <div class="col-sm-3">
 
-                                        <my-date-picker [options]="myDatePickerOptions" name="planEndEnd" [(ngModel)]="selectedStudentData.planEndEnd" placeholder="End Date"></my-date-picker>
+                                        <my-date-picker [options]="myDatePickerOptions" name="planEndEnd" [(ngModel)]="selectedStudentData.planEndDate" placeholder="End Date"></my-date-picker>
 
                                     </div>
                                     <div class="clearfix"></div>

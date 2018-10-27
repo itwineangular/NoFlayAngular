@@ -3,7 +3,7 @@ export class smtpObject {
     port: string;
     username: string;
     password: string;
-    defaultFromEmail: string;
+    // defaultFromEmail: string;
     auth: boolean;
     connectionTimeout: string;
     timeout: string;

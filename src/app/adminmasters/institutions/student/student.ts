@@ -26,10 +26,8 @@ export class Student {
     planEndDate?: any;
     mcmId: string;
     qrImage?: any;
-
-    planPrice : any;
+    membershipType: string;
    
-    planEndEnd : any;
     
   
 }

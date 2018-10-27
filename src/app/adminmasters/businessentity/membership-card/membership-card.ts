@@ -116,6 +116,8 @@ export  class selectedStudents
     stdEmail:string;
     institutionName:string;
     plan:string;
-    planAmount:string;
+    planAmount:number;
     courseCategory:string;
+    membershipType: string;
+    stdId: number;
 }

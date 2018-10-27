@@ -304,7 +304,7 @@ export class MembershipCardComponent implements OnInit {
 
     membershipObject.stdName = studentParameters.stdName;
     membershipObject.status = studentParameters.status;
-    this.changelistview( membershipObject.status);
+    // this.changelistview( membershipObject.status);
 
 
     if (typeof membershipObject.institutionName === 'undefined' && typeof membershipObject.courseCategory === 'undefined' && typeof membershipObject.courseName === 'undefined' && typeof membershipObject.stdName === 'undefined' && typeof membershipObject.status === 'undefined') {
@@ -357,35 +357,16 @@ export class MembershipCardComponent implements OnInit {
 
   }
 
-  planname: any;
-  errormsg: any;
-  onSelectPlan(i, checked) {
-    console.log(this.planNameList);
-    // this.planname = $('#planName').val();
-    // if (this.planname == null) {
-    //     // this.errormsg = "Please Select Plan Name First..!";
-    //     $('#mycheck-' + i).prop("checked", false);
-    //     $('#planName').focus();
-    // } else {
-    //     this.errormsg = "";
-    //     if ($('#mycheck-' + i).prop("checked") == true) {
-    //         i--;
-    //         this.studentList[i].plan = this.planname;
-    //     } else if ($('#mycheck-' + i).prop("checked") == false) {
-    //         i--;
-    //         this.studentList[i].plan = '';
-    //     }
-    // }
-
-  }
 
   public currentDateModule: any;
   public endDateModule: any;
   localDate = new Date();
 
-  selectedStudent(student, checked) {
+  selectedStudent(itemstatus,student, checked) {
     console.log(student);
     console.log(this.planNameList);
+
+    this.changelistview(itemstatus);
 
     if (checked) {
 
@@ -393,11 +374,18 @@ export class MembershipCardComponent implements OnInit {
       selectedStudent.stdName = student.stdName;
       selectedStudent.course = student.courseName;
       selectedStudent.stdEmail = student.stdEmail;
-      selectedStudent.institutionName = student.institutionName;
-      selectedStudent.plan = student.plan;
-      selectedStudent.planAmount = student.planAmount;
-      selectedStudent.courseCategory = student.courseCategory;
+      selectedStudent.institutionName = student.institutionName;     
+      selectedStudent.courseCategory = student.courseCategory;      
+      selectedStudent.stdId = student.stdId;
       
+
+      var planData = this.planNameList.filter(x => x.planId == student.plan);
+      console.log(planData);
+      if (planData.length > 0) {
+        selectedStudent.plan = planData[0].planName;
+        selectedStudent.planAmount = planData[0].planPrice;
+        selectedStudent.membershipType = planData[0].planMembership;
+      }
 
       this.selectedStudentsForEmailOrId.push(selectedStudent);
 
@@ -405,46 +393,27 @@ export class MembershipCardComponent implements OnInit {
     else {
       var data = this.selectedStudentsForEmailOrId.filter(x => x.stdEmail != student.stdEmail);
       this.selectedStudentsForEmailOrId = data;
+      this.cnamechangeflag=false;
+      this.pnamechangeflag=false;
     }
 
 
-    // if(this.selectedStudentData.stdId==student.stdId)
-    // {
-    //    this.selectedStudentData = new Student();
-    // }
-    // else
-    // {
-    this.selectedStudentData = student;
-    this.planNameListLocal = this.planNameList.filter((item) => item.planId == student.plan);
-    console.log(this.planNameListLocal);
-    this.selectedStudentData.planPrice = this.planNameListLocal[0].planPrice;
-    this.currentDateModule = { date: { year: this.localDate.getFullYear(), month: this.localDate.getMonth() + 1, day: this.localDate.getDate() } };
-    this.selectedStudentData.planStartDate = this.currentDateModule;
-
-    if (this.planNameListLocal[0].planMembership == "Monthly") {
-      this.currentDateModule = { date: { year: this.localDate.getFullYear(), month: this.localDate.getMonth() + 2, day: this.localDate.getDate() } };
-      this.selectedStudentData.planEndEnd = this.currentDateModule;
-    }
-    else if (this.planNameListLocal[0].planMembership == "Annual") {
-      this.currentDateModule = { date: { year: this.localDate.getFullYear() + 1, month: this.localDate.getMonth() + 1, day: this.localDate.getDate() } };
-      this.selectedStudentData.planEndEnd = this.currentDateModule;
-    }
-    // }
-    // console.log(this.selectedStudentData);
+   
+    
   }
 
   planChange(plan) {
     this.planNameListLocal = this.planNameList.filter((item) => item.planId == plan);
     this.selectedStudentData.plan = "" + this.planNameListLocal[0].planId;
-    this.selectedStudentData.planPrice = this.planNameListLocal[0].planPrice;
+    this.selectedStudentData.planAmount = this.planNameListLocal[0].planPrice;
 
     if (this.planNameListLocal[0].planMembership == "Monthly") {
       this.currentDateModule = { date: { year: this.localDate.getFullYear(), month: this.localDate.getMonth() + 2, day: this.localDate.getDate() } };
-      this.selectedStudentData.planEndEnd = this.currentDateModule;
+      this.selectedStudentData.planEndDate = this.currentDateModule;
     }
     else if (this.planNameListLocal[0].planMembership == "Annual") {
       this.currentDateModule = { date: { year: this.localDate.getFullYear() + 1, month: this.localDate.getMonth() + 1, day: this.localDate.getDate() } };
-      this.selectedStudentData.planEndEnd = this.currentDateModule;
+      this.selectedStudentData.planEndDate = this.currentDateModule;
     }
 
   }
@@ -529,14 +498,48 @@ export class MembershipCardComponent implements OnInit {
     }
   }
 
+  editUser(user)
+  {
+   console.log(user);
+   this.selectedStudentData = user;
+      this.planNameListLocal = this.planNameList.filter((item) => item.planId == user.plan);
+      this.selectedStudentData.planAmount = this.planNameListLocal[0].planPrice;
+      this.selectedStudentData.membershipType = this.planNameListLocal[0].planMembership;
+      this.currentDateModule = { date: { year: this.localDate.getFullYear(), month: this.localDate.getMonth() + 1, day: this.localDate.getDate() } };
+      this.selectedStudentData.planStartDate = this.currentDateModule;
+  
+      if (this.planNameListLocal[0].planMembership == "Monthly") {
+        this.currentDateModule = { date: { year: this.localDate.getFullYear(), month: this.localDate.getMonth() + 2, day: this.localDate.getDate() } };
+        this.selectedStudentData.planEndDate = this.currentDateModule;
+      }
+      else if (this.planNameListLocal[0].planMembership == "Annualy") {
+        this.currentDateModule = { date: { year: this.localDate.getFullYear() + 1, month: this.localDate.getMonth() + 1, day: this.localDate.getDate() } };
+        this.selectedStudentData.planEndDate = this.currentDateModule;
+      }
+  console.log(this.selectedStudentData);
+  }
+
   sendEmail() {
-   // console.log(this.studentPaymentTemplate);
+    // console.log(this.studentPaymentTemplate);
     this.selectedStudentsForEmailOrId.forEach(element => {
       console.log(element);
-      var re = "[studentName]"; 
-      var temp = this.studentPaymentTemplate.replace(re,element.stdName)
-      console.log(temp);
-      this.membershipCardService.sendStudentPaymentRequestMail(temp)
+      console.log(this.studentPaymentTemplate);
+      var studentName = /@studentName/gi;
+      var collegeName = /@collegeName/gi;
+      var planName = /@planName/gi;
+      var membershipType = /@membershipType/gi;
+      var amount = /@amount/gi;
+      var url =  /@id/gi;
+
+       var temp = this.studentPaymentTemplate.replace(studentName, element.stdName);
+       var temp2 = temp.replace(amount, element.planAmount);
+       var temp3 = temp2.replace(collegeName, element.institutionName);
+       var temp4 = temp3.replace(planName, element.plan);
+       var temp5 = temp4.replace(membershipType, element.membershipType);
+       var temp6 = temp5.replace(url, element.stdId);
+     
+      console.log(temp6);
+      this.membershipCardService.sendStudentPaymentRequestMail(temp6)
         .subscribe(
           (data) => {
             console.log(data);
@@ -549,15 +552,6 @@ export class MembershipCardComponent implements OnInit {
 
     console.log("completed");
 
-    // console.log(this.selectedStudentsForEmailOrId);
-    // this.membershipCardService.sendEmail(this.selectedStudentsForEmailOrId)
-    // .subscribe(
-    //   (data) => {
-    //   },
-    //   (error) => {
-    //     console.log(error);
-    //   }
-    // );
 
   }
 
