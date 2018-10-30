@@ -232,6 +232,13 @@
         {
             "emailTemplates" : "Email Templates",
             "selectEmailTemplate" : "Select email template"
+        },
+        "userPage":
+        {
+            "user" : "User Roles",
+            "username":"Username",
+            "password":"Password",
+            "roles": "Role"
         }
      },
      "studentLoginPage": {

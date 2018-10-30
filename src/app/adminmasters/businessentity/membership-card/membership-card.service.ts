@@ -83,7 +83,7 @@ export class MembershipCardService {
     });
 
     let options = { headers: headers };
-    return this.http.post(this.url + '/email/sendEmail', obj, options).pipe(map(res => res.json()));
+    return this.http.post('http://192.168.1.55:8080/email/sendEmail', obj, options).pipe(map(res => res.json()));
   }
 
 }

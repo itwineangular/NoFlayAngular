@@ -29,6 +29,7 @@ import { StudentComponent } from './adminmasters/institutions/student/student.co
 import { MembershipCardComponent } from './adminmasters/businessentity/membership-card/membership-card.component'
 import { EmailTemplateComponent } from './adminmasters/accesscontrol/email-template/email-template.component';
 import { InitialConfigurationComponent } from './adminmasters/accesscontrol/initial-configuration/initial-configuration.component';
+import { UserComponent } from './adminmasters/accesscontrol/user/user.component';
 
 const appRoutes: Routes = [
   {
@@ -40,7 +41,7 @@ const appRoutes: Routes = [
       { path: 'businesslogin', component: BusinessloginComponent },
       { path: 'registerstudent', component: RegstudentComponent },
       { path: 'registerinstitute', component: ReginstituteComponent },
-      { path: 'registerbusiness', component: RegbusinessComponent }
+      { path: 'registerbusiness', component: RegbusinessComponent },
     ]
   },
   /* ADMIN PART START*/
@@ -52,6 +53,7 @@ const appRoutes: Routes = [
       { path: 'addaccesscontrol', component: AddaccesscontrolComponent ,canActivate: [AuthGuard]},
       { path: 'emailTemplate', component: EmailTemplateComponent ,canActivate: [AuthGuard]},
       { path: 'initialConfiguration', component: InitialConfigurationComponent ,canActivate: [AuthGuard]},
+      { path: 'user', component: UserComponent ,canActivate: [AuthGuard]},
       { path: 'coursecategory', component: CourseCategoryComponent,canActivate: [AuthGuard] },
       { path: 'courses', component: CoursesComponent,canActivate: [AuthGuard] },
       { path: 'institute', component: EducationalInstituteComponent,canActivate: [AuthGuard] },

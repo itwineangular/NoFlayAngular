@@ -44,6 +44,7 @@ export class MembershipCardComponent implements OnInit {
   p: number = 1;
   pnamechangeflag: boolean;
   cnamechangeflag: boolean;
+  studentstatus:any;
 
 
   isListContainsData: boolean;
@@ -89,7 +90,8 @@ export class MembershipCardComponent implements OnInit {
     return this.value.split('\n');
   }
 
-  selectedStudentsForEmailOrId: selectedStudents[] = [];
+  // selectedStudentsForEmailOrId: selectedStudents[] = [];
+  selectedStudentsForEmailOrId: any = [];
 
 
 
@@ -304,6 +306,7 @@ export class MembershipCardComponent implements OnInit {
 
     membershipObject.stdName = studentParameters.stdName;
     membershipObject.status = studentParameters.status;
+    this.studentstatus = membershipObject.status;
     // this.changelistview( membershipObject.status);
 
 
@@ -370,31 +373,49 @@ export class MembershipCardComponent implements OnInit {
 
     if (checked) {
 
-      var selectedStudent = new selectedStudents();
-      selectedStudent.stdName = student.stdName;
-      selectedStudent.course = student.courseName;
-      selectedStudent.stdEmail = student.stdEmail;
-      selectedStudent.institutionName = student.institutionName;     
-      selectedStudent.courseCategory = student.courseCategory;      
-      selectedStudent.stdId = student.stdId;
+      // var selectedStudent = new selectedStudents();
+      // selectedStudent.stdName = student.stdName;
+      // selectedStudent.course = student.courseName;
+      // selectedStudent.stdEmail = student.stdEmail;
+      // selectedStudent.institutionName = student.institutionName;     
+      // selectedStudent.courseCategory = student.courseCategory;      
+      // selectedStudent.stdId = student.stdId;
       
 
-      var planData = this.planNameList.filter(x => x.planId == student.plan);
-      console.log(planData);
-      if (planData.length > 0) {
-        selectedStudent.plan = planData[0].planName;
-        selectedStudent.planAmount = planData[0].planPrice;
-        selectedStudent.membershipType = planData[0].planMembership;
-      }
+      // var planData = this.planNameList.filter(x => x.planId == student.plan);
+      // console.log(planData);
+      // if (planData.length > 0) {
+      //   selectedStudent.plan = planData[0].planName;
+      //   selectedStudent.planAmount = planData[0].planPrice;
+      //   selectedStudent.membershipType = planData[0].planMembership;
+      // }
 
-      this.selectedStudentsForEmailOrId.push(selectedStudent);
+      // this.selectedStudentsForEmailOrId.push(selectedStudent);
+
+      this.selectedStudentsForEmailOrId.push({
+        'stdName' :student.stdName,
+        'course' : student.courseName,
+        'stdEmail' : student.stdEmail,
+        'institutionName' : student.institutionName,     
+        'courseCategory' : student.courseCategory,      
+        'stdId' : student.stdId,
+      });
+      console.log(this.selectedStudentsForEmailOrId);
+
+      
 
     }
     else {
-      var data = this.selectedStudentsForEmailOrId.filter(x => x.stdEmail != student.stdEmail);
-      this.selectedStudentsForEmailOrId = data;
-      this.cnamechangeflag=false;
-      this.pnamechangeflag=false;
+      // var data = this.selectedStudentsForEmailOrId.filter(x => x.stdEmail != student.stdEmail);
+      // this.selectedStudentsForEmailOrId = data;
+     
+      var values = this.selectedStudentsForEmailOrId.map(function(o) { return o.stdId; });
+      const index = values.indexOf(student.stdId);
+      this.selectedStudentsForEmailOrId.splice(index, 1); 
+      if (this.selectedStudentsForEmailOrId.length === 0) {
+        this.cnamechangeflag=false;
+        this.pnamechangeflag=false;
+      }
     }
 
 
@@ -468,7 +489,8 @@ export class MembershipCardComponent implements OnInit {
 
   checkedval: boolean;
   toggleSelect(checked) {
-    // this.planname = $('#planName').val();
+   
+    this.changelistview(this.studentstatus);
 
     if (checked) {
       this.checkedval = true;
@@ -490,6 +512,8 @@ export class MembershipCardComponent implements OnInit {
       console.log(this.selectedStudentsForEmailOrId);
     } else {
       this.checkedval = null;
+      this.cnamechangeflag=false;
+      this.pnamechangeflag=false;
       // this.studentList.forEach(element => {
       //   element.plan = "";
       //   // this.selectedStudentsForEmailOrId.push(element.stdId);
@@ -519,40 +543,56 @@ export class MembershipCardComponent implements OnInit {
   console.log(this.selectedStudentData);
   }
 
-  sendEmail() {
-    // console.log(this.studentPaymentTemplate);
-    this.selectedStudentsForEmailOrId.forEach(element => {
-      console.log(element);
-      console.log(this.studentPaymentTemplate);
-      var studentName = /@studentName/gi;
-      var collegeName = /@collegeName/gi;
-      var planName = /@planName/gi;
-      var membershipType = /@membershipType/gi;
-      var amount = /@amount/gi;
-      var url =  /@id/gi;
+  // sendEmail() {
+  //   // console.log(this.studentPaymentTemplate);
+  //   this.selectedStudentsForEmailOrId.forEach(element => {
+  //     console.log(element);
+  //     console.log(this.studentPaymentTemplate);
+  //     var studentName = /@studentName/gi;
+  //     var collegeName = /@collegeName/gi;
+  //     var planName = /@planName/gi;
+  //     var membershipType = /@membershipType/gi;
+  //     var amount = /@amount/gi;
+  //     var url =  /@id/gi;
 
-       var temp = this.studentPaymentTemplate.replace(studentName, element.stdName);
-       var temp2 = temp.replace(amount, element.planAmount);
-       var temp3 = temp2.replace(collegeName, element.institutionName);
-       var temp4 = temp3.replace(planName, element.plan);
-       var temp5 = temp4.replace(membershipType, element.membershipType);
-       var temp6 = temp5.replace(url, element.stdId);
+  //      var temp = this.studentPaymentTemplate.replace(studentName, element.stdName);
+  //      var temp2 = temp.replace(amount, element.planAmount);
+  //      var temp3 = temp2.replace(collegeName, element.institutionName);
+  //      var temp4 = temp3.replace(planName, element.plan);
+  //      var temp5 = temp4.replace(membershipType, element.membershipType);
+  //      var temp6 = temp5.replace(url, element.stdId);
      
-      console.log(temp6);
-      this.membershipCardService.sendStudentPaymentRequestMail(temp6)
-        .subscribe(
-          (data) => {
-            console.log(data);
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
-    });
+  //     console.log(temp6);
+  //     this.membershipCardService.sendStudentPaymentRequestMail(temp6)
+  //       .subscribe(
+  //         (data) => {
+  //           console.log(data);
+  //         },
+  //         (error) => {
+  //           console.log(error);
+  //         }
+  //       );
+  //   });
 
-    console.log("completed");
+  //   console.log("completed");
 
 
+  // }
+  sendEmail(){
+    this.membershipCardService.sendStudentPaymentRequestMail(this.studentPaymentTemplate)
+          .subscribe(
+            (data) => {
+              console.log("mail");
+              console.log(data);
+              alert("mail sent");
+            },
+            (error) => {
+              console.log(error);
+            }
+          );  
+        
+        
+    
   }
 
   getEmailTemplate(editorId, templateName) {

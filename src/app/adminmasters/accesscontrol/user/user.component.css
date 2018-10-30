@@ -1,22 +1,3 @@
-.user
-{
-    height: 80px;
-    width: 80px;
-}
-.logo{
-    height: 80px;
-    width: 80px;
-}
-
-.titleImage{
-    height: 50px;
-    /* width: 100px; */
-}
-.studentImage{
-    height:100px;
-    width: 100px;
-}
-
 .myTable,.table th{text-align:center}
 .myTable,.table td{
 	text-align: center;
@@ -30,6 +11,12 @@
 span{color:red}
 .footer{padding-top:235px}
 
+.validation-error
+{
+    color: red;
+    text-align: center;
+}
+
 /* search start */
 
 input {
@@ -37,8 +24,7 @@ input {
 }
 input[type=search] {
 	-webkit-appearance: textfield;
-    -webkit-box-sizing: content-box;
-    box-sizing: border-box;
+	/* -webkit-box-sizing: content-box; */
 	font-family: inherit;
 	font-size: 100%;
 }
@@ -73,23 +59,10 @@ input[type=search]:focus {
 }
 /* search end */
 
-input:-moz-placeholder {
-	color: #999;
-}
-input::-webkit-input-placeholder {
-	color: #999;
-}
-
-
-.validation-error
-{
-    color: red;
-    text-align: center;
-}
-
 th>span{
 	color: black;
 }
+
 .btn-outline {
     background-color: transparent;
     color: inherit;
@@ -137,43 +110,14 @@ th>span{
 	width: 30px;
 	padding: 0px;
 }
-/*Checkboxes styles*/
-input[type="checkbox"] { display: none; }
-
-input[type="checkbox"] + label {
-  position: relative;
-  padding-left: 35px;
-  margin-bottom: 20px;
-  bottom: 10px;
-  font: 14px/20px 'Open Sans', Arial, sans-serif;
-  color: #000000;
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-}
-
-input[type="checkbox"] + label:last-child { margin-bottom: 0; }
-input[type="checkbox"] + label:before {
-  content: '';
-  width: 20px;
-  height: 20px;
-  border: 1px solid #6cc0e5;
-  position: absolute;
-  left: 0;
-  top: 0;
-  opacity: .6;
-  -webkit-transition: all .12s, border-color .08s;
-  transition: all .12s, border-color .08s;
-}
 
 
-input[type="checkbox"]:checked + label:before {
-  width: 10px;
-  border-radius: 0;
-  opacity: 1;
-  border-top-color: transparent;
-  border-left-color: transparent;
-  -webkit-transform: rotate(45deg);
-  transform: rotate(45deg);
-}
+  :host >>> .input-group-append .btn{
+	position: absolute;
+    right: 0;
+    z-index: 9;
+    padding: 6px 10px;
+  }
+  show-hide-password {
+	  width:100%;
+  }

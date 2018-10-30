@@ -36,6 +36,7 @@ export class AdminlayoutComponent implements OnInit {
   planName : string;
   plans : string;
   status : string;
+  user:string;
 
   membershipManagement : string;
   membershipCard : string;
@@ -103,6 +104,7 @@ export class AdminlayoutComponent implements OnInit {
     this.generalSetup = "General Setup",
     this.emailTemplate = "Email Templates",
     this.initialConfiguration = "Initial Configuration",
+    this.user = "User",
       this.institutions = "Institutions",
       this.businessEntities = "Business Entities",
       this.courseCategory = "Course Categories",
@@ -127,6 +129,7 @@ export class AdminlayoutComponent implements OnInit {
     this.generalSetup = "General Setup",
     this.emailTemplate = "Modèles de courrier électronique",
     this.initialConfiguration = "Initial Configuration",
+    this.user="Utilisateur",
       this.institutions = "Institutions",
       this.businessEntities = "Entités commerciales",
       this.courseCategory = "Catégories de cours",
@@ -169,6 +172,7 @@ export class AdminlayoutComponent implements OnInit {
               { 'menuid': '1', 'mainmenu': this.generalSetup,'submenu': [
                 { 'name': this.emailTemplate, 'url': 'emailTemplate' },
                 { 'name': this.initialConfiguration, 'url': 'initialConfiguration' },
+                { 'name': this.user, 'url': 'user' },
                 { 'name': this.accessControl, 'url': 'addaccesscontrol' }
 
               ] },

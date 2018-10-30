@@ -25,18 +25,6 @@ export class CornJobSettingsComponent implements OnInit {
   };
 
   SaveCornJob(cornJob) {
-    if (this.saveOrUpdate) {
-      this.service.UpdateCornJob(cornJob).subscribe(
-        (data) => {
-          this.alertMassege =data.message;
-        },
-        (error) => {
-          console.log(error);
-        });
-    }
-    else {
-      console.log(cornJob);
-      console.log("cornJob");
       this.service.SaveCornJob(cornJob).subscribe(
         (data) => {
           this.alertMassege =data.message;
@@ -44,16 +32,16 @@ export class CornJobSettingsComponent implements OnInit {
         (error) => {
           console.log(error);
         });
-    }
   }
   getCornJob() {
     this.service.getCornJob().subscribe(data => {
       
       if(data.length!=0)
       {
-        console.log(data);
-       this.cornJob = data[0];
-       this.saveOrUpdate = true;
+        let time = data[1].paramValue1.split(" ");
+        console.log(time);
+        this.cornJob.renewalEmailTime = time[2]+":"+time[1];
+        this.cornJob.renewalEmailBefore = data[1].paramValue2;
         document.getElementById("btnSave").innerText  = "Update";
       }
     });

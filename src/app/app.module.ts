@@ -18,6 +18,7 @@ import { OrderModule } from 'ngx-order-pipe';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { MyDatePickerModule } from 'mydatepicker';
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+import { ShowHidePasswordModule } from 'ngx-show-hide-password';
 
 import {
   SocialLoginModule,
@@ -65,6 +66,7 @@ import { EmailTemplateComponent } from './adminmasters/accesscontrol/email-templ
 import { InitialConfigurationComponent } from './adminmasters/accesscontrol/initial-configuration/initial-configuration.component';
 import { CornJobSettingsComponent } from './adminmasters/accesscontrol/corn-job-settings/corn-job-settings.component';
 import { SmtpDetailsComponent } from './adminmasters/accesscontrol/smtp-details/smtp-details.component';
+import { UserComponent } from './adminmasters/accesscontrol/user/user.component';
 
 
 @NgModule({
@@ -106,7 +108,8 @@ import { SmtpDetailsComponent } from './adminmasters/accesscontrol/smtp-details/
     EmailTemplateComponent,
     InitialConfigurationComponent,
     CornJobSettingsComponent,
-    SmtpDetailsComponent
+    SmtpDetailsComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
@@ -130,6 +133,7 @@ import { SmtpDetailsComponent } from './adminmasters/accesscontrol/smtp-details/
     MyDatePickerModule ,
     QRCodeModule,
     SelectDropDownModule,
+    ShowHidePasswordModule.forRoot(),
     FroalaEditorModule.forRoot(),
     FroalaViewModule.forRoot()
   ],
