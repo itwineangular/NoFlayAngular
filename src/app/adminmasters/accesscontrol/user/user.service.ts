@@ -75,15 +75,12 @@ searchUser(user) {
   let obj =
   {
     "username": user.username,
-    "password": user.password,
     "roles": user.roles
   };
   let headers = new Headers({
     'Content-Type': 'application/json'
   });
-  headers.append('Access-Control-Allow-Origin', '*');
-  headers.append('Access-Control-Allow-Headers', 'Content-Type');
-  headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
+ console.log(obj);
   let options = { headers: headers };
   return this.http.post(this.url+'/user/searchByCriteria', obj, options).pipe(map(res => res.json()));
 }

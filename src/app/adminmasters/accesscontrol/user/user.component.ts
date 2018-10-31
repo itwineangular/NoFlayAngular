@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {Userroles} from './userroles';
-import {UserService} from './user.service';
+import { Userroles } from './userroles';
+import { UserService } from './user.service';
 import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { ViewChild } from '@angular/core';
@@ -18,7 +18,7 @@ declare var $: any;
 export class UserComponent implements OnInit {
 
   alertMassege = "";
-  saveOrUpdate:any; 
+  saveOrUpdate: any;
   pagenumber: string;
   p: number = 1;
   itemsPerPage2: number = 1;
@@ -29,21 +29,43 @@ export class UserComponent implements OnInit {
 
   userList: Userroles[];
 
-  user:Userroles =new Userroles();
-  constructor(private service:UserService) { }
+  user: Userroles = new Userroles();
+
+  searchUser: Userroles = new Userroles();
+
+  @ViewChild('roleName') public ngSelectRoleName: SelectDropDownComponent;
+  constructor(private service: UserService) { }
 
   ngOnInit() {
     this.getUser();
     this.pageChange(5);
+    this.isSearchClicked=false;
+    this.isListContainsData = false;
+    this.searchUser.username = null;
   }
 
   addNew() {
     this.saveOrUpdate = "save";
     this.user = new Userroles();
-  //   $('#addModal').modal({
-  //     backdrop: 'static',
-  //     keyboard: false
-  // });
+     }
+
+  userRoleOptions = [
+    {
+      "role": "Admin"
+    },
+    {
+      "role": "Super Admin"
+    }
+  ]
+
+  selectedUserRoleValue: any = null;
+  userRoleSerachConfig = {
+    displayKey: "role",
+    search: true,
+    limitTo: this.userRoleOptions.length
+  };
+  changeUserRoleValue($event: any) {
+    console.log(this.selectedUserRoleValue);
   }
 
   clickedAlert = function () {
@@ -56,7 +78,7 @@ export class UserComponent implements OnInit {
   }
 
   saveUser(form: NgForm) {
-   
+
     if (this.saveOrUpdate == "save") {
       console.log("save");
       this.service.saveUser(form.value)
@@ -78,7 +100,7 @@ export class UserComponent implements OnInit {
         .subscribe(
           (data) => {
             this.alertMassege = "Item updated on list successfully!!";
-                     },
+          },
           (error) => {
             console.log(error);
             alert("Try again");
@@ -91,7 +113,7 @@ export class UserComponent implements OnInit {
     this.service.deleteUser(userId).subscribe(data => {
       this.alertMassege = "Deleted successfully!!";
       this.getUser();
-         });
+    });
   }
 
 
@@ -126,60 +148,69 @@ export class UserComponent implements OnInit {
   }
 
   searchUserRoles(userParameters) {
-    var userRolesLocal: Userroles = new Userroles();
-    this.isSearchClicked=true;
-    userRolesLocal.username = userParameters.username;
-    userRolesLocal.roles = userParameters.roles;
-    // if (typeof this.selectedValue !== 'undefined'  && this.selectedValue.length>0) 
-    // {
-    //   userRolesLocal.categoryName = this.selectedValue[0].categoryName;
-    // }
-    // if (typeof this.selectedCategoryCodeValue !== 'undefined' && this.selectedCategoryCodeValue.length>0) 
-    // {
-    //   userRolesLocal.categoryCode = this.selectedCategoryCodeValue[0].categoryCode
-    // }
+ if((userParameters.username == null && this.selectedUserRoleValue== null) ||
+ (userParameters.username == "" && this.selectedUserRoleValue== null) ||
+  (userParameters.username =="" && this.selectedUserRoleValue.length==0))
+ {
 
-    if (typeof userRolesLocal.username === 'undefined'  && typeof userRolesLocal.roles === 'undefined') 
-    {
-      Swal({
+    Swal({
         title: 'Invalid!!',
         text: 'Atleast enter any one field.',
         showCancelButton: false,
         confirmButtonText: 'Ok',
       });
       this.isListContainsData = false;
-      this.userList=[];
-     
-    }
-    else
-    {
-      this.service.searchUser(userRolesLocal)
-      .subscribe(
-        (data) => {
-          this.userList = data;
-          if (typeof this.userList !== 'undefined' && this.userList.length > 0) {
-            this.isListContainsData = true;
-          }
-          else {
-            this.isListContainsData = false;
-          }
-        },
-        (error) => {
-          console.log(error);
-          alert("Try again");
+      this.userList = []
+ }
+ else
+ {
+     var userRolesLocal: Userroles = new Userroles();
+      this.isSearchClicked = true;
+                if(userParameters.username != null)
+      {
+        if (userParameters.username !="") {
+          userRolesLocal.username = userParameters.username;
         }
-      );
-    }
+
+      }
+
+      if(this.selectedUserRoleValue != null)
+      {
+        if (this.selectedUserRoleValue.length > 0) {
+          userRolesLocal.roles = this.selectedUserRoleValue[0].role;
+        }
+
+      }
+
+     
+      this.service.searchUser(userRolesLocal)
+        .subscribe(
+          (data) => {
+            this.userList = data;
+            if (typeof this.userList !== 'undefined' && this.userList.length > 0) {
+              this.isListContainsData = true;
+            }
+            else {
+              this.isListContainsData = false;
+            }
+          },
+          (error) => {
+            console.log(error);
+            alert("Try again");
+          }
+        );
+ 
+ }
+
+
 
   }
 
   searchClear() {
-    this.user = new Userroles();
-  //   this.ngSelectCategoryName.deselectItem(this.selectedValue,0);
-  //   this.ngSelectCategoryName.ngOnInit();
+    this.searchUser = new Userroles();
+    this.ngSelectRoleName.deselectItem(this.selectedUserRoleValue,0);
+    this.ngSelectRoleName.ngOnInit();
 
-  //   this.ngSelectCategoryCode.deselectItem(this.selectedCategoryCodeValue,0);
-  //   this.ngSelectCategoryCode.ngOnInit();
   }
 
 }

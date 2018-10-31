@@ -579,12 +579,10 @@ export class MembershipCardComponent implements OnInit {
 
   // }
   sendEmail(){
-    this.membershipCardService.sendStudentPaymentRequestMail(this.studentPaymentTemplate)
+    this.membershipCardService.sendStudentPaymentRequestMail(this.studentPaymentTemplate,this.selectedStudentsForEmailOrId)
           .subscribe(
             (data) => {
-              console.log("mail");
-              console.log(data);
-              alert("mail sent");
+               alert("mail sent");
             },
             (error) => {
               console.log(error);

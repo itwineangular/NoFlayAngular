@@ -7,184 +7,192 @@
     </div>
     <div class="col-md-12">
         <div class="panel panel-default">
-        <div class="rcorners2">
+            <!-- <div class="rcorners2"> -->
             <form class="form-horizontal">
                 <div class="col-md-3">
-                    <label  for="user">{{'adminConfigarationPage.userPage.username' | translate}}</label>
-                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.userPage.username' | translate}}" />
+                    <label for="user">{{'adminConfigarationPage.userPage.username' | translate}}</label>
+                    <input class="form-control" type="text"  name="username"
+                    #username="ngModel" [(ngModel)]="searchUser.username"
+                    placeholder="{{'adminConfigarationPage.userPage.username' | translate}}" />
                 </div>
-              
                 <div class="col-md-3">
-                    <label for="user">{{
-                            'adminConfigarationPage.userPage.roles' | translate }}</label>
-                    <select class="form-control">
-                        <option value="1">Admin </option>
-                        <option value="2">SuperAdmin </option>
-                    </select>
+                    <label for="user">{{ 'adminConfigarationPage.userPage.roles' | translate }}</label>
+                    <ngx-select-dropdown #roleName (change)="changeUserRoleValue($event)" [multiple]="false" [(value)]="selectedUserRoleValue"
+                        [config]="userRoleSerachConfig" [options]="userRoleOptions"></ngx-select-dropdown>
                 </div>
-                
                 <div class="col-md-12">
-                    <button class="btn btn-info btn-outline pull-right cssButtonPadding" 
-                        type="button" (click)="addNew()" data-toggle="modal" data-target="#addModal">{{'adminConfigarationPage.commonFields.addNew'
-                        | translate}}</button>
+                    <button class="btn btn-info btn-outline pull-right cssButtonPadding" type="button" (click)="addNew()" data-toggle="modal"
+                        data-target="#addModal">{{'adminConfigarationPage.commonFields.addNew' | translate}}
+                    </button>
                     <button class="btn btn-warning btn-outline pull-right cssButtonPadding" type="button" (click)="searchClear()">{{'adminConfigarationPage.commonFields.clear'
                         | translate}}</button>
-                    <button class="btn btn-primary btn-outline pull-right cssButtonPadding" type="button" (click)="searchUserRoles(user)">{{'adminConfigarationPage.commonFields.search'
+                    <button class="btn btn-primary btn-outline pull-right cssButtonPadding" type="button" (click)="searchUserRoles(searchUser)">{{'adminConfigarationPage.commonFields.search'
                         | translate}}</button>
                 </div>
                 <div class="clearfix"></div>
-  
-              </form>
-              <div class="clearfix"></div>
-  </div>
-  </div>
-  </div>
-  <div class="col-md-12">
-  <div class="alert alert-warning fade in myAlert" *ngIf="alertMassege">
-          <a class="close" href="#" data-dismiss="alert" (click)="clickedAlert()">X</a>
-          <h4 style="text-align: center">{{alertMassege}}</h4>
-      </div>
-      </div>
-          <div class="col-md-12">
-              <div class="table-responsive">
-                  <table class="table table-bordered myTable table-condensed table-striped">
-                      <thead>
-                          <tr class="text-center">
-                              <th>{{'adminConfigarationPage.commonFields.index' | translate}}</th>
-                              <th>{{'adminConfigarationPage.userPage.username' | translate}}</th>
-                              <th>{{'adminConfigarationPage.userPage.password' | translate}}</th>
-                              <th>{{'adminConfigarationPage.userPage.roles' | translate}}</th>
-  
-                              <th>{{ 'adminConfigarationPage.commonFields.edit' | translate }}</th>
-                              <th>{{ 'adminConfigarationPage.commonFields.delete' | translate }}</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          <tr *ngFor="let item of userList | orderBy: key : reverse : caseInsensitive : comparator |  paginate: { itemsPerPage: pagenumber, currentPage: p }; let i=index">
-                              <td>{{((p-1)*itemsPerPage2)+i+1}}</td>
-                              <td>{{item.username}}</td>
-                              <td>{{item.password}}</td>
-                              <td>{{item.roles}}</td>
-  
-                              
-                              <td>
-                                  <button class="btn btn-warning buttonStyle" data-toggle="modal" data-target="#addModal" (click)="selectedUser(item)">
-                                      <i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size:15px"></i>
-                                  </button>
-                              </td>
-                              <td>
-                                  <button class="btn btn-danger buttonStyle" data-toggle="modal" data-target="#deleteModal" (click)="selectedUser(item)">
-                                      <i class="fa fa-trash-o" aria-hidden="true" style="font-size:15px"></i>
-                                  </button>
-                              </td>
-                          </tr>
-                      </tbody>
-                  </table>
-  
-                </div>
-                <div class="form-group">
-                  <div class="col-md-4">
-                      Show
-                      <select (change)="pageChange($event.target.value)" style="border: none;">
-      
-                          <option>5</option>
-                          <option>10</option>
-                          <option>15</option>
-                      </select>
-                      Entries
-                  </div>
-                  <div class="col-md-2"></div>
-      
-                  <div class=" col-md-6 text-right">
-                      <pagination-controls (pageChange)="customPageChange($event)"></pagination-controls>
-                  </div>
-                  <div class="clearfix"></div>
-                  </div>
-            </div>
-            <!-- Add Model -->
-                <div class="modal fade" id="addModal" role="dialog">
-                  <div class="modal-dialog">
-                      <div class="modal-content">
-                          <form class="form-horizontal"  #userForm="ngForm" (ngSubmit)="saveUser(userForm)">
-                              <div class="modal-header">
-                                  <button class="close" type="button" data-dismiss="modal">X</button>
-                                  <h4 class="modal-title">{{ 'adminConfigarationPage.commonFields.addNew' | translate }}</h4>
-                              </div>
-                              <div class="modal-body">
-                                  <div class="container">
-                                      <div class="form-group">
-                                          <label class="control-label col-sm-2" for="Name">{{'adminConfigarationPage.userPage.username'| translate}}
-                                              <span class="reqMark">*</span>
-                                          </label>
-                                          <div class="col-sm-3">
-                                              <input class="form-control" type="text" placeholder="{{ 'adminConfigarationPage.userPage.username' | translate }}"
-                                              name="username" #usernameControl="ngModel" [(ngModel)]="user.username" required />
-                                             
-                                          </div>
-                                      </div>
-                                      <div class="form-group">
-                                          <label class="control-label col-sm-2" for="Name">{{'adminConfigarationPage.userPage.password'| translate}}
-                                              <span class="reqMark">*</span>
-                                          </label>
-                                          <div class="col-sm-3">
-                                              <show-hide-password icon="fontawesome" [btnOutline]="false">
-                                                  <input class="form-control" type="password"  placeholder="{{ 'adminConfigarationPage.userPage.password' | translate }}"
-                                                  name="password" #passwordNameControl="ngModel" [(ngModel)]="user.password" required/>
-                                              </show-hide-password>
-                                          </div>
-                                         
-                                          
-                                      </div>
-                                      <div class="form-group">
-                                          <label class="control-label col-sm-2" for="code">{{'adminConfigarationPage.userPage.roles'
-                                              | translate}}
-                                              <span class="reqMark">*</span>
-                                          </label>
-                                          <div class="col-md-3">
-                                                <select class="form-control" name="roles" #roleName="ngModel"
-                                                [(ngModel)]="user.roles" required>
-                                                  <option value="1">Admin </option>
-                                                  <option value="2">SuperAdmin </option>
-                                              </select>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-                              <!-- Footer Modal -->
-                              <div class="modal-footer">
-                                  <button class="btn btn-success" type="submit" 
-                                      data-dismiss="modal" (click)="saveUser(userForm)">
-                                      {{'adminConfigarationPage.commonFields.save' | translate }}</button>
-                                  <button class="btn btn-default" type="button" data-dismiss="modal">{{
-                                      'adminConfigarationPage.commonFields.close' | translate }}</button>
-                              </div>
-                          </form>
-                      </div>
-          
-                  </div>
-              </div>
-  
-      <!-- Delete Modal-->
-      <div class="modal fade" id="deleteModal" role="dialog">
-              <div class="modal-dialog">
-                  <div class="modal-content">
-                      <div class="modal-header">
-                          <button class="close" type="button" data-dismiss="modal">X</button>
-                          <h4 class="modal-title">{{ 'adminConfigarationPage.commonFields.delete' | translate }}</h4>
-                      </div>
-                      <div class="modal-body">
-                          <h3>Are you sure to delete
-                              <span>{{user.username}}</span>????</h3>
-                      </div>
-                      <div class="modal-footer">
-                          <button class="btn btn-danger" type="button" (click)="deleteUser(user.userId)"
-                              data-dismiss="modal">{{ 'adminConfigarationPage.commonFields.yes' | translate }}</button>
-                          <button class="btn btn-primary" type="button" data-dismiss="modal">{{
-                              'adminConfigarationPage.commonFields.no' | translate }}</button>
-                      </div>
-                  </div>
-              </div>
-          </div>
-  
-    
+
+            </form>
+            <div class="clearfix"></div>
+            <!-- </div> -->
+        </div>
     </div>
+    <!-- <div class="col-md-12">
+        <div class="alert alert-warning fade in myAlert" *ngIf="alertMassege">
+            <a class="close" href="#" data-dismiss="alert" (click)="clickedAlert()">X</a>
+            <h4 style="text-align: center">{{alertMassege}}</h4>
+        </div>
+    </div> -->
+    <div class="col-md-12">
+        <div class="alert alert-warning fade in myAlert" *ngIf="alertMassege">
+            <a class="close" href="#" data-dismiss="alert" (click)="clickedAlert()">X</a>
+            <h4 style="text-align: center">{{alertMassege}}</h4>
+        </div>
+        <div *ngIf="isSearchClicked">
+            <div *ngIf="!isListContainsData">
+                <h3 class="text-center noRecord">{{ 'adminConfigarationPage.commonFields.noRecordFound' | translate }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12" *ngIf="isListContainsData">
+        <div class="table-responsive">
+            <table class="table table-bordered myTable table-condensed table-striped">
+                <thead>
+                    <tr class="text-center">
+                        <th>{{'adminConfigarationPage.commonFields.index' | translate}}</th>
+                        <th>{{'adminConfigarationPage.userPage.username' | translate}}</th>
+                        <th>{{'adminConfigarationPage.userPage.password' | translate}}</th>
+                        <th>{{'adminConfigarationPage.userPage.roles' | translate}}</th>
+
+                        <th>{{ 'adminConfigarationPage.commonFields.edit' | translate }}</th>
+                        <th>{{ 'adminConfigarationPage.commonFields.delete' | translate }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of userList | orderBy: key : reverse : caseInsensitive : comparator |  paginate: { itemsPerPage: pagenumber, currentPage: p }; let i=index">
+                        <td>{{((p-1)*itemsPerPage2)+i+1}}</td>
+                        <td>{{item.username}}</td>
+                        <td>{{item.password}}</td>
+                        <td>{{item.roles}}</td>
+
+
+                        <td>
+                            <button class="btn btn-warning buttonStyle" data-toggle="modal" data-target="#addModal" (click)="selectedUser(item)">
+                                <i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size:15px"></i>
+                            </button>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger buttonStyle" data-toggle="modal" data-target="#deleteModal" (click)="selectedUser(item)">
+                                <i class="fa fa-trash-o" aria-hidden="true" style="font-size:15px"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div class="form-group">
+            <div class="col-md-4">
+                Show
+                <select (change)="pageChange($event.target.value)" style="border: none;">
+
+                    <option>5</option>
+                    <option>10</option>
+                    <option>15</option>
+                </select>
+                Entries
+            </div>
+            <div class="col-md-2"></div>
+
+            <div class=" col-md-6 text-right">
+                <pagination-controls (pageChange)="customPageChange($event)"></pagination-controls>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <!-- Add Model -->
+    <div class="modal fade" id="addModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form class="form-horizontal" #userForm="ngForm" (ngSubmit)="saveUser(userForm)">
+                    <div class="modal-header">
+                        <button class="close" type="button" data-dismiss="modal">X</button>
+                        <h4 class="modal-title">{{ 'adminConfigarationPage.commonFields.addNew' | translate }}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="Name">{{'adminConfigarationPage.userPage.username'|
+                                    translate}}
+                                    <span class="reqMark">*</span>
+                                </label>
+                                <div class="col-sm-3">
+                                    <input class="form-control" type="text" placeholder="{{ 'adminConfigarationPage.userPage.username' | translate }}" name="username"
+                                        #usernameControl="ngModel" [(ngModel)]="user.username" required />
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="Name">{{'adminConfigarationPage.userPage.password'|
+                                    translate}}
+                                    <span class="reqMark">*</span>
+                                </label>
+                                <div class="col-sm-3">
+                                    <show-hide-password icon="fontawesome" [btnOutline]="false">
+                                        <input class="form-control" type="password" placeholder="{{ 'adminConfigarationPage.userPage.password' | translate }}" name="password"
+                                            #passwordNameControl="ngModel" [(ngModel)]="user.password" required/>
+                                    </show-hide-password>
+                                </div>
+
+
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="code">{{'adminConfigarationPage.userPage.roles'
+                                    | translate}}
+                                    <span class="reqMark">*</span>
+                                </label>
+                                <div class="col-md-3">
+                                    <select class="form-control" name="roles" #roleName="ngModel" [(ngModel)]="user.roles" required>
+                                        <option value="Admin">Admin</option>
+                                        <option value="Super Admin">Super Admin</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Footer Modal -->
+                    <div class="modal-footer">
+                        <button class="btn btn-success" type="submit" data-dismiss="modal" (click)="saveUser(userForm)">
+                            {{'adminConfigarationPage.commonFields.save' | translate }}</button>
+                        <button class="btn btn-default" type="button" data-dismiss="modal">{{ 'adminConfigarationPage.commonFields.close'
+                            | translate }}</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Delete Modal-->
+    <div class="modal fade" id="deleteModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal">X</button>
+                    <h4 class="modal-title">{{ 'adminConfigarationPage.commonFields.delete' | translate }}</h4>
+                </div>
+                <div class="modal-body">
+                    <h3>Are you sure to delete
+                        <span>{{user.username}}</span>????</h3>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger" type="button" (click)="deleteUser(user.userId)" data-dismiss="modal">{{
+                        'adminConfigarationPage.commonFields.yes' | translate }}</button>
+                    <button class="btn btn-primary" type="button" data-dismiss="modal">{{ 'adminConfigarationPage.commonFields.no'
+                        | translate }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

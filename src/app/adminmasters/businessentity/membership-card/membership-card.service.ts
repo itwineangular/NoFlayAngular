@@ -72,7 +72,7 @@ export class MembershipCardService {
     return this.http.post(this.url + '/students/EmailStudProfile', students, options).pipe(map(res => res.json()));
   }
 
-  sendStudentPaymentRequestMail(template) {
+  sendStudentPaymentRequestMail(template, students) {
     let obj =
     {
       "emailTemplate": "Student Credentials",
@@ -82,8 +82,19 @@ export class MembershipCardService {
       'Content-Type': 'application/json'
     });
 
+    let url = "http://192.168.1.55:8080/email/sendEmail/";
+    students.forEach(element => {
+      var loalUrl = url + element.stdId + ",";
+      url = loalUrl;
+    });
+
+    var newStr = url;
+    if (url.substring(url.length - 1) === ',') {
+      newStr = url.substring(0, url.length - 1);
+    }
+    console.log(newStr);
     let options = { headers: headers };
-    return this.http.post('http://192.168.1.55:8080/email/sendEmail', obj, options).pipe(map(res => res.json()));
+    return this.http.post(newStr, obj, options).pipe(map(res => res.json()));
   }
 
 }
