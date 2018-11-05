@@ -144,8 +144,8 @@
                                     <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.instituteName' | translate}}"
                                         name="instName" #instNameControl="ngModel" [(ngModel)]="institute.instName" required
                                     />
-                                    <!-- <div class="validation-error" *ngIf="instNameControl.invalid && instNameControl.touched">{{'adminConfigarationPage.commonFields.nameFieldRequired'
-                                        | translate}}</div> -->
+                                    <div class="validation-error" *ngIf="instNameControl.invalid && instNameControl.touched">{{'adminConfigarationPage.commonFields.nameFieldRequired'
+                                        | translate}}</div>
 
                                 </div>
                                 <div class="col-md-3">
@@ -365,7 +365,7 @@
                                             <div class="clearfix"></div>
                                         </div>
                                         <div class="col-lg-12 text-right">
-                                            <button class="btn btn-primary btnNext" type="button" data-toggle="pill" href="#step2" (click)="activeChange('first')">Continue</button>
+                                            <button class="btn btn-primary btnNext" type="button" [disabled]="contactDetails.invalid" data-toggle="pill" href="#step2" (click)="activeChange('first')">Continue</button>
                                         </div>
                                     </form>
                                 </div>
@@ -440,7 +440,7 @@
                                         </div>
                                         <div class="col-lg-12 text-right">
                                             <button type="button" class="btn btn-default btnPrevious preConButton" data-toggle="pill" href="#step1" (click)="activeChangePrevious('second')">Previous</button>
-                                            <button type="button" class="btn btn-primary btnNext" data-toggle="pill" href="#step3" (click)="activeChange('second')">Continue</button>
+                                            <button type="button" class="btn btn-primary btnNext" [disabled]="bankDetails.invalid" data-toggle="pill" href="#step3" (click)="activeChange('second')">Continue</button>
                                         </div>
                                     </form>
                                 </div>
@@ -472,7 +472,7 @@
                                         </div>
                                         <div class="col-lg-12 text-right">
                                             <button type="button" class="btn btn-default btnPrevious preConButton" data-toggle="pill" href="#step2" (click)="activeChangePrevious('third')">Previous</button>
-                                            <button type="button" class="btn btn-primary btnNext" data-toggle="pill" href="#complete" (click)="activeChange('third')">Continue</button>
+                                            <button type="button" class="btn btn-primary btnNext" [disabled]="courseoffered.invalid" data-toggle="pill" href="#complete" (click)="activeChange('third')">Continue</button>
                                         </div>
                                     </form>
                                 </div>
@@ -496,7 +496,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-success" type="submit" data-dismiss="modal" (click)="saveInstitute(institute)">{{'adminConfigarationPage.commonFields.save'
+                    <button class="btn btn-success" type="submit"  [disabled]="contactDetails.invalid||bankDetails.invalid||courseoffered.invalid" data-dismiss="modal" (click)="saveInstitute(institute)">{{'adminConfigarationPage.commonFields.save'
                         | translate}}</button>
                     <button class="btn btn-default" type="button" data-dismiss="modal">{{'adminConfigarationPage.commonFields.close'
                         | translate}}</button>
