@@ -46,11 +46,50 @@ export interface CourseProfile {
 }
 
 export interface CourseCategory {
-    categoryId: string;
+    // categoryId: string;
     categoryCode: string;
     categoryName: string;
     status: string;
-    creationDate: string;
-    createdBy: string;
+    // creationDate: string;
+    // createdBy: string;
     courseProfile: CourseProfile[];
+}
+
+export class CourseCategory {
+    categoryId: number;
+    categoryCode: string;
+    categoryName: string;
+    status: string;
+    creationDate?: any;
+    createdBy?: any;
+    modifiedDate?: any;
+    modifiedBy?: any;
+    courseProfileVos: any[];
+    isSelected : boolean;
+}
+
+export class CourseCategoryVo {
+    categoryId: number;
+    categoryCode: string;
+    categoryName: string;
+    status: string;
+    creationDate?: any;
+    createdBy?: any;
+    modifiedDate?: any;
+    modifiedBy?: any;
+    courseProfileVos: any[];
+    
+}
+
+export class courseProfileVos {
+    courseId: number;
+    courseName: string;
+    courseCode: string;
+    duration: string;
+    createdBy: string;
+    createDateTime?: any;
+    modifiedBy: string;
+    modifiedDateTime?: any;
+    courseCategoryVos: CourseCategoryVo[];
+    isSelected : boolean;
 }

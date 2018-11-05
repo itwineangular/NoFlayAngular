@@ -1,95 +1,105 @@
 <div class="mycontent">
     <div class="col-md-12">
         <hr />
-        <h3 class="text-center">{{'adminConfigarationPage.educationalInstitutesPage.educationalInstitutes' |
-            translate}}</h3>
+        <h3 class="text-center">{{'adminConfigarationPage.educationalInstitutesPage.educationalInstitutes' | translate}}
+        </h3>
         <hr />
     </div>
     <div class="col-md-12">
-        <div class="rcorners2">
-            <form class="form-horizontal" #educationalInstituteSearchForm="ngForm" (ngSubmit)="searchEducationalInstitute(educationalInstituteSearchForm)">
-                <div class="col-md-3">
-                    <label  for="instName">{{'adminConfigarationPage.educationalInstitutesPage.instituteName' | translate}}</label>
-                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.instituteName' | translate}}"
-                        name="instName" #instNameControl="ngModel" [(ngModel)]="institute.instName" />
-                </div>
-                <div class="col-md-3">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <form class="form-horizontal" #educationalInstituteSearchForm="ngForm" (ngSubmit)="searchEducationalInstitute(educationalInstituteSearchForm)">
+                    <div class="col-md-3">
+                        <label for="instName">{{'adminConfigarationPage.educationalInstitutesPage.instituteName' | translate}}</label>
+                           <ngx-select-dropdown #instName (change)="changeInstituteValue($event)" [multiple]="false" [(value)]="selectedInstituteValue"
+                                        [config]="config" [options]="instituteListLocal"></ngx-select-dropdown>
+                     </div>
+                    <div class="col-md-3">
                         <label for="instShortName">{{'adminConfigarationPage.businessEntity.shortName' | translate}}</label>
-                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.businessEntity.shortName' | translate}}"
-                        name="instShortName" #instShortNameControl="ngModel" [(ngModel)]="institute.instShortName" />
-                </div>
-                <div class="col-md-3">
-                        <label  for="instRegistrationCode">{{'adminConfigarationPage.businessEntity.registrationNumber' | translate}}</label>
-                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.businessEntity.registrationNumber' | translate}}"
-                        name="instRegistrationCode" #instRegistrationCodeControl="ngModel" [(ngModel)]="institute.instRegistrationCode" />
-                </div>
-                <div class="col-md-3">
-                        <label  for="branch">{{'adminConfigarationPage.educationalInstitutesPage.branch' | translate}}</label>
-                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.branch' | translate}}"
-                        name="instBranch" #instBranchControl="ngModel" [(ngModel)]="institute.instBranch" />
-                </div>
-                <div class="col-md-12">
-                    <button class="btn btn-info btn-outline pull-right cssButtonPadding" data-toggle="modal"
-                        data-target="#addModal" type="button" (click)="addNew()">{{'adminConfigarationPage.commonFields.addNew'
-                        | translate}}</button>
-                    <button class="btn btn-warning btn-outline pull-right cssButtonPadding" type="button" (click)="searchClear()">{{'adminConfigarationPage.commonFields.clear'
-                        | translate}}</button>
-                    <button class="btn btn-primary btn-outline pull-right cssButtonPadding" type="submit">{{'adminConfigarationPage.commonFields.search'
-                        | translate}}</button>
-                </div>
-            </form>
-        </div>
-        </div>
-        <div class="col-md-12">
-            <div class="alert alert-warning fade in myAlert" *ngIf="alertMassege">
-                <a class="close" href="#" data-dismiss="alert" (click)="clickedAlert()">X</a>
-                <h4 style="text-align: center">{{alertMassege}}</h4>
+                        <!-- <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.businessEntity.shortName' | translate}}" name="instShortName"
+                            #instShortNameControl="ngModel" [(ngModel)]="institute.instShortName" /> -->
+                            <ngx-select-dropdown #instShortName (change)="changeInstituteShortValue($event)" [multiple]="false" [(value)]="selectedInstituteShortValue"
+                            [config]="InstShortNameconfig" [options]="instituteListLocal"></ngx-select-dropdown>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="instRegistrationCode">{{'adminConfigarationPage.businessEntity.registrationNumber' |
+                            translate}}</label>
+                        <!-- <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.businessEntity.registrationNumber' | translate}}"
+                            name="instRegistrationCode" #instRegistrationCodeControl="ngModel" [(ngModel)]="institute.instRegistrationCode"
+                        /> -->
+
+                        <ngx-select-dropdown #instRegistrationCode (change)="changeInstituteRegValue($event)" [multiple]="false" [(value)]="selectedInstituteRegValue"
+                            [config]="InstRegNameconfig" [options]="instituteListLocal"></ngx-select-dropdown>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="branch">{{'adminConfigarationPage.educationalInstitutesPage.branch' | translate}}</label>
+                        <!-- <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.branch' | translate}}"
+                            name="instBranch" #instBranchControl="ngModel" [(ngModel)]="institute.instBranch" /> -->
+                            <ngx-select-dropdown #instBranch (change)="changeInstituteBranchValue($event)" [multiple]="false" [(value)]="selectedInstituteBranchValue"
+                            [config]="InstbranchNameconfig" [options]="instituteListLocal"></ngx-select-dropdown>
+                    </div>
+                    <div class="col-md-12">
+                        <button class="btn btn-info btn-outline pull-right cssButtonPadding" data-toggle="modal" data-target="#addModal" type="button"
+                            (click)="addNew()">{{'adminConfigarationPage.commonFields.addNew' | translate}}</button>
+                        <button class="btn btn-warning btn-outline pull-right cssButtonPadding" type="button" (click)="searchClear()">{{'adminConfigarationPage.commonFields.clear'
+                            | translate}}</button>
+                        <button class="btn btn-primary btn-outline pull-right cssButtonPadding" type="submit">{{'adminConfigarationPage.commonFields.search'
+                            | translate}}</button>
+                    </div>
+                </form>
             </div>
-            <div *ngIf="isSearchClicked">
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="alert alert-warning fade in myAlert" *ngIf="alertMassege">
+            <a class="close" href="#" data-dismiss="alert" (click)="clickedAlert()">X</a>
+            <h4 style="text-align: center">{{alertMassege}}</h4>
+        </div>
+        <div *ngIf="isSearchClicked">
             <div *ngIf="!isListContainsData">
                 <h3 class="text-center noRecord">{{ 'adminConfigarationPage.commonFields.noRecordFound' | translate }}</h3>
             </div>
-            </div>
         </div>
-        <div class="col-md-12" *ngIf="isListContainsData">
+    </div>
+    <div class="col-md-12" *ngIf="isListContainsData">
         <div class="table-responsive">
-        <table class="table table-bordered myTable table-condensed table-striped">
-            <thead>
-            <tr class="text-center">
-                <th>{{'adminConfigarationPage.commonFields.index' | translate}}</th>
-                <th [class.active]="key === 'instName'" (click)=" sort('instName')">{{'adminConfigarationPage.educationalInstitutesPage.instituteName'
-                    | translate}} <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span></th>
-                <th [class.active]="key === 'instShortName'" (click)=" sort('instShortName')">{{'adminConfigarationPage.educationalInstitutesPage.shortName'
-                    | translate}} <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span></th>
-                <th [class.active]="key === 'instRegistrationCode'" (click)=" sort('instRegistrationCode')">{{'adminConfigarationPage.educationalInstitutesPage.registrationNumber'
-                    | translate}} <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span></th>
-                <th [class.active]="key === 'instBranch'" (click)=" sort('instBranch')">{{'adminConfigarationPage.educationalInstitutesPage.branch'
-                    | translate}} <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span></th>
-                <th>{{ 'adminConfigarationPage.commonFields.edit' | translate }}</th>
-                <th>{{ 'adminConfigarationPage.commonFields.delete' | translate }}</th>
-        
-            </tr>
-        </thead>
-            <tbody>
-                <tr *ngFor="let item of instituteList | orderBy: key : reverse : caseInsensitive : comparator |  paginate: { itemsPerPage: pagenumber, currentPage: p };let i=index">
-                    <td>{{((p-1)*itemsPerPage2)+i+1}}</td>
-                    <td>{{item.instName}}</td>
-                    <td>{{item.instShortName}}</td>
-                    <td>{{item.instRegistrationCode}}</td>
-                    <td>{{item.instBranch}}</td>
-                    <td>
-                        <button class="btn btn-warning buttonStyle" data-toggle="modal" data-target="#addModal" (click)="selectedUser(item)">
-                            <i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size:15px"></i>
-                        </button>
-                    </td>
-                    <td>
-                        <button class="btn btn-danger buttonStyle" data-toggle="modal" data-target="#deleteModal" (click)="selectedUser(item)">
-                            <i class="fa fa-trash-o" aria-hidden="true" style="font-size:15px"></i>
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+            <table class="table table-bordered myTable table-condensed table-striped">
+                <thead>
+                    <tr class="text-center">
+                        <th>{{'adminConfigarationPage.commonFields.index' | translate}}</th>
+                        <th [class.active]="key === 'instName'" (click)=" sort('instName')">{{'adminConfigarationPage.educationalInstitutesPage.instituteName'
+                            | translate}} <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span></th>
+                        <th [class.active]="key === 'instShortName'" (click)=" sort('instShortName')">{{'adminConfigarationPage.educationalInstitutesPage.shortName'
+                            | translate}} <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span></th>
+                        <th [class.active]="key === 'instRegistrationCode'" (click)=" sort('instRegistrationCode')">{{'adminConfigarationPage.educationalInstitutesPage.registrationNumber'
+                            | translate}} <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span></th>
+                        <th [class.active]="key === 'instBranch'" (click)=" sort('instBranch')">{{'adminConfigarationPage.educationalInstitutesPage.branch'
+                            | translate}} <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span></th>
+                        <th>{{ 'adminConfigarationPage.commonFields.edit' | translate }}</th>
+                        <th>{{ 'adminConfigarationPage.commonFields.delete' | translate }}</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of instituteList | orderBy: key : reverse : caseInsensitive : comparator |  paginate: { itemsPerPage: pagenumber, currentPage: p };let i=index">
+                        <td>{{((p-1)*itemsPerPage2)+i+1}}</td>
+                        <td>{{item.instName}}</td>
+                        <td>{{item.instShortName}}</td>
+                        <td>{{item.instRegistrationCode}}</td>
+                        <td>{{item.instBranch}}</td>
+                        <td>
+                            <button class="btn btn-warning buttonStyle" data-toggle="modal" data-target="#addModal" (click)="selectedUser(item)">
+                                <i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size:15px"></i>
+                            </button>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger buttonStyle" data-toggle="modal" data-target="#deleteModal" (click)="selectedUser(item)">
+                                <i class="fa fa-trash-o" aria-hidden="true" style="font-size:15px"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
         <div class="form-group">
             <div class="col-md-4">
@@ -108,47 +118,48 @@
                 <pagination-controls (pageChange)="customPageChange($event)"></pagination-controls>
             </div>
             <div class="clearfix"></div>
-            </div>
-
         </div>
-    <!-- </div> -->
+
+    </div>
+
     <!-- Add Modal-->
     <div class="modal fade" id="addModal" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                
-                    <div class="modal-header">
-                        <button class="close" type="button" data-dismiss="modal">X</button>
-                        <h4 class="modal-title">{{'adminConfigarationPage.commonFields.addNew' | translate}}</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="container">
-                            <div class="form-group">
-                               <h4><label for="Name">{{'adminConfigarationPage.commonFields.instituteDetails'
-                                    | translate}}</label></h4>
-                            </div>
-                            <form class="form-horizontal" #educationalInstituteForm="ngForm" (ngSubmit)="saveInstitute(educationalInstituteForm)">
+
+                <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal">X</button>
+                    <h4 class="modal-title">{{'adminConfigarationPage.commonFields.addNew' | translate}}</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="form-group">
+                            <h4><label for="Name">{{'adminConfigarationPage.commonFields.instituteDetails' | translate}}</label></h4>
+                        </div>
+                        <form class="form-horizontal" #educationalInstituteForm="ngForm" (ngSubmit)="saveInstitute(educationalInstituteForm)">
                             <div class="form-group">
                                 <div class="col-md-3">
-                                        <label for="instituteName">{{'adminConfigarationPage.educationalInstitutesPage.instituteName' | translate}} <span class="reqMark">*</span></label>
+                                    <label for="instituteName">{{'adminConfigarationPage.educationalInstitutesPage.instituteName'
+                                        | translate}} <span class="reqMark">*</span></label>
                                     <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.instituteName' | translate}}"
-                                        name="instName" #instNameControl="ngModel" [(ngModel)]="institute.instName"
-                                        required />
-                                    <div class="validation-error" *ngIf="instNameControl.invalid && instNameControl.touched">{{'adminConfigarationPage.commonFields.nameFieldRequired'
-                                        | translate}}</div>
+                                        name="instName" #instNameControl="ngModel" [(ngModel)]="institute.instName" required
+                                    />
+                                    <!-- <div class="validation-error" *ngIf="instNameControl.invalid && instNameControl.touched">{{'adminConfigarationPage.commonFields.nameFieldRequired'
+                                        | translate}}</div> -->
 
                                 </div>
                                 <div class="col-md-3">
-                                        <label for="shortName">{{'adminConfigarationPage.businessEntity.shortName' | translate}} <span class="reqMark">*</span></label>
-                                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.businessEntity.shortName' | translate}}"
-                                        name="instShortName" #instShortNameControl="ngModel" [(ngModel)]="institute.instShortName"
-                                        required />
+                                    <label for="shortName">{{'adminConfigarationPage.businessEntity.shortName' | translate}}
+                                        <span class="reqMark">*</span></label>
+                                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.businessEntity.shortName' | translate}}" name="instShortName"
+                                        #instShortNameControl="ngModel" [(ngModel)]="institute.instShortName" required />
                                     <div class="validation-error" *ngIf="instShortNameControl.invalid && instShortNameControl.touched">{{'adminConfigarationPage.commonFields.shortNameRequired'
                                         | translate}}</div>
 
                                 </div>
                                 <div class="col-md-3">
-                                        <label for="registrationNumber">{{'adminConfigarationPage.businessEntity.registrationNumber' | translate}} <span class="reqMark">*</span></label>
+                                    <label for="registrationNumber">{{'adminConfigarationPage.businessEntity.registrationNumber'
+                                        | translate}} <span class="reqMark">*</span></label>
                                     <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.businessEntity.registrationNumber' | translate}}"
                                         name="instRegistrationCode" #instRegistrationCodeControl="ngModel" [(ngModel)]="institute.instRegistrationCode"
                                         required />
@@ -156,334 +167,341 @@
                                         | translate}}</div>
                                 </div>
                                 <div class="col-md-3">
-                                        <label for="branch">{{'adminConfigarationPage.educationalInstitutesPage.branch' | translate}} <span class="reqMark">*</span></label>
+                                    <label for="branch">{{'adminConfigarationPage.educationalInstitutesPage.branch' | translate}}
+                                        <span class="reqMark">*</span></label>
                                     <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.branch' | translate}}"
-                                        name="instBranch" #instBranchControl="ngModel" [(ngModel)]="institute.instBranch"
-                                        required />
+                                        name="instBranch" #instBranchControl="ngModel" [(ngModel)]="institute.instBranch" required
+                                    />
                                     <div class="validation-error" *ngIf="instBranchControl.invalid && instBranchControl.touched">{{'adminConfigarationPage.commonFields.branchRequired'
                                         | translate}}</div>
                                 </div>
-                                
-                            </div>
-                            </form>
-                            <div class="wizard">
-                                <div class="wizard-inner">
-                                    <div class="connecting-line"></div>
-                                    <ul class="nav nav-tabs" role="tablist">
 
-                                            <li id="test1" role="presentation" class="active" >
-                                                    <a class="disableTab" href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="Contact Details">
-                                                        <span class="round-tab">
-                                                            <i class="glyphicon glyphicon-phone-alt"></i>
-                                                        </span>
-                                                    </a>
-                                                </li>
-        
-                                                <li id="test2" role="presentation">
-                                                    <a class="disableTab" href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Bank Details">
-                                                        <span class="round-tab">
-                                                            <i class="glyphicon glyphicon-piggy-bank"></i>
-                                                        </span>
-                                                    </a>
-                                                </li>
-                                                <li id="test3" role="presentation">
-                                                    <a class="disableTab" href="#step3" data-toggle="tab" aria-controls="step3" role="tab" title="Course offered">
-                                                        <span class="round-tab">
-                                                            <i class="glyphicon glyphicon-education"></i>
-                                                        </span>
-                                                    </a>
-                                                </li>
-        
-                                                <li id="test4" role="presentation" (click)="glyphiback('fourth')">
-                                                    <a class="disableTab" href="#complete" data-toggle="tab" aria-controls="complete" role="tab"
-                                                        title="Upload photo">
-                                                        <span class="round-tab">
-                                                            <i class="glyphicon glyphicon-picture"></i>
-                                                        </span>
-                                                    </a>
-                                                </li>
-                                    </ul>
+                            </div>
+                        </form>
+                        <div class="wizard">
+                            <div class="wizard-inner">
+                                <div class="connecting-line"></div>
+                                <ul class="nav nav-tabs" role="tablist">
+
+                                    <li id="test1" role="presentation" class="active">
+                                        <a class="disableTab" href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="Contact Details">
+                                            <span class="round-tab">
+                                                <i class="glyphicon glyphicon-phone-alt"></i>
+                                            </span>
+                                        </a>
+                                    </li>
+
+                                    <li id="test2" role="presentation">
+                                        <a class="disableTab" href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Bank Details">
+                                            <span class="round-tab">
+                                                <i class="glyphicon glyphicon-piggy-bank"></i>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li id="test3" role="presentation">
+                                        <a class="disableTab" href="#step3" data-toggle="tab" aria-controls="step3" role="tab" title="Course offered">
+                                            <span class="round-tab">
+                                                <i class="glyphicon glyphicon-education"></i>
+                                            </span>
+                                        </a>
+                                    </li>
+
+                                    <li id="test4" role="presentation" (click)="glyphiback('fourth')">
+                                        <a class="disableTab" href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Upload photo">
+                                            <span class="round-tab">
+                                                <i class="glyphicon glyphicon-picture"></i>
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- <form role="form"> -->
+
+                            <div class="tab-content">
+                                <div class="tab-pane active" role="tabpanel" id="step1">
+                                    <h4><label for="contactDetails"></label>{{ 'adminConfigarationPage.commonFields.contactDetails'
+                                        | translate }}</h4>
+                                    <form #contactDetails="ngForm" novalidate>
+                                        <div class="form-group">
+                                            <div class="col-md-3">
+                                                <label for="contactPerson">{{'adminConfigarationPage.educationalInstitutesPage.contactPerson'
+                                                    | translate}} <span class="reqMark">*</span></label>
+                                                <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.contactPerson' | translate}}"
+                                                    name="instContactPerson" #instContactPersonControl="ngModel" [(ngModel)]="institute.instContactPerson"
+                                                    required />
+                                                <div class="validation-error" *ngIf="instContactPersonControl.invalid && instContactPersonControl.touched">{{'adminConfigarationPage.commonFields.contactPersonRequired'
+                                                    | translate}}</div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="designation">{{'adminConfigarationPage.educationalInstitutesPage.designation'
+                                                    | translate}} <span class="reqMark">*</span></label>
+                                                <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.designation' | translate}}"
+                                                    name="instDesignation" #instDesignationControl="ngModel" [(ngModel)]="institute.instDesignation"
+                                                    required />
+                                                <div class="validation-error" *ngIf="instDesignationControl.invalid && instDesignationControl.touched">{{'adminConfigarationPage.commonFields.DesignationRequired'
+                                                    | translate}}</div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="address1">{{'adminConfigarationPage.educationalInstitutesPage.address1'
+                                                    | translate}} <span class="reqMark">*</span></label>
+                                                <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.address1' | translate}}"
+                                                    name="instAddressone" #instAddressoneControl="ngModel" [(ngModel)]="institute.instAddressone"
+                                                    required />
+                                                <div class="validation-error" *ngIf="instAddressoneControl.invalid && instAddressoneControl.touched">{{'adminConfigarationPage.commonFields.Address1Required'
+                                                    | translate}}</div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="address2">{{'adminConfigarationPage.educationalInstitutesPage.address2'
+                                                    | translate}} <span class="reqMark">*</span></label>
+                                                <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.address2' | translate}}"
+                                                    name="instAddresstwo" #instAddresstwoControl="ngModel" [(ngModel)]="institute.instAddresstwo"
+                                                    required />
+                                                <div class="validation-error" *ngIf="instAddresstwoControl.invalid && instAddresstwoControl.touched">{{'adminConfigarationPage.commonFields.Address2Required'
+                                                    | translate}}</div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-3">
+                                                <label for="country">{{'adminConfigarationPage.educationalInstitutesPage.country'
+                                                    | translate}} <span class="reqMark">*</span></label>
+                                                <select class="form-control" name="instCountryname" #instCountrynameControl="ngModel" [(ngModel)]="institute.instCountryname"
+                                                    (change)="onSelect($event.target.value)" required>
+                                                    <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.educationalInstitutesPage.country'
+                                                        | translate}}</option>
+                                                    <option *ngFor="let country of countries" value={{country.id}}>
+                                                        {{country.name}}
+                                                    </option>
+                                                </select>
+                                                <div class="validation-error" *ngIf="instCountrynameControl.invalid && instCountrynameControl.touched">{{'adminConfigarationPage.commonFields.countryRequired'
+                                                    | translate}}</div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="state">{{'adminConfigarationPage.educationalInstitutesPage.state'
+                                                    | translate}} <span class="reqMark">*</span></label>
+                                                <select class="form-control" name="institute" #instituteControl="ngModel" [(ngModel)]="institute.instState" (change)="onStateSelect($event.target.value)"
+                                                    required>
+                                                    <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.educationalInstitutesPage.state'
+                                                        | translate}}
+                                                    </option>
+                                                    <option *ngFor="let state of states" value={{state.id}}>
+                                                        {{state.name}}
+                                                    </option>
+                                                </select>
+                                                <div class="validation-error" *ngIf="instituteControl.invalid && instituteControl.touched">{{'adminConfigarationPage.commonFields.stateRequired'
+                                                    | translate}}</div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="city">{{'adminConfigarationPage.educationalInstitutesPage.city'
+                                                    | translate}} <span class="reqMark">*</span></label>
+                                                <select class="form-control" name="instCity" #instCityControl="ngModel" [(ngModel)]="institute.instCity" required>
+                                                    <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.educationalInstitutesPage.city'
+                                                        | translate}}</option>
+                                                    <option *ngFor="let city of cities" value={{city.id}}>
+                                                        {{city.name}}
+                                                    </option>
+                                                </select>
+                                                <div class="validation-error" *ngIf="instCityControl.invalid && instCityControl.touched">{{'adminConfigarationPage.commonFields.cityRequired'
+                                                    | translate}}</div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="pinCode">{{'adminConfigarationPage.educationalInstitutesPage.pinCode'
+                                                    | translate}} <span class="reqMark">*</span></label>
+                                                <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.pinCode' | translate}}"
+                                                    name="instPincode" #instPincodeControl="ngModel" [(ngModel)]="institute.instPincode"
+                                                    required />
+                                                <div class="validation-error" *ngIf="instPincodeControl.invalid && instPincodeControl.touched">{{'adminConfigarationPage.commonFields.PincodeRequired'
+                                                    | translate}}</div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-3">
+                                                <label for="email">{{'adminConfigarationPage.educationalInstitutesPage.email'
+                                                    | translate}} <span class="reqMark">*</span></label>
+                                                <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.email' | translate}}"
+                                                    name="instEmail" #instEmailControl="ngModel" [(ngModel)]="institute.instEmail"
+                                                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$" required />
+                                                <div class="validation-error" *ngIf="instEmailControl.invalid && instEmailControl.touched">
+                                                    <div class="validation-error" *ngIf="instEmailControl.errors.required ">
+                                                        {{'adminConfigarationPage.commonFields.emailRequired' | translate}}
+                                                    </div>
+                                                    <div class="validation-error" *ngIf="instEmailControl.errors.pattern">
+                                                        {{'adminConfigarationPage.commonFields.invalidEmailMessage' | translate}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="mobile">{{'adminConfigarationPage.educationalInstitutesPage.mobile'
+                                                    | translate}} <span class="reqMark">*</span></label>
+                                                <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.mobile' | translate}}"
+                                                    name="instMobile" #instMobileControl="ngModel" [(ngModel)]="institute.instMobile"
+                                                    pattern="\d*" minlength=10 maxlength=15 required />
+                                                <div class="validation-error" *ngIf="instMobileControl.invalid && instMobileControl.touched">
+                                                    <div class="validation-error" *ngIf="instMobileControl.errors.required ">
+                                                        {{'adminConfigarationPage.commonFields.MobileRequired' | translate}}
+                                                    </div>
+                                                    <div class="validation-error" *ngIf="instMobileControl.errors.minlength">
+                                                        {{'adminConfigarationPage.commonFields.mobileLength' | translate}}
+                                                    </div>
+                                                    <div class="validation-error" *ngIf="instMobileControl.errors.pattern">
+                                                        {{'adminConfigarationPage.commonFields.invalidMobileMessage' | translate}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="phone">{{'adminConfigarationPage.educationalInstitutesPage.phone'
+                                                    | translate}}</label>
+                                                <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.phone' | translate}}"
+                                                    name="instPhone" #instPhone="ngModel" [(ngModel)]="institute.instPhone" />
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="fax">{{'adminConfigarationPage.educationalInstitutesPage.fax'
+                                                    | translate}}</label>
+                                                <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.fax' | translate}}"
+                                                    name="instFax" #instFax="ngModel" [(ngModel)]="institute.instFax" />
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="col-lg-12 text-right">
+                                            <button class="btn btn-primary btnNext" type="button" data-toggle="pill" href="#step2" (click)="activeChange('first')">Continue</button>
+                                        </div>
+                                    </form>
                                 </div>
 
-                                <!-- <form role="form"> -->
-
-                                    <div class="tab-content">
-                                        <div class="tab-pane active" role="tabpanel" id="step1">
-                                            <h4><label for="contactDetails"></label>{{ 'adminConfigarationPage.commonFields.contactDetails' | translate }}</h4>
-                                            <form #contactDetails="ngForm" novalidate>
-                                                <div class="form-group">
-                                                    <div class="col-md-3">
-                                                            <label for="contactPerson">{{'adminConfigarationPage.educationalInstitutesPage.contactPerson' | translate}} <span class="reqMark">*</span></label>
-                                                        <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.contactPerson' | translate}}"
-                                                            name="instContactPerson" #instContactPersonControl="ngModel"
-                                                            [(ngModel)]="institute.instContactPerson" required />
-                                                        <div class="validation-error" *ngIf="instContactPersonControl.invalid && instContactPersonControl.touched">{{'adminConfigarationPage.commonFields.contactPersonRequired'
-                                                            | translate}}</div>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                            <label for="designation">{{'adminConfigarationPage.educationalInstitutesPage.designation' | translate}} <span class="reqMark">*</span></label>
-                                                        <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.designation' | translate}}"
-                                                            name="instDesignation" #instDesignationControl="ngModel"
-                                                            [(ngModel)]="institute.instDesignation" required />
-                                                        <div class="validation-error" *ngIf="instDesignationControl.invalid && instDesignationControl.touched">{{'adminConfigarationPage.commonFields.DesignationRequired'
-                                                            | translate}}</div>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                            <label for="address1">{{'adminConfigarationPage.educationalInstitutesPage.address1' | translate}} <span class="reqMark">*</span></label>
-                                                        <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.address1' | translate}}"
-                                                            name="instAddressone" #instAddressoneControl="ngModel"
-                                                            [(ngModel)]="institute.instAddressone" required />
-                                                        <div class="validation-error" *ngIf="instAddressoneControl.invalid && instAddressoneControl.touched">{{'adminConfigarationPage.commonFields.Address1Required'
-                                                            | translate}}</div>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                            <label for="address2">{{'adminConfigarationPage.educationalInstitutesPage.address2' | translate}} <span class="reqMark">*</span></label>
-                                                        <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.address2' | translate}}"
-                                                            name="instAddresstwo" #instAddresstwoControl="ngModel"
-                                                            [(ngModel)]="institute.instAddresstwo" required />
-                                                        <div class="validation-error" *ngIf="instAddresstwoControl.invalid && instAddresstwoControl.touched">{{'adminConfigarationPage.commonFields.Address2Required'
-                                                            | translate}}</div>
-                                                    </div>
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="col-md-3">
-                                                            <label for="country">{{'adminConfigarationPage.educationalInstitutesPage.country' | translate}} <span class="reqMark">*</span></label>
-                                                        <select class="form-control" name="instCountryname"
-                                                            #instCountrynameControl="ngModel" [(ngModel)]="institute.instCountryname"
-                                                            (change)="onSelect($event.target.value)" required>
-                                                            <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.educationalInstitutesPage.country'
-                                                                | translate}}</option>
-                                                            <option *ngFor="let country of countries" value={{country.id}}>
-                                                                {{country.name}}
-                                                            </option>
-                                                        </select>
-                                                        <div class="validation-error" *ngIf="instCountrynameControl.invalid && instCountrynameControl.touched">{{'adminConfigarationPage.commonFields.countryRequired'
-                                                            | translate}}</div>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                            <label for="state">{{'adminConfigarationPage.educationalInstitutesPage.state' | translate}} <span class="reqMark">*</span></label>
-                                                        <select class="form-control" name="institute" #instituteControl="ngModel"
-                                                            [(ngModel)]="institute.instState" (change)="onStateSelect($event.target.value)"
-                                                            required>
-                                                            <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.educationalInstitutesPage.state'
-                                                                |
-                                                                translate}}
-                                                            </option>
-                                                            <option *ngFor="let state of states" value={{state.id}}>
-                                                                {{state.name}}
-                                                            </option>
-                                                        </select>
-                                                        <div class="validation-error" *ngIf="instituteControl.invalid && instituteControl.touched">{{'adminConfigarationPage.commonFields.stateRequired'
-                                                            | translate}}</div>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                            <label for="city">{{'adminConfigarationPage.educationalInstitutesPage.city' | translate}} <span class="reqMark">*</span></label>
-                                                        <select class="form-control" name="instCity" #instCityControl="ngModel"
-                                                            [(ngModel)]="institute.instCity" required>
-                                                            <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.educationalInstitutesPage.city'
-                                                                | translate}}</option>
-                                                            <option *ngFor="let city of cities" value={{city.id}}>
-                                                                {{city.name}}
-                                                            </option>
-                                                        </select>
-                                                        <div class="validation-error" *ngIf="instCityControl.invalid && instCityControl.touched">{{'adminConfigarationPage.commonFields.cityRequired'
-                                                            | translate}}</div>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                            <label for="pinCode">{{'adminConfigarationPage.educationalInstitutesPage.pinCode' | translate}} <span class="reqMark">*</span></label>
-                                                        <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.pinCode' | translate}}"
-                                                            name="instPincode" #instPincodeControl="ngModel"
-                                                            [(ngModel)]="institute.instPincode" required />
-                                                        <div class="validation-error" *ngIf="instPincodeControl.invalid && instPincodeControl.touched">{{'adminConfigarationPage.commonFields.PincodeRequired'
-                                                            | translate}}</div>
-                                                    </div>
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="col-md-3">
-                                                            <label for="email">{{'adminConfigarationPage.educationalInstitutesPage.email' | translate}} <span class="reqMark">*</span></label>
-                                                        <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.email' | translate}}"
-                                                            name="instEmail" #instEmailControl="ngModel" [(ngModel)]="institute.instEmail"
-                                                            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$" required />
-                                                        <div class="validation-error" *ngIf="instEmailControl.invalid && instEmailControl.touched">
-                                                            <div class="validation-error" *ngIf="instEmailControl.errors.required ">
-                                                                {{'adminConfigarationPage.commonFields.emailRequired' |
-                                                                translate}}
-                                                            </div>
-                                                            <div class="validation-error" *ngIf="instEmailControl.errors.pattern">
-                                                                {{'adminConfigarationPage.commonFields.invalidEmailMessage'
-                                                                | translate}}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                            <label for="mobile">{{'adminConfigarationPage.educationalInstitutesPage.mobile' | translate}} <span class="reqMark">*</span></label>
-                                                        <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.mobile' | translate}}"
-                                                            name="instMobile" #instMobileControl="ngModel" [(ngModel)]="institute.instMobile"
-                                                            pattern="\d*" minlength=10 maxlength=15 required />
-                                                        <div class="validation-error" *ngIf="instMobileControl.invalid && instMobileControl.touched">
-                                                            <div class="validation-error" *ngIf="instMobileControl.errors.required ">
-                                                                {{'adminConfigarationPage.commonFields.MobileRequired'
-                                                                | translate}}
-                                                            </div>
-                                                            <div class="validation-error" *ngIf="instMobileControl.errors.minlength">
-                                                                {{'adminConfigarationPage.commonFields.mobileLength' |
-                                                                translate}}
-                                                            </div>
-                                                            <div class="validation-error" *ngIf="instMobileControl.errors.pattern">
-                                                                {{'adminConfigarationPage.commonFields.invalidMobileMessage'
-                                                                | translate}}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                            <label for="phone">{{'adminConfigarationPage.educationalInstitutesPage.phone' | translate}}</label>
-                                                        <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.phone' | translate}}"
-                                                            name="instPhone" #instPhone="ngModel" [(ngModel)]="institute.instPhone" />
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                            <label for="fax">{{'adminConfigarationPage.educationalInstitutesPage.fax' | translate}}</label>
-                                                        <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.fax' | translate}}"
-                                                            name="instFax" #instFax="ngModel" [(ngModel)]="institute.instFax" />
-                                                    </div>
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                                <div class="col-lg-12 text-right">
-                                                        <button class="btn btn-primary btnNext" type="button"  
-                                                            data-toggle="pill" href="#step2" (click)="activeChange('first')">Continue</button>                                                          
-                                                    </div>
-                                            </form>
-                                        </div>
-
-                                        <div class="tab-pane" role="tabpanel" id="step2">
-                                            <h3>{{ 'adminConfigarationPage.commonFields.bankDetails' | translate }}</h3>
-                                            <form #bankDetails="ngForm">
-                                                <div class="form-group">
-                                                    <div class="col-md-3">
-                                                            <label for="accountHolderName">{{'adminConfigarationPage.educationalInstitutesPage.accountHolderName' | translate}} <span class="reqMark">*</span></label>
-                                                        <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.accountHolderName' | translate}}"
-                                                            name="instAccountHolderName" #instAccountHolderNameControl="ngModel"
-                                                            [(ngModel)]="institute.instAccountHolderName" required />
-                                                        <div class="validation-error" *ngIf="instAccountHolderNameControl.invalid && instAccountHolderNameControl.touched">{{'adminConfigarationPage.commonFields.accountHolderName'
-                                                            | translate}}</div>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                            <label for="accountNumber">{{'adminConfigarationPage.educationalInstitutesPage.accountNumber' | translate}} <span class="reqMark">*</span></label>
-                                                        <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.accountNumber' | translate}}"
-                                                            name="instAccountNumber" #instAccountNumberControl="ngModel"  pattern="\d*"
-                                                            [(ngModel)]="institute.instAccountNumber" required />
-                                                        <div class="validation-error" *ngIf="instAccountNumberControl.invalid && instAccountNumberControl.touched">{{'adminConfigarationPage.commonFields.accountNumber'
-                                                            | translate}}
-                                                            <div class="validation-error" *ngIf="instAccountNumberControl.errors.pattern">
-                                                                {{'adminConfigarationPage.commonFields.invalidAccNumberMessage'
-                                                                | translate}}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                            <label for="ifscCode">{{'adminConfigarationPage.educationalInstitutesPage.ifscCode' | translate}} <span class="reqMark">*</span></label>
-                                                        <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.ifscCode' | translate}}"
-                                                            name="instIfscCode" #instIfscCodeControl="ngModel"
-                                                            [(ngModel)]="institute.instIfscCode" required />
-                                                        <div class="validation-error" *ngIf="instIfscCodeControl.invalid && instIfscCodeControl.touched">{{'adminConfigarationPage.commonFields.ifscCode'
-                                                            | translate}}</div>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                            <label for="accountType">{{'adminConfigarationPage.educationalInstitutesPage.accountType' | translate}} <span class="reqMark">*</span></label>
-                                                        <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.accountType' | translate}}"
-                                                            name="instAccountType" #instAccountTypeControl="ngModel"
-                                                            [(ngModel)]="institute.instAccountType" required />
-                                                        <div class="validation-error" *ngIf="instAccountTypeControl.invalid && instAccountTypeControl.touched">{{'adminConfigarationPage.commonFields.accountType'
-                                                            | translate}}</div>
-                                                    </div>
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="col-md-3">
-                                                            <label for="bankName">{{'adminConfigarationPage.educationalInstitutesPage.bankName' | translate}} <span class="reqMark">*</span></label>
-                                                        <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.bankName' | translate}}"
-                                                            name="instBankName" #instBankNameControl="ngModel"
-                                                            [(ngModel)]="institute.instBankName" required />
-                                                        <div class="validation-error" *ngIf="instBankNameControl.invalid && instBankNameControl.touched">{{'adminConfigarationPage.commonFields.bankName'
-                                                            | translate}}</div>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                            <label for="branch">{{'adminConfigarationPage.educationalInstitutesPage.branch' | translate}} <span class="reqMark">*</span></label>
-                                                        <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.branch' | translate}}"
-                                                            name="instBankBranch" #instBankBranchControl="ngModel"
-                                                            [(ngModel)]="institute.instBankBranch" required />
-                                                        <div class="validation-error" *ngIf="instBankBranchControl.invalid && instBankBranchControl.touched">{{'adminConfigarationPage.commonFields.branchRequired'
-                                                            | translate}}</div>
-                                                    </div>
-                                                    <div class="clearfix"></div>
-
-                                                </div>
-                                                 <div class="col-lg-12 text-right">
-                                                    <button type="button" class="btn btn-default btnPrevious preConButton" data-toggle="pill"
-                                                        href="#step1" (click)="activeChangePrevious('second')">Previous</button>
-                                                    <button type="button" class="btn btn-primary btnNext" 
-                                                        data-toggle="pill" href="#step3"  (click)="activeChange('second')">Continue</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="tab-pane" role="tabpanel" id="step3">
-                                                <form #courseoffered="ngForm">
-                                                <div class="col-sm-12">
-                                                    <div class="col-sm-6">
-                                                        <h3>Course Category <span class="reqMark">*</span></h3>
-                                                      
-                                                            <div class="boxes" *ngFor="let item of courseCategoryList">
-                                                                <input  type="checkbox" id="{{item.categoryId}}" name="courseCategoryList[]" value={{item.categoryId}} (click)="courseCategoryCheckboxSelect(item.categoryId)" required />
-                                                                <label for="{{item.categoryId}}">{{item.categoryName }}</label>
-                                                            </div>
-                                                        
-                                                    </div>
-                                                    
-                                                    <div class="col-sm-6">
-                                                        <h3>Courses <span class="reqMark">*</span></h3>
-                                                      
-                                                            <div class="boxes" *ngFor="let item of courseListLocal">
-                                                                <input type="checkbox" id="{{item.courseId}}" name="courses[]" value={{item.courseId}} (click)="courseCheckboxSelect(item.courseId)" required/>
-                                                                <label for="{{item.courseId}}">{{item.courseName}}</label>
-                                                            </div>
-                                                        </div>
-                                                   
-                                                </div>
-                                                <div class="col-lg-12 text-right">
-                                                        <button type="button" class="btn btn-default btnPrevious preConButton" data-toggle="pill" href="#step2" (click)="activeChangePrevious('third')">Previous</button>
-                                                        <button type="button" class="btn btn-primary btnNext" data-toggle="pill" href="#complete" (click)="activeChange('third')">Continue</button>
-                                                    </div>
-                                            </form>
+                                <div class="tab-pane" role="tabpanel" id="step2">
+                                    <h3>{{ 'adminConfigarationPage.commonFields.bankDetails' | translate }}</h3>
+                                    <form #bankDetails="ngForm">
+                                        <div class="form-group">
+                                            <div class="col-md-3">
+                                                <label for="accountHolderName">{{'adminConfigarationPage.educationalInstitutesPage.accountHolderName'
+                                                    | translate}} <span class="reqMark">*</span></label>
+                                                <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.accountHolderName' | translate}}"
+                                                    name="instAccountHolderName" #instAccountHolderNameControl="ngModel" [(ngModel)]="institute.instAccountHolderName"
+                                                    required />
+                                                <div class="validation-error" *ngIf="instAccountHolderNameControl.invalid && instAccountHolderNameControl.touched">{{'adminConfigarationPage.commonFields.accountHolderName'
+                                                    | translate}}</div>
                                             </div>
-                                        <div class="tab-pane" role="tabpanel" id="complete">
-                                            <h3>{{'adminConfigarationPage.educationalInstitutesPage.uploads' |
-                                                translate}}</h3>
-                                            <form #upload="ngForm">
-                                                <img *ngIf="url" [src]="url" height="200">
-                                                <input type="file" #fileInput required (change)="addToQueue($event.target.files)" />
-                                                <div class="col-lg-12 text-right">
-                                                    <button type="button" class="btn btn-default prev-step" data-toggle="pill"
-                                                        href="#step3">Previous</button>
-
+                                            <div class="col-md-3">
+                                                <label for="accountNumber">{{'adminConfigarationPage.educationalInstitutesPage.accountNumber'
+                                                    | translate}} <span class="reqMark">*</span></label>
+                                                <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.accountNumber' | translate}}"
+                                                    name="instAccountNumber" #instAccountNumberControl="ngModel" pattern="\d*"
+                                                    [(ngModel)]="institute.instAccountNumber" required />
+                                                <div class="validation-error" *ngIf="instAccountNumberControl.invalid && instAccountNumberControl.touched">{{'adminConfigarationPage.commonFields.accountNumber'
+                                                    | translate}}
+                                                    <div class="validation-error" *ngIf="instAccountNumberControl.errors.pattern">
+                                                        {{'adminConfigarationPage.commonFields.invalidAccNumberMessage' | translate}}
+                                                    </div>
                                                 </div>
-                                            </form>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="ifscCode">{{'adminConfigarationPage.educationalInstitutesPage.ifscCode'
+                                                    | translate}} <span class="reqMark">*</span></label>
+                                                <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.ifscCode' | translate}}"
+                                                    name="instIfscCode" #instIfscCodeControl="ngModel" [(ngModel)]="institute.instIfscCode"
+                                                    required />
+                                                <div class="validation-error" *ngIf="instIfscCodeControl.invalid && instIfscCodeControl.touched">{{'adminConfigarationPage.commonFields.ifscCode'
+                                                    | translate}}</div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="accountType">{{'adminConfigarationPage.educationalInstitutesPage.accountType'
+                                                    | translate}} <span class="reqMark">*</span></label>
+                                                <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.accountType' | translate}}"
+                                                    name="instAccountType" #instAccountTypeControl="ngModel" [(ngModel)]="institute.instAccountType"
+                                                    required />
+                                                <div class="validation-error" *ngIf="instAccountTypeControl.invalid && instAccountTypeControl.touched">{{'adminConfigarationPage.commonFields.accountType'
+                                                    | translate}}</div>
+                                            </div>
+                                            <div class="clearfix"></div>
                                         </div>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                <!-- </form> -->
-                            </div>
+                                        <div class="form-group">
+                                            <div class="col-md-3">
+                                                <label for="bankName">{{'adminConfigarationPage.educationalInstitutesPage.bankName'
+                                                    | translate}} <span class="reqMark">*</span></label>
+                                                <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.bankName' | translate}}"
+                                                    name="instBankName" #instBankNameControl="ngModel" [(ngModel)]="institute.instBankName"
+                                                    required />
+                                                <div class="validation-error" *ngIf="instBankNameControl.invalid && instBankNameControl.touched">{{'adminConfigarationPage.commonFields.bankName'
+                                                    | translate}}</div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="branch">{{'adminConfigarationPage.educationalInstitutesPage.branch'
+                                                    | translate}} <span class="reqMark">*</span></label>
+                                                <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.educationalInstitutesPage.branch' | translate}}"
+                                                    name="instBankBranch" #instBankBranchControl="ngModel" [(ngModel)]="institute.instBankBranch"
+                                                    required />
+                                                <div class="validation-error" *ngIf="instBankBranchControl.invalid && instBankBranchControl.touched">{{'adminConfigarationPage.commonFields.branchRequired'
+                                                    | translate}}</div>
+                                            </div>
+                                            <div class="clearfix"></div>
 
+                                        </div>
+                                        <div class="col-lg-12 text-right">
+                                            <button type="button" class="btn btn-default btnPrevious preConButton" data-toggle="pill" href="#step1" (click)="activeChangePrevious('second')">Previous</button>
+                                            <button type="button" class="btn btn-primary btnNext" data-toggle="pill" href="#step3" (click)="activeChange('second')">Continue</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="tab-pane" role="tabpanel" id="step3">
+                                    <form #courseoffered="ngForm">
+                                        <div class="col-sm-12">
+                                            <div class="col-sm-6">
+                                                <h3>Course Category <span class="reqMark">*</span></h3>
+
+                                                <div class="boxes" *ngFor="let item of courseCategoryList">
+                                                    <input type="checkbox" id="{{item.categoryId}}" name="courseCategoryList" value={{item.categoryId}} (click)="courseCategoryCheckboxSelect(item.categoryId)"
+                                                        checked={{item.isSelected}} required />
+                                                    <label for="{{item.categoryId}}">{{item.categoryName }}</label>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                <h3>Courses <span class="reqMark">*</span></h3>
+
+
+                                                <div class="boxes" *ngFor="let item of courseListLocal;let i=index">
+                                                    <input type="checkbox" id="{{i+1}}" name="courseListLocal" value={{i+1}} (click)="courseCheckboxSelect(item)" checked={{item.isSelected}}
+                                                        required/>
+                                                    <label for="{{i+1}}">{{item.courseName}}</label>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-lg-12 text-right">
+                                            <button type="button" class="btn btn-default btnPrevious preConButton" data-toggle="pill" href="#step2" (click)="activeChangePrevious('third')">Previous</button>
+                                            <button type="button" class="btn btn-primary btnNext" data-toggle="pill" href="#complete" (click)="activeChange('third')">Continue</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="tab-pane" role="tabpanel" id="complete">
+                                    <h3>{{'adminConfigarationPage.educationalInstitutesPage.uploads' | translate}}
+                                    </h3>
+                                    <form #upload="ngForm">
+                                        <img *ngIf="url" [src]="url" height="200">
+                                        <input type="file" #fileInput required (change)="addToQueue($event.target.files)" />
+                                        <div class="col-lg-12 text-right">
+                                            <button type="button" class="btn btn-default prev-step" data-toggle="pill" href="#step3">Previous</button>
+
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <!-- </form> -->
                         </div>
+
                     </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-success" type="submit" data-dismiss="modal" (click)="saveInstitute(institute)"
-                         >{{'adminConfigarationPage.commonFields.save'
-                            | translate}}</button>
-                        <button class="btn btn-default" type="button" data-dismiss="modal">{{'adminConfigarationPage.commonFields.close'
-                            | translate}}</button>
-                    </div>
-               
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success" type="submit" data-dismiss="modal" (click)="saveInstitute(institute)">{{'adminConfigarationPage.commonFields.save'
+                        | translate}}</button>
+                    <button class="btn btn-default" type="button" data-dismiss="modal">{{'adminConfigarationPage.commonFields.close'
+                        | translate}}</button>
+                </div>
+
             </div>
 
         </div>
@@ -502,10 +520,10 @@
                         <span>{{institute.instName}}</span>????</h3>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-danger" type="button" (click)="deleteInstitute(institute.institutionid)"
-                        data-dismiss="modal">{{ 'adminConfigarationPage.commonFields.yes' | translate }}</button>
-                    <button class="btn btn-primary" type="button" data-dismiss="modal">{{
-                        'adminConfigarationPage.commonFields.no' | translate }}</button>
+                    <button class="btn btn-danger" type="button" (click)="deleteInstitute(institute.institutionid)" data-dismiss="modal">{{
+                        'adminConfigarationPage.commonFields.yes' | translate }}</button>
+                    <button class="btn btn-primary" type="button" data-dismiss="modal">{{ 'adminConfigarationPage.commonFields.no'
+                        | translate }}</button>
                 </div>
             </div>
         </div>

@@ -12,29 +12,28 @@ export class SmtpDetailsService {
   constructor(private http: Http) { }
 
   saveIntialConfiguration(intialconfiguration) {
+    console.log(intialconfiguration);
     let obj = {
-      "host": intialconfiguration.host,
-      "port": intialconfiguration.port,
-      "username": intialconfiguration.username,
-      "password": intialconfiguration.password,
-      "auth": intialconfiguration.auth,
-      "connectionTimeout": intialconfiguration.connectionTimeout,
-      "timeout": intialconfiguration.timeout,
-      "writeTimeout": intialconfiguration.writeTimeout,
-      "enable": intialconfiguration.enable,
-      "required": intialconfiguration.required
+      "paramKey": "EMAIL",
+      "paramValues": [intialconfiguration.username,intialconfiguration.password]
     };
 
     let headers = new Headers({
       'Content-Type': 'application/json'
     });
     let options = { headers: headers };
-    return this.http.put(this.url + '/properties/update/' + intialconfiguration.appPropertiesId, obj, options).pipe(map(res => res.json()));
+    console.log(obj);
+    return this.http.post(this.url+'/maintenance/saveOrUpdate', obj,options).pipe(map(res => res.json()));
   }
 
   getIntialConfiguration()
   {
-     return this.http.get(this.url+'/properties/list').pipe(map(res => res.json()));
+     return this.http.get(this.url+'/maintenance/list',).pipe(map(res => res.json()));
+  }
+
+  getIntialConfiguration2()
+  {
+    return this.http.get(this.url+'/properties/list').pipe(map(res => res.json()));
   }
 
 }

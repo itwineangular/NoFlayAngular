@@ -1,4 +1,4 @@
-import { EducationalInstitute ,CourseCategory, CourseProfile } from "./educational-institute";
+import { EducationalInstitute ,CourseCategory,courseProfileVos } from "./educational-institute";
 import { CommonServicesService } from "../../../common-services.service";
 import { EducationalInstituteServicesService } from './educational-institute-services.service';
 import { FileQueueObject, FileuploaderService } from './fileuploader.service';
@@ -7,7 +7,8 @@ import { Component, ElementRef, OnInit, EventEmitter, Output, ViewChild } from '
 import { CourseCategoryService } from '../course-category/course-category.service';
 import { CourseService } from '../courses/courses.service';
 import { Course } from '../courses/courses.module';
-// import { CourseCategory } from "../course-category/course-category.module";
+import Swal from 'sweetalert2';
+import { SelectDropDownComponent } from "ngx-select-dropdown";
 import * as $ from 'jquery';
 
 @Component({
@@ -29,13 +30,20 @@ export class EducationalInstituteComponent implements OnInit {
     states = [];
     cities = [];
 
+   
+    courseCategoryListForUpdate: CourseCategory[] = [];
+
     courseCategoryList: CourseCategory[] = [];
     selectedCourseCategoryList: string[] = [];
     courseListLocalDummy: CourseCategory[] = [];
 
-    courseList : CourseProfile[] = [];
+    
 
-    courseListLocal: CourseProfile[] = [];
+    courseList : courseProfileVos[] = [];
+    courseListLocal: courseProfileVos[] = [];
+    selectedCourseListGlobal: courseProfileVos[] = [];
+    
+
     selectedCoursecourseList: string[] = [];
 
     url: any;
@@ -51,12 +59,19 @@ export class EducationalInstituteComponent implements OnInit {
 
     institute: EducationalInstitute = new EducationalInstitute();
     instituteList: EducationalInstitute[];
+    instituteListLocal: EducationalInstitute[] = [];
 
     // tslint:disable-next-line:no-output-on-prefix
     @Output() onCompleteItem = new EventEmitter();
 
     @ViewChild('fileInput') fileInput;
     queue: Observable<FileQueueObject[]>;
+
+    @ViewChild('instName') public ngSelectinstName: SelectDropDownComponent;
+    @ViewChild('instShortName') public ngSelectinstShortName: SelectDropDownComponent;
+    @ViewChild('instRegistrationCode') public ngSelectinstRegistrationCode: SelectDropDownComponent;
+    @ViewChild('instBranch') public ngSelectinstBranch: SelectDropDownComponent;
+
 
     constructor(private commonService: CommonServicesService,
         private service: EducationalInstituteServicesService,
@@ -70,7 +85,7 @@ export class EducationalInstituteComponent implements OnInit {
         this.getCities();
         this.getCourseCategory();
         this.getCourses();
-        // this.getInstitutes();
+        this.getInstitutes();
         this.isListContainsData = false;
         this.isSearchClicked=false;
 
@@ -85,6 +100,52 @@ export class EducationalInstituteComponent implements OnInit {
             $('.btnPrevious').click(function(){
             $('.nav-tabs > .active').prev('li').find('a').trigger('click');
             });
+    }
+
+    selectedInstituteValue: any;
+    config = {
+        displayKey: "instName", //if objects array passed which key to be displayed defaults to description
+        search: true,
+        limitTo: this.instituteListLocal.length
+    };
+
+    changeInstituteValue($event: any) {
+
+    }
+
+    selectedInstituteShortValue: any;
+    InstShortNameconfig = {
+        displayKey: "instShortName", 
+        search: true,
+        limitTo: this.instituteListLocal.length
+      
+    };
+
+    changeInstituteShortValue($event: any) {
+
+    }
+
+    selectedInstituteRegValue: any;
+    InstRegNameconfig = {
+        displayKey: "instRegistrationCode", 
+        search: true,
+        limitTo: this.instituteListLocal.length
+       
+    };
+
+    changeInstituteRegValue($event: any) {
+
+    }
+
+    selectedInstituteBranchValue: any;
+    InstbranchNameconfig = {
+        displayKey: "instBranch", 
+        search: true,
+        limitTo: this.instituteListLocal.length
+                                };
+
+    changeInstituteBranchValue($event: any) {
+
     }
     activeChange(value){
         if(value == "first"){
@@ -135,54 +196,85 @@ export class EducationalInstituteComponent implements OnInit {
     }
 
     searchEducationalInstitute(instituteParameters) {
-        if (typeof instituteParameters.value.instName != "undefined"
-          || typeof instituteParameters.value.instShortName != "undefined"
-          || typeof instituteParameters.value.instRegistrationCode != "undefined"
-          || typeof instituteParameters.value.instBranch != "undefined") {
-            this.isSearchClicked=true;
-            if(instituteParameters.value.instName === null
-            ||  instituteParameters.value.instShortName === null
-            ||  instituteParameters.value.instRegistrationCode === null
-            ||  instituteParameters.value.instBranch === null)
-            {
+        var educationLocal: EducationalInstitute= new EducationalInstitute();
+              this.isSearchClicked=true;
+        if (typeof this.selectedInstituteValue!== 'undefined'  && this.selectedInstituteValue.length>0) 
+         {
+           educationLocal.instName = this.selectedInstituteValue[0].instName;
+         }
 
-            } 
-            else{
-              this.service.searchEducationalInstitute(instituteParameters.value)
-            .subscribe(
-                (data) => {
-                    this.instituteList = data;
-                    if (typeof this.instituteList !== 'undefined' && this.instituteList.length > 0) {
-                        this.isListContainsData = true;
-                        console.log("list check");
-                        console.log(this.instituteList);
-                      }
-                      else {
-                        this.isListContainsData = false;
-                      }
-                    },
-                    (error) => {
-                      console.log(error);
-                      alert("Try again");
-                    }
-                  );
+         if (typeof this.selectedInstituteShortValue!== 'undefined'  && this.selectedInstituteShortValue.length>0) 
+         {
+           educationLocal.instShortName = this.selectedInstituteShortValue[0].instShortName;
+         }
+
+         if (typeof this.selectedInstituteRegValue!== 'undefined'  && this.selectedInstituteRegValue.length>0) 
+         {
+           educationLocal.instRegistrationCode = this.selectedInstituteRegValue[0].instRegistrationCode;
+         }
+
+         if (typeof this.selectedInstituteBranchValue!== 'undefined'  && this.selectedInstituteBranchValue.length>0) 
+         {
+           educationLocal.instBranch = this.selectedInstituteBranchValue[0].instBranch;
+         }
+       
+       
+         if (typeof educationLocal.instName === 'undefined' 
+         && typeof educationLocal.instShortName === 'undefined' 
+         && typeof educationLocal.instRegistrationCode === 'undefined' 
+         && typeof educationLocal.instBranch === 'undefined') 
+         {
+           Swal({
+             title: 'Invalid!!',
+             text: 'Atleast enter any one field.',
+             showCancelButton: false,
+             confirmButtonText: 'Ok',
+           });
+           this.isListContainsData = false;
+           this.instituteListLocal=[];
           
-              }
-            }
-          
-            }
+         }
+         else
+         {
+           this.service.searchEducationalInstitute(educationLocal)
+           .subscribe(
+             (data) => {
+                 console.log(this.instituteList) 
+               
+               this.instituteList = data;
+               if (typeof this.instituteList !== 'undefined' && this.instituteList.length > 0) {
+                 this.isListContainsData = true;
+               }
+               else {
+                 this.isListContainsData = false;
+               }
+             },
+             (error) => {
+               console.log(error);
+               alert("Try again");
+             }
+           );
+         }
+       }
+    
+
+  
     searchClear() {
         this.institute = new EducationalInstitute();
-        // this.service.searchEducationalInstitute(this.institute)
-        //     .subscribe(
-        //         (data) => {
-        //             this.instituteList = data;
-        //         },
-        //         (error) => {
-        //             console.log(error);
-        //             alert("Try again");
-        //         }
-        //     );
+        this.ngSelectinstName.deselectItem(this.selectedInstituteValue, 0);
+        this.ngSelectinstName.ngOnInit();
+
+        this.ngSelectinstShortName.deselectItem(this.selectedInstituteShortValue, 0);
+        this.ngSelectinstShortName.ngOnInit();
+
+        this.ngSelectinstRegistrationCode.deselectItem(this.selectedInstituteRegValue, 0);
+        this.ngSelectinstRegistrationCode.ngOnInit();
+
+        this.ngSelectinstBranch.deselectItem(this.selectedInstituteBranchValue, 0);
+        this.ngSelectinstBranch.ngOnInit();
+        
+
+       
     }
 
     addNew() {
@@ -195,6 +287,41 @@ export class EducationalInstituteComponent implements OnInit {
         this.institute = data;
         this.onSelect(this.institute.instCountryname);
         this.onStateSelect(this.institute.instState);
+
+        console.log(data);
+        console.log(this.courseCategoryList);
+        console.log(this.courseList);
+
+        if(data.courseCategoryVos.length>0)
+        {
+            data.courseCategoryVos.forEach(element => {
+                this.selectedCourseCategoryList.push(element.categoryId);
+                var data= this.courseCategoryList.filter(x=>x.categoryId == element.categoryId);
+                data[0].isSelected = true;
+                var list = this.courseCategoryList.filter(x=>x.categoryId != element.categoryId);
+                list.push(data[0]);
+                this.courseCategoryList= list;
+
+                element.courseProfileVos.forEach(courseProfile => {
+                console.log(courseProfile);
+                   var  course : courseProfileVos = new courseProfileVos();
+                   course = courseProfile;
+                   var xyz = this.courseList.filter(x=>x.courseId == courseProfile.courseId);
+                   if(xyz.length>0)
+                   {
+                    course.courseCategoryVos = xyz[0].courseCategoryVos;
+                   }
+                   
+                   course.isSelected = true;
+                   this.courseListLocal.push(course);
+                   this.selectedCourseListGlobal.push(course);
+                });
+            });
+        }
+
+        console.log(this.courseCategoryList);
+        console.log(this.courseListLocal);
+
     }
     clickedAlert = function () {
         this.alertMassege = "";
@@ -239,66 +366,71 @@ export class EducationalInstituteComponent implements OnInit {
     }
 
     courseCategoryCheckboxSelect(id) {
-        
-        this.editisCourseCategoryed = true;
+
         if (this.selectedCourseCategoryList.findIndex(x => x === id) >= 0)
         {
-            this.courseListLocalDummy = this.courseCategoryList.filter((item) => item.categoryId == id);
-            for (let entry of this.courseListLocalDummy)
-            {
-                for (let item of entry.courseProfile)
-                {
-                    this.courseListLocal.splice(this.courseListLocal.indexOf(item),1);
-                    this.selectedCoursecourseList.splice(this.courseListLocal.indexOf(id),1);
-                }
-            }
+          var courseListDummy: courseProfileVos[] = [];
+           this.courseListLocal.forEach(element => {
+                element.courseCategoryVos.forEach((element2=>{
+                    if(element2.categoryId!==id)
+                    {
+
+                       courseListDummy.push(element);
+                       return;
+                    }
+                }));
+            });
+            
+            this.courseListLocal = courseListDummy;
             this.selectedCourseCategoryList.splice(this.selectedCourseCategoryList.indexOf(id),1);
-        }
-        else 
-        {
-            this.courseListLocalDummy = this.courseCategoryList.filter((item) => item.categoryId == id);
-            for (let entry of this.courseListLocalDummy)
-            {
-                for (let item of entry.courseProfile)
-                {
-                    this.courseListLocal.push(item);
-                }
-            }
-            this.selectedCourseCategoryList.push(id);
-        }
-
-    }
-
-    checkboxActivated:boolean = false;
-    courseCheckboxSelect(id)
-    {
-        if($('#'+id).prop('checked')){
-            this.checkboxActivated = true;
-        }else{
-            this.checkboxActivated = false;
-        }
-        if (this.selectedCoursecourseList.findIndex(x => x === id) >= 0)
-        {
-            this.selectedCoursecourseList.splice(this.selectedCoursecourseList.indexOf(id),1);
         }
         else
         {
-            this.selectedCoursecourseList.push(id);
+            this.courseList.forEach(element => {
+                element.courseCategoryVos.forEach(element2 => {
+                    if(element2.categoryId==id)
+                    {
+                        this.courseListLocal.push(element);
+                        return;
+                    } 
+                });  
+            });
+            this.selectedCourseCategoryList.push(id);
         }
-        console.log(this.selectedCoursecourseList);
+
+        console.log(this.selectedCourseCategoryList);
+
+    }
+
+    courseCheckboxSelect(course)
+        {  
+           
+  
+        if (this.selectedCourseListGlobal.findIndex(x => x.courseId === course.courseId) >= 0)
+        {
+            var data = this.selectedCourseListGlobal.filter(x=>x.courseId !== course.courseId);
+            this.selectedCourseListGlobal = data;
+        }
+        else
+        {
+            this.selectedCourseListGlobal.push(course);
+        }
+        console.log(this.selectedCourseListGlobal);
+
+        
+       
 
     }
 
 
     saveInstitute(institute) {
-        if (this.saveOrUpdate == "save") {
-            console.log("save");
-            this.uploader.uploadAll(institute,"image");
+               if (this.saveOrUpdate == "save") {
+                     this.uploader.uploadAll(institute,"image");
 
-            this.service.saveEducationalInstitute(institute, this.selectedCourseCategoryList,this.selectedCoursecourseList)
+            this.service.saveEducationalInstitute(institute, this.selectedCourseCategoryList,this.selectedCourseListGlobal)
                 .subscribe(
                     (data) => {
-                        this.alertMassege = "New item add on list successfully!!";
+                       this.alertMassege = "New item add on list successfully!!";
                         this.getInstitutes();
                     },
                     (error) => {
@@ -306,16 +438,13 @@ export class EducationalInstituteComponent implements OnInit {
                         alert("Try again");
                     }
                 );
+              
+
 
         }
         else if (this.saveOrUpdate == "update") {
-            console.log("update");
-            // var selectedCourses = [];
-            // var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
-            // for (var i = 0; i < checkboxes.length; i++) {
-            //     selectedCourses.push(checkboxes[i].id);
-            // }
-            this.service.updateEducationalInstitute(this.institute, this.selectedCourseCategoryList)
+           
+            this.service.updateEducationalInstitute(this.institute, this.selectedCourseCategoryList,this.selectedCourseListGlobal)
                 .subscribe(
                     (data) => {
                         this.alertMassege = "Item updated on list successfully!!";
@@ -341,7 +470,7 @@ export class EducationalInstituteComponent implements OnInit {
 
     getInstitutes() {
         this.service.getEducationalInstitute().subscribe(data => {
-            this.instituteList = data;
+            this.instituteListLocal = data;
         });
     }
 

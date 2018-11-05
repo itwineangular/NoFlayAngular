@@ -30,38 +30,38 @@
         </div>
         <div class="col-md-3" style="margin-top: 20px">
           <label for="auth">Smtp Auth</label>
-          <select class="form-control" readonly name="auth" #auth="ngModel" [(ngModel)]="smtp.auth">
+          <select disabled   class="form-control" readonly name="auth" #auth="ngModel" [(ngModel)]="smtp.auth">
             <option value="true"> true </option>
             <option value="false"> false </option>
           </select>
         </div>
         <div class="col-md-3" style="margin-top: 20px">
           <label for="connectionTimeout">Smtp Connection Timeout</label>
-          <input class="form-control" type="text" readonly name="connectionTimeout" #connectionTimeout="ngModel" [(ngModel)]="smtp.connectionTimeout"
+          <input disabled class="form-control" type="text" readonly name="connectionTimeout" #connectionTimeout="ngModel" [(ngModel)]="smtp.connectionTimeout"
           />
         </div>
-        <div class="col-md-3" style="margin-top: 20px">
+        <!-- <div class="col-md-3" style="margin-top: 20px">
           <label for="timeout">Smtp Timeout</label>
           <input class="form-control" type="text" readonly name="timeout" #timeout="ngModel" [(ngModel)]="smtp.timeout" />
-        </div>
-        <div class="col-md-3" style="margin-top: 20px">
+        </div> -->
+        <!-- <div class="col-md-3" style="margin-top: 20px">
           <label for="writeTimeout">Smtp Write Timeout</label>
           <input class="form-control" type="text" readonly name="writeTimeout" #writeTimeout="ngModel" [(ngModel)]="smtp.writeTimeout" />
-        </div>
-        <div class="col-md-3" style="margin-top: 20px">
+        </div> -->
+        <!-- <div class="col-md-3" style="margin-top: 20px">
           <label for="enable">Enable</label>
           <select class="form-control" readonly name="enable" #enable="ngModel" [(ngModel)]="smtp.enable">
             <option value="true"> true </option>
             <option value="false"> false </option>
           </select>
-        </div>
-        <div class="col-md-3" style="margin-top: 20px">
+        </div> -->
+        <!-- <div class="col-md-3" style="margin-top: 20px">
           <label for="Required">Required</label>
           <select class="form-control"  readonly name="required" #required="ngModel" [(ngModel)]="smtp.required">
             <option value="true"> true </option>
             <option value="false"> false </option>
           </select>
-        </div>
+        </div> -->
         <div class="col-md-12">
           <button class="btn btn-primary btn-outline pull-right" type="button" (click)="saveIntialConfiguration(intitalConfigurationForm)">Save</button>
         </div>

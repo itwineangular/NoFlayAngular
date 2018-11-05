@@ -4,10 +4,10 @@ export class smtpObject {
     username: string;
     password: string;
     // defaultFromEmail: string;
-    auth: boolean;
+    auth: string;
     connectionTimeout: string;
     timeout: string;
     writeTimeout: string;
-    Enable: boolean;
-    Required: boolean;
+    Enable: string;
+    Required: string;
 }
