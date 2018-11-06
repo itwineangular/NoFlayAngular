@@ -9,6 +9,9 @@ import { BusinessCategory } from "../bisuness-category/business-category";
 
 import { AttributeService } from "../attribute/attribute.service";
 import { Attribute } from "../attribute/attribute";
+import {PrivilegeCategory} from "../privilegecategory/privilegecategory";
+import  {PrivilegecategoryService} from "../privilegecategory/privilegecategory.service"
+
 // import * as $ from 'jquery';
 
 import Swal from 'sweetalert2';
@@ -48,6 +51,12 @@ export class BusinessEntityComponent implements OnInit {
   businessEntityListLocal: BusinessEntity[]= [];
 
   attributeList: Attribute[];
+  privilegeList: PrivilegeCategory[] = [];
+
+  public editisPrivilegeId = false;
+  selectedPrivilegeCategoryList: number[] = [];
+  attributeListLocal: Attribute[] = [];
+  selectedAttributeList: Attribute[] = [];
 
   @ViewChild('businessName') public ngSelectbusinessName: SelectDropDownComponent;
   @ViewChild('registrationNumber') public ngSelectregistrationNumber: SelectDropDownComponent;
@@ -55,7 +64,8 @@ export class BusinessEntityComponent implements OnInit {
   constructor(private service: BusinessEntityService,
     private commonService: CommonServicesService,
     private businessCategoryService: BusinessCategoryServicesService,
-    private attributeService: AttributeService
+    private attributeService: AttributeService,
+    private privilegecategoryService: PrivilegecategoryService
   ) { }
 
   ngOnInit() {
@@ -426,5 +436,44 @@ selectCheckbox(id){
     this.ngSelectregistrationNumber.deselectItem(this.selectedregistrationNumberValue,0);
     this.ngSelectregistrationNumber.ngOnInit();
     
+  }
+
+  getPrivilegeCategory() {
+    this.privilegecategoryService.getPrivilegeCategory().subscribe(data => {
+      this.privilegeList = data;
+
+    });
+  }
+
+  privilegeCategoryCheckboxSelect(id) {
+    console.log(id);
+    if (this.selectedPrivilegeCategoryList.findIndex(x => x === id) >= 0) {
+      this.selectedPrivilegeCategoryList.splice(this.selectedPrivilegeCategoryList.indexOf(id), 1);
+    }
+    else {
+      this.selectedPrivilegeCategoryList.push(id);
+    }
+    this.attributeListLocal = []
+    this.attributeList.forEach(element => {
+      element.privileges.forEach(innerElement => {
+        if(this.selectedPrivilegeCategoryList.findIndex(x => x === innerElement.privilegeId) >= 0)
+        {
+          this.attributeListLocal.push(element);
+        }
+      });
+    });
+    this.attributeListLocal = Array.from(new Set(this.attributeListLocal));
+  }
+
+  servicesCheckboxSelect(service)
+  {
+    if (this.selectedAttributeList.findIndex(x => x.attributeId === service.attributeId) >= 0) {
+      var list = this.selectedAttributeList.filter(x=>x.attributeId !=service.attributeId);
+      this.selectedAttributeList = list;
+    }
+    else {
+      this.selectedAttributeList.push(service);
+    }
+
   }
 }

@@ -19,6 +19,7 @@ import { CoursesComponent } from './adminmasters/institutions/courses/courses.co
 import { EducationalInstituteComponent } from './adminmasters/institutions/educational-institute/educational-institute.component';
 import { AddaccesscontrolComponent } from './adminmasters/accesscontrol/addaccesscontrol/addaccesscontrol.component';
 import { BisunessCategoryComponent } from './adminmasters/businessentity/bisuness-category/bisuness-category.component';
+// import { AttributeComponent } from './adminmasters/businessentity/attribute/attribute.component';
 import { AttributeComponent } from './adminmasters/businessentity/attribute/attribute.component';
 import { BusinessEntityComponent } from './adminmasters/businessentity/business-entity/business-entity.component';
 import { MembershipComponent } from './adminmasters/businessentity/membership/membership.component';
@@ -30,6 +31,7 @@ import { MembershipCardComponent } from './adminmasters/businessentity/membershi
 import { EmailTemplateComponent } from './adminmasters/accesscontrol/email-template/email-template.component';
 import { InitialConfigurationComponent } from './adminmasters/accesscontrol/initial-configuration/initial-configuration.component';
 import { UserComponent } from './adminmasters/accesscontrol/user/user.component';
+import { PrivilegecategoryComponent } from './adminmasters/businessentity/privilegecategory/privilegecategory.component';
 
 const appRoutes: Routes = [
   {
@@ -66,6 +68,7 @@ const appRoutes: Routes = [
       { path: 'status', component: StatusComponent,canActivate: [AuthGuard] },
       { path: 'studentadd', component: StudentComponent ,canActivate: [AuthGuard]},
       { path: 'membershipCard', component: MembershipCardComponent ,canActivate: [AuthGuard]},
+      { path: 'privilegeCategory', component: PrivilegecategoryComponent ,canActivate: [AuthGuard]},
     ]
   }
   /* ADMIN PART END*/

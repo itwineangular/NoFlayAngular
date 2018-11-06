@@ -3,7 +3,7 @@
                 <!-- <div class="row"> -->
     <div class="col-md-12">
         <hr />
-        <h3 class="text-center">{{'adminConfigarationPage.attributes.attribute' | translate}}</h3>
+        <h3 class="text-center">{{'adminConfigarationPage.attributes.service' | translate}}</h3>
         <hr />
     </div>
     <div class="col-md-12">
@@ -13,24 +13,24 @@
             <form class="form-horizontal" #attributeForm="ngForm" (ngSubmit)="searchAttribute(attributeForm)">
 
                    <div class="col-md-3">
-                    <label for="attributeName">{{'adminConfigarationPage.attributes.attributeName'
+                    <label for="attributeName">{{'adminConfigarationPage.attributes.serviceName'
                             | translate}}</label>
                     
                         <ngx-select-dropdown #attributeName (change)="changeValue($event)" [multiple]="false" [(value)]="selectedValue"
                         [config]="config" [options]="attributeListLocal"></ngx-select-dropdown>
                 </div>
                 <div class="col-md-3">
-                    <label for="attributeCode">{{'adminConfigarationPage.attributes.attributeCode'
+                    <label for="attributeCode">{{'adminConfigarationPage.attributes.serviceCode'
                             | translate}}</label>
                    
                         <ngx-select-dropdown #attributeCode (change)="changeValue($event)" [multiple]="false" [(value)]="selectedattributeCodeValue"
                         [config]="attributeCodeconfig" [options]="attributeListLocal"></ngx-select-dropdown>
                 </div>
                 <div class="col-md-3">
-                    <label for="businessCatCode">{{'adminConfigarationPage.attributes.businessCategoryName' | translate }}</label>
+                    <label for="businessCatCode">{{'adminConfigarationPage.attributes.privilegeCategoryName' | translate }}</label>
                     
-                    <ngx-select-dropdown #businessCategoryName (change)="changeValue($event)" [multiple]="false" [(value)]="selectedbusinessCategoryNameValue"
-                        [config]="businessCategoryNameconfig" [options]="attributeListLocal"></ngx-select-dropdown>
+                    <ngx-select-dropdown #privilegeCategoryName (change)="changeValuePrivilege()" [multiple]="false" [(value)]="selectedprivilegeCategoryNameValue"
+                        [config]="privilegeCategoryNameconfig" [options]="privilegeCategoryList"></ngx-select-dropdown>
                 </div>
                 <div class="col-md-12">
                     <button class="btn btn-info btn-outline pull-right cssButtonPadding" data-toggle="modal" data-target="#addModal" type="button"
@@ -64,17 +64,17 @@
             <tr class="text-center">
                 <th>{{'adminConfigarationPage.commonFields.index' | translate}}
                 </th>
-                <th [class.active]="key === 'attributeName'" (click)=" sort('attributeName')">{{'adminConfigarationPage.attributes.attribute'
+                <th [class.active]="key === 'attributeName'" (click)=" sort('attributeName')">{{'adminConfigarationPage.attributes.serviceName'
                     | translate}}
                     <span [hidden]="reverse">▼</span>
                     <span [hidden]="!reverse">▲</span>
                 </th>
-                <th [class.active]="key === 'attributeCode'" (click)=" sort('attributeCode')">{{'adminConfigarationPage.attributes.attributeCode'
+                <th [class.active]="key === 'attributeCode'" (click)=" sort('attributeCode')">{{'adminConfigarationPage.attributes.serviceCode'
                     | translate}}
                     <span [hidden]="reverse">▼</span>
                     <span [hidden]="!reverse">▲</span>
                 </th>
-                <th [class.active]="key === 'businessCatCode'" (click)=" sort('businessCatCode')">{{'adminConfigarationPage.businessCategory.businessCategoryName'
+                <th [class.active]="key === 'privilegeCategoryName'" (click)=" sort('privilegeCategoryName')">{{'adminConfigarationPage.attributes.privilegeCategoryName'
                     | translate}}
                     <span [hidden]="reverse">▼</span>
                     <span [hidden]="!reverse">▲</span>
@@ -88,7 +88,12 @@
                     <td>{{((p-1)*itemsPerPage2)+i+1}}</td>
                     <td>{{item.attributeName}}</td>
                     <td>{{item.attributeCode}} </td>
-                    <td>{{item.businessCatCode}}</td>
+                    <!-- <td>{{item.privileges[0].privilegeName}}</td> -->
+                    <td>
+                        <div *ngFor="let privilege of item.privileges">
+                                {{privilege.privilegeName}}<br>
+                        </div> 
+                    </td>
                     <td>
                         <button class="btn btn-warning buttonStyle" data-toggle="modal" data-target="#addModal" (click)="selectUser(item)">
                             <i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size:15px"></i>
@@ -140,7 +145,7 @@
                         <div class="modal-body">
                             <div class="container">
                                 <div class="form-group">
-                                    <label class="control-label col-sm-2" for="Enter Name">{{'adminConfigarationPage.attributes.attributeName'
+                                    <label class="control-label col-sm-2" for="Enter Name">{{'adminConfigarationPage.attributes.serviceName'
                                         | translate}}
                                         <span class="reqMark">*</span>
                                     </label>
@@ -153,7 +158,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-sm-2" for="Enter Code">{{'adminConfigarationPage.attributes.attributeCode'
+                                    <label class="control-label col-sm-2" for="Enter Code">{{'adminConfigarationPage.attributes.serviceCode'
                                         | translate}}
                                         <span class="reqMark">*</span>
                                     </label>
@@ -167,15 +172,18 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-sm-2" for="full name">{{
-                                        'adminConfigarationPage.attributes.businessCategoryName' | translate }}
+                                        'adminConfigarationPage.attributes.privilegeCategoryName' | translate }}
                                         <span class="reqMark">*</span>
                                     </label>
                                     <div class="col-sm-3">
-                                        <select class="form-control" name="businessCatCode" #businessCatCode="ngModel"
-                                            [(ngModel)]="attribute.businessCatCode" required>
-                                            <option *ngFor="let item of businessCategoryList" value={{item.businessCategoryName}}>{{item.businessCategoryName}}
+                                            <ngx-select-dropdown #addPrivilegeCategoryNames (change)="changeaddPrivilegeCategoryNameValue()" [multiple]="true" [(value)]="selectedaddPrivilegeCategoryNameValue"
+                                            [config]="addPrivilegeCategoryName" [options]="privilegeCategoryListForAdd"></ngx-select-dropdown>
+
+                                        <!-- <select class="form-control" name="privilegeId" #privilegeId="ngModel"
+                                            [(ngModel)]="attribute.privilegeId" required>
+                                            <option *ngFor="let item of privilegeCategoryList" value={{item.privilegeId}}>{{item.privilegeName}}
                                             </option>
-                                        </select>
+                                        </select> -->
                                     </div>
                                 </div>
                             </div>

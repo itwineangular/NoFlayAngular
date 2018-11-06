@@ -397,15 +397,29 @@
                                             </h4>
                                             </div>
                                             <form #selectOffers="ngForm">
-                                            <div class="boxes" *ngFor="let item of attributeList">
-                                                <input type="checkbox" id="{{item.attributeName}}" name="attributeList[]" (change)="selectCheckbox($event.target.value)"
-                                                    value={{item.attributeName}}>
-                                                <label for="{{item.attributeName}}">{{item.attributeName}}</label>
-                                            </div>
-                                            <div class="col-lg-12 text-right">
-                                                    <button type="button" class="btn btn-default btnPrevious preConButton" data-toggle="pill" href="#step2" (click)="activeChangePrevious('third')">Previous</button>
-                                                    <button type="button"  class="btn btn-primary btnNext" data-toggle="pill" href="#complete" (click)="activeChange('third')">Continue</button>
-                                                </div>
+                                                <div class="col-sm-12">
+
+                                                    <div class="col-sm-6">
+                                                        <h4><label for="selectOffers"></label>{{'adminConfigarationPage.businessEntity.privilegeName' | translate}}<span class="reqMark">*</span></h4>
+                                                      
+                                                        <div class="boxes" *ngFor="let item of privilegeList">
+                                                            <input type="checkbox" id="{{item.privilegeId}}" name="privilegeList[]" (change)="privilegeCategoryCheckboxSelect(item.privilegeId)"
+                                                                value={{item.privilegeId}}>
+                                                            <label for="{{item.privilegeId}}">{{item.privilegeName}}</label>
+                                                        </div>
+                                                        
+                                                    </div>
+        
+                                                    <div class="col-sm-6">
+                                                        <h4>{{'adminConfigarationPage.businessEntity.services' | translate}}<span class="reqMark">*</span></h4>
+                                                      
+                                                            <div class="boxes" *ngFor="let item of attributeListLocal">
+                                                                <input type="checkbox" id="{{item.attributeId}}" name="attribute[]" value={{item.attributeId}} (change)="servicesCheckboxSelect(item)" required/>
+                                                                <label for="{{item.attributeId}}">{{item.attributeName}}</label>
+                                                            </div>
+                                                        </div>
+        
+                                                        </div>
                                             </form>
                                         </div>
                                         <div class="tab-pane" role="tabpanel" id="complete">

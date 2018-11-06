@@ -19,7 +19,7 @@ export class AdminlayoutComponent implements OnInit {
   generalSetup: string;
   emailTemplate: string;
   initialConfiguration: string;
-  accessControl : string;
+  accessControl: string;
 
   institutions: string;
   businessEntities: string;
@@ -27,19 +27,20 @@ export class AdminlayoutComponent implements OnInit {
   courseCategory: string;
   courses: string;
   educationalInstitutions: string;
-  student:string;
+  student: string;
 
   businessCategory: string;
   businessEntity: string;
   attribute: string;
   membership: string;
-  planName : string;
-  plans : string;
-  status : string;
-  user:string;
+  planName: string;
+  plans: string;
+  status: string;
+  user: string;
 
-  membershipManagement : string;
-  membershipCard : string;
+  membershipManagement: string;
+  membershipCard: string;
+  privilegeCategory: string;
 
   id: string;
 
@@ -77,8 +78,7 @@ export class AdminlayoutComponent implements OnInit {
 
   }
 
-  logout()
-  {
+  logout() {
     console.log("Logout");
     this.authService.logout();
     this.router.navigate(['/adminlogin']);
@@ -101,10 +101,10 @@ export class AdminlayoutComponent implements OnInit {
 
   englishMenuItems() {
     this.accessControl = "Access Control",
-    this.generalSetup = "General Setup",
-    this.emailTemplate = "Email Templates",
-    this.initialConfiguration = "Initial Configuration",
-    this.user = "User",
+      this.generalSetup = "General Setup",
+      this.emailTemplate = "Email Templates",
+      this.initialConfiguration = "Initial Configuration",
+      this.user = "User",
       this.institutions = "Institutions",
       this.businessEntities = "Business Entities",
       this.courseCategory = "Course Categories",
@@ -112,12 +112,13 @@ export class AdminlayoutComponent implements OnInit {
       this.educationalInstitutions = "Educational Institutions",
       this.businessCategory = "Business Categories",
       this.businessEntity = "Business Entity",
-      this.attribute = "Attributes",
+      this.attribute = "Services",
       this.membership = "Subscription Type",
       this.planName = "Plan Names",
       this.plans = "Plans",
       this.status = "Status",
       this.student = "Students",
+      this.privilegeCategory = "Privilege Category",
 
       this.membershipManagement = "Membership Management",
       this.membershipCard = "Membership Card",
@@ -126,10 +127,10 @@ export class AdminlayoutComponent implements OnInit {
   }
   frenchMenuitems() {
     this.accessControl = "Contrôle d'accès",
-    this.generalSetup = "General Setup",
-    this.emailTemplate = "Modèles de courrier électronique",
-    this.initialConfiguration = "Initial Configuration",
-    this.user="Utilisateur",
+      this.generalSetup = "General Setup",
+      this.emailTemplate = "Modèles de courrier électronique",
+      this.initialConfiguration = "Initial Configuration",
+      this.user = "Utilisateur",
       this.institutions = "Institutions",
       this.businessEntities = "Entités commerciales",
       this.courseCategory = "Catégories de cours",
@@ -137,12 +138,13 @@ export class AdminlayoutComponent implements OnInit {
       this.educationalInstitutions = "Les établissements d'enseignement",
       this.businessCategory = "Catégories d'entreprises",
       this.businessEntity = "Entité commerciale",
-      this.attribute = "Les attributs",
+      this.attribute = "Prestations de service",
       this.membership = "Type d'abonnement",
       this.planName = "Noms de plan",
       this.plans = "Des plans",
       this.status = "Statut",
       this.student = "Élèves",
+      this.privilegeCategory = "privilègeCatégorie",
 
       this.membershipManagement = "Gestion des membres",
       this.membershipCard = "Carte de membre",
@@ -169,13 +171,15 @@ export class AdminlayoutComponent implements OnInit {
           'menuitems':
             [
               // { 'menuid': '1', 'mainmenu': 'Access Control', 'url': 'accesscontrol' },
-              { 'menuid': '1', 'mainmenu': this.generalSetup,'submenu': [
-                { 'name': this.emailTemplate, 'url': 'emailTemplate' },
-                { 'name': this.initialConfiguration, 'url': 'initialConfiguration' },
-                { 'name': this.user, 'url': 'user' },
-                { 'name': this.accessControl, 'url': 'addaccesscontrol' }
+              {
+                'menuid': '1', 'mainmenu': this.generalSetup, 'submenu': [
+                  { 'name': this.emailTemplate, 'url': 'emailTemplate' },
+                  { 'name': this.initialConfiguration, 'url': 'initialConfiguration' },
+                  { 'name': this.user, 'url': 'user' },
+                  { 'name': this.accessControl, 'url': 'addaccesscontrol' }
 
-              ] },
+                ]
+              },
               {
                 'menuid': '2', 'mainmenu': this.institutions,
                 'submenu': [
@@ -189,19 +193,17 @@ export class AdminlayoutComponent implements OnInit {
               {
                 'menuid': '3', 'mainmenu': this.businessEntities,
                 'submenu': [
-                  { 'name': this.businessCategory, 'url': 'businessCategory' },
-                  { 'name': this.businessEntities, 'url': 'businessEntity' },
+                  { 'name': this.privilegeCategory, 'url': 'privilegeCategory' },
                   { 'name': this.attribute, 'url': 'attribute' },
-                  // { 'name': this.membership, 'url': 'membership' },
-                  // { 'name': this.planName,'url':'planName'},
-                  // { 'name': this.plans, 'url': 'plans' }
+                  { 'name': this.businessCategory, 'url': 'businessCategory' },
+                  { 'name': this.businessEntities, 'url': 'businessEntity' }       
                 ]
               },
               {
                 'menuid': '4', 'mainmenu': this.membershipManagement,
                 'submenu': [
                   { 'name': this.membership, 'url': 'membership' },
-                  { 'name': this.planName,'url':'planName'},
+                  { 'name': this.planName, 'url': 'planName' },
                   { 'name': this.plans, 'url': 'plans' },
                   { 'name': this.membershipCard, 'url': 'membershipCard' }
                 ]

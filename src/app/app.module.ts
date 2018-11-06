@@ -11,8 +11,10 @@ import { FilterPipe} from './filter.pipe';
 import { FilterPipeCourseCategory } from "./adminmasters/institutions/course-category/filter.pipe";
 import { FilterPipeCourses } from "./adminmasters/institutions/courses/courses-filter-pipe";
 import { FilterPipeBusinessCategory } from "./adminmasters/businessentity/bisuness-category/business-caregory-filter";
+// import {  FilterPipeAttribute} from "./adminmasters/businessentity/attribute/attribute-filter";
 import {  FilterPipeAttribute} from "./adminmasters/businessentity/attribute/attribute-filter";
 import { FilterPipeMembership } from "./adminmasters/businessentity/membership/membership-filter";
+import {FilterPipePrivilegeCategory} from "./adminmasters/businessentity/privilegecategory/privilegecategory-filter";
 import { FilterPipePlanName } from "./adminmasters/businessentity/plan-name/plan-name-filter";
 import { OrderModule } from 'ngx-order-pipe';
 import {NgxPaginationModule} from 'ngx-pagination';
@@ -48,6 +50,7 @@ import { CoursesComponent } from './adminmasters/institutions/courses/courses.co
 import { EducationalInstituteComponent } from './adminmasters/institutions/educational-institute/educational-institute.component';
 import { AddaccesscontrolComponent } from './adminmasters/accesscontrol/addaccesscontrol/addaccesscontrol.component';
 import { BisunessCategoryComponent } from './adminmasters/businessentity/bisuness-category/bisuness-category.component';
+// import { AttributeComponent } from './adminmasters/businessentity/attribute/attribute.component';
 import { AttributeComponent } from './adminmasters/businessentity/attribute/attribute.component';
 import { BusinessEntityComponent } from './adminmasters/businessentity/business-entity/business-entity.component';
 import { FileuploaderService } from './adminmasters/institutions/educational-institute/fileuploader.service';
@@ -67,6 +70,8 @@ import { InitialConfigurationComponent } from './adminmasters/accesscontrol/init
 import { CornJobSettingsComponent } from './adminmasters/accesscontrol/corn-job-settings/corn-job-settings.component';
 import { SmtpDetailsComponent } from './adminmasters/accesscontrol/smtp-details/smtp-details.component';
 import { UserComponent } from './adminmasters/accesscontrol/user/user.component';
+import { PrivilegecategoryComponent } from './adminmasters/businessentity/privilegecategory/privilegecategory.component';
+import { from } from '../../node_modules/rxjs';
 
 
 @NgModule({
@@ -109,7 +114,9 @@ import { UserComponent } from './adminmasters/accesscontrol/user/user.component'
     InitialConfigurationComponent,
     CornJobSettingsComponent,
     SmtpDetailsComponent,
-    UserComponent
+    UserComponent,
+    FilterPipePrivilegeCategory,
+    PrivilegecategoryComponent
   ],
   imports: [
     BrowserModule,

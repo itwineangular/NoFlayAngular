@@ -150,14 +150,24 @@
             "shortName" : "Nom court",
             "selectOffers" : "Sélectionner des offres",
             "plans" : "Des plans",
-            "selectBusiness" : "Sélectionner une catégorie d'activité"
+            "selectBusiness" : "Sélectionner une catégorie d'activité",
+            "privilegeName" : "Catégorie de privilège",
+            "services":"Prestations de service"
         },
 
         "attributes" : {
+            "service" : "prestations de service",
             "attribute" : "Les attributs",
-            "attributeName" : "Nom d'attribut",
-            "attributeCode" : "Code d'attribut",
-            "businessCategoryName" : "Nom de la catégorie d'entreprise"
+            "serviceName" : "Nom du service",
+            "serviceCode" : "code de service",
+            "businessCategoryName" : "Nom de la catégorie d'entreprise",
+            "privilegeCategoryName" : "Nom de la catégorie de privilège"
+        },
+
+        "privilegeCategory" : {
+            "privilegeCategory" : "Catégorie de privilège",
+            "privilegeCategoryName" : "Nom de la catégorie de privilège",
+            "name" : "prénom"
         },
         "membershipPage" : {
             "membership" : "Type d'abonnement",

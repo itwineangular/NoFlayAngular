@@ -184,14 +184,21 @@
             "shortName" : "ShortName",
             "selectOffers" : "select Offers",
             "plans" : "Plans",
-            "selectBusiness" : "Select Business Category"
+            "selectBusiness" : "Select Business Category",
+            "privilegeName" : "Privilege Category",
+            "services":"Services"
         },
 
-        "attributes" : {
-            "attribute" : "Attributes",
-            "attributeName" : "Attribute Name",
-            "attributeCode" : "Attribute Code",
-            "businessCategoryName" : "Business Category Name"
+        "attributes": {
+            "service": "Services",
+            "serviceName": "Service Name",
+            "serviceCode": "Service Code",
+            "privilegeCategoryName": "Privilege Category Name"
+        },
+        "privilegeCategory": {
+            "privilegeCategory": "Privilege Category",
+            "privilegeCategoryName": "Privilege Category Name",
+            "privilegename": "Privilege Name"
         },
         "membershipPage" : {
             "membership" : "Subscription Type",
