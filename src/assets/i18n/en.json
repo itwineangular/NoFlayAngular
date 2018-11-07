@@ -169,7 +169,9 @@
             "planMessage":"Plan Required",
             "noRecordFound":"No Record Found",
             "instituteDetails": "Institute Details",
-            "invalidAccNumberMessage": "Invalid Account Number"
+            "invalidAccNumberMessage": "Invalid Account Number",
+
+            "planDetail":"Plan Details"
         },
 
         "businessCategory" : {
@@ -205,6 +207,7 @@
             "membershipName" : "Subscription Name"
           
         },
+
         "plannamePage":
         {
             "plan" : "Plans",
@@ -228,6 +231,14 @@
             "checkbox": "Checkbox",
             "proceed": "Proceed",
             "mcmId": "MCM ID"
+        },
+
+        "paymentDetailsPage" : {
+            "paymentDetails": "Payment Details",
+            "institutionName":"Institutiuon Name",
+            "courseCategory": "Course Category",
+            "course":"Course",
+            "studentName":"Student Name"
         },
         "statusPage":
         {
@@ -310,6 +321,8 @@
             "message" : "Already have an account ?",
             "signhere" : "Sign here"
         }
+
+      
      }
 
 }

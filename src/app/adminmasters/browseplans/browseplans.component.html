@@ -1,0 +1,38 @@
+<div style="margin: 50px;">
+  <h2 class="text-center"> Choose a plan that's right for you.</h2>
+
+  <div class="row ">
+
+      <div class="col-sm-12">
+
+          <div class="row ">
+              <div class="col-lg-4 col-xs-12" *ngFor="let item of plans">
+                  <div class="panel panel-default text-center">
+                      <div class="panel-heading">
+                          <h1>{{item.planName}} </h1>
+                      </div>
+                      <div class="panel-body" *ngFor="let itemLocal of item.planMembershipsArray">
+                          <input type="radio" name="radiogroup" [checked]="idx === 1" [value]="itemLocal.planId" #planId="ngModel" [(ngModel)]="selectedPlan.planId"
+                              (click)="onRadioButtonClick(itemLocal)">
+                          <strong>{{itemLocal.planMembership}}</strong> Rs.{{itemLocal.planPrice}}
+                      </div>
+                      <div class="panel-footer">
+                          <button class="btn btn-danger" type="button"  (click)="payment()">
+                              CONTINUE
+                          </button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+      </div>
+
+  </div>
+</div>
+
+<div class="col-sm-6 text-left">
+
+  <button class="btn btn-info" type="button" (click)="previousPage()">
+      Back
+  </button>
+</div>

@@ -42,6 +42,10 @@ export class AdminlayoutComponent implements OnInit {
   membershipCard: string;
   privilegeCategory: string;
  
+  paymentDetails :string;
+  payment : string;
+  browseplans :string;
+
   id: string;
 
   constructor(public router: Router,
@@ -123,6 +127,9 @@ export class AdminlayoutComponent implements OnInit {
       this.membershipManagement = "Membership Management",
       this.membershipCard = "Membership Card",
 
+      this.paymentDetails =" Payment Details",
+      this.payment = "Payment",
+      this.browseplans ="Browse Plans",
      
 
       this.gotopage(this.selectedFlag)
@@ -151,6 +158,9 @@ export class AdminlayoutComponent implements OnInit {
       this.membershipManagement = "Gestion des membres",
       this.membershipCard = "Carte de membre",
 
+      this.paymentDetails ="Détails de paiement",
+      this.payment = "Paiement",
+      this.browseplans ="Parcourir les plans"
      
 
       this.gotopage(this.selectedFlag);
@@ -210,6 +220,7 @@ export class AdminlayoutComponent implements OnInit {
                   { 'name': this.planName, 'url': 'planName' },
                   { 'name': this.plans, 'url': 'plans' },
                   { 'name': this.membershipCard, 'url': 'membershipCard' },
+                  { 'name': this.paymentDetails, 'url': 'paymentDetails' },
                  
                 ]
               }

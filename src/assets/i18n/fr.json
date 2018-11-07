@@ -135,7 +135,16 @@
             "datetFieldRequired":"La date est requise",
             "noRecordFound":"Aucun Enregistrement Trouvé",
             "instituteDetails": "Détails de l'institut",
-            "invalidAccNumberMessage": "Numéro de compte invalide"
+            "invalidAccNumberMessage": "Numéro de compte invalide",
+            "planDetail":"Détails du plan"
+        },
+
+        "paymentDetailsPage" : {
+            "paymentDetails": "Détails de paiement",
+            "institutionName":"Nom de l'institutiuon",
+            "courseCategory": "Catégorie de cours  ",
+            "course":"Cours",
+            "studentName":"Nom d'étudiant"
         },
 
         "businessCategory" : {

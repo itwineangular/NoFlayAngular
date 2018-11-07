@@ -72,6 +72,9 @@ import { SmtpDetailsComponent } from './adminmasters/accesscontrol/smtp-details/
 import { UserComponent } from './adminmasters/accesscontrol/user/user.component';
 import { PrivilegecategoryComponent } from './adminmasters/businessentity/privilegecategory/privilegecategory.component';
 import { from } from '../../node_modules/rxjs';
+import { PaymentDetailsComponent } from './adminmasters/businessentity/payment-details/payment-details.component';
+import { PaymentComponent } from './adminmasters/payment/payment.component';
+import { BrowseplansComponent } from './adminmasters/browseplans/browseplans.component';
 
 
 @NgModule({
@@ -116,7 +119,11 @@ import { from } from '../../node_modules/rxjs';
     SmtpDetailsComponent,
     UserComponent,
     FilterPipePrivilegeCategory,
-    PrivilegecategoryComponent
+    PrivilegecategoryComponent,
+    PaymentDetailsComponent,
+    PaymentComponent,
+    BrowseplansComponent
+   
   ],
   imports: [
     BrowserModule,

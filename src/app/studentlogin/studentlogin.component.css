@@ -325,7 +325,18 @@ footer .glyphicon {
     border-top: 1px dashed #8c8b8b;
     width: 400px;
 }
+span{color:red}
 
+.validation-error
+{
+    color: red;
+    text-align: center;
+}
+.reg
+{
+    margin: 0 auto;
+    width:80% 
+}
 
 /* new lan */
 

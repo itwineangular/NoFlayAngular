@@ -32,7 +32,9 @@ import { EmailTemplateComponent } from './adminmasters/accesscontrol/email-templ
 import { InitialConfigurationComponent } from './adminmasters/accesscontrol/initial-configuration/initial-configuration.component';
 import { UserComponent } from './adminmasters/accesscontrol/user/user.component';
 import { PrivilegecategoryComponent } from './adminmasters/businessentity/privilegecategory/privilegecategory.component';
-
+import { PaymentDetailsComponent } from './adminmasters/businessentity/payment-details/payment-details.component';
+import { PaymentComponent } from './adminmasters/payment/payment.component';
+import { BrowseplansComponent } from './adminmasters/browseplans/browseplans.component';
 
 const appRoutes: Routes = [
   {
@@ -45,6 +47,8 @@ const appRoutes: Routes = [
       { path: 'registerstudent', component: RegstudentComponent },
       { path: 'registerinstitute', component: ReginstituteComponent },
       { path: 'registerbusiness', component: RegbusinessComponent },
+      { path: 'payment/:id',component:PaymentComponent},
+      {path: 'browseplans/:id',component:BrowseplansComponent}
     
     ]
   },
@@ -71,7 +75,7 @@ const appRoutes: Routes = [
       { path: 'studentadd', component: StudentComponent ,canActivate: [AuthGuard]},
       { path: 'membershipCard', component: MembershipCardComponent ,canActivate: [AuthGuard]},
       { path: 'privilegeCategory', component: PrivilegecategoryComponent ,canActivate: [AuthGuard]},
-    
+      { path: 'paymentDetails', component: PaymentDetailsComponent ,canActivate: [AuthGuard]},
     ]
   }
   /* ADMIN PART END*/

@@ -1,0 +1,224 @@
+<div class="container" style="margin-top: 52px;">
+  <div class="col-md-12">
+      <!-- <hr /> -->
+      <h2>Hi {{student.stdName}}</h2>
+      <hr />
+      <h3 class="text-center">Payment </h3>
+  </div>
+  <br>
+  <div class="col-lg-2 col-lg-offset-1" id="card">
+      <label>Select Payment Mode</label>
+      <ul class="nav nav-pills nav-stacked">
+          <li class="active">
+              <a data-toggle="pill" href="#debit"  (click)="debitCardClick()">
+                  <i class="fa fa-credit-card-alt fa-5x"></i>
+                  <label>Debit Card</label>
+              </a>
+          </li>
+          <br>
+          <li>
+              <a data-toggle="pill" href="#credit" (click)="creditCardClick()">
+                  <i class="fa fa-credit-card-alt fa-5x"></i>
+                  <label>Credit Card</label>
+              </a>
+          </li>
+          <br>
+          <li>
+              <a data-toggle="pill" href="#banking" (click)= "netBanking()">
+                  <i class="fa fa-university fa-5x"></i>
+                  <label>Net Banking</label>
+              </a>
+          </li>
+      </ul>
+  </div>
+  <div class="col-lg-8 col-lg-offset-1">
+
+      <div class="tab-content ">
+          <div id="debit" class="col-lg-8 tab-pane fade in active">
+              <div class="panel panel-default">
+                  <div class="panel-heading">
+                      <div class="col-lg-6">
+                          <label>
+                              <h4>Payment Details</h4>
+                          </label>
+                      </div>
+                      <div class="col-lg-6">
+                          <img class="img-responsive pull-right" src="http://i76.imgup.net/accepted_c22e0.png">
+                      </div>
+                      <div class="clearfix"></div>
+                  </div>
+                  <div class="panel-body">
+
+                      <div class="form-group">
+
+                          <div class="col-lg-12">
+                              <label> DEBIT CARD NUMBER</label>
+                              <input type="text" class="form-control" id="debit-card" name="cc-number" placeholder="CardNumber" (ngModelChange)="mychange($event)"
+                                  maxlength="19" [ngModel]="iban_no" required />
+                          </div>
+                          <div class="clearfix"></div>
+                      </div>
+                      <div class="clearfix"></div>
+                      <div class="form-group">
+                          <div class="col-lg-8">
+                              <label>EXPIRATION DATE</label>
+                              <input type="text" placeholder="MM/YY" maxlength=5 class="form-control" [ngModel]="expiredate" (ngModelChange)="mychangeexpiredate($event)"
+                                  required />
+                          </div>
+                          <div class="col-lg-4">
+                              <label>CV CODE</label>
+                              <input type="text" placeholder="CVV" maxlength=3 class="form-control" [ngModel]="cvv_no" (ngModelChange)="mychangecvv($event)"
+                                  required/>
+                          </div>
+                          <div class="clearfix"></div>
+
+                      </div>
+                      <div class="col-lg-12">
+                          <p>Your {{selectedPlan.planName}} plan price Rs. {{selectedPlan.planPrice}}.
+                                  <button (click)="changePlan()">Change</button>
+                              <!-- <a routerLink="/browseplans/{{student.stdId}}" (click)="changePlan()"> CHANGE</a> -->
+                          </p>
+                      </div>
+                      <div class="col-lg-12" style="margin-top:15px;">
+                          <button type="button" class="btn btn-success btn-block btn-lg" (click)="payment(student.stdId)">PAY NOW</button>
+                      </div>
+
+                  </div>
+              </div>
+          </div>
+
+
+          <div id="credit" class="tab-pane fade col-lg-8 col-lg-offset-1">
+                  <div class="panel panel-default">
+                      <div class="panel-heading">
+                          <div class="col-lg-6">
+                              <label>
+                                  <h4>Payment Details</h4>
+                              </label>
+                          </div>
+                          <div class="col-lg-6">
+                              <img class="img-responsive pull-right" src="http://i76.imgup.net/accepted_c22e0.png">
+                          </div>
+                          <div class="clearfix"></div>
+                      </div>
+                      <div class="panel-body">
+  
+                          <div class="form-group">
+  
+                              <div class="col-lg-12">
+                                  <label> CREDIT CARD NUMBER</label>
+                                  <input type="text" class="form-control" id="credit-card" name="cc-number" placeholder="CardNumber" (ngModelChange)="mychange($event)"
+                                      maxlength="19" [ngModel]="iban_no" required />
+                              </div>
+                              <div class="clearfix"></div>
+                          </div>
+                          <div class="clearfix"></div>
+                          <div class="form-group">
+                              <div class="col-lg-8">
+                                  <label>EXPIRATION DATE</label>
+                                  <input type="text" placeholder="MM/YY" maxlength=5 class="form-control" [ngModel]="expiredate" (ngModelChange)="mychangeexpiredate($event)"
+                                      required />
+                              </div>
+                              <div class="col-lg-4">
+                                  <label>CV CODE</label>
+                                  <input type="text" placeholder="CVV" maxlength=3 class="form-control" [ngModel]="cvv_no" (ngModelChange)="mychangecvv($event)"
+                                      required/>
+                              </div>
+                              <div class="clearfix"></div>
+  
+                          </div>
+                          <div class="col-lg-12">
+                              <p>Your {{selectedPlan.planName}} plan price Rs. {{selectedPlan.planPrice}}.
+                                  <a routerLink="/browseplans/{{student.stdId}}"> CHANGE</a>
+                              </p>
+                          </div>
+                          <div class="col-lg-12" style="margin-top:15px;">
+                              <button type="button" class="btn btn-success btn-block btn-lg" (click)="payment(student.stdId)">PAY NOW</button>
+                          </div>
+  
+                      </div>
+                  </div>
+              </div> 
+          <!-- <div id="credit" class="tab-pane fade col-lg-6 col-lg-offset-1">
+              <div class="panel panel-default">
+                  <div class="panel-heading">
+                      <div class="col-lg-6">
+                          Payment Details
+                      </div>
+                      <div class="col-lg-6">
+                          <img class="img-responsive pull-right" src="http://i76.imgup.net/accepted_c22e0.png">
+                      </div>
+                      <div class="clearfix"></div>
+                  </div>
+                  <div class="panel-body">
+                      <div class="form-group">
+                          <div class="col-lg-12">
+                              <label>CREDIT CARD NUMBER</label>
+                              <input type="text" class="form-control" id="credit-card" name="cardNumber" placeholder="CardNumber" maxlength=19 />
+
+
+                          </div>
+                          <div class="clearfix"></div>
+                      </div>
+                      <div class="clearfix"></div>
+                      <div class="form-group">
+                          <div class="col-lg-8">
+                              <label>EXPIRATION DATE</label>
+                              <input type="text" class="form-control" placeholder="MM/YY" maxlength=5 />
+                          </div>
+                          <div class="col-lg-4">
+                              <label>CV CODE</label>
+                              <input type="text" class="form-control" placeholder="CVV" maxlength=3/>
+                          </div>
+                          <div class="clearfix"></div>
+
+                      </div>
+                      <div class="col-lg-12">
+                          <p>Your PLAN Unlimited Streaming in SD at Rs.500 a month.
+
+                              <a routerLink="/browseplans/{{student.stdId}}" (click)="browsePlans()">CHANGE</a>
+
+                          </p>
+                      </div>
+                      <div class="col-lg-12" style="margin-top:15px;">
+                          <button type="button" class="btn btn-success btn-block btn-lg">PAY NOW</button>
+                      </div>
+
+                  </div>
+              </div>
+          </div> -->
+
+          <div id="banking" class="tab-pane fade col-lg-8 col-lg-offset-1">
+              <h4>Login to</h4>
+              <h3>Corporate Internet Banking</h3>
+              <div class="form-group">
+                  <div class="col-lg-8">
+
+                      <label>Select your Bank</label>
+                      <select class="form-control">
+                          <option value="select">Select</option>
+                          <option value="sbi">State Bank</option>
+                          <option value="icici">ICICI Bank</option>
+                          <option value="hdfc">HDFC Bank</option>
+                          <option value="axis">Axis Bank</option>
+                          <option value="kotak">Kotak Bank</option>
+                          <option value="andra">Andra Bank</option>
+                      </select>
+                      <!-- </div> -->
+                      <br>
+                      <label>User ID</label>
+                      <input type="text" class="form-control" name="name" placeholder="User ID" />
+                      <br>
+                      <label>Password</label>
+                      <input type="password" class="form-control" name="name" placeholder="Password" />
+                      <div class="col-lg-12" style="margin-top:15px;">
+                          <button type="button" class="btn btn-success btn-block btn-lg">CONTINUE</button>
+                      </div>
+                  </div>
+                  <div class="clearfix"></div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="clearfix"></div>
+</div>
