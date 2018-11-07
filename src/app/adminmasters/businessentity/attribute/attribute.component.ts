@@ -69,8 +69,8 @@ export class AttributeComponent implements OnInit {
     this.ngSelectattributeCode.ngOnInit();
 
     if (this.selectedValue.length > 0) {
-      this.selectedprivilegeCategoryNameValue = this.selectedValue[0].privileges
-      this.ngSelectprivilegeCategoryName.value = this.selectedValue[0].privileges;
+      this.selectedprivilegeCategoryNameValue = this.selectedValue[0].privilegeVos
+      this.ngSelectprivilegeCategoryName.value = this.selectedValue[0].privilegeVos;
       this.ngSelectprivilegeCategoryName.ngOnInit();
     }
   }
@@ -167,8 +167,8 @@ export class AttributeComponent implements OnInit {
   selectUser(item) {
     this.saveOrUpdate = "update";
     this.attribute = item;
-    if (this.attribute.privileges.length > 0) {
-  this.selectedaddPrivilegeCategoryNameValue = this.attribute.privileges;
+    if (this.attribute.privilegeVos.length > 0) {
+  this.selectedaddPrivilegeCategoryNameValue = this.attribute.privilegeVos;
    // this.ngselectedaddPrivilegeCategoryNameValue.selectedItems = this.attribute.privileges;
     }
 

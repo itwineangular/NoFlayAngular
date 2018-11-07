@@ -33,6 +33,7 @@ import { InitialConfigurationComponent } from './adminmasters/accesscontrol/init
 import { UserComponent } from './adminmasters/accesscontrol/user/user.component';
 import { PrivilegecategoryComponent } from './adminmasters/businessentity/privilegecategory/privilegecategory.component';
 
+
 const appRoutes: Routes = [
   {
     path: '', children: [
@@ -44,6 +45,7 @@ const appRoutes: Routes = [
       { path: 'registerstudent', component: RegstudentComponent },
       { path: 'registerinstitute', component: ReginstituteComponent },
       { path: 'registerbusiness', component: RegbusinessComponent },
+    
     ]
   },
   /* ADMIN PART START*/
@@ -69,6 +71,7 @@ const appRoutes: Routes = [
       { path: 'studentadd', component: StudentComponent ,canActivate: [AuthGuard]},
       { path: 'membershipCard', component: MembershipCardComponent ,canActivate: [AuthGuard]},
       { path: 'privilegeCategory', component: PrivilegecategoryComponent ,canActivate: [AuthGuard]},
+    
     ]
   }
   /* ADMIN PART END*/

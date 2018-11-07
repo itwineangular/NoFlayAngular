@@ -79,6 +79,7 @@ export class BusinessEntityComponent implements OnInit {
 
     this.getAttribute();
     this.pageChange(5);
+    this.getPrivilegeCategory();
 
     $('.btnNext').click(function(){
       $('.nav-tabs > .active').next('li').find('a').trigger('click');
@@ -455,7 +456,7 @@ selectCheckbox(id){
     }
     this.attributeListLocal = []
     this.attributeList.forEach(element => {
-      element.privileges.forEach(innerElement => {
+      element.privilegeVos.forEach(innerElement => {
         if(this.selectedPrivilegeCategoryList.findIndex(x => x === innerElement.privilegeId) >= 0)
         {
           this.attributeListLocal.push(element);

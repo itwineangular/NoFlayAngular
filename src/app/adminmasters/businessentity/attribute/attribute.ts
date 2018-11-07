@@ -4,14 +4,14 @@ export class Attribute {
     attributeCode: string;
     privilegeId: any;
 
-    privileges: Privilege[];
+    privilegeVos: privilegeVos[];
     creationDate?: any;
     createdBy?: any;
     modifiedDate?: any;
     modifiedBy?: any;
 }
 
-export class Privilege {
+export class privilegeVos {
     privilegeId: number;
     privilegeName: string;
 }
