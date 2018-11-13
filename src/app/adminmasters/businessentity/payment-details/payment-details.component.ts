@@ -9,7 +9,7 @@ import { PaymentDetailsService } from './payment-details.service';
 import Swal from 'sweetalert2';
 import {PlanName} from '../plan-name/plan-name';
 import {PlansObject} from '../../businessentity/plans/plans-object';
-// import {PaymentService} from '../../payment/payment.service';
+import {PaymentService} from '../../payment/payment.service';
 
 
 @Component({
@@ -61,7 +61,7 @@ export class PaymentDetailsComponent implements OnInit {
 
   constructor(private studentService: StudentService,
     private paymentDetailsService : PaymentDetailsService,
-    // private paymentService :PaymentService,
+    private paymentService :PaymentService
     ) { }
 
   ngOnInit() {
@@ -94,14 +94,14 @@ export class PaymentDetailsComponent implements OnInit {
   }
 
   getPayment() {
-    // this.paymentService.getPayment()
-    //   .subscribe(
-    //     (data) => {
-    //       console.log("data"+data);
-    //       this.paymentList = data;
-    //       console.log("payment list"+this.paymentList);
-    //     }
-    //   );
+    this.paymentService.getPayment()
+      .subscribe(
+        (data) => {
+          console.log("data"+data);
+          this.paymentList = data;
+          console.log("payment list"+this.paymentList);
+        }
+      );
 
   }
 

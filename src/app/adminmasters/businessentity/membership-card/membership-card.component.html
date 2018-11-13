@@ -51,14 +51,14 @@
                             name="stdName" #studentNameControl="ngModel" [(ngModel)]="membershipCard.stdName" />
                     </div>
 
-                   
+
                     <div class="col-md-3">
                         <label for="status">{{'adminConfigarationPage.studentPage.status' | translate}}</label>
-                        <select class="form-control" name="status" #status="ngModel" [(ngModel)]="membershipCard.status"  required>
+                        <select class="form-control" name="status" #status="ngModel" [(ngModel)]="membershipCard.status" required>
                             <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.status' | translate}}</option>
                             <option *ngFor="let item of statusList" value={{item.status}}>{{item.status}} </option>
                         </select>
-                        </div>
+                    </div>
                     <div class="col-md-12">
                         <button class="btn btn-warning btn-outline pull-right cssButtonPadding" type="button" (click)="searchClear()">{{'adminConfigarationPage.commonFields.clear' | translate}}</button>
                         <button class="btn btn-primary btn-outline pull-right cssButtonPadding" type="button" (click)="searchStudent(membershipCard)">{{'adminConfigarationPage.commonFields.search' | translate}}</button>
@@ -69,11 +69,11 @@
         </div>
     </div>
 
-    <div class="col-md-12 text-right"  *ngIf="isListContainsData">
+    <div class="col-md-12 text-right" *ngIf="isListContainsData">
         <input type="checkbox" id="mycheck-{{ i+1 }}" value="{{ i+1 }}" (click)="toggleSelect($event.target.checked)">
-        <label  for="mycheck-{{ i+1 }}">Select All</label>
-    
-   </div>
+        <label for="mycheck-{{ i+1 }}">Select All</label>
+
+    </div>
     <div class="col-md-12">
         <!-- <div class="alert alert-warning fade in myAlert" *ngIf="alertMassege">
             <a class="close" href="#" data-dismiss="alert" (click)="clickedAlert()">X</a>
@@ -104,8 +104,8 @@
                         <!-- <th>{{ 'adminConfigarationPage.membershipCardPage.mcmId' | translate }} </th> -->
 
                         <th>{{ 'adminConfigarationPage.membershipCardPage.checkbox' | translate }}</th>
-                        <th>{{ 'adminConfigarationPage.commonFields.edit' | translate }}</th>
-                        <th>{{ 'adminConfigarationPage.commonFields.view' | translate }}</th>
+                        <th *ngIf="isEditColumnVisible">{{ 'adminConfigarationPage.commonFields.edit' | translate }}</th>
+                        <th *ngIf="!isEditColumnVisible">{{ 'adminConfigarationPage.commonFields.view' | translate }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -122,13 +122,13 @@
                             <input type="checkbox" id="mycheck-{{ i+1 }}" (change)="selectedStudent(item.status,item, $event.target.checked)" checked={{checkedval}}>
                             <label for="mycheck-{{ i+1 }}"></label>
                         </td>
-                        <td>
+                        <td *ngIf="isEditColumnVisible">
                             <button class="btn btn-warning buttonStyle" data-toggle="modal" data-target="#addModal" (click)="editUser(item)">
                                 <i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size:15px"></i>
                             </button>
                         </td>
-                        <td>
-                            <button class="btn btn-success buttonStyle" data-toggle="modal" data-target="#QRModal" (click)="selectedUser(item)">
+                        <td *ngIf="!isEditColumnVisible">
+                            <button class="btn btn-success buttonStyle" data-toggle="modal" data-target="#QRModal" (click)="selectedStudentForcard(item)">
                                 <span class="glyphicon glyphicon-eye-open" aria-hidden="true" style="font-size:15px" style="color:white"></span>
                                 <!-- <i class="fa fa-eye" aria-hidden="true" style="font-size:15px"></i> -->
                             </button>
@@ -157,10 +157,10 @@
 
         </div>
         <div class="col-lg-12 text-center">
-            <button *ngIf="pnamechangeflag" class="btn btn-primary btnNext" type="button" (click)="proceedClick()" data-toggle="modal" data-target="#addModal">{{ 'adminConfigarationPage.membershipCardPage.proceed' | translate }}</button>
+            <button *ngIf="pnamechangeflag" class="btn btn-primary btnNext" type="button" (click)="proceedClick()">{{ 'adminConfigarationPage.membershipCardPage.proceed' | translate }}</button>
         </div>
         <div class="col-lg-12 text-center">
-            <button *ngIf="cnamechangeflag" class="btn btn-primary btnNext" type="button" (click)="sendEmail()"  >Send Email</button>
+            <button *ngIf="cnamechangeflag" class="btn btn-primary btnNext" type="button" (click)="sendEmail()">Send Email</button>
         </div>
 
     </div>
@@ -313,19 +313,19 @@
                                     <label>Name :</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <label>ROSS GELLER</label>
+                                    <label>{{studentDetailsForCard.stdName}}</label>
                                 </div>
                                 <div class="col-md-4" style="text-align: right">
                                     <label>Id :</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <label>NFRVBECS0001</label>
+                                    <label>{{studentDetailsForCard.mcmId}}</label>
                                 </div>
                                 <div class="col-md-4" style="text-align: right">
                                     <label>Plan :</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <label>SILVER-ANNUAL</label>
+                                    <label>{{studentDetailsForCard.plan}}-{{studentDetailsForCard.membershipType}}</label>
                                 </div>
                                 <!-- <div class="col-md-4" style="text-align: right">
                                     <label>Expiry :</label>
@@ -335,7 +335,8 @@
                                 </div> -->
                             </div>
                             <div class="col-md-3">
-                                <img src="./assets/img/s2.jpg" class="studentImage" alt="student">
+                                <img src="http://192.168.1.51:8080/students/imageFiles/{{studentDetailsForCard.stdName}}_Lighthouse" class="studentImage"
+                                    alt="student">
                             </div>
                         </div>
                     </div>
@@ -351,7 +352,7 @@
     <!-- custom id card design -->
     <div style="visibility: hidden;">
         <div id="customMembershipCard">
-            <div style="width: 55%;margin:0 auto;border:1px solid #ccc;border-radius: 3px;padding:15px;">
+            <div style="width: 350px;height: 180px; margin-bottom: 33px;border:1px solid #ccc;border-radius: 3px;padding:15px;">
                 <div style="width: 100%;">
                     <div style="float: left; width: 15%">
                         <img src="./assets/img/noflaylogo1.jpg" style="width: 60px" alt="logo">
@@ -364,31 +365,53 @@
                     <div style="clear: both;"></div>
                 </div>
 
+                <div style="width: 100%; margin-top: 15px">
+                    <div style="float: left; width: 25%">
+                        <qrcode [qrdata]="myAngularxQrCode" [size]="80" [level]="'M'"></qrcode>
+                    </div>
+                    <div style="float: left; width: 50%; text-align: center; margin-top: 10px">
+                        <p style="margin: 0px">{{studentNameLocal}}</p>
+                        <p style="margin-top: 5px; margin-bottom: 5px">{{mcmIdLocal}}</p>
+                        <p style="margin: 0px">{{planLocal}}</p>
+                    </div>
+                    <div style="float: left; width: 25%">
+                        <img src="http://192.168.1.51:8080/students/imageFiles/{{studentNameLocal}}_Lighthouse" style="height: 80px; width: 80px" alt="student">
+                    </div>
+                    <div style="clear: both;"></div>
+                </div>
+            </div>
+            <!-- <div style="width: 55%;margin:0 auto;border:1px solid #ccc;border-radius: 3px;padding:15px;">
+                <div style="width: 100%;">
+                    <div style="float: left; width: 15%">
+                        <img src="./assets/img/noflaylogo1.jpg" style="width: 60px" alt="logo">
+                    </div>
+                    <div style="float: left; width: 80%">
+                        <img src="./assets/img/noflayTitle.png" style="width: 100px" alt="NoFlay">
+
+                        <small style="display: block;">LIVING IN WELLNESS - BALANCED LIFE</small>
+                    </div>
+                    <div style="clear: both;"></div>
+                </div>
 
                 <div style="width: 100%; margin-top: 15px">
                     <div style="float: left; width: 25%">
                         <qrcode [qrdata]="myAngularxQrCode" [size]="100" [level]="'M'"></qrcode>
                     </div>
                     <div style="float: left; width: 50%; text-align: center; margin-top: 10px">
-                        <!-- <label>Name : ROSS GELLER</label>
-                          <br/>
-                          <label>Id : NFRVBECS0001</label>
-                          <br/>
-                          <label>Plan : SILVER-ANNUAL</label> -->
-                        <p style="margin: 0px">Mr. ROSS GELLER</p>
-                        <p style="margin-top: 5px; margin-bottom: 5px">NFRVBECS0001</p>
-                        <p style="margin: 0px">SILVER-ANNUAL</p>
+                        <p style="margin: 0px">{{studentDetailsForCard.stdName}}</p>
+                        <p style="margin-top: 5px; margin-bottom: 5px">{{studentDetailsForCard.mcmId}}</p>
+                        <p style="margin: 0px"> {{studentDetailsForCard.membershipType}}</p>
                     </div>
                     <div style="float: left; width: 25%">
-                        <img src="./assets/img/s2.jpg" style="height: 100px; width: 100px" alt="student">
+                        <img src="http://192.168.1.51:8080/students/imageFiles/{{studentDetailsForCard.stdName}}_Lighthouse" style="height: 100px; width: 100px" alt="student">
                     </div>
                     <div style="clear: both;"></div>
                 </div>
-            </div>
+            </div> -->
         </div>
 
     </div>
 
-    
+
 
 </div>

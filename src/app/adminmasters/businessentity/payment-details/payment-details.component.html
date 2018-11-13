@@ -173,7 +173,7 @@
                                       <div class="col-sm-3">
   
                                               <input class="form-control" type="text" placeholder="StartDate" name="planStartDate" readonly
-                                              [(ngModel)]="selectedStudentData.planStartDate"/>
+                                              [ngModel]="selectedStudentData.planStartDate  | date:'medium'"/>
                                           <!-- <my-date-picker [options]="myDatePickerOptions" name="planStartDate" [(ngModel)]="selectedStudentData.planStartDate" placeholder="Start Date"
                                               (click)="setDate($event.target.value)"></my-date-picker> -->
   
@@ -184,7 +184,7 @@
                                       <label class="control-label col-sm-2">End Date:</label>
                                       <div class="col-sm-3">
                                               <input class="form-control" type="text" placeholder=" EndDate" name="planEndDate" readonly
-                                              [(ngModel)]="selectedStudentData.planEndDate"/>
+                                              [ngModel]="selectedStudentData.planEndDate  | date:'medium'"/>
                                           <!-- <my-date-picker [options]="myDatePickerOptions" name="planEndEnd" [(ngModel)]="selectedStudentData.planEndDate" placeholder="End Date"></my-date-picker> -->
   
                                       </div>
@@ -219,7 +219,7 @@
                                               <div class="col-sm-3">
           
                                                   <input class="form-control" type="text" placeholder="Payment Date" name="paymentDate" readonly 
-                                                  [(ngModel)]="payment.paymentDate"
+                                                  [ngModel]="payment.paymentDate | date:'medium'"
                                                   />
           
                                               </div>

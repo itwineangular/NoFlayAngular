@@ -30,6 +30,7 @@ declare var $: any;
 })
 export class StudentComponent implements OnInit {
 
+  url: any;
   viewdisable: boolean = true;
   startDate = new Date(1990, 0, 1);
   alertMassege = "";
@@ -84,6 +85,8 @@ export class StudentComponent implements OnInit {
 
   academicYear: string;
   academicYearsList: string[] = [];
+
+  isEditColumnVisible: boolean;
 
   d = new Date();
 
@@ -257,6 +260,22 @@ export class StudentComponent implements OnInit {
 
   }
 
+  addToQueue(file: FileList) {
+
+    if (file && file[0]) {
+        var reader = new FileReader();
+        reader.readAsDataURL(file[0]); // read file as data url
+        reader.onload = (event) => {
+            let target: any = event.target;
+            let content: string = target.result;
+            this.url = content;
+            // this.url = event.target.result;
+  
+        }
+    }
+  
+    this.uploader.addToQueue(file);
+  }
 
   addNew() {
     this.saveOrUpdate = "save";
@@ -403,12 +422,14 @@ onInstituteSelect(institutionId)
   }
   saveStudent(studentValue) {
 
+    this.uploader.uploadAll(studentValue,"studentImage");
+
     if (this.saveOrUpdate == "save") {
    
       this.studentService.saveStudent(studentValue, this.selectedInstitute, this.selectedCategory, this.selectedCourse)
         .subscribe(
           (data) => {
-            this.alertMassege = "New item add on list successfully!!";
+            this.alertMassege = "Student Registered successfully!!";
             this.getStudent();
           },
           (error) => {
@@ -781,6 +802,12 @@ onInstituteSelect(institutionId)
           this.isListContainsData = true;
           this.studentList = data;
           this.studentList = data;
+          if (this.studentList[0].status == 'created') {
+            this.isEditColumnVisible = true;
+
+          } else if (this.studentList[0].status == 'payment') {
+            this.isEditColumnVisible = false;
+          }
         }
         else {
           this.isListContainsData = false;

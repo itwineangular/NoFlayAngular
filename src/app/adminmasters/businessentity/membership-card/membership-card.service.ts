@@ -82,7 +82,7 @@ export class MembershipCardService {
       'Content-Type': 'application/json'
     });
 
-    let url = "http://192.168.1.55:8080/email/sendEmail/";
+    let url = "http://192.168.1.51:8080/email/sendEmail/";
     students.forEach(element => {
       var loalUrl = url + element.stdId + ",";
       url = loalUrl;

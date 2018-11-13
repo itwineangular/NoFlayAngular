@@ -80,6 +80,12 @@ export class FileuploaderService {
       this.url = this.globalUrl+'/uploadFile';
       this.form.append("instName", data.instName);
     }
+    else if(type=="studentImage")
+    {     
+      this.url = "http://192.168.1.51:8080/students/imageUpload";      
+      this.form.append("stdName", data.stdName);
+      console.log("stdName", data.stdName);
+    }
     else if(type=="file")
     {
       this.url = this.globalUrl+'/students/uploadFile';

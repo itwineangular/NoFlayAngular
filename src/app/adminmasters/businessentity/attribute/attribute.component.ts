@@ -125,7 +125,9 @@ export class AttributeComponent implements OnInit {
             // this.getAttribute();
           },
           (error) => {
-            console.log(error);
+            console.log("error");
+            console.log(error._body);
+            console.log("error");
             alert("Try again");
           }
         );

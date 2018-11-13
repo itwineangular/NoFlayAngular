@@ -92,7 +92,7 @@
                             <span [hidden]="reverse">▼</span>
                             <span [hidden]="!reverse">▲</span>
                         </th>
-                        <th [class.active]="key === 'stdRollnumber'" (click)=" sort('stdRollnumber')">{{ 'adminConfigarationPage.studentPage.rollNumber' | translate }}
+                        <!-- <th [class.active]="key === 'stdRollnumber'" (click)=" sort('stdRollnumber')">{{ 'adminConfigarationPage.studentPage.rollNumber' | translate }}
                             <span [hidden]="reverse">▼</span>
                             <span [hidden]="!reverse">▲</span>
                         </th>
@@ -107,7 +107,9 @@
                         <th [class.active]="key === 'courseName'" (click)=" sort('courseName')">{{ 'adminConfigarationPage.studentPage.courses' | translate }}
                             <span [hidden]="reverse">▼</span>
                             <span [hidden]="!reverse">▲</span>
-                        </th>
+                        </th> -->
+                        <th *ngIf="!isEditColumnVisible">Plan StartDate</th>
+                        <th *ngIf="!isEditColumnVisible">Plan EndDate</th>
                         <th [class.active]="key === 'status'" (click)=" sort('status')">{{ 'adminConfigarationPage.studentPage.status' | translate }}
                             <span [hidden]="reverse">▼</span>
                             <span [hidden]="!reverse">▲</span>
@@ -122,10 +124,12 @@
                         <td>{{item.stdName}}</td>
                         <td>{{item.stdMobile}}</td>
                         <td>{{item.stdEmail}}</td>
-                        <td>{{item.stdRollnumber}}</td>
+                        <td *ngIf="!isEditColumnVisible">{{item.planStartDate| date:'fullDate'}}</td>
+                        <td *ngIf="!isEditColumnVisible">{{item.planEndDate | date:'fullDate'}}</td>
+                        <!-- <td>{{item.stdRollnumber}}</td>
                         <td>{{item.institutionName}}</td>
                         <td>{{item.courseCategory}}</td>
-                        <td>{{item.courseName}}</td>
+                        <td>{{item.courseName}}</td> -->
                         <td>{{item.status}}</td>
                         <td>
                             <button class="btn btn-warning buttonStyle" data-toggle="modal" data-target="#addModal" (click)="selectUser(item)">
@@ -310,6 +314,28 @@
                                 </div>
 
                                 <div class="col-sm-3">
+                                    <label for="plan">Plan Price<span class="reqMark">*</span></label>
+                                    <select class="form-control" type="text" name="plan" #plan="ngModel" [(ngModel)]="student.planAmount" required>
+                                        <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.plan' | translate}}</option>
+                                        <option *ngFor="let item of planList" value={{item.planPrice}}>{{item.planPrice}}
+                                        </option>
+                                    </select>                                 
+
+
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <label for="plan">Membership Type<span class="reqMark">*</span></label>
+                                    <select class="form-control" type="text" name="plan" #plan="ngModel" [(ngModel)]="student.membershipType" required>
+                                        <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.plan' | translate}}</option>
+                                        <option *ngFor="let item of planList" value={{item.planMembership}}>{{item.planMembership}}
+                                        </option>
+                                    </select>                                 
+
+
+                                </div>
+
+                                <div class="col-sm-3">
                                     <label for="status">{{'adminConfigarationPage.studentPage.status' | translate}}<span class="reqMark">*</span></label>
                                     <select class="form-control" name="status" #status="ngModel" [(ngModel)]="student.status" required>
                                         <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.status' | translate}}</option>
@@ -320,6 +346,15 @@
 
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                        <img *ngIf="url" [src]="url" height="200">
+                                        <input type="file" #fileInput required (change)="addToQueue($event.target.files)" required/>
+                                </div>
+
+                            </div>
+
 
 
                             <div class="form-group col-md-12">

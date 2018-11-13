@@ -59,7 +59,9 @@ export class StudentService {
       "courseName": courseName,
       "courseCategory": courseCategory,
       "plan": data.plan,
-      "status": data.status
+      "status": data.status,
+      "planAmount":data.planAmount,
+      "membershipType":data.membershipType
       // "yearofjoining": data.yearofjoining
     };
 
@@ -94,7 +96,9 @@ export class StudentService {
       "courseName": courseName,
       "courseCategory": courseCategory,
       "plan": data.plan,
-      "status": data.status
+      "status": data.status,
+      "planAmount":data.planAmount,
+      "membershipType":data.membershipType
       // "yearofjoining": data.yearofjoining
     };
 
