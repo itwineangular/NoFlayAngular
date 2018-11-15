@@ -16,6 +16,7 @@ import {  FilterPipeAttribute} from "./adminmasters/businessentity/attribute/att
 import { FilterPipeMembership } from "./adminmasters/businessentity/membership/membership-filter";
 import {FilterPipePrivilegeCategory} from "./adminmasters/businessentity/privilegecategory/privilegecategory-filter";
 import { FilterPipePlanName } from "./adminmasters/businessentity/plan-name/plan-name-filter";
+import {FilterPipeStatus} from "./adminmasters/status/status/status-filter";
 import { OrderModule } from 'ngx-order-pipe';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { MyDatePickerModule } from 'mydatepicker';
@@ -122,6 +123,7 @@ import { BrowseplansComponent } from './adminmasters/browseplans/browseplans.com
     PrivilegecategoryComponent,
     PaymentDetailsComponent,
     PaymentComponent,
+    FilterPipeStatus,
     BrowseplansComponent
    
   ],

@@ -227,7 +227,7 @@
             "studentName":"Nom d'étudiant",
             "planName":"plan",
             "checkbox": "Case à cocher",
-            "proceed": "Procéder",
+            "proceed": "Imprimer la carte d'identité",
             "mcmId": "ID MCM"
         },
         "statusPage":

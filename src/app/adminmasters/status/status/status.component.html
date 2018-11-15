@@ -1,39 +1,162 @@
-
 <div class="mycontent">
-    <div class="container">
-        <div class="row">
+    <!-- <div class="container"> -->
+        <!-- <div class="row"> -->
             <div class="col-md-12">
                 <hr/>
-                <h3 class="text-center">{{'adminConfigarationPage.statusPage.status' | translate}}</h3>
+                <h3 class="text-center">{{ 'adminConfigarationPage.statusPage.status' | translate }}</h3>
                 <hr/>
+                </div>
+            <!-- </div> -->
+            <div class="col-md-12">
+                    <div class="panel panel-default">
+                       
+                        <div class="panel-body">
+                <form class="form-horizontal" #statusForm="ngForm" (ngSubmit)="searchStatus(statusForm)">
+                    <div class="col-md-3">
+                        <label for="status">{{ 'adminConfigarationPage.statusPage.status' | translate }}</label>
+                        
+                                 <ngx-select-dropdown #chosenuser [multiple]="false" [(value)]="selectedValue"   
+                                 [config]="config" [options]="statusListLocal"></ngx-select-dropdown>
+                    </div>
+                    
+                    <div class="col-md-12">
+                        <button class="btn btn-info btn-outline pull-right cssButtonPadding" data-toggle="modal" data-target="#addModal" type="button"
+                            (click)="addNew()">{{'adminConfigarationPage.commonFields.addNew' | translate}}</button>
+                        <button class="btn btn-warning btn-outline pull-right cssButtonPadding" type="button" (click)="searchClear()">{{'adminConfigarationPage.commonFields.clear' | translate}}</button>
+                        <button class="btn btn-primary btn-outline pull-right cssButtonPadding" type="submit">{{'adminConfigarationPage.commonFields.search' | translate}}</button>
+                    </div>
+                    <div class="clearfix"></div>
+                </form>
+                <div class="clearfix"></div>
             </div>
+        </div>
+        </div>
+        <!-- </div> -->
+    
+    <!-- <div class="container"> -->
+        <!-- <div class="row">  -->
+            
+                    <!-- <input type="search" [(ngModel)]="searchText" placeholder="Search">
+                <button class="btn btn-info pull-right" data-toggle="modal" data-target="#addModal" (click)="addNew()">{{ 'adminConfigarationPage.commonFields.addNew' | translate }}
+                </button> -->
+                <div class="col-md-12">
+                    <div class="alert alert-warning fade in myAlert" *ngIf="alertMassege">
+                        <a class="close" href="#" data-dismiss="alert" (click)="clickedAlert()">X</a>
+                        <h4 style="text-align: center">{{alertMassege}}</h4>
+                    </div>
+                    <div *ngIf="isSearchClicked">
+                    <div *ngIf="!isListContainsData">
+                        <h3 class="text-center noRecord">{{ 'adminConfigarationPage.commonFields.noRecordFound' | translate }}</h3>
+                    </div>
+                    </div>
+                </div>
+                <div class="col-md-12" *ngIf="isListContainsData">
+                <div class="table-responsive">
+                <table class="table table-bordered myTable table-condensed table-striped">
+                    <thead>
+                    <tr class="text-center">
+                        <th>{{'adminConfigarationPage.commonFields.index' | translate}}</th>
+                        <th [class.active]="key === 'status'"  (click)=" sort('status')">{{ 'adminConfigarationPage.statusPage.status' | translate }} <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span></th>
+                        <th>{{ 'adminConfigarationPage.commonFields.edit' | translate }}</th>
+                        <!-- <th>{{ 'adminConfigarationPage.commonFields.delete' | translate }}</th> -->
+                    </tr>
+                </thead>
+                    <tbody>
+                        <tr *ngFor="let item of statusList   | filterStatus : searchText| orderBy: key : reverse : caseInsensitive : comparator |  paginate: { itemsPerPage: pagenumber, currentPage: p };let i=index">
+                            
+                            <td>{{((p-1)*itemsPerPage2)+i+1}}</td>
+                            <td>{{item.status}}</td>
+                            <td>
+                                <button class="btn btn-warning buttonStyle" data-toggle="modal" data-target="#addModal" (click)="selectUser(item)">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size:15px"></i>
+                                </button>
+                            </td>
+                            <!-- <td>
+                                <button class="btn btn-danger buttonStyle" data-toggle="modal" data-target="#deleteModal" (click)="selectUser(item)">
+                                    <i class="fa fa-trash-o" aria-hidden="true" style="font-size:15px"></i>
+                                </button>
+                            </td> -->
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+                <div class="form-group">
+                    <div class="col-md-4">
+                            Show 
+                                <select (change)="pageChange($event.target.value)" style="border: none;">
+                                        
+                                        <option>5</option>
+                                        <option>10</option>
+                                        <option>15</option>
+                                </select>
+                            Entries
+                        </div>
+                        <div class="col-md-2"></div>
+
+                    <div class=" col-md-6 text-right">
+                        <pagination-controls (pageChange)="customPageChange($event)"></pagination-controls>
+                </div>
+                <div class="clearfix"></div>
+                </div>
+
+            </div>
+            <!-- </div> -->
+        <!-- </div>
+    </div> -->
+
+    <!-- Add Modal-->
+    <div class="modal fade" id="addModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <form class="form-horizontal" #statusForm="ngForm" (ngSubmit)="saveStatus(statusForm)">
+                    <div class="modal-header">
+                        <button class="close" type="button" data-dismiss="modal">X</button>
+                        <h4 class="modal-title">{{ 'adminConfigarationPage.commonFields.addNew' | translate }}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="Name">{{ 'adminConfigarationPage.statusPage.status' | translate }}
+                                    <span class="reqMark">*</span>
+                                </label>
+                                <div class="col-sm-3">
+                                    <input class="form-control" type="text" placeholder="Name" name="status" #statusControl="ngModel" [(ngModel)]="status.status"
+                                     required />
+                                    <div class="validation-error" *ngIf="statusControl.invalid && statusControl.touched">{{'adminConfigarationPage.commonFields.nameFieldRequired' | translate}}</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-success" type="submit" data-dismiss="modal" [disabled]="statusForm.invalid" (click)="saveStatus(status)">{{ 'adminConfigarationPage.commonFields.save' | translate }}</button>
+                        <button class="btn btn-default" type="button" data-dismiss="modal">{{ 'adminConfigarationPage.commonFields.close' | translate }}</button>
+                    </div>
+                </form>
+            </div>
+
         </div>
     </div>
 
-    <div class="container">
-            <div class="col-md-12">
-                  
-                   
-                    <table class="table table-bordered myTable">
-                        <thead>
-                        <tr class="text-center">
-                            <th > {{'adminConfigarationPage.statusPage.id' | translate}} </th>
-                            <th > {{'adminConfigarationPage.statusPage.status' | translate}}</th>
-                            
-                        </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let item of statusList" >
-                                <td>{{item.studentStatusId}}</td>
-                                <td>{{item.status}}</td> 
-                            </tr>
-                            
-                        </tbody>
-                    </table>
-                   
-    
+    <!-- Delete Modal-->
+    <!-- <div class="modal fade" id="deleteModal" role="dialog">
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal">X</button>
+                    <h4 class="modal-title">{{ 'adminConfigarationPage.commonFields.delete' | translate }}</h4>
+                </div>
+                <div class="modal-body">
+                    <h3>Are you sure to delete
+                        <span>{{status.status}}</span>????</h3>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger" type="button" (click)="deleteStatus(status.statusId)" data-dismiss="modal">{{ 'adminConfigarationPage.commonFields.yes' | translate }}</button>
+                    <button class="btn btn-primary" type="button" data-dismiss="modal">{{ 'adminConfigarationPage.commonFields.no' | translate }}</button>
                 </div>
             </div>
-
-    
-</div>
+        </div>
+    </div> -->
+<!-- </div> -->

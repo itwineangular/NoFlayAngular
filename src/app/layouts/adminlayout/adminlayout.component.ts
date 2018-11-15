@@ -200,6 +200,7 @@ export class AdminlayoutComponent implements OnInit {
                   { 'name': this.courseCategory, 'url': 'coursecategory' },
                   { 'name': this.courses, 'url': 'courses' },
                   { 'name': this.educationalInstitutions, 'url': 'institute' },
+                  { 'name': this.status, 'url': 'status' },
                   { 'name': this.student, 'url': 'studentadd' }
 
                 ]

@@ -121,3 +121,10 @@ export  class selectedStudents
     membershipType: string;
     stdId: number;
 }
+
+export class StudentCard {
+    studentName: string;
+    studentMcmId : string;
+    studentPlan : string;
+    studentQrCode : string;
+}

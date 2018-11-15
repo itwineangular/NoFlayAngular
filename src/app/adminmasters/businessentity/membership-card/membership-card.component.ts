@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MembershipCard, Institution, CourseCategory, CourseProfile, selectedStudents } from './membership-card';
+import { MembershipCard, Institution, CourseCategory, CourseProfile, selectedStudents, StudentCard } from './membership-card';
 import { MembershipCardService } from './membership-card.service';
 import { Student } from '../../institutions/student/student';
 import { StudentService } from '../../institutions/student/student.service';
@@ -82,6 +82,8 @@ export class MembershipCardComponent implements OnInit {
   statusList: Student[];
   isEditColumnVisible: boolean;
   studentDetailsForCard: Student = new Student();
+
+  studentCardList: StudentCard[] = [];
 
 
   @ViewChild('instituteName') public ngSelectInstituteName: SelectDropDownComponent;
@@ -375,52 +377,17 @@ export class MembershipCardComponent implements OnInit {
 
   selectedStudent(itemstatus, student, checked) {
     console.log(student);
-    console.log(this.planNameList);
+    // console.log(this.planNameList);
 
     this.changelistview(itemstatus);
 
     if (checked) {
-
-      // var selectedStudent = new selectedStudents();
-      // selectedStudent.stdName = student.stdName;
-      // selectedStudent.course = student.courseName;
-      // selectedStudent.stdEmail = student.stdEmail;
-      // selectedStudent.institutionName = student.institutionName;     
-      // selectedStudent.courseCategory = student.courseCategory;      
-      // selectedStudent.stdId = student.stdId;
-
-
-      // var planData = this.planNameList.filter(x => x.planId == student.plan);
-      // console.log(planData);
-      // if (planData.length > 0) {
-      //   selectedStudent.plan = planData[0].planName;
-      //   selectedStudent.planAmount = planData[0].planPrice;
-      //   selectedStudent.membershipType = planData[0].planMembership;
-      // }
-
       this.selectedStudentsForEmailOrId.push(student);
-
-      // this.selectedStudentsForEmailOrId.push({
-      //   'stdName' :student.stdName,
-      //   'course' : student.courseName,
-      //   'stdEmail' : student.stdEmail,
-      //   'institutionName' : student.institutionName,     
-      //   'courseCategory' : student.courseCategory,      
-      //   'stdId' : student.stdId,
-      //   'plan' : student.plan
-      // });
-      console.log(this.selectedStudentsForEmailOrId);
-
-
-
     }
     else {
-      // var data = this.selectedStudentsForEmailOrId.filter(x => x.stdEmail != student.stdEmail);
-      // this.selectedStudentsForEmailOrId = data;
+      var localData = this.selectedStudentsForEmailOrId.filter(x => x.stdId != student.stdId);
+      this.selectedStudentsForEmailOrId = localData;
 
-      var values = this.selectedStudentsForEmailOrId.map(function (o) { return o.stdId; });
-      const index = values.indexOf(student.stdId);
-      this.selectedStudentsForEmailOrId.splice(index, 1);
       if (this.selectedStudentsForEmailOrId.length === 0) {
         this.cnamechangeflag = false;
         this.pnamechangeflag = false;
@@ -489,42 +456,71 @@ export class MembershipCardComponent implements OnInit {
   idCardTemplate: any[] = [];
 
   proceedClick() {
-    
-    console.log(this.planNameList);
 
-    let printContents = "", popupWin;
-    let list2 = [];
+
+    this.studentCardList = [];
     for (let studentLocal of this.selectedStudentsForEmailOrId) {
-      this.studentNameLocal = studentLocal.stdName;
-      this.mcmIdLocal = studentLocal.mcmId;
+      var studentCard: StudentCard = new StudentCard();
+      studentCard.studentName = studentLocal.stdName;
+      studentCard.studentMcmId = studentLocal.mcmId;
       this.planNameListLocal = this.planNameList.filter((item) => item.planId == studentLocal.plan);
       var planName = "";
       if (this.planNameListLocal.length > 0) {
         planName = this.planNameListLocal[0].planName;
       }
-
-      var htmlCode = document.getElementById('customMembershipCard').innerHTML;
-      var stdName = /studentName/gi;
-      var stdMcmId = /studentMcmId/gi;
-      var stdPlan = /studentPlan/gi;
-      var temp = htmlCode.replace(stdName, studentLocal.stdName);
-      var temp2 = temp.replace(stdMcmId, studentLocal.mcmId);
-      var temp3 = temp2.replace(stdPlan, planName);
-      list2.push(temp3);
+      studentCard.studentPlan = planName;
+      studentCard.studentQrCode = "Name:" + studentLocal.stdName + ",Id:" + studentLocal.mcmId + ",Card:" + planName + ".";
+      this.studentCardList.push(studentCard);
     }
 
-    list2.forEach(element => {
-      printContents += element;
-    });
-
-    popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
-    popupWin.document.open();
-    popupWin.document.write(`
+    setTimeout(() => {
+      let printContents = "", popupWin;
+      printContents = document.getElementById('customMembershipCard').innerHTML;
+      popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
+      popupWin.document.open();
+      popupWin.document.write(`
       <html>
     <body onload="window.print();window.close()">${printContents}</body>
       </html>`
-    );
-    popupWin.document.close();
+      );
+      popupWin.document.close();
+    }, 1000)
+
+    // console.log(this.planNameList);
+
+    // let printContents = "", popupWin;
+    // let list2 = [];
+    // for (let studentLocal of this.selectedStudentsForEmailOrId) {
+    //   this.studentNameLocal = studentLocal.stdName;
+    //   this.mcmIdLocal = studentLocal.mcmId;
+    //   this.planNameListLocal = this.planNameList.filter((item) => item.planId == studentLocal.plan);
+    //   var planName = "";
+    //   if (this.planNameListLocal.length > 0) {
+    //     planName = this.planNameListLocal[0].planName;
+    //   }
+
+    //   var htmlCode = document.getElementById('customMembershipCard').innerHTML;
+    //   var stdName = /studentName/gi;
+    //   var stdMcmId = /studentMcmId/gi;
+    //   var stdPlan = /studentPlan/gi;
+    //   var temp = htmlCode.replace(stdName, studentLocal.stdName);
+    //   var temp2 = temp.replace(stdMcmId, studentLocal.mcmId);
+    //   var temp3 = temp2.replace(stdPlan, planName);
+    //   list2.push(temp3);
+    // }
+
+    // list2.forEach(element => {
+    //   printContents += element;
+    // });
+
+    // popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
+    // popupWin.document.open();
+    // popupWin.document.write(`
+    //   <html>
+    // <body onload="window.print();window.close()">${printContents}</body>
+    //   </html>`
+    // );
+    // popupWin.document.close();
 
   }
 
@@ -540,36 +536,22 @@ export class MembershipCardComponent implements OnInit {
 
   checkedval: boolean;
   toggleSelect(checked) {
+    this.selectedStudentsForEmailOrId = [];
 
     this.changelistview(this.studentstatus);
 
     if (checked) {
       this.checkedval = true;
-      this.studentList.forEach(element => {
-        // element.stdName = this.planname;
-        // var selectedStudent = new selectedStudents();
-        // selectedStudent.stdName = element.stdName;
-        // selectedStudent.course = element.courseName;
-        // selectedStudent.stdEmail = element.stdEmail;
-        // selectedStudent.institutionName = element.institutionName;
-        // selectedStudent.plan = element.plan;
-        // selectedStudent.planAmount = element.planAmount;
-        // selectedStudent.courseCategory = element.courseCategory;
-
-        this.selectedStudentsForEmailOrId.push(element);
-        // console.log(selectedStudent);
-
-      });
-      console.log(this.selectedStudentsForEmailOrId);
-    } else {
+      // this.studentList.forEach(element => {
+      //   this.selectedStudentsForEmailOrId.push(element);
+      // });
+      this.selectedStudentsForEmailOrId = this.studentList;
+    }
+    else {
       this.checkedval = null;
       this.cnamechangeflag = false;
       this.pnamechangeflag = false;
-      // this.studentList.forEach(element => {
-      //   element.plan = "";
-      //   // this.selectedStudentsForEmailOrId.push(element.stdId);
-
-      // });
+      this.selectedStudentsForEmailOrId = [];
     }
   }
 

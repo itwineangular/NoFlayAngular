@@ -1,5 +1,8 @@
 export class Status {
 
-    studentStatusId: number;
+    // studentStatusId: number;
+    // status: string;
+
+    status_id: number;
     status: string;
 }

@@ -335,8 +335,7 @@
                                 </div> -->
                             </div>
                             <div class="col-md-3">
-                                <img src="http://192.168.1.55:8080/students/imageFiles/{{studentDetailsForCard.stdName}}" class="studentImage"
-                                    alt="student">
+                                <img src="http://192.168.1.55:8080/students/imageFiles/{{studentDetailsForCard.stdName}}" class="studentImage" alt="student">
                             </div>
                         </div>
                     </div>
@@ -352,34 +351,37 @@
     <!-- custom id card design -->
     <div style="visibility: hidden;">
         <div id="customMembershipCard">
-                <div style="width: 325.03937008px;height: 204.09448819px; margin-bottom: 45px;border:1px solid #ccc;border-radius: 3px;padding:37.795275591px;">
+            <ul style="list-style: none;">
+                <li *ngFor="let studentCard of studentCardList">
+                    <div style="width: 325.03937008px;height: 204.09448819px; margin-bottom: 45px;border:1px solid #ccc;border-radius: 3px;padding:37.795275591px;">
                         <div style="width: 100%;">
-                            <div style="float: left; width: 15%">
+                            <div style="float: left; width: 15%;">
                                 <img src="./assets/img/noflaylogo1.jpg" style="width: 60px" alt="logo">
                             </div>
                             <div style="float: left; width: 80%">
                                 <img src="./assets/img/noflayTitle.png" style="width: 100px" alt="NoFlay">
-        
                                 <small style="display: block;">LIVING IN WELLNESS - BALANCED LIFE</small>
                             </div>
                             <div style="clear: both;"></div>
                         </div>
                         <div style="width: 100%; margin-top: 15px">
                             <div style="float: left; width: 25%">
-                                <qrcode [qrdata]="myAngularxQrCode" [size]="65" [level]="'M'"></qrcode>
+                                <qrcode [qrdata]="studentCard.studentQrCode" [size]="65" [level]="'M'"></qrcode>
                             </div>
                             <div style="float: left; width: 50%; text-align: center; margin-top: 0px">
-                                <p style="margin: 0px; font-weight: bold; font-size: 18px">studentName</p>
-                                <p style="margin-top: 5px; margin-bottom: 5px; font-weight: bold; font-size: 18px">studentMcmId</p>
-                                <p style="margin: 0px; font-weight: bold; font-size: 18px">studentPlan</p>
+                                <p style="margin: 0px; font-weight: bold; font-size: 18px">{{studentCard.studentName}}</p>
+                                <p style="margin-top: 5px; margin-bottom: 5px; font-weight: bold; font-size: 18px">{{studentCard.studentMcmId}}</p>
+                                <p style="margin: 0px; font-weight: bold; font-size: 18px">{{studentCard.studentPlan}}</p>
                             </div>
                             <div style="float: left; width: 25%">
-                                <img src="http://192.168.1.55:8080/students/imageFiles/studentName" style="height: 68.031496063px; width: 75.590551181px" alt="student">
+                                <img src="http://192.168.1.55:8080/students/imageFiles/{{studentCard.studentName}}" style="height: 68.031496063px; width: 75.590551181px" alt="student">
                             </div>
                             <div style="clear: both;"></div>
                         </div>
                     </div>
-            <!-- <div style="width: 350px;height: 180px; margin-bottom: 33px;border:1px solid #ccc;border-radius: 3px;padding:15px;">
+                </li>
+            </ul>
+            <!-- <div style="width: 325.03937008px;height: 204.09448819px; margin-bottom: 45px;border:1px solid #ccc;border-radius: 3px;padding:37.795275591px;">
                 <div style="width: 100%;">
                     <div style="float: left; width: 15%">
                         <img src="./assets/img/noflaylogo1.jpg" style="width: 60px" alt="logo">
@@ -391,46 +393,18 @@
                     </div>
                     <div style="clear: both;"></div>
                 </div>
-
                 <div style="width: 100%; margin-top: 15px">
                     <div style="float: left; width: 25%">
-                        <qrcode [qrdata]="myAngularxQrCode" [size]="80" [level]="'M'"></qrcode>
+                        <qrcode [qrdata]="myAngularxQrCode" [size]="65" [level]="'M'"></qrcode>
                     </div>
-                    <div style="float: left; width: 50%; text-align: center; margin-top: 10px">
-                        <p style="margin: 0px">studentName</p>
-                        <p style="margin-top: 5px; margin-bottom: 5px">studentMcmId</p>
-                        <p style="margin: 0px">studentPlan</p>
-                    </div>
-                    <div style="float: left; width: 25%">
-                        <img src="http://192.168.1.51:8080/students/imageFiles/studentName_Lighthouse" style="height: 80px; width: 80px" alt="student">
-                    </div>
-                    <div style="clear: both;"></div>
-                </div>
-            </div> -->
-            <!-- <div style="width: 55%;margin:0 auto;border:1px solid #ccc;border-radius: 3px;padding:15px;">
-                <div style="width: 100%;">
-                    <div style="float: left; width: 15%">
-                        <img src="./assets/img/noflaylogo1.jpg" style="width: 60px" alt="logo">
-                    </div>
-                    <div style="float: left; width: 80%">
-                        <img src="./assets/img/noflayTitle.png" style="width: 100px" alt="NoFlay">
-
-                        <small style="display: block;">LIVING IN WELLNESS - BALANCED LIFE</small>
-                    </div>
-                    <div style="clear: both;"></div>
-                </div>
-
-                <div style="width: 100%; margin-top: 15px">
-                    <div style="float: left; width: 25%">
-                        <qrcode [qrdata]="myAngularxQrCode" [size]="100" [level]="'M'"></qrcode>
-                    </div>
-                    <div style="float: left; width: 50%; text-align: center; margin-top: 10px">
-                        <p style="margin: 0px">{{studentDetailsForCard.stdName}}</p>
-                        <p style="margin-top: 5px; margin-bottom: 5px">{{studentDetailsForCard.mcmId}}</p>
-                        <p style="margin: 0px"> {{studentDetailsForCard.membershipType}}</p>
+                    <div style="float: left; width: 50%; text-align: center; margin-top: 0px">
+                        <p style="margin: 0px; font-weight: bold; font-size: 18px">studentName</p>
+                        <p style="margin-top: 5px; margin-bottom: 5px; font-weight: bold; font-size: 18px">studentMcmId</p>
+                        <p style="margin: 0px; font-weight: bold; font-size: 18px">studentPlan</p>
                     </div>
                     <div style="float: left; width: 25%">
-                        <img src="http://192.168.1.51:8080/students/imageFiles/{{studentDetailsForCard.stdName}}_Lighthouse" style="height: 100px; width: 100px" alt="student">
+                        <img src="http://192.168.1.55:8080/students/imageFiles/studentName" style="height: 68.031496063px; width: 75.590551181px"
+                            alt="student">
                     </div>
                     <div style="clear: both;"></div>
                 </div>
