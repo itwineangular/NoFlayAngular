@@ -294,8 +294,32 @@
             <div class="modal-content">
                 <div id="membershipCard" class="modal-body">
                     <div class="row">
-                        <!-- <div class="col-md-12"> -->
-                        <div class="col-md-2">
+
+                            <div class="idcard" style="font-family:universal knowledge,arial;font-size:15px;width: 325.03937008px;height:204.09448819px;border:1px solid #ccc;
+                            margin-left: 150px">
+                                <div class="idcard-header" style="position:relative;">
+                                    <div class="idcard-logo-left">
+                                        <img style="width: 167px;padding: 3px;margin-left: 11px;" src="./assets/img/combinedLogo.png" />
+                                    </div>
+                                    <div class="idcard-QR-right" style="position:absolute;top: 0px;right: 0px;border:solid;margin-right: 10px;margin-top: 5px; padding: 5px">
+                                            <qrcode [qrdata]="myAngularxQrCode" [size]="50" [level]="'M'"></qrcode>
+                                    </div>
+                                </div>
+                                <hr style="width: 93%;">
+                                <div class="idcard-content " style="position:relative;">
+                                    <div class="user-image" style="margin-left: 13px;border: solid;width: 25.5%;margin-top: 13px;float: left;position:absolute;">
+                                        <img src="http://192.168.1.55:8080/students/imageFiles/{{studentDetailsForCard.stdName}}"
+                                            style="height: 68.031496063px; width: 75.590551181px" />
+                                    </div>
+                                    <div class="user-details" style="float: right; margin-right: 43px;margin-top: -7px;">
+                                        <P>{{studentDetailsForCard.stdName}}</P>
+                                        <p>{{studentDetailsForCard.mcmId}}</p>
+                                        <p>{{studentDetailsForCard.plan}}</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        <!-- <div class="col-md-2">
                             <img src="./assets/img/noflaylogo1.jpg" class="logo" alt="logo">
                         </div>
                         <div class="col-md-10">
@@ -303,7 +327,6 @@
                             <br/>
                             <label>LIVING IN WELLNESS - BALANCED LIFE</label>
                         </div>
-                        <!-- </div> -->
                         <div class="col-md-12" style="margin-top: 20px">
                             <div class="col-md-3">
                                 <qrcode [qrdata]="myAngularxQrCode" [size]="100" [level]="'M'"></qrcode>
@@ -327,17 +350,11 @@
                                 <div class="col-md-8">
                                     <label>{{studentDetailsForCard.plan}}-{{studentDetailsForCard.membershipType}}</label>
                                 </div>
-                                <!-- <div class="col-md-4" style="text-align: right">
-                                    <label>Expiry :</label>
-                                </div>
-                                <div class="col-md-8">
-                                    <label>08-10-2019</label>
-                                </div> -->
                             </div>
                             <div class="col-md-3">
                                 <img src="http://192.168.1.55:8080/students/imageFiles/{{studentDetailsForCard.stdName}}" class="studentImage" alt="student">
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -353,7 +370,31 @@
         <div id="customMembershipCard">
             <ul style="list-style: none;">
                 <li *ngFor="let studentCard of studentCardList">
-                    <div style="width: 325.03937008px;height: 204.09448819px; margin-bottom: 45px;border:1px solid #ccc;border-radius: 3px;padding:37.795275591px;">
+                        <div class="idcard" style=" background: #fff;width: 325.03937008px;height:204.09448819px;border:1px solid #ccc;border-radius: 5px;margin-bottom: 45px;
+                        font-family:universal knowledge,arial;font-size:15px; padding:37.795275591px;">
+                            <div class="idcard-header" style="position:relative;">
+                                <div class="idcard-logo-left">
+                                    <img style="width: 167px;padding: 3px;margin-left: 11px;" src="./assets/img/combinedLogo.png" />
+                                </div>
+                                <div class="idcard-QR-right" style="position:absolute;top: 0px;right: 0px;border:solid;margin-right: 10px;margin-top: 5px; padding: 5px">
+                                    <qrcode [qrdata]="studentCard.studentQrCode" [size]="50" [level]="'M'"></qrcode>
+                                </div>
+                            </div>
+                            <hr style="width: 93%;">
+                            <div class="idcard-content " style="position:relative;">
+                                <div class="user-image" style="margin-left: 13px;border: solid;width: 23%;margin-top: 13px;float: left;position:absolute;">
+                                    <img src="http://192.168.1.55:8080/students/imageFiles/{{studentCard.studentName}}"
+                                        style="height: 68.031496063px; width: 75.590551181px" />
+                                </div>
+                                <div class="user-details" style="float: right; margin-right: 43px;margin-top: -7px;">
+                                    <P>{{studentCard.studentName}}</P>
+                                    <p>{{studentCard.studentMcmId}}</p>
+                                    <p>{{studentCard.studentPlan}}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    <!-- <div style="width: 325.03937008px;height: 204.09448819px; margin-bottom: 45px;border:1px solid #ccc;border-radius: 3px;padding:37.795275591px;">
                         <div style="width: 100%;">
                             <div style="float: left; width: 15%;">
                                 <img src="./assets/img/noflaylogo1.jpg" style="width: 60px" alt="logo">
@@ -378,37 +419,10 @@
                             </div>
                             <div style="clear: both;"></div>
                         </div>
-                    </div>
+                    </div> -->
                 </li>
             </ul>
-            <!-- <div style="width: 325.03937008px;height: 204.09448819px; margin-bottom: 45px;border:1px solid #ccc;border-radius: 3px;padding:37.795275591px;">
-                <div style="width: 100%;">
-                    <div style="float: left; width: 15%">
-                        <img src="./assets/img/noflaylogo1.jpg" style="width: 60px" alt="logo">
-                    </div>
-                    <div style="float: left; width: 80%">
-                        <img src="./assets/img/noflayTitle.png" style="width: 100px" alt="NoFlay">
-
-                        <small style="display: block;">LIVING IN WELLNESS - BALANCED LIFE</small>
-                    </div>
-                    <div style="clear: both;"></div>
-                </div>
-                <div style="width: 100%; margin-top: 15px">
-                    <div style="float: left; width: 25%">
-                        <qrcode [qrdata]="myAngularxQrCode" [size]="65" [level]="'M'"></qrcode>
-                    </div>
-                    <div style="float: left; width: 50%; text-align: center; margin-top: 0px">
-                        <p style="margin: 0px; font-weight: bold; font-size: 18px">studentName</p>
-                        <p style="margin-top: 5px; margin-bottom: 5px; font-weight: bold; font-size: 18px">studentMcmId</p>
-                        <p style="margin: 0px; font-weight: bold; font-size: 18px">studentPlan</p>
-                    </div>
-                    <div style="float: left; width: 25%">
-                        <img src="http://192.168.1.55:8080/students/imageFiles/studentName" style="height: 68.031496063px; width: 75.590551181px"
-                            alt="student">
-                    </div>
-                    <div style="clear: both;"></div>
-                </div>
-            </div> -->
+           
         </div>
 
     </div>

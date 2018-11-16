@@ -197,22 +197,42 @@ export class MembershipCardComponent implements OnInit {
 
 
   print(): void {
-    let printContents, popupWin;
-    printContents = document.getElementById('customMembershipCard').innerHTML;
-    popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
-    popupWin.document.open();
-    popupWin.document.write(`
+    this.studentCardList = [];
+    var studentCard: StudentCard = new StudentCard();
+      studentCard.studentName = this.studentDetailsForCard.stdName;
+      studentCard.studentMcmId = this.studentDetailsForCard.mcmId;
+      studentCard.studentPlan = this.studentDetailsForCard.plan;
+      studentCard.studentQrCode = "Name:" + this.studentDetailsForCard.stdName + ",Id:" + this.studentDetailsForCard.mcmId + ",Card:" + this.studentDetailsForCard + ".";
+      this.studentCardList.push(studentCard);
+
+    setTimeout(() => {
+      let printContents = "", popupWin;
+      printContents = document.getElementById('customMembershipCard').innerHTML;
+      popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
+      popupWin.document.open();
+      popupWin.document.write(`
       <html>
-        <head>
-          <title>Print tab</title>
-          <style>
-          //........Customized style.......
-          </style>
-        </head>
     <body onload="window.print();window.close()">${printContents}</body>
       </html>`
-    );
-    popupWin.document.close();
+      );
+      popupWin.document.close();
+    }, 1000);
+    // let printContents, popupWin;
+    // printContents = document.getElementById('customMembershipCard').innerHTML;
+    // popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
+    // popupWin.document.open();
+    // popupWin.document.write(`
+    //   <html>
+    //     <head>
+    //       <title>Print tab</title>
+    //       <style>
+    //       //........Customized style.......
+    //       </style>
+    //     </head>
+    // <body onload="window.print();window.close()">${printContents}</body>
+    //   </html>`
+    // );
+    // popupWin.document.close();
   }
 
   // onInstituteSelect(institutionId) {
