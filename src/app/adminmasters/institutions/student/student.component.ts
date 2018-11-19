@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Student, PlanNameObject, Institution, CourseCategory, CourseProfile } from './student';
+import { Student, PlanNameObject, Institution, CourseCategory, CourseProfile, Status } from './student';
 import { StudentService } from "./student.service";
 import { CommonServicesService } from "../../../common-services.service";
 import { DatepickerOptions, NgDatepickerModule, NgDatepickerComponent } from 'ng2-datepicker';
@@ -14,8 +14,10 @@ import { CourseCategoryService } from "../course-category/course-category.servic
 import { Course } from '../courses/courses.module';
 import { CourseService } from "../courses/courses.service";
 import Swal from 'sweetalert2';
+import { Router } from "@angular/router";
 
 
+import { NgForm } from '@angular/forms';
 declare var jquery: any;
 declare var $: any;
 
@@ -57,7 +59,7 @@ export class StudentComponent implements OnInit {
   courseLocal = [];
   courseCategory = [];
   courses = [];
-  statusList: Student[];
+  statusList: Student[]=[];
   planList: Student[];
   studentList: Student[];
   studentBulkList: Student[] = [];
@@ -70,6 +72,9 @@ export class StudentComponent implements OnInit {
   plan: PlanNameObject = new PlanNameObject();
   planNameList: PlanNameObject[] = [];
 
+  status: Status = new Status();
+  statusNameList: Status[] = [];
+
 
   institution: Institution = new Institution();
 
@@ -81,12 +86,10 @@ export class StudentComponent implements OnInit {
   selectedCategory: string;
 
   courseList: CourseProfile[] = [];
-  selectedCourse: string;
+  selectedCourse: string;  
 
   academicYear: string;
   academicYearsList: string[] = [];
-
-  isEditColumnVisible: boolean;
 
   d = new Date();
 
@@ -107,6 +110,8 @@ export class StudentComponent implements OnInit {
   @ViewChild('instituteName') public ngSelectInstituteName: SelectDropDownComponent;
   @ViewChild('categoryName') public ngSelectinstCategoryName: SelectDropDownComponent;
   @ViewChild('courseName') public ngSelectCourseName: SelectDropDownComponent;
+  @ViewChild('status') public ngSelectStatusValue: SelectDropDownComponent;
+  @ViewChild('studentRegForm') mytemplateForm : NgForm;
 
   courseCategoryListForSearch: CourseCategory[]=[];
   courseListLocal: Course[]=[];
@@ -115,7 +120,8 @@ export class StudentComponent implements OnInit {
     private studentService: StudentService,
     private courseCategoryService: CourseCategoryService,
     private courseservice: CourseService,
-    private uploader: FileuploaderService) { }
+    private uploader: FileuploaderService,
+    public router:Router) { }
 
   ngOnInit() {
     this.getAcademicYears();
@@ -134,6 +140,7 @@ export class StudentComponent implements OnInit {
     this.getPlans();
     this.isListContainsData = false;
     this.isSearchClicked = false;
+    this.getStudent();
 
     this.pageChange(5);
     this.getPlanName();
@@ -183,16 +190,16 @@ export class StudentComponent implements OnInit {
    {
     
   }
-  // selectedStatusValue : any;
-  // courseNameconfig = {
-  //   displayKey: "courseName", //if objects array passed which key to be displayed defaults to description
-  //   search: true,
-  //   limitTo: this.courseListLocal.length
-  // };
-  // changeValueStatus($event: any)
-  //  {
-    
-  // }
+  selectedStatusValue : any;
+  statusNameconfig = {
+    displayKey: "status", //if objects array passed which key to be displayed defaults to description
+    search: true,
+    limitTo: this.statusList.length
+  };
+  changeValueStatus($event: any)
+   {
+    console.log(this.statusList)
+  }
 
   openbulkuploadpopup() {
     $('#bulk').modal({
@@ -260,30 +267,14 @@ export class StudentComponent implements OnInit {
 
   }
 
-  addToQueue(file: FileList) {
-
-    if (file && file[0]) {
-        var reader = new FileReader();
-        reader.readAsDataURL(file[0]); // read file as data url
-        reader.onload = (event) => {
-            let target: any = event.target;
-            let content: string = target.result;
-            this.url = content;
-            // this.url = event.target.result;
-  
-        }
-    }
-  
-    this.uploader.addToQueue(file);
-  }
 
   addNew() {
     this.saveOrUpdate = "save";
     this.student = new Student();
-    $('#addModal').modal({
-      backdrop: 'static',
-      keyboard: false
-    });
+    // $('#addModal').modal({
+    //   backdrop: 'static',
+    //   keyboard: false
+    // });
   }
 
   getCountries() {
@@ -303,8 +294,23 @@ export class StudentComponent implements OnInit {
   }
 
   selectUser(user) {
+   
+    console.log("user");
     this.saveOrUpdate = "update";
     this.student = user;
+    this.onSelect(this.student.countryName);
+    this.onStateSelect(this.student.state);
+    console.log(this.student);
+    console.log(this.institutionList);
+   // this.student.institutionName = this.student.institution.institutionId;
+   this.student.institutionId = this.student.institution.institutionId;
+   this.student.categoryId =  this.student.courseCategory.categoryId;
+   this.student.courseId =  this.student.courseProfile.courseId;
+    this.onInstituteSelect(this.student.institution.institutionId);
+    this.onCourseCategorySelect(this.student.categoryId);
+    this.student.planId= this.student.plan.planId;
+    this.student.statusId= this.student.status.statusId;
+
   }
 
   getBulkStudents() {
@@ -314,44 +320,27 @@ export class StudentComponent implements OnInit {
     });
   }
 
-  // onInstituteSelect(institutionId) {
-
-  //   this.courseCategoryList = [];
-  //   this.courseList = [];
-  //   var institutionListLocal: Institution[] = [];
-  //   institutionListLocal = this.institutionList.filter((item) => item.institutionId == institutionId);
-  //   for (let item of institutionListLocal[0].courseCategory) {
-  //     this.courseCategoryList.push(item);
-  //   }
-
-  //   this.selectedInstitute = institutionListLocal[0].instName.toString();
-
-  // }
+ 
   
 onInstituteSelect(institutionId)
 {
   this.courseCategoryList = [];
   var institutionListLocal : Institution[] = [];
   institutionListLocal = this.institutionList.filter((item)=> item.institutionId == institutionId);
+  
+  console.log(this.institutionList);
+
   for(let item of institutionListLocal[0].courseCategoryVos)
   {
+    console.log("gdhsfghdsgfh");
+    console.log(this.courseCategoryList);
+
       this.courseCategoryList.push(item);
   }
   this.selectedInstitute = institutionListLocal[0].instName.toString();
+
 }
 
-
-  // onCourseCategorySelect(categoryId) {
-
-  //   this.courseList = [];
-  //   var courseCategoryListLocal: CourseCategory[] = [];
-  //   courseCategoryListLocal = this.courseCategoryList.filter((item) => item.categoryId == categoryId);
-  //   for (let item of courseCategoryListLocal[0].courseProfile) {
-  //     this.courseList.push(item);
-  //   }
-  //   this.selectedCategory = courseCategoryListLocal[0].categoryName.toString();
-
-  // }
 
   onCourseCategorySelect(categoryId)
  {
@@ -420,17 +409,42 @@ onInstituteSelect(institutionId)
 
     });
   }
+
   saveStudent(studentValue) {
 
     this.uploader.uploadAll(studentValue,"studentImage");
 
     if (this.saveOrUpdate == "save") {
    
-      this.studentService.saveStudent(studentValue, this.selectedInstitute, this.selectedCategory, this.selectedCourse)
+      this.studentService.saveStudent(studentValue)
         .subscribe(
           (data) => {
-            this.alertMassege = "Student Registered successfully!!";
-            this.getStudent();
+            var string = data['_body'],
+            substring = "Already existing mail";
+            if (string.includes(substring)) {
+              Swal({
+                title: 'Already existing mail !!!!',
+                text: "Email already exists. Please choose a different email",
+              confirmButtonText: 'OK!'
+              });
+            }
+            else {
+              this.mytemplateForm.reset();
+              this.url = "";
+              $("#fileControl").val('');
+            
+              Swal({
+                title: 'successfull !!!!',
+                text: "Your data is saved successfully, expect an mail.",
+              confirmButtonText: 'OK!'
+              })
+  
+              this.getStudent();
+              //this.reset();
+  
+            }
+            // this.alertMassege = "Student Registered successfully!!";
+            //this.getStudent();
           },
           (error) => {
             console.log(error);
@@ -441,7 +455,7 @@ onInstituteSelect(institutionId)
     }
     else if (this.saveOrUpdate == "update") {
      
-      this.studentService.updateStudent(this.student, this.selectedInstitute, this.selectedCategory, this.selectedCourse)
+      this.studentService.updateStudent(this.student)
         .subscribe(
           (data) => {
             this.alertMassege = "Item updated on list successfully!!";
@@ -458,6 +472,74 @@ onInstituteSelect(institutionId)
 
 
   }
+
+  // saveStudent(studentValue) {
+
+  //   this.uploader.uploadAll(studentValue,"studentImage");
+  //   if (this.saveOrUpdate == "save") {
+   
+  //     this.studentService.saveStudent(studentValue)
+  //       .subscribe(
+  //         (data) => {
+  //           var string = data['_body'],
+  //           substring = "Already existing mail";
+  //           if (string.includes(substring)) {
+  //             Swal({
+  //             title: 'Already existing mail !!!!',
+  //             text: "Email already exists. Please choose a different email",
+  //             // type: 'warning',
+  //             // cancelButtonColor: '#d33',
+  //             confirmButtonText: 'OK!'
+  //             });
+  //             }
+  //             else {
+  //               Swal({
+  //               title: 'successfull !!!!',
+  //               text: "Your data is saved successfully, expect an mail.",
+  //               // type: 'success',
+  //               // confirmButtonColor: '#3085d6',
+  //               confirmButtonText: 'OK!'
+  //               }).then((result) => {
+  //               if (result.value) {
+  //               //this.router.navigate(['studentlogin/']);
+  //               // student.resetForm();
+                
+                
+  //               }
+  //               });
+                
+  //               this.getStudent();
+  //               // this.reset();
+                
+  //               }
+           
+  //         },
+  //         (error) => {
+  //           console.log(error);
+  //           alert("Try again");
+  //         }
+  //       );
+
+  //   }
+  //   else if (this.saveOrUpdate == "update") {
+     
+  //     this.studentService.updateStudent(this.student)
+  //       .subscribe(
+  //         (data) => {
+  //           this.alertMassege = "Item updated on list successfully!!";
+
+  //           this.getStudent();
+  //         },
+  //         (error) => {
+  //           console.log(error);
+  //           alert("Try again");
+  //         }
+  //       );
+
+  //   }
+
+
+  // }
   saveStudentBulk(studentValue) {
     this.studentService.uploadCsvFile(this.studentBulkList)
       .subscribe(
@@ -478,6 +560,7 @@ onInstituteSelect(institutionId)
       .subscribe(
         (data) => {
           this.studentList = data;
+          
         }
       );
 
@@ -586,6 +669,26 @@ onInstituteSelect(institutionId)
       );
   }
 
+  addToQueue(file: FileList) {
+
+    if (file && file[0]) {
+        var reader = new FileReader();
+        reader.readAsDataURL(file[0]); // read file as data url
+        reader.onload = (event) => {
+            let target: any = event.target;
+            let content: string = target.result;
+            this.url = content;
+
+            // let file = fileInput.target.files[0];
+            // let fileName = file.name;
+            // this.url = event.target.result;
+  
+        }
+    }
+  
+    this.uploader.addToQueue(file);
+  }
+
   //convert to csv to json
   addToFileToQueue(item) {
     this.input = this.fileInput.nativeElement;
@@ -692,94 +795,100 @@ onInstituteSelect(institutionId)
   planname: any;
   errormsg: any;
 
-  onSelectPlan(i, checked) {
-    this.planname = $('#planName').val();
-    if (this.planname == null) {
-      this.errormsg = "Please Select Plan Name First..!";
-      $('#mycheck-' + i).prop("checked", false);
-      $('#planName').focus();
-    } else {
-      this.errormsg = "";
-      if ($('#mycheck-' + i).prop("checked") == true) {
-        i--;
-        this.studentBulkList[i].plan = this.planname;
-        this.studentBulkList[i].institutionName = this.selectedInstitute;
-        this.studentBulkList[i].courseCategory = this.selectedCategory;
-        this.studentBulkList[i].courseName = this.selectedCourse;
-      } else if ($('#mycheck-' + i).prop("checked") == false) {
-        i--;
-        this.studentBulkList[i].plan = '';
-        this.studentBulkList[i].institutionName = '';
-        this.studentBulkList[i].courseCategory = '';
-        this.studentBulkList[i].courseName = '';
-      }
-    }
+  // onSelectPlan(i, checked) {
+  //   this.planname = $('#planName').val();
+  //   if (this.planname == null) {
+  //     this.errormsg = "Please Select Plan Name First..!";
+  //     $('#mycheck-' + i).prop("checked", false);
+  //     $('#planName').focus();
+  //   } else {
+  //     this.errormsg = "";
+  //     if ($('#mycheck-' + i).prop("checked") == true) {
+  //       i--;
+  //       this.studentBulkList[i].plan = this.planname;
+  //       this.studentBulkList[i].institutionName = this.selectedInstitute;
+  //       this.studentBulkList[i].courseCategory = this.selectedCategory;
+  //       this.studentBulkList[i].courseName = this.selectedCourse;
+  //     } else if ($('#mycheck-' + i).prop("checked") == false) {
+  //       i--;
+  //       this.studentBulkList[i].plan = '';
+  //       this.studentBulkList[i].institutionName = '';
+  //       this.studentBulkList[i].courseCategory = '';
+  //       this.studentBulkList[i].courseName = '';
+  //     }
+  //   }
 
-  }
+  // }
 
-  toggleSelect(checked) {
-    this.planname = $('#planName').val();
-    if (this.planname == null) {
-      this.errormsg = "Please Select Plan Name First..!";
-      $('#mycheck-' + checked).prop("checked", false);
-      $('#planName').focus();
-    } else {
-      if (checked) {
-        this.checkedval = true;
-        this.studentBulkList.forEach(element => {
-          element.plan = this.planname;
-        });
-        this.studentBulkList.forEach(element => {
-          element.institutionName = this.selectedInstitute;
-        });
-        this.studentBulkList.forEach(element => {
-          element.courseCategory = this.selectedCategory;
-        });
-        this.studentBulkList.forEach(element => {
-          element.courseName = this.selectedCourse;
-        });
-      } else {
-        this.checkedval = null;
-        this.studentBulkList.forEach(element => {
-          element.plan = "";
-        });
-        this.studentBulkList.forEach(element => {
-          element.institutionName = "";
-        });
-        this.studentBulkList.forEach(element => {
-          element.courseCategory = "";
-        });
-        this.studentBulkList.forEach(element => {
-          element.courseName = "";
-        });
-      }
-    }
-  }
+  // toggleSelect(checked) {
+  //   this.planname = $('#planName').val();
+  //   if (this.planname == null) {
+  //     this.errormsg = "Please Select Plan Name First..!";
+  //     $('#mycheck-' + checked).prop("checked", false);
+  //     $('#planName').focus();
+  //   } else {
+  //     if (checked) {
+  //       this.checkedval = true;
+  //       this.studentBulkList.forEach(element => {
+  //         element.plan = this.planname;
+  //       });
+  //       this.studentBulkList.forEach(element => {
+  //         element.institutionName = this.selectedInstitute;
+  //       });
+  //       this.studentBulkList.forEach(element => {
+  //         element.courseCategory = this.selectedCategory;
+  //       });
+  //       this.studentBulkList.forEach(element => {
+  //         element.courseName = this.selectedCourse;
+  //       });
+  //     } else {
+  //       this.checkedval = null;
+  //       this.studentBulkList.forEach(element => {
+  //         element.plan = "";
+  //       });
+  //       this.studentBulkList.forEach(element => {
+  //         element.institutionName = "";
+  //       });
+  //       this.studentBulkList.forEach(element => {
+  //         element.courseCategory = "";
+  //       });
+  //       this.studentBulkList.forEach(element => {
+  //         element.courseName = "";
+  //       });
+  //     }
+  //   }
+  // }
 
   searchStudent(studentParameters) {
       var studentObject: Student = new Student();
     this.isSearchClicked = true;
     if (typeof this.selectedInstituteValue !== 'undefined' && this.selectedInstituteValue.length > 0) {
-      studentObject.institutionName = this.selectedInstituteValue[0].instName;
+      studentObject.institutionId = this.selectedInstituteValue[0].institutionId;
+     
     }
 
     if (typeof this.selectedCourseCategoryValue !== 'undefined' && this.selectedCourseCategoryValue.length > 0) {
-      console.log(this.selectedCourseCategoryValue);
-      studentObject.courseCategory = this.selectedCourseCategoryValue[0].categoryName;
+     
+      studentObject.categoryId = this.selectedCourseCategoryValue[0].categoryId;     
    
     }
 
     if (typeof this.selectedCourseValue !== 'undefined' && this.selectedCourseValue.length>0) 
     {
-      studentObject.courseName = this.selectedCourseValue[0].courseName
+      studentObject.courseId = this.selectedCourseValue[0].courseId
     }
 
-    studentObject.status = studentParameters.status;
+    if (typeof this.selectedStatusValue !== 'undefined' && this.selectedStatusValue.length>0) 
+    {
+      studentObject.statusId = this.selectedStatusValue[0].statusId
+    }
+
+    // studentObject.status = studentParameters.status;
 
  
   
 
-    if (typeof studentObject.institutionName === 'undefined'  && typeof studentObject.courseCategory === 'undefined' && typeof studentObject.courseName === 'undefined' && typeof studentObject.status === 'undefined') 
+    if (typeof studentObject.institutionId === 'undefined'  && typeof studentObject.categoryId === 'undefined' && typeof studentObject.courseId === 'undefined' && typeof studentObject.statusId === 'undefined') 
   {
     Swal({
       title: 'Invalid!!',
@@ -795,22 +904,20 @@ onInstituteSelect(institutionId)
   else
   {
     this.studentService.searchStudent(studentObject)
-    .subscribe(
+        .subscribe(
       (data) => {
+        console.log("studentObject");
+        console.log(studentObject);
+
         this.studentList = data;
         if (typeof this.studentList !== 'undefined' && this.studentList.length > 0) {
-          this.isListContainsData = true;
-          this.studentList = data;
-          this.studentList = data;
-          if (this.studentList[0].status == 'created') {
-            this.isEditColumnVisible = true;
-
-          } else if (this.studentList[0].status == 'payment') {
-            this.isEditColumnVisible = false;
-          }
+          this.isListContainsData = true;         
+          // this.studentList = data;
+          // this.studentList = data;
         }
         else {
           this.isListContainsData = false;
+          
         }
       },
       (error) => {
@@ -888,6 +995,8 @@ onInstituteSelect(institutionId)
     this.ngSelectinstCategoryName.ngOnInit();
     this.ngSelectCourseName.deselectItem(this.selectedCourseValue,0);
     this.ngSelectCourseName.ngOnInit();
+    this.ngSelectStatusValue.deselectItem(this.selectedStatusValue,0);
+    this.ngSelectStatusValue.ngOnInit();
     
   }
 }

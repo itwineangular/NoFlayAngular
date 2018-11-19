@@ -41,7 +41,7 @@ export class StudentService {
   //   return this.http.get(this.url + '/plans/list', options).pipe(map(res => res.json()));
   // }
 
-  saveStudent(data,institute,courseCategory,courseName) {
+  saveStudent(data) {
     let obj = {
 
       "stdName": data.stdName,
@@ -55,14 +55,12 @@ export class StudentService {
       "gender": data.gender,
       "stdEmail": data.stdEmail,
       "stdRollnumber": data.stdRollnumber,
-      "institutionName": institute,
-      "courseName": courseName,
-      "courseCategory": courseCategory,
-      "plan": data.plan,
-      "status": data.status,
-      "planAmount":data.planAmount,
-      "membershipType":data.membershipType
-      // "yearofjoining": data.yearofjoining
+      "institutionId": data.institutionId,
+      "courseId": data.courseId,
+      "categoryId": data.categoryId,
+      "planId": data.planId,
+      "statusId": data.statusId,
+      "yearofjoining": data.yearofjoining
     };
 
 
@@ -78,9 +76,8 @@ export class StudentService {
 
   }
 
-  updateStudent(data,institute,courseCategory,courseName) {
+  updateStudent(data) {
     let obj = {
-      "stdId": data.stdId,
       "stdName": data.stdName,
       "addressOne": data.addressOne,
       "addressTwo": data.addressTwo,
@@ -92,14 +89,12 @@ export class StudentService {
       "gender": data.gender,
       "stdEmail": data.stdEmail,
       "stdRollnumber": data.stdRollnumber,
-      "institutionName": institute,
-      "courseName": courseName,
-      "courseCategory": courseCategory,
-      "plan": data.plan,
-      "status": data.status,
-      "planAmount":data.planAmount,
-      "membershipType":data.membershipType
-      // "yearofjoining": data.yearofjoining
+      "institutionId": data.institutionId,
+      "courseId": data.courseId,
+      "categoryId": data.categoryId,
+      "planId": data.planId,
+      "statusId": data.statusId,
+      "yearofjoining": data.yearofjoining
     };
 
     let headers = new Headers({
@@ -210,11 +205,10 @@ getBulkStudentsdata() {
 searchStudent(studentsData) {
   let obj =
   {
-    "institutionName": studentsData.institutionName,
-    "courseCategory": studentsData.courseCategory,
-    "courseName": studentsData.courseName,
-    "status": studentsData.status,
-    "stdName": studentsData.stdName
+    "institutionId": studentsData.institutionId,
+    "categoryId": studentsData.categoryId,
+    "courseId": studentsData.courseId,    
+    "statusId": studentsData.statusId
 
   };
   console.log(obj);
@@ -225,7 +219,8 @@ searchStudent(studentsData) {
   headers.append('Access-Control-Allow-Headers', 'Content-Type');
   headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
   let options = { headers: headers };
-  return this.http.post(this.url+'/students/searchByCriteria', obj, options).pipe(map(res => res.json()));
+  return this.http.post(this.url+'/students/searchStudent', obj, options).pipe(map(res => res.json()));
+  // return this.http.post(this.url+'/students/searchByCriteria', obj, options).pipe(map(res => res.json()));
 }  
 
 }

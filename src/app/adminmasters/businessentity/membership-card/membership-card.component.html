@@ -54,10 +54,9 @@
 
                     <div class="col-md-3">
                         <label for="status">{{'adminConfigarationPage.studentPage.status' | translate}}</label>
-                        <select class="form-control" name="status" #status="ngModel" [(ngModel)]="membershipCard.status" required>
-                            <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.status' | translate}}</option>
-                            <option *ngFor="let item of statusList" value={{item.status}}>{{item.status}} </option>
-                        </select>
+                        <ngx-select-dropdown  #status (change)="changeValueStatus($event)" [multiple]="false" [(value)]="selectedStatusValue"
+                        [config]="statusNameconfig" [options]="statusList"></ngx-select-dropdown>
+                        
                     </div>
                     <div class="col-md-12">
                         <button class="btn btn-warning btn-outline pull-right cssButtonPadding" type="button" (click)="searchClear()">{{'adminConfigarationPage.commonFields.clear' | translate}}</button>
@@ -113,13 +112,13 @@
                         <td>{{((p-1)*itemsPerPage2)+i+1}}</td>
                         <td>{{item.stdName}}</td>
                         <td>{{item.institutionName}}</td>
-                        <td>{{item.plan}}</td>
-                        <td>{{item.status}}</td>
+                        <td>{{item.planName}}</td>
+                        <td>{{item.status.status}}</td>
                         <!-- <td></td> -->
                         <td style="color:#cccccc">
                             <!-- <input type="checkbox" id="mycheck-{{ i+1 }}"  (change)="onSelectPlan( i+1 , $event.target.checked)" checked={{checkedval}}>
                             <label for="mycheck-{{ i+1 }}"></label> -->
-                            <input type="checkbox" id="mycheck-{{ i+1 }}" (change)="selectedStudent(item.status,item, $event.target.checked)" checked={{checkedval}}>
+                            <input type="checkbox" id="mycheck-{{ i+1 }}" (change)="selectedStudent(item.status.status,item, $event.target.checked)" checked={{checkedval}}>
                             <label for="mycheck-{{ i+1 }}"></label>
                         </td>
                         <td *ngIf="isEditColumnVisible">
@@ -308,7 +307,7 @@
                                 <hr style="width: 93%;">
                                 <div class="idcard-content " style="position:relative;">
                                     <div class="user-image" style="margin-left: 13px;border: solid;width: 25.5%;margin-top: 13px;float: left;position:absolute;">
-                                        <img src="http://192.168.1.55:8080/students/imageFiles/{{studentDetailsForCard.stdName}}"
+                                        <img src="http://192.168.1.51:9090/students/imageFiles/{{studentDetailsForCard.stdName}}"
                                             style="height: 68.031496063px; width: 75.590551181px" />
                                     </div>
                                     <div class="user-details" style="float: right; margin-right: 43px;margin-top: -7px;">
@@ -371,7 +370,7 @@
             <ul style="list-style: none;">
                 <li *ngFor="let studentCard of studentCardList">
                         <div class="idcard" style=" background: #fff;width: 325.03937008px;height:204.09448819px;border:1px solid #ccc;border-radius: 5px;margin-bottom: 45px;
-                        font-family:universal knowledge,arial;font-size:15px; padding:37.795275591px;">
+                        font-family:universal knowledge,arial;font-size:15px; padding:3px;">
                             <div class="idcard-header" style="position:relative;">
                                 <div class="idcard-logo-left">
                                     <img style="width: 167px;padding: 3px;margin-left: 11px;" src="./assets/img/combinedLogo.png" />

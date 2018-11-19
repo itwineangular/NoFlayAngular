@@ -201,14 +201,16 @@ footer .glyphicon {
 
 .add img {
     width:100%;
-    height: 200px;
+    /* height: 200px; */
+    height:268px;
 }
 
 .login
 {
     width:100%;
-    height: 640px;
-    overflow: hidden;
+    height: 850px;
+    /* height: 640px;
+    overflow: hidden; */
 }
 
 
@@ -255,8 +257,8 @@ footer .glyphicon {
   
   .login-input {
     width: 285px;
-    height: 50px;
-    margin-bottom: 25px;
+    height: 40px;
+    margin-bottom: 10px;
     padding-left:10px;
     font-size: 15px;
     background: #fff;

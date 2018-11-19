@@ -248,7 +248,8 @@
             "about" : "SUR",
             "services" : "PRESTATIONS DE SERVICE",
             "pricing" : "PRIX",
-            "login" : "S'IDENTIFIER"
+            "login" : "S'IDENTIFIER",
+            "registration" : "REGISTRATION"
         },
         "aboutSection" : {
             "aboutMcm" : "À PROPOS DE NoFlay",

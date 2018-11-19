@@ -15,22 +15,46 @@ import { StudentRegistration, PlanNameObject, Institution, CourseCategory, Cours
 import { StudentregistrationService } from "./studentregistration.service";
 // declare var $lang: any;
 
+import { DatepickerOptions, NgDatepickerModule, NgDatepickerComponent } from 'ng2-datepicker';
+import * as enLocale from 'date-fns/locale/en';
+import Swal from 'sweetalert2';
+import { NgForm } from '@angular/forms';
+import { CommonServicesService } from "../common-services.service";
+import { FileQueueObject, FileuploaderService } from "./../adminmasters/institutions/educational-institute/fileuploader.service";
+
 @Component({
   selector: 'app-studentlogin',
   templateUrl: './studentlogin.component.html',
   styleUrls: ['./studentlogin.component.css']
 })
 export class StudentloginComponent implements OnInit {
+  
+  academicYear: string;
+  academicYearsList: string[] = [];
+  d = new Date();
+
+  options: DatepickerOptions = {
+    locale: enLocale,
+    minDate: new Date(this.d.setDate(this.d.getDate() - 1))
+  };
   partytype: any;
   loginOrRegister: string;
   selectedLanguage: string;
 
+  url: any;
+  countries = [];
+  statesLocal = [];
+  citiesLocal = [];
+  states = [];
+  cities = [];
   @ViewChild('instituteName') public ngSelectinstituteName: SelectDropDownComponent;
   @ViewChild('course') public ngSelectcourse: SelectDropDownComponent;
   @ViewChild('courseCategory') public ngSelectcourseCategory: SelectDropDownComponent;
   @ViewChild('planName') public ngSelectplanName: SelectDropDownComponent;
 
+  @ViewChild('studentRegForm') mytemplateForm : NgForm;
 
+  statusList: StudentRegistration[];
   alertMassege = "";
   saveOrUpdate: string;
   planList: StudentRegistration[];
@@ -54,6 +78,7 @@ export class StudentloginComponent implements OnInit {
   courseList: CourseProfile[] = [];
   selectedCourse: string;
 
+  
   selectedInstituteNameValue: any;
   InstituteNameConfig = {
     displayKey: "instName", //if objects array passed which key to be displayed defaults to description
@@ -80,6 +105,9 @@ export class StudentloginComponent implements OnInit {
     this.ngSelectcourse.ngOnInit();
 
   }
+
+
+
 
   selectedCourseValue: any;
   CourseConfig = {
@@ -131,6 +159,8 @@ export class StudentloginComponent implements OnInit {
     private courseCategoryService: CourseCategoryService,
     private courseservice: CourseService,
     private router: Router,
+    private commonService: CommonServicesService,
+    private uploader: FileuploaderService
   ) {
       translate.setDefaultLang('en');
 
@@ -141,12 +171,19 @@ export class StudentloginComponent implements OnInit {
      }
 
   ngOnInit() {
+    this.getAcademicYears();
+    var currentYear = this.d.getFullYear();
+    var nextYear = currentYear + 1;
+    this.academicYear = currentYear.toString() + " - " + nextYear.toString();
+
     this.getInstitution();
     this.getCourse();
     this.getCourseCategory();
     this.getPlanName();
     this.getStudent();
-
+    this.getCountries();
+    this.getStates();
+    this.getCities();
 
 
     $(document).ready(function(){
@@ -302,22 +339,89 @@ export class StudentloginComponent implements OnInit {
     this.alertMassege = "";
   };
 
-  saveStudent(student) {
+  // saveStudent(student) {
 
-    this.studentService.saveStudent( student, this.selectedInstituteNameValue, this.selectedCourseCategoryValue, this.selectedCourseValue, this.selectedPlanValue)
-      .subscribe(
-        (data) => {
-          console.log("******" + data);
-          this.alertMassege = "Registered successfully!!";
-          // if (form != null)
-          //   form.reset();
-          this.getStudent();
+  //   this.studentService.saveStudent( student, this.selectedInstituteNameValue, this.selectedCourseCategoryValue, this.selectedCourseValue, this.selectedPlanValue)
+  //     .subscribe(
+  //       (data) => {
+  //         console.log("******" + data);
+  //         this.alertMassege = "Registered successfully!!";
+         
+  //         this.getStudent();
         
-          this.reset();
+  //         this.reset();
 
           
 
-         },
+  //        },
+  //       (error) => {
+  //         console.log(error);
+  //         alert("Try again");
+  //       }
+  //     );
+
+
+
+  // }
+
+  addToFileToServer(file: FileList) {
+    //this.addToFileToQueue("");
+    
+    this.uploader.addToQueue(file);
+   // this.uploader.uploadAll("1239", "file");
+    // this.studentService.upload(file);
+
+  }
+
+//image upload for student
+addToQueue(file: FileList) {
+
+  if (file && file[0]) {
+      var reader = new FileReader();
+      reader.readAsDataURL(file[0]); // read file as data url
+      reader.onload = (event) => {
+          let target: any = event.target;
+          let content: string = target.result;
+          this.url = content;
+          // this.url = event.target.result;
+
+      }
+  }
+
+  this.uploader.addToQueue(file);
+}
+
+  saveStudent(student) {
+    this.uploader.uploadAll(student,"studentImage");
+    this.studentService.saveStudent(student, this.selectedInstituteNameValue, this.selectedCourseCategoryValue, this.selectedCourseValue, this.selectedPlanValue)
+      .subscribe(
+        (data) => {
+          var string = data['_body'],
+            substring = "Already existing mail";
+          if (string.includes(substring)) {
+            Swal({
+              title: 'Already existing mail !!!!',
+              text: "Email already exists. Please choose a different email",
+            confirmButtonText: 'OK!'
+            });
+          }
+          else {
+            this.mytemplateForm.reset();
+            this.url = "";
+            $("#fileControl").val('');
+          
+            Swal({
+              title: 'successfull !!!!',
+              text: "Your data is saved successfully, expect an mail.",
+            confirmButtonText: 'OK!'
+            })
+
+            this.getStudent();
+            this.reset();
+
+          }
+
+        },
         (error) => {
           console.log(error);
           alert("Try again");
@@ -401,4 +505,62 @@ export class StudentloginComponent implements OnInit {
       );
 
   }
+
+  getCountries() {
+    this.commonService.getCountries().subscribe(data => {
+      this.countries = data
+    });
+  }
+  getStates() {
+    this.commonService.getStates().subscribe(data => {
+      this.statesLocal = data
+    });
+  }
+  getCities() {
+    this.commonService.getCities().subscribe(data => {
+      this.citiesLocal = data
+    });
+  }
+
+  onSelect(countryid) {
+    this.states = this.statesLocal.filter((item) => item.countryCode == countryid);
+    this.cities = [];
+  }
+
+  onStateSelect(stateid) {
+    this.cities = this.citiesLocal.filter((item) => item.stateCode == stateid);
+  }
+
+
+//reg & login onclickchange function
+  goToReg(value) {
+    if (value == 'LOGIN') {
+      this.loginOrRegister = "LOGIN";
+      $('#reg').removeClass("in active");
+      $('#sign').addClass("in active");
+    } else if (value == 'REGISTRATION') {
+      this.loginOrRegister = "REGISTER";
+      $('#sign').removeClass("in active");
+      $('#reg').addClass("in active");
+    }
+  }
+
+  getAcademicYears() {
+    var firstYear = this.d.getFullYear() - 3;
+    var currentYear = this.d.getFullYear();
+    for (let i = firstYear; i < currentYear; i++) {
+      this.academicYearsList.push(i.toString() + " - " + (i + 1).toString());
+    }
+
+
+  }
+  
+  getStatus() {
+    this.studentService.getStatus().subscribe(data => {
+      console.log(data);
+      this.statusList = data;
+
+    });
+  }
+
 }

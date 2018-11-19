@@ -12,7 +12,7 @@ export class PaymentService {
   constructor(private http: Http) { }
 
   getStudent(id) {
-    return this.http.get('http://192.168.1.51:8080/students/' + id).pipe(map(res => res.json()));
+    return this.http.get('http://192.168.1.51:9090/students/' + id).pipe(map(res => res.json()));
   }
 
   payment(id, cardNum,randomNum ,paymentDate, cardType) 

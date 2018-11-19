@@ -82,8 +82,8 @@ export class BrowseplansComponent implements OnInit {
   }
 
   payment() {
-    this.student.plan = "" + this.selectedPlan.planId;
-    this.studentService.updateStudent(this.student, this.student.institutionName, this.student.courseCategory, this.student.courseName)
+    // this.student.plan = "" + this.selectedPlan.planId;
+    this.studentService.updateStudent(this.student)
       .subscribe(
         (data) => {
           this.getStudent();

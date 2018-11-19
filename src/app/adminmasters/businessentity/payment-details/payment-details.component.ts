@@ -84,11 +84,11 @@ export class PaymentDetailsComponent implements OnInit {
       this.payment = data[0];
     }
 
-    var planData = this.planNameList.filter(x=>x.planId == student.plan);
-    if(planData.length>0)
-    {
-      this.selectedStudentData.plan = planData[0].planName;
-    }
+    // var planData = this.planNameList.filter(x=>x.planId == student.plan);
+    // if(planData.length>0)
+    // {
+    //   this.selectedStudentData.plan = planData[0].planName;
+    // }
 
    
   }

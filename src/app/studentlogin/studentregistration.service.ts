@@ -21,25 +21,34 @@ export class StudentregistrationService {
       console.log(data);
          let obj = {
      
-           "stdName": data.stdName,
-            "stdMobile": data.stdMobile,
-           "stdEmail": data.stdEmail,
-           "stdRollnumber": data.stdRollnumber,
-           "institutionName": institute[0].instName,
-           "courseName": course[0].courseName,
-           "courseCategory": courseCategory[0].categoryName,
-           "plan": plan[0].planName
+          //  "stdName": data.stdName,
+          //   "stdMobile": data.stdMobile,
+          //  "stdEmail": data.stdEmail,
+          //  "stdRollnumber": data.stdRollnumber,
+          //  "institutionName": institute[0].instName,
+          //  "courseName": course[0].courseName,
+          //  "courseCategory": courseCategory[0].categoryName,
+          //  "plan": plan[0].planName
+
+          "stdName": data.stdName,
+          "addressOne": data.addressOne,
+          "addressTwo": data.addressTwo,
+          "city": data.city,
+          "state": data.state,
+          "zipCode": data.zipCode,
+          "countryName": data.countryName,
+          "stdMobile": data.stdMobile,
+          "gender": data.gender,
+          "stdEmail": data.stdEmail,
+          "stdRollnumber": data.stdRollnumber,
+          "institutionId": data.institutionId,
+          "courseId": data.courseId,
+          "categoryId": data.categoryId,
+          "planId": data.planId,
+          "statusId": data.statusId,
+          "yearofjoining": data.yearofjoining
      
-          
-           // "stdName": "Bhagyapgowda",
-           // "stdMobile": 8898989876,
-           // "stdEmail": "bhagyagowda@itwinetech.com",
-           // "stdRollnumber": 103,
-           // "institutionName": "BMS Eng",
-           // "courseCategory": "UG",
-           // "courseName": "BE",
-           // "plan": "Gold"
-          
+       
      
      
          };
@@ -112,5 +121,29 @@ export class StudentregistrationService {
         let options = { headers: headers };
         return this.http.get(this.url + '/plans/list', options).pipe(map(res => res.json()));
       }
+
+      uploadImage(imageFile)
+      {
+        console.log("here");
+       let headers = new Headers();
+         headers.append('Access-Control-Allow-Origin','*');
+         headers.append('Access-Control-Allow-Credentials','true');
+         headers.append('Access-Control-Allow-Headers','Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
+         headers.append('Access-Control-Allow-Methods','GET,POST,OPTIONS,DELETE,PUT');
+         let options = { headers: headers };
+     
+       return this.http.post(this.url+'/uploadFile',imageFile,options);
+     }
+
+     getStatus() {
+      let headers = new Headers({
+        'Content-Type': 'application/json'
+      });
+      headers.append('Access-Control-Allow-Origin', '*');
+      headers.append('Access-Control-Allow-Headers', 'Content-Type');
+      headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
+      let options = { headers: headers };
+      return this.http.get(this.url +'/status/list', options).pipe(map(res => res.json()));
+    }
     
 }

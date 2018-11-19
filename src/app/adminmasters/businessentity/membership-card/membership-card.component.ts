@@ -79,7 +79,7 @@ export class MembershipCardComponent implements OnInit {
   courseList: CourseProfile[] = [];
   selectedCourse: string;
 
-  statusList: Student[];
+  statusList: Student[] = [];
   isEditColumnVisible: boolean;
   studentDetailsForCard: Student = new Student();
 
@@ -89,6 +89,7 @@ export class MembershipCardComponent implements OnInit {
   @ViewChild('instituteName') public ngSelectInstituteName: SelectDropDownComponent;
   @ViewChild('courseCategoryName') public ngSelectCourseCategoryName: SelectDropDownComponent;
   @ViewChild('courseName') public ngSelectCourseName: SelectDropDownComponent;
+  @ViewChild('status') public ngSelectStatusValue: SelectDropDownComponent;
 
   get values(): string[] {
     return this.value.split('\n');
@@ -124,6 +125,7 @@ export class MembershipCardComponent implements OnInit {
   }
 
   changelistview(value) {
+    console.log("value");
     console.log(value);
     if (value == 'created') {
 
@@ -192,6 +194,17 @@ export class MembershipCardComponent implements OnInit {
 
   }
 
+  selectedStatusValue : any;
+  statusNameconfig = {
+    displayKey: "status", //if objects array passed which key to be displayed defaults to description
+    search: true,
+    limitTo: this.statusList.length
+  };
+  changeValueStatus($event: any)
+   {
+    
+  }
+
 
 
 
@@ -200,9 +213,9 @@ export class MembershipCardComponent implements OnInit {
     this.studentCardList = [];
     var studentCard: StudentCard = new StudentCard();
       studentCard.studentName = this.studentDetailsForCard.stdName;
-      studentCard.studentMcmId = this.studentDetailsForCard.mcmId;
-      studentCard.studentPlan = this.studentDetailsForCard.plan;
-      studentCard.studentQrCode = "Name:" + this.studentDetailsForCard.stdName + ",Id:" + this.studentDetailsForCard.mcmId + ",Card:" + this.studentDetailsForCard + ".";
+      // studentCard.studentMcmId = this.studentDetailsForCard.mcmId;
+      // studentCard.studentPlan = this.studentDetailsForCard.plan;
+      studentCard.studentQrCode = "Name:" + this.studentDetailsForCard.stdName + ",Id:" + this.studentDetailsForCard.mcmID + ",Card:" + this.studentDetailsForCard + ".";
       this.studentCardList.push(studentCard);
 
     setTimeout(() => {
@@ -327,14 +340,19 @@ export class MembershipCardComponent implements OnInit {
       membershipObject.courseName = this.selectedCourseName[0].courseName;
     }
 
+    if (typeof this.selectedStatusValue !== 'undefined' && this.selectedStatusValue.length>0) 
+    {
+      membershipObject.statusId = this.selectedStatusValue[0].statusId
+    }
+
 
     membershipObject.stdName = studentParameters.stdName;
     membershipObject.status = studentParameters.status;
-    this.studentstatus = membershipObject.status;
+    // this.studentstatus = membershipObject.status;
     // this.changelistview( membershipObject.status);
 
 
-    if (typeof membershipObject.institutionName === 'undefined' && typeof membershipObject.courseCategory === 'undefined' && typeof membershipObject.courseName === 'undefined' && typeof membershipObject.stdName === 'undefined' && typeof membershipObject.status === 'undefined') {
+    if (typeof membershipObject.institutionName === 'undefined' && typeof membershipObject.courseCategory === 'undefined' && typeof membershipObject.courseName === 'undefined' && typeof membershipObject.stdName === 'undefined'  && typeof membershipObject.statusId === 'undefined') {
       Swal({
         title: 'Invalid!!',
         text: 'Atleast enter any one field.',
@@ -353,10 +371,11 @@ export class MembershipCardComponent implements OnInit {
             this.studentList = data;
             if (typeof this.studentList !== 'undefined' && this.studentList.length > 0) {
               this.isListContainsData = true;
-              if (this.studentList[0].status == 'created') {
+              console.log(this.studentList);
+              if (this.studentList[0].status.status.toLowerCase() == 'created') {
                 this.isEditColumnVisible = true;
 
-              } else if (this.studentList[0].status == 'payment') {
+              } else if (this.studentList[0].status.status.toLowerCase() == 'payment') {
                 this.isEditColumnVisible = false;
               }
             }
@@ -385,9 +404,8 @@ export class MembershipCardComponent implements OnInit {
     this.ngSelectCourseCategoryName.ngOnInit();
     this.ngSelectCourseName.deselectItem(this.selectedCourseName, 0);
     this.ngSelectCourseName.ngOnInit();
-
-
-
+    this.ngSelectStatusValue.deselectItem(this.selectedStatusValue,0);
+    this.ngSelectStatusValue.ngOnInit();
   }
 
 
@@ -418,17 +436,19 @@ export class MembershipCardComponent implements OnInit {
 
 
   }
-
+  studentListLocal: Student[] = [];
   planChange(plan) {
-    this.planNameListLocal = this.planNameList.filter((item) => item.planId == plan);
-    this.selectedStudentData.plan = "" + this.planNameListLocal[0].planId;
-    this.selectedStudentData.planAmount = this.planNameListLocal[0].planPrice;
 
-    if (this.planNameListLocal[0].planMembership == "Monthly") {
+    this.studentListLocal= this.studentList.filter((item) => item.planId == plan)
+    // this.planNameListLocal = this.planNameList.filter((item) => item.planId == plan);
+    // this.selectedStudentData.plan = "" + this.planNameListLocal[0].planId;
+    // this.selectedStudentData.planAmount = this.planNameListLocal[0].planPrice;
+
+    if (this.studentListLocal[0].plan.planMembership == "Monthly") {
       this.currentDateModule = { date: { year: this.localDate.getFullYear(), month: this.localDate.getMonth() + 2, day: this.localDate.getDate() } };
       this.selectedStudentData.planEndDate = this.currentDateModule;
     }
-    else if (this.planNameListLocal[0].planMembership == "Annual") {
+    else if (this.studentListLocal[0].plan.planMembership == "Annual") {
       this.currentDateModule = { date: { year: this.localDate.getFullYear() + 1, month: this.localDate.getMonth() + 1, day: this.localDate.getDate() } };
       this.selectedStudentData.planEndDate = this.currentDateModule;
     }
@@ -482,14 +502,14 @@ export class MembershipCardComponent implements OnInit {
     for (let studentLocal of this.selectedStudentsForEmailOrId) {
       var studentCard: StudentCard = new StudentCard();
       studentCard.studentName = studentLocal.stdName;
-      studentCard.studentMcmId = studentLocal.mcmId;
-      this.planNameListLocal = this.planNameList.filter((item) => item.planId == studentLocal.plan);
+      // studentCard.studentMcmId = studentLocal.mcmId;
+      // this.planNameListLocal = this.planNameList.filter((item) => item.planId == studentLocal.plan);
       var planName = "";
       if (this.planNameListLocal.length > 0) {
         planName = this.planNameListLocal[0].planName;
       }
       studentCard.studentPlan = planName;
-      studentCard.studentQrCode = "Name:" + studentLocal.stdName + ",Id:" + studentLocal.mcmId + ",Card:" + planName + ".";
+      studentCard.studentQrCode = "Name:" + studentLocal.stdName + ",Id:" + studentLocal.mcmID + ",Card:" + planName + ".";
       this.studentCardList.push(studentCard);
     }
 
@@ -558,7 +578,7 @@ export class MembershipCardComponent implements OnInit {
   toggleSelect(checked) {
     this.selectedStudentsForEmailOrId = [];
 
-    this.changelistview(this.studentstatus);
+    this.changelistview(this.student.status.statusId);
 
     if (checked) {
       this.checkedval = true;
@@ -578,17 +598,18 @@ export class MembershipCardComponent implements OnInit {
   editUser(user) {
     console.log(user);
     this.selectedStudentData = user;
-    this.planNameListLocal = this.planNameList.filter((item) => item.planId == user.plan);
-    this.selectedStudentData.planAmount = this.planNameListLocal[0].planPrice;
-    this.selectedStudentData.membershipType = this.planNameListLocal[0].planMembership;
+    this.studentListLocal = this.studentList.filter((item) => item.plan.planId == user.plan.planId);    
+    this.selectedStudentData.plan.planName = this.studentListLocal[0].plan.planName;
+    this.selectedStudentData.plan.planPrice = this.studentListLocal[0].plan.planPrice;
+    // this.selectedStudentData.plan.planMembership = this.planNameListLocal[0].planMembership;
     this.currentDateModule = { date: { year: this.localDate.getFullYear(), month: this.localDate.getMonth() + 1, day: this.localDate.getDate() } };
     this.selectedStudentData.planStartDate = this.currentDateModule;
 
-    if (this.planNameListLocal[0].planMembership == "Monthly") {
+    if (this.studentListLocal[0].plan.planMembership == "Monthly") {
       this.currentDateModule = { date: { year: this.localDate.getFullYear(), month: this.localDate.getMonth() + 2, day: this.localDate.getDate() } };
       this.selectedStudentData.planEndDate = this.currentDateModule;
     }
-    else if (this.planNameListLocal[0].planMembership == "Annualy") {
+    else if (this.studentListLocal[0].plan.planMembership == "Annualy") {
       this.currentDateModule = { date: { year: this.localDate.getFullYear() + 1, month: this.localDate.getMonth() + 1, day: this.localDate.getDate() } };
       this.selectedStudentData.planEndDate = this.currentDateModule;
     }
@@ -654,9 +675,9 @@ export class MembershipCardComponent implements OnInit {
 
   selectedStudentForcard(student: Student): void {
     this.studentDetailsForCard = student;
-    console.log(this.studentDetailsForCard.membershipType);
-    this.planNameListLocal = this.planNameList.filter((item) => item.planId == student.plan);
-    this.studentDetailsForCard.plan = this.planNameListLocal[0].planName;
+    // console.log(this.studentDetailsForCard.membershipType);
+    // this.planNameListLocal = this.planNameList.filter((item) => item.planId == student.plan);
+    // this.studentDetailsForCard.plan = this.planNameListLocal[0].planName;
   }
 
 }

@@ -264,7 +264,8 @@
             "about" : "ABOUT",
             "services" : "SERVICES",
             "pricing" : "PRICING",
-            "login" : "LOGIN"
+            "login" : "LOGIN",
+            "registration" : "REGISTRATION"
         },
         "aboutSection" : {
             "aboutMcm" : "ABOUT NoFlay",
