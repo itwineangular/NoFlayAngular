@@ -59,7 +59,7 @@ export class StudentService {
       "courseId": data.courseId,
       "categoryId": data.categoryId,
       "planId": data.planId,
-      "statusId": data.statusId,
+      "statusId": 1,
       "yearofjoining": data.yearofjoining
     };
 
@@ -93,7 +93,7 @@ export class StudentService {
       "courseId": data.courseId,
       "categoryId": data.categoryId,
       "planId": data.planId,
-      "statusId": data.statusId,
+      "statusId": 1,
       "yearofjoining": data.yearofjoining
     };
 

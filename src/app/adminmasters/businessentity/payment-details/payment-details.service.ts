@@ -45,10 +45,13 @@ export class PaymentDetailsService {
   searchStudent(studentsData) {
     let obj =
     {
-      "institutionName": studentsData.institutionName,
-      "courseCategory": studentsData.courseCategory,
-      "courseName": studentsData.courseName,
-       "stdName": studentsData.stdName,
+      "institutionId": studentsData.institutionId,
+    "categoryId": studentsData.categoryId,
+    "courseId": studentsData.courseId   
+      // "institutionName": studentsData.institutionName,
+      // "courseCategory": studentsData.courseCategory,
+      // "courseName": studentsData.courseName,
+      //  "stdName": studentsData.stdName,
       //"status": studentsData.status
 
     };

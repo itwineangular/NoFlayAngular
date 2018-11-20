@@ -494,9 +494,9 @@
                                                     <!-- <ngx-select-dropdown #planName (change)="changeValuePlan($event)" [multiple]="false" [(value)]="selectedPlanValue" [config]="PlanConfig"
                                                         [options]="planNameList"></ngx-select-dropdown> -->
 
-                                                        <select class="form-control" name="planName" id="planName" #planName="ngModel" [(ngModel)]="plan.planId">
+                                                        <select class="form-control" name="planName" id="planName" #planName="ngModel" [(ngModel)]="student.planId">
                                                             <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.selectPlan' | translate}}</option>
-                                                            <option *ngFor="let item of planNameList" value={{item.planName}}-{{item.planMembership}}>
+                                                            <option *ngFor="let item of planNameList" value={{item.planId}}>
                                                                 {{item.planName}} - {{item.planMembership}} </option>
                         
                                                         </select>
@@ -520,13 +520,13 @@
 
                                         <div class="form-group">
                                           
-                                                <div class="col-md-4 ">
+                                                <!-- <div class="col-md-4 ">
                                                 <label for="institution" style="float: left;">{{'adminConfigarationPage.studentPage.institution' | translate}}
                                                     <span class="reqMark">*</span>
                                                 </label>
                                                 <ngx-select-dropdown #instituteName (change)="changeValueInstitute($event)" [multiple]="false" [(value)]="selectedInstituteNameValue"
                                                     placeholder="No city selected" [config]="InstituteNameConfig" [options]="institutionList" ></ngx-select-dropdown>
-                                                <!-- <div class="validation-error" *ngIf="institutionName.invalid && institutionName.touched">{{'adminConfigarationPage.commonFields.institution' | translate}}</div> -->
+                                                
                                            </div> 
                                            <div class="col-md-4 ">
                                             <label for="courseCategory" style="float: left;">{{'adminConfigarationPage.studentPage.courseCategory' | translate}}
@@ -543,7 +543,41 @@
                                             <ngx-select-dropdown #course (change)="changeValueCourse($event)" [multiple]="false" [(value)]="selectedCourseValue" [config]="CourseConfig"
                                                 [options]="courseList"></ngx-select-dropdown>
                                         </div>
-    
+     -->
+
+                                            <div class="col-sm-4" >
+                                                <label for="institution" style="float: left;">{{'adminConfigarationPage.studentPage.institution' | translate}}<span class="reqMark">*</span></label>
+                                                <select class="form-control" name="institutionName" #institutionName="ngModel" [(ngModel)]="student.institutionId" (change)="onInstituteSelect($event.target.value)"
+                                                    required>
+                                                    <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.institution' | translate}}</option>
+                                                    <option *ngFor="let item of institutionList" value={{item.institutionId}}>{{item.instName}}
+                                                    </option>
+                                                </select>
+                                                <div class="validation-error" *ngIf="institutionName.invalid && institutionName.touched">{{'adminConfigarationPage.commonFields.institution' | translate}}</div>
+
+                                            </div>
+                                            <div class="col-sm-4" >
+                                                <label for="courseCategory" style="float: left;">{{'adminConfigarationPage.studentPage.courseCategory' | translate}}<span class="reqMark">*</span></label>
+                                                <select class="form-control" type="text" name="courseCategory" #courseCategory="ngModel" [(ngModel)]="student.categoryId"
+                                                    (change)="onCourseCategorySelect($event.target.value)" required>
+                                                    <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.courseCategory' | translate}}</option>
+                                                    <option *ngFor="let item of courseCategoryList" value={{item.categoryId}}>{{item.categoryName}}
+                                                    </option>
+                                                </select>
+                                                <div class="validation-error" *ngIf="courseCategory.invalid && courseCategory.touched">{{'adminConfigarationPage.commonFields.courseCategory' | translate}}</div>
+
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label for="courses"  style="float: left;">{{'adminConfigarationPage.studentPage.courses' | translate}}<span class="reqMark">*</span></label>
+                                                <select class="form-control" type="text" name="course" #course="ngModel" [(ngModel)]="student.courseId" (change)="onCourseSelect($event.target.value)"
+                                                    required>
+                                                    <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.courses' | translate}}</option>
+                                                    <option *ngFor="let item of courseList" value={{item.courseId}}>{{item.courseName}}
+                                                    </option>
+                                                </select>
+                                                <div class="validation-error" *ngIf="course.invalid && course.touched">{{'adminConfigarationPage.commonFields.courses' | translate}}</div>
+
+                                            </div>
 
                                            <div class="clearfix"></div>
                                         </div>

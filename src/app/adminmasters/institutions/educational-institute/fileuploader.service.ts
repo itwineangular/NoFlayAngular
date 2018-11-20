@@ -83,8 +83,8 @@ export class FileuploaderService {
     else if(type=="studentImage")
     {     
       this.url = this.globalUrl+'/students/imageUpload';      
-      this.form.append("stdName", data.stdName);
-      console.log("stdName", data.stdName);
+      this.form.append("stdEmail", data.stdEmail);
+      console.log("stdEmail", data.stdEmail);
     }
     else if(type=="file")
     {

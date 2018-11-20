@@ -17,7 +17,7 @@ export class StudentregistrationService {
       tokenService.init();
      }
 
-     saveStudent(data, institute, courseCategory, course, plan) {
+     saveStudent(data) {
       console.log(data);
          let obj = {
      
@@ -45,7 +45,7 @@ export class StudentregistrationService {
           "courseId": data.courseId,
           "categoryId": data.categoryId,
           "planId": data.planId,
-          "statusId": data.statusId,
+          // "statusId": data.statusId,
           "yearofjoining": data.yearofjoining
      
        

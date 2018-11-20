@@ -78,11 +78,11 @@ export class PaymentDetailsComponent implements OnInit {
     console.log("padgdsfyment");
     console.log(student);
     this.selectedStudentData = student;
-    var data = this.paymentList.filter(x=>x.studentProfile.stdId == student.stdId);
-    if(data.length>0)
-    {
-      this.payment = data[0];
-    }
+    // var data = this.paymentList.filter(x=>x.studentProfile.stdId == student.stdId);
+    // if(data.length>0)
+    // {
+    //   this.payment = data[0];
+    // }
 
     // var planData = this.planNameList.filter(x=>x.planId == student.plan);
     // if(planData.length>0)
@@ -220,25 +220,26 @@ export class PaymentDetailsComponent implements OnInit {
 
 
     if (typeof this.selectedInstituteName !== 'undefined' && this.selectedInstituteName.length > 0) {
-      paymentDetailsObject.institutionName = this.selectedInstituteName[0].instName;;
+      paymentDetailsObject.institutionId = this.selectedInstituteName[0].institutionId;
     }
 
     if (typeof this.selectedCourseCategoryName !== 'undefined' && this.selectedCourseCategoryName.length > 0) {
-      paymentDetailsObject.courseCategory = this.selectedCourseCategoryName[0].categoryName;;
+      paymentDetailsObject.categoryId = this.selectedCourseCategoryName[0].categoryId;
     }
 
     if (typeof this.selectedCourseName !== 'undefined' && this.selectedCourseName.length > 0) {
-      paymentDetailsObject.courseName = this.selectedCourseName[0].courseName;
+      paymentDetailsObject.courseId = this.selectedCourseName[0].courseId;
     }
 
 
-    paymentDetailsObject.stdName = studentParameters.stdName;
-    paymentDetailsObject.status = studentParameters.status;
-    this.studentstatus = paymentDetailsObject.status;
+    // paymentDetailsObject.stdName = studentParameters.stdName;
+    // paymentDetailsObject.status = studentParameters.status;
+    // this.studentstatus = paymentDetailsObject.status;
     // this.changelistview( membershipObject.status);
 
 
-    if (typeof paymentDetailsObject.institutionName === 'undefined' && typeof paymentDetailsObject.courseCategory === 'undefined' && typeof paymentDetailsObject.courseName === 'undefined' && typeof paymentDetailsObject.stdName === 'undefined' && typeof paymentDetailsObject.status === 'undefined') {
+      paymentDetailsObject.categoryId = this.selectedCourseCategoryName[0].categoryId;
+      if (typeof paymentDetailsObject.institutionId === 'undefined' && typeof paymentDetailsObject.categoryId === 'undefined' && typeof paymentDetailsObject.courseId === 'undefined' ) {
       Swal({
         title: 'Invalid!!',
         text: 'Atleast enter any one field.',

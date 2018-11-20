@@ -15,6 +15,7 @@ import { Course } from '../courses/courses.module';
 import { CourseService } from "../courses/courses.service";
 import Swal from 'sweetalert2';
 import { Router } from "@angular/router";
+import { Constants } from "../../../Constants";
 
 
 import { NgForm } from '@angular/forms';
@@ -31,7 +32,7 @@ declare var $: any;
   styleUrls: ['./student.component.css']
 })
 export class StudentComponent implements OnInit {
-
+  globalurl = Constants.HOME_URL;
   url: any;
   viewdisable: boolean = true;
   startDate = new Date(1990, 0, 1);
@@ -111,7 +112,7 @@ export class StudentComponent implements OnInit {
   @ViewChild('categoryName') public ngSelectinstCategoryName: SelectDropDownComponent;
   @ViewChild('courseName') public ngSelectCourseName: SelectDropDownComponent;
   @ViewChild('status') public ngSelectStatusValue: SelectDropDownComponent;
-  @ViewChild('studentRegForm') mytemplateForm : NgForm;
+  @ViewChild('studentForm') mytemplateForm : NgForm;
 
   courseCategoryListForSearch: CourseCategory[]=[];
   courseListLocal: Course[]=[];
@@ -309,7 +310,8 @@ export class StudentComponent implements OnInit {
     this.onInstituteSelect(this.student.institution.institutionId);
     this.onCourseCategorySelect(this.student.categoryId);
     this.student.planId= this.student.plan.planId;
-    this.student.statusId= this.student.status.statusId;
+    // this.student.statusId= this.student.status.statusId;
+    this.url = this.globalurl+"/students/imageFiles/"+this.student.stdEmail;
 
   }
 
@@ -410,109 +412,17 @@ onInstituteSelect(institutionId)
     });
   }
 
-  saveStudent(studentValue) {
-
-    this.uploader.uploadAll(studentValue,"studentImage");
-
-    if (this.saveOrUpdate == "save") {
-   
-      this.studentService.saveStudent(studentValue)
-        .subscribe(
-          (data) => {
-            var string = data['_body'],
-            substring = "Already existing mail";
-            if (string.includes(substring)) {
-              Swal({
-                title: 'Already existing mail !!!!',
-                text: "Email already exists. Please choose a different email",
-              confirmButtonText: 'OK!'
-              });
-            }
-            else {
-              this.mytemplateForm.reset();
-              this.url = "";
-              $("#fileControl").val('');
-            
-              Swal({
-                title: 'successfull !!!!',
-                text: "Your data is saved successfully, expect an mail.",
-              confirmButtonText: 'OK!'
-              })
-  
-              this.getStudent();
-              //this.reset();
-  
-            }
-            // this.alertMassege = "Student Registered successfully!!";
-            //this.getStudent();
-          },
-          (error) => {
-            console.log(error);
-            alert("Try again");
-          }
-        );
-
-    }
-    else if (this.saveOrUpdate == "update") {
-     
-      this.studentService.updateStudent(this.student)
-        .subscribe(
-          (data) => {
-            this.alertMassege = "Item updated on list successfully!!";
-
-            this.getStudent();
-          },
-          (error) => {
-            console.log(error);
-            alert("Try again");
-          }
-        );
-
-    }
-
-
-  }
-
   // saveStudent(studentValue) {
 
   //   this.uploader.uploadAll(studentValue,"studentImage");
+
   //   if (this.saveOrUpdate == "save") {
    
   //     this.studentService.saveStudent(studentValue)
   //       .subscribe(
   //         (data) => {
-  //           var string = data['_body'],
-  //           substring = "Already existing mail";
-  //           if (string.includes(substring)) {
-  //             Swal({
-  //             title: 'Already existing mail !!!!',
-  //             text: "Email already exists. Please choose a different email",
-  //             // type: 'warning',
-  //             // cancelButtonColor: '#d33',
-  //             confirmButtonText: 'OK!'
-  //             });
-  //             }
-  //             else {
-  //               Swal({
-  //               title: 'successfull !!!!',
-  //               text: "Your data is saved successfully, expect an mail.",
-  //               // type: 'success',
-  //               // confirmButtonColor: '#3085d6',
-  //               confirmButtonText: 'OK!'
-  //               }).then((result) => {
-  //               if (result.value) {
-  //               //this.router.navigate(['studentlogin/']);
-  //               // student.resetForm();
-                
-                
-  //               }
-  //               });
-                
-  //               this.getStudent();
-  //               // this.reset();
-                
-  //               }
-           
+  //           this.alertMassege = "Student Registered successfully!!";
+  //           this.getStudent();
   //         },
   //         (error) => {
   //           console.log(error);
@@ -540,6 +450,76 @@ onInstituteSelect(institutionId)
 
 
   // }
+
+  saveStudent(studentValue) {
+console.log("student ****");
+    this.uploader.uploadAll(studentValue,"studentImage");
+
+     if (this.saveOrUpdate == "save")
+     {
+   console.log("save student");
+      this.studentService.saveStudent(studentValue)
+        .subscribe(
+          (data) => {
+            
+            this.mytemplateForm.reset();
+            this.url = "";
+            $("#fileControl").val('');
+            this.alertMassege = "Student Registered successfully!!";
+            this.getStudent();
+          
+            // Swal({
+            //   title: 'successfull !!!!',
+            //   text: "Your data is saved successfully, expect an mail.",
+            // confirmButtonText: 'OK!'
+            // })
+           
+          },
+          (error) => {
+            console.log(error);
+           // alert("Try again");
+            var string = error['_body'];
+            
+            console.log(string);
+            var substring = "Already existing mail";
+            if (string.includes(substring)) {
+              Swal({
+                title: 'Already existing mail !!!!',
+                text: "Email already exists. Please choose a different email",
+              confirmButtonText: 'OK!'
+              });
+              this.student.stdEmail="";
+            }
+            
+            else {
+              alert("Try again");
+  
+            }
+          }
+        );
+
+    }
+    else if (this.saveOrUpdate == "update") {
+     
+      this.studentService.updateStudent(this.student)
+        .subscribe(
+          (data) => {
+            this.alertMassege = "Item updated on list successfully!!";
+
+            this.getStudent();
+          },
+          (error) => {
+            console.log(error);
+            alert("Try again");
+          }
+        );
+
+    }
+
+
+  }
+
+  
   saveStudentBulk(studentValue) {
     this.studentService.uploadCsvFile(this.studentBulkList)
       .subscribe(
@@ -560,6 +540,7 @@ onInstituteSelect(institutionId)
       .subscribe(
         (data) => {
           this.studentList = data;
+          
           
         }
       );
@@ -914,6 +895,7 @@ onInstituteSelect(institutionId)
           this.isListContainsData = true;         
           // this.studentList = data;
           // this.studentList = data;
+          console.log(this.studentList)
         }
         else {
           this.isListContainsData = false;
