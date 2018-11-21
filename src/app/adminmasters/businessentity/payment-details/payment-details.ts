@@ -61,7 +61,7 @@ export class Institution {
     instRegistrationCode?: any;
     instBranch?: any;
     instShortName: string;
-    courseCategory: CourseCategory[];
+    courseCategoryVos: CourseCategory[];
     instContactPerson: string;
 }
 

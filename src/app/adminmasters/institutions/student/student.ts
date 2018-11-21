@@ -118,6 +118,7 @@ export class Student {
     courseId?: any;
     planId?: any;
     statusId: any;
+    statusName: any;
     
 }
 

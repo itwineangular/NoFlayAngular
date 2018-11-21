@@ -111,8 +111,10 @@ private router : Router) { }
       this.service.getStudent(id)
         .subscribe(
           (data) => {
-            this.student = data;
-            this.getPlan(+ this.student.plan);
+            console.log("data");
+            console.log(data);
+            // this.student = data;
+            // this.getPlan(+ this.student.plan);
           },
           (error) => {
             console.log(error);

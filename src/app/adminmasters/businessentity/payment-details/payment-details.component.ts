@@ -22,6 +22,7 @@ export class PaymentDetailsComponent implements OnInit {
   @ViewChild('instituteName') public ngSelectInstituteName: SelectDropDownComponent;
   @ViewChild('courseCategoryName') public ngSelectCourseCategoryName: SelectDropDownComponent;
   @ViewChild('courseName') public ngSelectCourseName: SelectDropDownComponent;
+   @ViewChild('status') public ngSelectStatusValue: SelectDropDownComponent;
 
   itemsPerPage2: number = 1;
   pagenumber: string;
@@ -71,6 +72,8 @@ export class PaymentDetailsComponent implements OnInit {
     this.getPayment();
     this.getPlanName();
     this.isSearchClicked = false;
+    this.pageChange(5);
+
   }
 
   viewUser(student : Student) : void
@@ -78,11 +81,12 @@ export class PaymentDetailsComponent implements OnInit {
     console.log("padgdsfyment");
     console.log(student);
     this.selectedStudentData = student;
-    // var data = this.paymentList.filter(x=>x.studentProfile.stdId == student.stdId);
-    // if(data.length>0)
-    // {
-    //   this.payment = data[0];
-    // }
+    var data = this.paymentList.filter(x=>x.studentProfile.stdId == student.stdId);
+    console.log(data);
+    if(data.length>0)
+    {
+      this.payment = data[0];
+    }
 
     // var planData = this.planNameList.filter(x=>x.planId == student.plan);
     // if(planData.length>0)
@@ -214,6 +218,17 @@ export class PaymentDetailsComponent implements OnInit {
 
   }
 
+  selectedStatusValue : any;
+  statusNameconfig = {
+    displayKey: "status", //if objects array passed which key to be displayed defaults to description
+    search: true,
+    limitTo: this.statusList.length
+  };
+  changeValueStatus($event: any)
+   {
+    
+  }
+
   searchStudent(studentParameters) {
     var paymentDetailsObject: Student = new Student();
     this.isSearchClicked = true;
@@ -231,15 +246,24 @@ export class PaymentDetailsComponent implements OnInit {
       paymentDetailsObject.courseId = this.selectedCourseName[0].courseId;
     }
 
+    if (typeof this.selectedStatusValue !== 'undefined' && this.selectedStatusValue.length>0) 
+    {
+      paymentDetailsObject.statusId = this.selectedStatusValue[0].statusId
+    }
 
-    // paymentDetailsObject.stdName = studentParameters.stdName;
-    // paymentDetailsObject.status = studentParameters.status;
+     paymentDetailsObject.stdName = studentParameters.stdName;
+     paymentDetailsObject.status = studentParameters.status;
     // this.studentstatus = paymentDetailsObject.status;
     // this.changelistview( membershipObject.status);
 
 
-      paymentDetailsObject.categoryId = this.selectedCourseCategoryName[0].categoryId;
-      if (typeof paymentDetailsObject.institutionId === 'undefined' && typeof paymentDetailsObject.categoryId === 'undefined' && typeof paymentDetailsObject.courseId === 'undefined' ) {
+     // paymentDetailsObject.categoryId = this.selectedCourseCategoryName[0].categoryId;
+      if (typeof paymentDetailsObject.institutionId === 'undefined' && 
+      typeof paymentDetailsObject.categoryId === 'undefined' 
+      && typeof paymentDetailsObject.courseId === 'undefined' 
+      && typeof paymentDetailsObject.stdName === 'undefined' 
+       && typeof paymentDetailsObject.statusId === 'undefined'
+    ) {
       Swal({
         title: 'Invalid!!',
         text: 'Atleast enter any one field.',
@@ -281,6 +305,8 @@ export class PaymentDetailsComponent implements OnInit {
     this.ngSelectCourseCategoryName.ngOnInit();
     this.ngSelectCourseName.deselectItem(this.selectedCourseName, 0);
     this.ngSelectCourseName.ngOnInit();
+    this.ngSelectStatusValue.deselectItem(this.selectedStatusValue,0);
+    this.ngSelectStatusValue.ngOnInit();
 
 
 

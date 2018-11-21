@@ -303,14 +303,15 @@ export class StudentComponent implements OnInit {
     this.onStateSelect(this.student.state);
     console.log(this.student);
     console.log(this.institutionList);
+    console.log(this.student.institutionId);
    // this.student.institutionName = this.student.institution.institutionId;
-   this.student.institutionId = this.student.institution.institutionId;
-   this.student.categoryId =  this.student.courseCategory.categoryId;
-   this.student.courseId =  this.student.courseProfile.courseId;
-    this.onInstituteSelect(this.student.institution.institutionId);
+  //  this.student.institutionId = this.student.institution.institutionId;
+  //  this.student.categoryId =  this.student.courseCategory.categoryId;
+  //  this.student.courseId =  this.student.courseProfile.courseId;
+    this.onInstituteSelect(this.student.institutionId);
     this.onCourseCategorySelect(this.student.categoryId);
-    this.student.planId= this.student.plan.planId;
-    // this.student.statusId= this.student.status.statusId;
+  //   this.student.planId= this.student.plan.planId;
+  //   // this.student.statusId= this.student.status.statusId;
     this.url = this.globalurl+"/students/imageFiles/"+this.student.stdEmail;
 
   }

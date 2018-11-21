@@ -1,244 +1,261 @@
 <div class="mycontent">
-  <div class="col-md-12">
-      <hr />
-      <h3 class="text-center">Payment Details</h3>
-      <hr />
-  </div>
-
-  <div class="col-md-12">
-      <div class="panel panel-default">
-          <div class="panel-body">
-              <form class="form-horizontal" #paymentDetailsSearchForm="ngForm" (ngSubmit)="searchStudent(paymentDetailsSearchForm)">
-                  <div class="col-md-3">
-                      <label for="instituteName">Institution Name</label>
-                      <ngx-select-dropdown #instituteName (change)="changeInstituteNameValue($event)" [multiple]="false" [(value)]="selectedInstituteName"
-                          [config]="configInstituteName" [options]="institutionList"></ngx-select-dropdown>
-                  </div>
-                  <div class="col-md-3">
-                          <label for="categoryCode">Course Category</label>
-                          <ngx-select-dropdown #courseCategoryName (change)="changeCourseCategoryNameValue($event)" [multiple]="false" [(value)]="selectedCourseCategoryName"
-                              [config]="configCourseCategoryName" [options]="courseCategoryList"></ngx-select-dropdown>
-                   </div>
-                   <div class="col-md-3">
-                          <label for="courseName">Course Name</label>
-                          <ngx-select-dropdown #courseName (change)="changeCourseNameValue($event)" [multiple]="false" [(value)]="selectedCourseName"
-                              [config]="configCourseName" [options]="courseList"></ngx-select-dropdown>
-                  </div>
-                  <div class="col-md-3">
-                          <label for="stdName">Student Name</label>
-                          <input class="form-control" type="text" placeholder="Student Name"
-                              name="stdName" #studentNameControl="ngModel" [(ngModel)]="paymentDetails.stdName" />
-                  </div>
-
-                  <div class="col-md-12">
-                      <button class="btn btn-warning btn-outline pull-right cssButtonPadding" type="button" (click)="searchClear()">clear</button>
-                      <button class="btn btn-primary btn-outline pull-right cssButtonPadding" type="button" (click)="searchStudent(paymentDetails)">search</button>
+    <div class="col-md-12">
+        <hr />
+        <h3 class="text-center">Payment Details</h3>
+        <hr />
+    </div>
+  
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <form class="form-horizontal" #paymentDetailsSearchForm="ngForm" (ngSubmit)="searchStudent(paymentDetailsSearchForm)">
+                    <div class="col-md-3">
+                        <label for="instituteName">Institution Name</label>
+                        <ngx-select-dropdown #instituteName (change)="changeInstituteNameValue($event)" [multiple]="false" [(value)]="selectedInstituteName"
+                            [config]="configInstituteName" [options]="institutionList"></ngx-select-dropdown>
+                    </div>
+                    <div class="col-md-3">
+                            <label for="categoryCode">Course Category</label>
+                            <ngx-select-dropdown #courseCategoryName (change)="changeCourseCategoryNameValue($event)" [multiple]="false" [(value)]="selectedCourseCategoryName"
+                                [config]="configCourseCategoryName" [options]="courseCategoryList"></ngx-select-dropdown>
+                     </div>
+                     <div class="col-md-3">
+                            <label for="courseName">Course Name</label>
+                            <ngx-select-dropdown #courseName (change)="changeCourseNameValue($event)" [multiple]="false" [(value)]="selectedCourseName"
+                                [config]="configCourseName" [options]="courseList"></ngx-select-dropdown>
+                    </div>
+                    <div class="col-md-3">
+                            <label for="stdName">Student Name</label>
+                            <input class="form-control" type="text" placeholder="Student Name"
+                                name="stdName" #studentNameControl="ngModel" [(ngModel)]="paymentDetails.stdName" />
+                    </div>
+                    <div class="col-md-3">
+                      <label class="control-label col-sm-2" for="startDate">StartDate</label>
+                      <my-date-picker [options]="myDatePickerOptions2" name="startDateTime" #startDateTime="ngModel" [(ngModel)]="plan.startDateTime"></my-date-picker>
+  
                   </div>
   
-                 
-                  </form>
-              </div>
-          </div>
-      </div>
-
-      <div class="col-md-12">
-          <div *ngIf="isSearchClicked">
-               <div *ngIf="!isListContainsData">
-                   <h3 class="text-center noRecord">No Record Found</h3>
-               </div>
-           </div>
-   </div>
-
-                  <div class="col-md-12" *ngIf="isListContainsData">
-                          <div class="table-responsive">
-                              <table class="table table-bordered myTable table-condensed table-striped">
-                                  <thead>
-                                      <tr class="text-center">
-                                          <th>{{'adminConfigarationPage.commonFields.index' | translate}}</th>
-                                          <th>{{ 'adminConfigarationPage.paymentDetailsPage.studentName' | translate }}
-                  
-                                          </th>
-                                          <th>{{ 'adminConfigarationPage.paymentDetailsPage.institutionName' | translate }}
-                  
-                                          </th>
-                                          <!-- <th>{{ 'adminConfigarationPage.membershipCardPage.planName' | translate }}
-                  
-                                          </th> -->
-                                          <th>{{ 'adminConfigarationPage.paymentDetailsPage.course' | translate }}
-                  
-                                              </th>
-                                              <th>{{ 'adminConfigarationPage.paymentDetailsPage.courseCategory' | translate }}
-                  
-                                                  </th>
-                                          <th>{{ 'adminConfigarationPage.statusPage.status' | translate }}</th>
-                                          <!-- <th>{{ 'adminConfigarationPage.membershipCardPage.mcmId' | translate }} </th> -->
-                  
-                                          <!-- <th>{{ 'adminConfigarationPage.membershipCardPage.checkbox' | translate }}</th> -->
-                                          <!-- <th>{{ 'adminConfigarationPage.commonFields.edit' | translate }}</th> -->
-                                          <th>{{ 'adminConfigarationPage.commonFields.planDetail' | translate }}</th>
-                                      </tr>
-                                  </thead>
-                                  <tbody>
-                                      <tr *ngFor="let item of studentList | paginate: { itemsPerPage: pagenumber, currentPage: p };let i=index">
-                                          <td>{{((p-1)*itemsPerPage2)+i+1}}</td>
-                                          <td>{{item.stdName}}</td>
-                                          <td>{{item.institutionName}}</td>
-                                          <td>{{item.courseName}}</td>
-                                          <td>{{item.courseCategory.categoryName}}</td>
-                                          <!-- <td>{{item.plan}}</td> -->
-                                          <td>{{item.status.status}}</td>
-                                          
-                                          <td>
-                                              <button class="btn btn-warning buttonStyle" data-toggle="modal" data-target="#addModal" (click)="viewUser(item)">
-                                                 <span class="glyphicon glyphicon-eye-open" aria-hidden="true" style="font-size:15px" style="color:white"></span>
-                                              </button>
-                                          </td>
-                                        
-                                      </tr>
-                                  </tbody>
-                              </table>
-                          </div>
-                          <div class="form-group">
-                              <div class="col-md-4">
-                                  Show
-                                  <select (change)="pageChange($event.target.value)" style="border: none;">
-                  
-                                      <option>5</option>
-                                      <option>10</option>
-                                      <option>15</option>
-                                  </select>
-                                  Entries
-                              </div>
-                              <div class="col-md-2"></div>
-                  
-                              <div class=" col-md-6 text-right">
-                                  <pagination-controls (pageChange)="customPageChange($event)"></pagination-controls>
-                              </div>
-                              <div class="clearfix"></div>
-                  
-                          </div>
-                          <div class="col-lg-12 text-center">
-                              <button *ngIf="pnamechangeflag" class="btn btn-primary btnNext" type="button" (click)="proceedClick()" data-toggle="modal" data-target="#addModal">{{ 'adminConfigarationPage.membershipCardPage.proceed' | translate }}</button>
-                          </div>
-                         
-                  
-                      </div>
-
-
+                  <div class="col-md-3">
+                      <label for="status">{{'adminConfigarationPage.studentPage.status' | translate}}</label>
+                      <ngx-select-dropdown  #status (change)="changeValueStatus($event)" [multiple]="false" [(value)]="selectedStatusValue"
+                      [config]="statusNameconfig" [options]="statusList"></ngx-select-dropdown>
                       
-  <div class="modal fade" id="addModal" role="dialog">
-          <div class="modal-dialog">
-              <div class="modal-content">
-                  <form class="form-horizontal">
-                      <div>
-                          <div class="modal-header">
-                              <button class="close" type="button" data-dismiss="modal">×</button>
-                              <h4 class="modal-title">{{ 'adminConfigarationPage.commonFields.planDetail' | translate }}</h4>
-                          </div>
-                          <div class="modal-body">
-                              <div class="container">
-                                  <div class="form-group">
-                                      <label class="control-label col-sm-2">Plan Name:</label>
-                                      <div class="col-sm-3">
-                                           <input class="form-control" type="text" placeholder="Plan Name" name="plan" readonly 
-                                              [(ngModel)]="selectedStudentData.planName" />
-
-                                              
-                                         
-                                      </div>
-                                      <div class="clearfix"></div>
-                                  </div>
-
-                                  <div class="form-group">
-                                          <label class="control-label col-sm-2">Membership Type:</label>
-                                          <div class="col-sm-3">
-      
-                                              <input class="form-control" type="text" placeholder="Membership Type" name="membershipType" readonly
-                                               [(ngModel)]="selectedStudentData.membershipType"/>
-                                           </div>
-                                          <div class="clearfix"></div>
-                                      </div>
-
-                                  <div class="form-group">
-                                      <label class="control-label col-sm-2">Amount:</label>
-                                      <div class="col-sm-3">
+                  </div>
   
-                                          <input class="form-control" type="text" placeholder="Amount" name="planPrice" readonly
-                                           [(ngModel)]="selectedStudentData.planAmount"/>
-                                       </div>
-                                      <div class="clearfix"></div>
-                                  </div>
-                                  <div class="form-group">
-                                      <label class="control-label col-sm-2">Start Date:</label>
-                                      <div class="col-sm-3">
   
-                                              <input class="form-control" type="text" placeholder="StartDate" name="planStartDate" readonly
-                                              [ngModel]="selectedStudentData.planStartDate  | date:'medium'"/>
-                                          <!-- <my-date-picker [options]="myDatePickerOptions" name="planStartDate" [(ngModel)]="selectedStudentData.planStartDate" placeholder="Start Date"
-                                              (click)="setDate($event.target.value)"></my-date-picker> -->
+                    
   
-                                      </div>
-                                      <div class="clearfix"></div>
-                                  </div>
-                                  <div class="form-group">
-                                      <label class="control-label col-sm-2">End Date:</label>
-                                      <div class="col-sm-3">
-                                              <input class="form-control" type="text" placeholder=" EndDate" name="planEndDate" readonly
-                                              [ngModel]="selectedStudentData.planEndDate  | date:'medium'"/>
-                                          <!-- <my-date-picker [options]="myDatePickerOptions" name="planEndEnd" [(ngModel)]="selectedStudentData.planEndDate" placeholder="End Date"></my-date-picker> -->
+                    <div class="col-md-12">
+                        <button class="btn btn-warning btn-outline pull-right cssButtonPadding" type="button" (click)="searchClear()">clear</button>
+                        <button class="btn btn-primary btn-outline pull-right cssButtonPadding" type="button" (click)="searchStudent(paymentDetails)">search</button>
+                    </div>
+    
+                   
+                    </form>
+                </div>
+            </div>
+        </div>
   
-                                      </div>
-                                      <div class="clearfix"></div>
-                                  </div>
-                                  <div class="form-group">
-                                          <label class="control-label col-sm-2">Payment Mode:</label>
-                                          <div class="col-sm-3">
-      
-                                              <input class="form-control" type="text" placeholder="Payment Mode" name="paymentMode" readonly 
-                                              [(ngModel)]="payment.paymentMode"
-                                              />
-      
-                                          </div>
-                                          <div class="clearfix"></div>
-                                      </div>
-
-                                      <div class="form-group">
-                                              <label class="control-label col-sm-2">Reference Number:</label>
-                                              <div class="col-sm-3">
-          
-                                                  <input class="form-control" type="text" placeholder="Reference Number" name="paymentReference" readonly 
-                                                  [(ngModel)]="payment.paymentReference"
-                                                  />
-          
-                                              </div>
-                                              <div class="clearfix"></div>
-                                          </div>
-
-                                          <div class="form-group">
-                                              <label class="control-label col-sm-2">Payment Date:</label>
-                                              <div class="col-sm-3">
-          
-                                                  <input class="form-control" type="text" placeholder="Payment Date" name="paymentDate" readonly 
-                                                  [ngModel]="payment.paymentDate | date:'medium'"
-                                                  />
-          
-                                              </div>
-                                              <div class="clearfix"></div>
-                                          </div>
-      
+        <div class="col-md-12">
+            <div *ngIf="isSearchClicked">
+                 <div *ngIf="!isListContainsData">
+                     <h3 class="text-center noRecord">No Record Found</h3>
+                 </div>
+             </div>
+     </div>
   
-                                  <!-- <div class="col-sm-6 text-center">
-                                      <button class="btn btn-primary btnNext" type="button" (click)="generateMembershipId()">Browse Plan</button>
-                                  </div> -->
-                              </div>
-                          </div>
-                      </div>
-                  </form>
-              </div>                                                 
-          </div>
-      </div>
-
-                 
+                    <div class="col-md-12" *ngIf="isListContainsData">
+                            <div class="table-responsive">
+                                <table class="table table-bordered myTable table-condensed table-striped">
+                                    <thead>
+                                        <tr class="text-center">
+                                            <th>{{'adminConfigarationPage.commonFields.index' | translate}}</th>
+                                            <th>{{ 'adminConfigarationPage.paymentDetailsPage.studentName' | translate }}
+                    
+                                            </th>
+                                            <th>{{ 'adminConfigarationPage.paymentDetailsPage.institutionName' | translate }}
+                    
+                                            </th>
+                                            <!-- <th>{{ 'adminConfigarationPage.membershipCardPage.planName' | translate }}
+                    
+                                            </th> -->
+                                            <th>{{ 'adminConfigarationPage.paymentDetailsPage.course' | translate }}
+                    
+                                                </th>
+                                                <th>{{ 'adminConfigarationPage.paymentDetailsPage.courseCategory' | translate }}
+                    
+                                                    </th>
+                                            <th>{{ 'adminConfigarationPage.statusPage.status' | translate }}</th>
+                                            <!-- <th>{{ 'adminConfigarationPage.membershipCardPage.mcmId' | translate }} </th> -->
+                    
+                                            <!-- <th>{{ 'adminConfigarationPage.membershipCardPage.checkbox' | translate }}</th> -->
+                                            <!-- <th>{{ 'adminConfigarationPage.commonFields.edit' | translate }}</th> -->
+                                            <th>{{ 'adminConfigarationPage.commonFields.planDetail' | translate }}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of studentList | paginate: { itemsPerPage: pagenumber, currentPage: p };let i=index">
+                                            <td>{{((p-1)*itemsPerPage2)+i+1}}</td>
+                                            <td>{{item.stdName}}</td>
+                                            <td>{{item.institutionName}}</td>
+                                            <td>{{item.courseName}}</td>
+                                            <td>{{item.categoryName}}</td>
+                                            <!-- <td>{{item.plan}}</td> -->
+                                            <td>{{item.statusName}}</td>
+                                            
+                                            <td>
+                                                <button class="btn btn-warning buttonStyle" data-toggle="modal" data-target="#addModal" (click)="viewUser(item)">
+                                                   <span class="glyphicon glyphicon-eye-open" aria-hidden="true" style="font-size:15px" style="color:white"></span>
+                                                </button>
+                                            </td>
+                                          
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    Show
+                                    <select (change)="pageChange($event.target.value)" style="border: none;">
+                    
+                                        <option>5</option>
+                                        <option>10</option>
+                                        <option>15</option>
+                                    </select>
+                                    Entries
+                                </div>
+                                <div class="col-md-2"></div>
+                    
+                                <div class=" col-md-6 text-right">
+                                    <pagination-controls (pageChange)="customPageChange($event)"></pagination-controls>
+                                </div>
+                                <div class="clearfix"></div>
+                    
+                            </div>
+                            <div class="col-lg-12 text-center">
+                                <button *ngIf="pnamechangeflag" class="btn btn-primary btnNext" type="button" (click)="proceedClick()" data-toggle="modal" data-target="#addModal">{{ 'adminConfigarationPage.membershipCardPage.proceed' | translate }}</button>
+                            </div>
+                           
+                    
+                        </div>
+  
+  
+                        
+    <div class="modal fade" id="addModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form class="form-horizontal">
+                        <div>
+                            <div class="modal-header">
+                                <button class="close" type="button" data-dismiss="modal">×</button>
+                                <h4 class="modal-title">{{ 'adminConfigarationPage.commonFields.planDetail' | translate }}</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container">
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">Plan Name:</label>
+                                        <div class="col-sm-3">
+                                             <input class="form-control" type="text" placeholder="Plan Name" name="plan" readonly 
+                                                [(ngModel)]="selectedStudentData.planName" />
+  
+                                                
+                                           
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+  
+                                    <div class="form-group">
+                                            <label class="control-label col-sm-2">Membership Type:</label>
+                                            <div class="col-sm-3">
+        
+                                                <input class="form-control" type="text" placeholder="Membership Type" name="membershipType" readonly
+                                                 [(ngModel)]="selectedStudentData.membershipType"/>
+                                             </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+  
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">Amount:</label>
+                                        <div class="col-sm-3">
+    
+                                            <input class="form-control" type="text" placeholder="Amount" name="planPrice" readonly
+                                             [(ngModel)]="selectedStudentData.planAmount"/>
+                                         </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <!-- <div class="form-group">
+                                        <label class="control-label col-sm-2">Start Date:</label>
+                                        <div class="col-sm-3">
+    
+                                                <input class="form-control" type="text" placeholder="StartDate" name="planStartDate" readonly
+                                                [ngModel]="selectedStudentData.planStartDate  | date:'medium'"/>
+                                          
+    
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div> -->
+                                      <!-- <my-date-picker [options]="myDatePickerOptions" name="planStartDate" [(ngModel)]="selectedStudentData.planStartDate" placeholder="Start Date"
+                                                (click)="setDate($event.target.value)"></my-date-picker> -->
+                                    <!-- <div class="form-group">
+                                        <label class="control-label col-sm-2">End Date:</label>
+                                        <div class="col-sm-3">
+                                                <input class="form-control" type="text" placeholder=" EndDate" name="planEndDate" readonly
+                                                [ngModel]="selectedStudentData.planEndDate  | date:'medium'"/>
+                                            
+    
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div> -->
+                                    <!-- <my-date-picker [options]="myDatePickerOptions" name="planEndEnd" [(ngModel)]="selectedStudentData.planEndDate" placeholder="End Date"></my-date-picker> -->
+                                    <div class="form-group">
+                                            <label class="control-label col-sm-2">Payment Mode:</label>
+                                            <div class="col-sm-3">
+        
+                                                <input class="form-control" type="text" placeholder="Payment Mode" name="paymentMode" readonly 
+                                                [(ngModel)]="payment.paymentMode"
+                                                />
+        
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+  
+                                        <div class="form-group">
+                                                <label class="control-label col-sm-2">Reference Number:</label>
+                                                <div class="col-sm-3">
             
-
-</div>
+                                                    <input class="form-control" type="text" placeholder="Reference Number" name="paymentReference" readonly 
+                                                    [(ngModel)]="payment.paymentReference"
+                                                    />
+            
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+  
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-2">Payment Date:</label>
+                                                <div class="col-sm-3">
+            
+                                                    <input class="form-control" type="text" placeholder="Payment Date" name="paymentDate" readonly 
+                                                    [ngModel]="payment.paymentDate | date:'medium'"
+                                                    />
+            
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+        
+    
+                                    <!-- <div class="col-sm-6 text-center">
+                                        <button class="btn btn-primary btnNext" type="button" (click)="generateMembershipId()">Browse Plan</button>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>                                                 
+            </div>
+        </div>
+  
+                   
+              
+  
+  </div>

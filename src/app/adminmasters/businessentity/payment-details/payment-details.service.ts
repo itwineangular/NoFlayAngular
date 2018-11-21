@@ -47,12 +47,12 @@ export class PaymentDetailsService {
     {
       "institutionId": studentsData.institutionId,
     "categoryId": studentsData.categoryId,
-    "courseId": studentsData.courseId   
+    "courseId": studentsData.courseId ,  
       // "institutionName": studentsData.institutionName,
       // "courseCategory": studentsData.courseCategory,
       // "courseName": studentsData.courseName,
-      //  "stdName": studentsData.stdName,
-      //"status": studentsData.status
+       "stdName": studentsData.stdName,
+      "status": studentsData.status
 
     };
     let headers = new Headers({
@@ -62,7 +62,7 @@ export class PaymentDetailsService {
     headers.append('Access-Control-Allow-Headers', 'Content-Type');
     headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
     let options = { headers: headers };
-    return this.http.post(this.url + '/students/searchByCriteria', obj, options).pipe(map(res => res.json()));
+    return this.http.post(this.url + '/students/searchStudent', obj, options).pipe(map(res => res.json()));
   }
 
 }
