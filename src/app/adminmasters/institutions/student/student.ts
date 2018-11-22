@@ -83,7 +83,7 @@ export class Status {
 export class Student { 
    
     stdId: number;
-    mcmID?: any;
+    mcmId?: any;
     actInd?: any;
     stdName: string;
     stdMobile: number;
@@ -119,6 +119,7 @@ export class Student {
     planId?: any;
     statusId: any;
     statusName: any;
+    membershipType:any;
     
 }
 

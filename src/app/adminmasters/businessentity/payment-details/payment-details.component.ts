@@ -80,6 +80,7 @@ export class PaymentDetailsComponent implements OnInit {
   {
     console.log("padgdsfyment");
     console.log(student);
+    this.payment =new Payment;
     this.selectedStudentData = student;
     var data = this.paymentList.filter(x=>x.studentProfile.stdId == student.stdId);
     console.log(data);

@@ -19,16 +19,6 @@ export class CourseProfile {
 }
 
 export class CourseCategory {
-    // categoryId: number;
-    // categoryCode: string;
-    // categoryName: string;
-    // status: string;
-    // creationDate: any;
-    // createdBy: string;
-    // modifiedDate: any;
-    // modifiedBy: string;
-    // courseProfile: CourseProfile[];
-
     categoryId: number;
     categoryCode: string;
     categoryName: string;
@@ -101,9 +91,9 @@ export class Student {
     planEndDate?: any;
     mcmId: string;
     qrImage?: any;
-
+    planName:any;
     planPrice : any;
-   
+    membershipType:any;
     planEndEnd : any;
     
   
@@ -124,7 +114,9 @@ export  class selectedStudents
 
 export class StudentCard {
     studentName: string;
-    studentMcmId : string;
+    studentMcmId : any;
     studentPlan : string;
     studentQrCode : string;
+    studentEmail : string;
+    studentMembership:string;
 }

@@ -1,431 +1,411 @@
 <div class="mycontent">
-    <div class="col-md-12">
-        <hr />
-        <h3 class="text-center">Membership Card</h3>
-        <hr />
-    </div>
-
-    <div class="col-md-12">
-        <div class="panel panel-default">
-
-            <div class="panel-body">
-                <form class="form-horizontal" #membershipCardSearchForm="ngForm" (ngSubmit)="searchStudent(membershipCardSearchForm)">
-                    <div class="col-md-3">
-                        <label for="institutionName">{{'adminConfigarationPage.membershipCardPage.institutionName' | translate}}</label>
-                        <ngx-select-dropdown #instituteName (change)="changeInstituteNameValue($event)" [multiple]="false" [(value)]="selectedInstituteName"
-                            [config]="configInstituteName" [options]="institutionList"></ngx-select-dropdown>
-                        <!-- <select class="form-control" name="institutionName" #institutionName="ngModel" [(ngModel)]="membershipCard.institutionName"
-                        (change)="onInstituteSelect($event.target.value)" required>
-                        <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.membershipCardPage.institutionName' | translate}}</option>
-                        <option *ngFor="let item of institutionList" value={{item.institutionId}}>{{item.instName}}
-                        </option>
-                    </select> -->
-                    </div>
-                    <div class="col-md-3">
-                        <label for="categoryCode">{{'adminConfigarationPage.membershipCardPage.courseCategory' | translate}}</label>
-                        <ngx-select-dropdown #courseCategoryName (change)="changeCourseCategoryNameValue($event)" [multiple]="false" [(value)]="selectedCourseCategoryName"
-                            [config]="configCourseCategoryName" [options]="courseCategoryList"></ngx-select-dropdown>
-                        <!-- <select class="form-control" type="text" name="courseCategory" #courseCategory="ngModel" [(ngModel)]="membershipCard.courseCategory"
-                            (change)="onCourseCategorySelect($event.target.value)" required>
-                            <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.membershipCardPage.courseCategory' | translate}}</option>
-                            <option *ngFor="let item of courseCategoryList" value={{item.categoryId}}>{{item.categoryName}}
-                            </option>
-                        </select> -->
-
-                    </div>
-                    <div class="col-md-3">
-                        <label for="courseName">{{'adminConfigarationPage.membershipCardPage.course' | translate}}</label>
-                        <ngx-select-dropdown #courseName (change)="changeCourseNameValue($event)" [multiple]="false" [(value)]="selectedCourseName"
-                            [config]="configCourseName" [options]="courseList"></ngx-select-dropdown>
-                        <!-- <select class="form-control" type="text" name="course" #course="ngModel" [(ngModel)]="membershipCard.course" (change)="onCourseSelect($event.target.value)"
-                            required>
-                            <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.membershipCardPage.course' | translate}}</option>
-                            <option *ngFor="let item of courseList" value={{item.courseName}}>{{item.courseName}}
-                            </option>
-                        </select> -->
-                    </div>
-
-                    <div class="col-md-3">
-                        <label for="stdName">{{ 'adminConfigarationPage.membershipCardPage.studentName' | translate }}</label>
-                        <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.membershipCardPage.studentName' | translate}}"
-                            name="stdName" #studentNameControl="ngModel" [(ngModel)]="membershipCard.stdName" />
-                    </div>
-
-
-                    <div class="col-md-3">
-                        <label for="status">{{'adminConfigarationPage.studentPage.status' | translate}}</label>
-                        <ngx-select-dropdown  #status (change)="changeValueStatus($event)" [multiple]="false" [(value)]="selectedStatusValue"
-                        [config]="statusNameconfig" [options]="statusList"></ngx-select-dropdown>
+        <div class="col-md-12">
+            <hr />
+            <h3 class="text-center">Membership Card</h3>
+            <hr />
+        </div>
+    
+        <div class="col-md-12">
+            <div class="panel panel-default">
+    
+                <div class="panel-body">
+                    <form class="form-horizontal" #membershipCardSearchForm="ngForm" (ngSubmit)="searchStudent(membershipCardSearchForm)">
+                        <div class="col-md-3">
+                            <label for="institutionName">{{'adminConfigarationPage.membershipCardPage.institutionName' | translate}}</label>
+                            <ngx-select-dropdown #instituteName (change)="changeInstituteNameValue($event)" [multiple]="false" [(value)]="selectedInstituteName"
+                                [config]="configInstituteName" [options]="institutionList"></ngx-select-dropdown>
+                           
+                        </div>
+                        <div class="col-md-3">
+                            <label for="categoryCode">{{'adminConfigarationPage.membershipCardPage.courseCategory' | translate}}</label>
+                            <ngx-select-dropdown #courseCategoryName (change)="changeCourseCategoryNameValue($event)" [multiple]="false" [(value)]="selectedCourseCategoryName"
+                                [config]="configCourseCategoryName" [options]="courseCategoryList"></ngx-select-dropdown>
+                          
+    
+                        </div>
+                        <div class="col-md-3">
+                            <label for="courseName">{{'adminConfigarationPage.membershipCardPage.course' | translate}}</label>
+                            <ngx-select-dropdown #courseName (change)="changeCourseNameValue($event)" [multiple]="false" [(value)]="selectedCourseName"
+                                [config]="configCourseName" [options]="courseList"></ngx-select-dropdown>
                         
-                    </div>
-                    <div class="col-md-12">
-                        <button class="btn btn-warning btn-outline pull-right cssButtonPadding" type="button" (click)="searchClear()">{{'adminConfigarationPage.commonFields.clear' | translate}}</button>
-                        <button class="btn btn-primary btn-outline pull-right cssButtonPadding" type="button" (click)="searchStudent(membershipCard)">{{'adminConfigarationPage.commonFields.search' | translate}}</button>
-
-                    </div>
-                </form>
+                        </div>
+    
+                        <div class="col-md-3">
+                            <label for="stdName">{{ 'adminConfigarationPage.membershipCardPage.studentName' | translate }}</label>
+                            <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.membershipCardPage.studentName' | translate}}"
+                                name="stdName" #studentNameControl="ngModel" [(ngModel)]="membershipCard.stdName" />
+                        </div>
+    
+    
+                        <div class="col-md-3">
+                            <label for="status">{{'adminConfigarationPage.studentPage.status' | translate}}</label>
+                            <ngx-select-dropdown  #status (change)="changeValueStatus($event)" [multiple]="false" [(value)]="selectedStatusValue"
+                            [config]="statusNameconfig" [options]="statusList"></ngx-select-dropdown>
+                            
+                        </div>
+                        <div class="col-md-12">
+                            <button class="btn btn-warning btn-outline pull-right cssButtonPadding" type="button" (click)="searchClear()">{{'adminConfigarationPage.commonFields.clear' | translate}}</button>
+                            <button class="btn btn-primary btn-outline pull-right cssButtonPadding" type="button" (click)="searchStudent(membershipCard)">{{'adminConfigarationPage.commonFields.search' | translate}}</button>
+    
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
-
-    <div class="col-md-12 text-right" *ngIf="isListContainsData">
-        <input type="checkbox" id="mycheck-{{ i+1 }}" value="{{ i+1 }}" (click)="toggleSelect($event.target.checked)">
-        <label for="mycheck-{{ i+1 }}">Select All</label>
-
-    </div>
-    <div class="col-md-12">
-        <!-- <div class="alert alert-warning fade in myAlert" *ngIf="alertMassege">
-            <a class="close" href="#" data-dismiss="alert" (click)="clickedAlert()">X</a>
-            <h4 style="text-align: center">{{alertMassege}}</h4>
+    
+        <div class="col-md-12 text-right" *ngIf="isListContainsData">
+            <input type="checkbox" id="mycheck-{{ i+1 }}" value="{{ i+1 }}" (click)="toggleSelect($event.target.checked)">
+            <label for="mycheck-{{ i+1 }}">Select All</label>
+    
+        </div>
+        <div class="col-md-12">
+                  <div *ngIf="isSearchClicked">
+                <div *ngIf="!isListContainsData">
+                    <h3 class="text-center noRecord">{{ 'adminConfigarationPage.commonFields.noRecordFound' | translate }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12" *ngIf="isListContainsData">
+            <div class="table-responsive">
+                <table class="table table-bordered myTable table-condensed table-striped">
+                    <thead>
+                        <tr class="text-center">
+                            <th>{{'adminConfigarationPage.commonFields.index' | translate}}</th>
+                            <th>{{ 'adminConfigarationPage.membershipCardPage.studentName' | translate }}
+    
+                            </th>
+                            <th>{{ 'adminConfigarationPage.membershipCardPage.institutionName' | translate }}
+    
+                            </th>
+                            <th>{{ 'adminConfigarationPage.membershipCardPage.planName' | translate }}
+    
+                            </th>
+                            <th>{{ 'adminConfigarationPage.statusPage.status' | translate }}</th>
+                            <!-- <th>{{ 'adminConfigarationPage.membershipCardPage.mcmId' | translate }} </th> -->
+    
+                            <th>{{ 'adminConfigarationPage.membershipCardPage.checkbox' | translate }}</th>
+                            <th *ngIf="isEditColumnVisible">{{ 'adminConfigarationPage.commonFields.edit' | translate }}</th>
+                            <th *ngIf="!isEditColumnVisible">{{ 'adminConfigarationPage.commonFields.view' | translate }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of studentList | paginate: { itemsPerPage: pagenumber, currentPage: p };let i=index">
+                            <td>{{((p-1)*itemsPerPage2)+i+1}}</td>
+                            <td>{{item.stdName}}</td>
+                            <td>{{item.institutionName}}</td>
+                            <td>{{item.planName}}</td>
+                            <td>{{item.statusName}}</td>
+                            <!-- <td></td> -->
+                            <td style="color:#cccccc">
+                                <!-- <input type="checkbox" id="mycheck-{{ i+1 }}"  (change)="onSelectPlan( i+1 , $event.target.checked)" checked={{checkedval}}>
+                                <label for="mycheck-{{ i+1 }}"></label> -->
+                                <input type="checkbox" id="mycheck-{{ i+1 }}" (change)="selectedStudent(item.statusName,item, $event.target.checked)" checked={{checkedval}}>
+                                <label for="mycheck-{{ i+1 }}"></label>
+                            </td>
+                            <td *ngIf="isEditColumnVisible">
+                                <button class="btn btn-warning buttonStyle" data-toggle="modal" data-target="#addModal" (click)="editUser(item)">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size:15px"></i>
+                                </button>
+                            </td>
+                            <td *ngIf="!isEditColumnVisible">
+                                <button class="btn btn-success buttonStyle" data-toggle="modal" data-target="#QRModal" (click)="selectedStudentForcard(item)">
+                                    <span class="glyphicon glyphicon-eye-open" aria-hidden="true" style="font-size:15px" style="color:white"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="form-group">
+                <div class="col-md-4">
+                    Show
+                    <select (change)="pageChange($event.target.value)" style="border: none;">
+    
+                        <option>5</option>
+                        <option>10</option>
+                        <option>15</option>
+                    </select>
+                    Entries
+                </div>
+                <div class="col-md-2"></div>
+    
+                <div class=" col-md-6 text-right">
+                    <pagination-controls (pageChange)="customPageChange($event)"></pagination-controls>
+                </div>
+                <div class="clearfix"></div>
+    
+            </div>
+            <div class="col-lg-12 text-center">
+                <button *ngIf="anamechangeflag" class="btn btn-primary btnNext" type="button" (click)="proceedClick()">{{ 'adminConfigarationPage.membershipCardPage.proceed' | translate }}</button>
+            </div>
+            <div class="col-lg-12 text-center">
+                <button *ngIf="pnamechangeflag" class="btn btn-primary btnNext" type="button" (click)="generateId()">{{ 'adminConfigarationPage.membershipCardPage.generateId' | translate }}</button>
+            </div>
+            <div class="col-lg-12 text-center">
+                <button *ngIf="cnamechangeflag" class="btn btn-primary btnNext" type="button" (click)="sendEmail()">Send Email</button>
+            </div>
+    
+        </div>
+    
+      
+    
+        <div class="modal fade" id="addModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form class="form-horizontal">
+                        <div>
+                            <div class="modal-header">
+                                <button class="close" type="button" data-dismiss="modal">×</button>
+                                <h4 class="modal-title">{{ 'adminConfigarationPage.commonFields.addNew' | translate }}</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container">
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">Plan Name</label>
+                                        <div class="col-sm-3">
+                                            <select class="form-control" (change)="planChange($event.target.value)" type="text" name="plan" [(ngModel)]="selectedStudentData.plan"
+                                                required>
+                                                <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.plan' | translate}}</option>
+                                                <option *ngFor="let item of planNameList" value={{item.planId}}>{{item.planName}}
+                                                </option>
+                                            </select>
+                                         
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">Amount</label>
+                                        <div class="col-sm-3">
+    
+                                            <input class="form-control" type="text" placeholder="Amount" name="planPrice" readonly [(ngModel)]="selectedStudentData.planAmount"
+                                            />
+    
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">Start Date</label>
+                                        <div class="col-sm-3">
+    
+                                            <my-date-picker [options]="myDatePickerOptions" name="planStartDate" [(ngModel)]="selectedStudentData.planStartDate" placeholder="Start Date"
+                                                (click)="setDate($event.target.value)"></my-date-picker>
+    
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">End Date</label>
+                                        <div class="col-sm-3">
+    
+                                            <my-date-picker [options]="myDatePickerOptions" name="planEndEnd" [(ngModel)]="selectedStudentData.planEndDate" placeholder="End Date"></my-date-picker>
+    
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+    
+                                    <div class="col-sm-6 text-center">
+                                        <button class="btn btn-primary btnNext" type="button" (click)="generateMembershipId()">Generate MemberShip Id</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    
+    
+        <!-- <button class="btn btn-warning" data-toggle="modal" data-target="#addModal">
+            Barcode
+        </button>
+        <button class="btn btn-warning" data-toggle="modal" data-target="#QRModal">
+            Qr Code
+        </button> -->
+    
+        <!-- barcode -->
+        <!-- <div class="modal fade" id="addModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div id="membershipCard1" class="modal-body">
+                        <div class="row">
+                            <div class="col-md-4" style="text-align: left;">
+                                <img src="./assets/img/noflaylogo1.jpg" class="logo" alt="logo">
+                            </div>
+                            <div class="col-md-4" style="text-align: center">
+                                <img src="./assets/img/noflayTitle.png" class="logo" alt="NoFlay">
+                            </div>
+                            <div class="col-md-4" style="text-align: right">
+                                <img src="./assets/img/s2.jpg" class="user" alt="student">
+                                <br/>
+                                <label>CHANDLER</label>
+                            </div>
+                            <div class="col-md-12" style="text-align: center">
+                                <label>NFRVBECS0001</label>
+                            </div>
+                            <div class="col-md-12" style="text-align: center">
+                                <div fxLayout="column">
+                                    <ngx-barcode *ngFor="let bcValue of values" [bc-element-type]="elementType" [bc-value]="bcValue" [bc-format]="format" [bc-line-color]="lineColor"
+                                        [bc-width]="width" [bc-height]="height" [bc-display-value]="displayValue" [bc-font-options]="fontOptions"
+                                        [bc-font]="font" [bc-text-align]="textAlign" [bc-text-position]="textPosition" [bc-text-margin]="textMargin"
+                                        [bc-font-size]="fontSize" [bc-background]="background" [bc-margin]="margin" [bc-margin-top]="marginTop"
+                                        [bc-margin-bottom]="marginBottom" [bc-margin-left]="marginLeft" [bc-margin-right]="marginRight"></ngx-barcode>
+                                </div>
+                            </div>
+                            <div class="col-md-6" style="text-align: left;">
+                                <label>SILVER-ANNUAL</label>
+                            </div>
+                            <div class="col-md-6" style="text-align: right">
+                                <label>valid upto: 07/19</label>
+                            </div>
+    
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
         </div> -->
-        <div *ngIf="isSearchClicked">
-            <div *ngIf="!isListContainsData">
-                <h3 class="text-center noRecord">{{ 'adminConfigarationPage.commonFields.noRecordFound' | translate }}</h3>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-12" *ngIf="isListContainsData">
-        <div class="table-responsive">
-            <table class="table table-bordered myTable table-condensed table-striped">
-                <thead>
-                    <tr class="text-center">
-                        <th>{{'adminConfigarationPage.commonFields.index' | translate}}</th>
-                        <th>{{ 'adminConfigarationPage.membershipCardPage.studentName' | translate }}
-
-                        </th>
-                        <th>{{ 'adminConfigarationPage.membershipCardPage.institutionName' | translate }}
-
-                        </th>
-                        <th>{{ 'adminConfigarationPage.membershipCardPage.planName' | translate }}
-
-                        </th>
-                        <th>{{ 'adminConfigarationPage.statusPage.status' | translate }}</th>
-                        <!-- <th>{{ 'adminConfigarationPage.membershipCardPage.mcmId' | translate }} </th> -->
-
-                        <th>{{ 'adminConfigarationPage.membershipCardPage.checkbox' | translate }}</th>
-                        <th *ngIf="isEditColumnVisible">{{ 'adminConfigarationPage.commonFields.edit' | translate }}</th>
-                        <th *ngIf="!isEditColumnVisible">{{ 'adminConfigarationPage.commonFields.view' | translate }}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let item of studentList | paginate: { itemsPerPage: pagenumber, currentPage: p };let i=index">
-                        <td>{{((p-1)*itemsPerPage2)+i+1}}</td>
-                        <td>{{item.stdName}}</td>
-                        <td>{{item.institutionName}}</td>
-                        <td>{{item.planName}}</td>
-                        <td>{{item.status.status}}</td>
-                        <!-- <td></td> -->
-                        <td style="color:#cccccc">
-                            <!-- <input type="checkbox" id="mycheck-{{ i+1 }}"  (change)="onSelectPlan( i+1 , $event.target.checked)" checked={{checkedval}}>
-                            <label for="mycheck-{{ i+1 }}"></label> -->
-                            <input type="checkbox" id="mycheck-{{ i+1 }}" (change)="selectedStudent(item.status.status,item, $event.target.checked)" checked={{checkedval}}>
-                            <label for="mycheck-{{ i+1 }}"></label>
-                        </td>
-                        <td *ngIf="isEditColumnVisible">
-                            <button class="btn btn-warning buttonStyle" data-toggle="modal" data-target="#addModal" (click)="editUser(item)">
-                                <i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size:15px"></i>
-                            </button>
-                        </td>
-                        <td *ngIf="!isEditColumnVisible">
-                            <button class="btn btn-success buttonStyle" data-toggle="modal" data-target="#QRModal" (click)="selectedStudentForcard(item)">
-                                <span class="glyphicon glyphicon-eye-open" aria-hidden="true" style="font-size:15px" style="color:white"></span>
-                                <!-- <i class="fa fa-eye" aria-hidden="true" style="font-size:15px"></i> -->
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="form-group">
-            <div class="col-md-4">
-                Show
-                <select (change)="pageChange($event.target.value)" style="border: none;">
-
-                    <option>5</option>
-                    <option>10</option>
-                    <option>15</option>
-                </select>
-                Entries
-            </div>
-            <div class="col-md-2"></div>
-
-            <div class=" col-md-6 text-right">
-                <pagination-controls (pageChange)="customPageChange($event)"></pagination-controls>
-            </div>
-            <div class="clearfix"></div>
-
-        </div>
-        <div class="col-lg-12 text-center">
-            <button *ngIf="pnamechangeflag" class="btn btn-primary btnNext" type="button" (click)="proceedClick()">{{ 'adminConfigarationPage.membershipCardPage.proceed' | translate }}</button>
-        </div>
-        <div class="col-lg-12 text-center">
-            <button *ngIf="cnamechangeflag" class="btn btn-primary btnNext" type="button" (click)="sendEmail()">Send Email</button>
-        </div>
-
-    </div>
-
-    <!-- <div class="col-lg-12 text-center">
-        <button class="btn btn-primary btnNext" type="button" (click)="proceedClick()" data-toggle="modal" data-target="#addModal">{{ 'adminConfigarationPage.membershipCardPage.proceed' | translate }}</button>
-    </div> -->
-
-    <div class="modal fade" id="addModal" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form class="form-horizontal">
-                    <div>
-                        <div class="modal-header">
-                            <button class="close" type="button" data-dismiss="modal">×</button>
-                            <h4 class="modal-title">{{ 'adminConfigarationPage.commonFields.addNew' | translate }}</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="container">
-                                <div class="form-group">
-                                    <label class="control-label col-sm-2">Plan Name</label>
-                                    <div class="col-sm-3">
-                                        <select class="form-control" (change)="planChange($event.target.value)" type="text" name="plan" [(ngModel)]="selectedStudentData.plan"
-                                            required>
-                                            <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.plan' | translate}}</option>
-                                            <option *ngFor="let item of planNameList" value={{item.planId}}>{{item.planName}}
-                                            </option>
-                                        </select>
-                                        <!-- <input type="text" id="planName" name="plan" #planControl="ngModel" *ngFor="let item of planNameList"
-                                    [(ngModel)]="item.plan" readonly required> -->
+    
+        <!-- qr code -->
+        <div class="modal fade" id="QRModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div id="membershipCard" class="modal-body">
+                        <div class="row">
+    
+                                <div class="idcard" style="font-family:universal knowledge,arial;font-size:15px;width: 325.03937008px;height:204.09448819px;border:1px solid #ccc;
+                                margin-left: 150px">
+                                    <div class="idcard-header" style="position:relative;">
+                                        <div class="idcard-logo-left">
+                                            <img style="width: 167px;padding: 3px;margin-left: 11px;" src="./assets/img/combinedLogo.png" />
+                                        </div>
+                                        <div class="idcard-QR-right" style="position:absolute;top: 0px;right: 0px;border:solid;margin-right: 10px;margin-top: 5px; padding: 5px">
+                                                <qrcode [qrdata]="myAngularxQrCode" [size]="50" [level]="'M'"></qrcode>
+                                        </div>
                                     </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-sm-2">Amount</label>
-                                    <div class="col-sm-3">
-
-                                        <input class="form-control" type="text" placeholder="Amount" name="planPrice" readonly [(ngModel)]="selectedStudentData.planAmount"
-                                        />
-
+                                    <hr style="width: 93%;">
+                                    <div class="idcard-content " style="position:relative;">
+                                        <div class="user-image" style="margin-left: 13px;border: solid;width: 25.5%;margin-top: 13px;float: left;position:absolute;">
+                                            <img src="http://192.168.1.51:9090/students/imageFiles/{{studentDetailsForCard.stdEmail}}"
+                                                style="height: 68.031496063px; width: 75.590551181px" />
+                                        </div>
+                                        <div class="user-details" style="float: right; margin-right: 43px;margin-top: -7px;">
+                                            <P>{{studentDetailsForCard.stdName}}</P>
+                                            <p>{{studentDetailsForCard.mcmId}}</p>
+                                            <p>{{studentDetailsForCard.planName}}-{{studentDetailsForCard.membershipType}}</p>
+                                        </div>
                                     </div>
-                                    <div class="clearfix"></div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label col-sm-2">Start Date</label>
-                                    <div class="col-sm-3">
-
-                                        <my-date-picker [options]="myDatePickerOptions" name="planStartDate" [(ngModel)]="selectedStudentData.planStartDate" placeholder="Start Date"
-                                            (click)="setDate($event.target.value)"></my-date-picker>
-
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-sm-2">End Date</label>
-                                    <div class="col-sm-3">
-
-                                        <my-date-picker [options]="myDatePickerOptions" name="planEndEnd" [(ngModel)]="selectedStudentData.planEndDate" placeholder="End Date"></my-date-picker>
-
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-
-                                <div class="col-sm-6 text-center">
-                                    <button class="btn btn-primary btnNext" type="button" (click)="generateMembershipId()">Generate MemberShip Id</button>
-                                </div>
+    
+                            <!-- <div class="col-md-2">
+                                <img src="./assets/img/noflaylogo1.jpg" class="logo" alt="logo">
                             </div>
+                            <div class="col-md-10">
+                                <img src="./assets/img/noflayTitle.png" class="titleImage" alt="NoFlay">
+                                <br/>
+                                <label>LIVING IN WELLNESS - BALANCED LIFE</label>
+                            </div>
+                            <div class="col-md-12" style="margin-top: 20px">
+                                <div class="col-md-3">
+                                    <qrcode [qrdata]="myAngularxQrCode" [size]="100" [level]="'M'"></qrcode>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="col-md-4" style="text-align: right">
+                                        <label>Name :</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <label>{{studentDetailsForCard.stdName}}</label>
+                                    </div>
+                                    <div class="col-md-4" style="text-align: right">
+                                        <label>Id :</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <label>{{studentDetailsForCard.mcmId}}</label>
+                                    </div>
+                                    <div class="col-md-4" style="text-align: right">
+                                        <label>Plan :</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <label>{{studentDetailsForCard.plan}}-{{studentDetailsForCard.membershipType}}</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <img src="http://192.168.1.55:8080/students/imageFiles/{{studentDetailsForCard.stdName}}" class="studentImage" alt="student">
+                                </div>
+                            </div> -->
                         </div>
                     </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- <button class="btn btn-warning" data-toggle="modal" data-target="#addModal">
-        Barcode
-    </button>
-    <button class="btn btn-warning" data-toggle="modal" data-target="#QRModal">
-        Qr Code
-    </button> -->
-
-    <!-- barcode -->
-    <!-- <div class="modal fade" id="addModal" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div id="membershipCard1" class="modal-body">
-                    <div class="row">
-                        <div class="col-md-4" style="text-align: left;">
-                            <img src="./assets/img/noflaylogo1.jpg" class="logo" alt="logo">
-                        </div>
-                        <div class="col-md-4" style="text-align: center">
-                            <img src="./assets/img/noflayTitle.png" class="logo" alt="NoFlay">
-                        </div>
-                        <div class="col-md-4" style="text-align: right">
-                            <img src="./assets/img/s2.jpg" class="user" alt="student">
-                            <br/>
-                            <label>CHANDLER</label>
-                        </div>
-                        <div class="col-md-12" style="text-align: center">
-                            <label>NFRVBECS0001</label>
-                        </div>
-                        <div class="col-md-12" style="text-align: center">
-                            <div fxLayout="column">
-                                <ngx-barcode *ngFor="let bcValue of values" [bc-element-type]="elementType" [bc-value]="bcValue" [bc-format]="format" [bc-line-color]="lineColor"
-                                    [bc-width]="width" [bc-height]="height" [bc-display-value]="displayValue" [bc-font-options]="fontOptions"
-                                    [bc-font]="font" [bc-text-align]="textAlign" [bc-text-position]="textPosition" [bc-text-margin]="textMargin"
-                                    [bc-font-size]="fontSize" [bc-background]="background" [bc-margin]="margin" [bc-margin-top]="marginTop"
-                                    [bc-margin-bottom]="marginBottom" [bc-margin-left]="marginLeft" [bc-margin-right]="marginRight"></ngx-barcode>
-                            </div>
-                        </div>
-                        <div class="col-md-6" style="text-align: left;">
-                            <label>SILVER-ANNUAL</label>
-                        </div>
-                        <div class="col-md-6" style="text-align: right">
-                            <label>valid upto: 07/19</label>
-                        </div>
-
+                    <div class="modal-footer">
+                        <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" type="button" data-dismiss="modal" (click)="print()">Print</button>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-                </div>
             </div>
         </div>
-    </div> -->
-
-    <!-- qr code -->
-    <div class="modal fade" id="QRModal" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div id="membershipCard" class="modal-body">
-                    <div class="row">
-
-                            <div class="idcard" style="font-family:universal knowledge,arial;font-size:15px;width: 325.03937008px;height:204.09448819px;border:1px solid #ccc;
-                            margin-left: 150px">
+    
+        <!-- custom id card design -->
+        <div style="visibility: hidden;">
+            <div id="customMembershipCard">
+                <ul style="list-style: none;">
+                    <li *ngFor="let studentCard of studentCardList">
+                            <div class="idcard" style=" background: #fff;width: 325.03937008px;height:204.09448819px;border:1px solid #ccc;border-radius: 5px;margin-bottom: 45px;
+                            font-family:universal knowledge,arial;font-size:15px; padding:3px;">
                                 <div class="idcard-header" style="position:relative;">
                                     <div class="idcard-logo-left">
                                         <img style="width: 167px;padding: 3px;margin-left: 11px;" src="./assets/img/combinedLogo.png" />
                                     </div>
                                     <div class="idcard-QR-right" style="position:absolute;top: 0px;right: 0px;border:solid;margin-right: 10px;margin-top: 5px; padding: 5px">
-                                            <qrcode [qrdata]="myAngularxQrCode" [size]="50" [level]="'M'"></qrcode>
+                                        <qrcode [qrdata]="studentCard.studentQrCode" [size]="50" [level]="'M'"></qrcode>
                                     </div>
                                 </div>
                                 <hr style="width: 93%;">
                                 <div class="idcard-content " style="position:relative;">
-                                    <div class="user-image" style="margin-left: 13px;border: solid;width: 25.5%;margin-top: 13px;float: left;position:absolute;">
-                                        <img src="http://192.168.1.51:9090/students/imageFiles/{{studentDetailsForCard.stdName}}"
+                                    <div class="user-image" style="margin-left: 13px;border: solid;width: 23%;margin-top: 13px;float: left;position:absolute;">
+                                        <img src="http://192.168.1.51:9090/students/imageFiles/{{studentCard.studentEmail}}"
                                             style="height: 68.031496063px; width: 75.590551181px" />
                                     </div>
                                     <div class="user-details" style="float: right; margin-right: 43px;margin-top: -7px;">
-                                        <P>{{studentDetailsForCard.stdName}}</P>
-                                        <p>{{studentDetailsForCard.mcmId}}</p>
-                                        <p>{{studentDetailsForCard.plan}}</p>
+                                        <P>{{studentCard.studentName}}</P>
+                                        <p>{{studentCard.studentMcmId}}</p>
+                                        <p>{{studentCard.studentPlan}}-{{studentCard.studentMembership}}</p>
                                     </div>
                                 </div>
                             </div>
-
-                        <!-- <div class="col-md-2">
-                            <img src="./assets/img/noflaylogo1.jpg" class="logo" alt="logo">
-                        </div>
-                        <div class="col-md-10">
-                            <img src="./assets/img/noflayTitle.png" class="titleImage" alt="NoFlay">
-                            <br/>
-                            <label>LIVING IN WELLNESS - BALANCED LIFE</label>
-                        </div>
-                        <div class="col-md-12" style="margin-top: 20px">
-                            <div class="col-md-3">
-                                <qrcode [qrdata]="myAngularxQrCode" [size]="100" [level]="'M'"></qrcode>
+    
+                        <!-- <div style="width: 325.03937008px;height: 204.09448819px; margin-bottom: 45px;border:1px solid #ccc;border-radius: 3px;padding:37.795275591px;">
+                            <div style="width: 100%;">
+                                <div style="float: left; width: 15%;">
+                                    <img src="./assets/img/noflaylogo1.jpg" style="width: 60px" alt="logo">
+                                </div>
+                                <div style="float: left; width: 80%">
+                                    <img src="./assets/img/noflayTitle.png" style="width: 100px" alt="NoFlay">
+                                    <small style="display: block;">LIVING IN WELLNESS - BALANCED LIFE</small>
+                                </div>
+                                <div style="clear: both;"></div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="col-md-4" style="text-align: right">
-                                    <label>Name :</label>
+                            <div style="width: 100%; margin-top: 15px">
+                                <div style="float: left; width: 25%">
+                                    <qrcode [qrdata]="studentCard.studentQrCode" [size]="65" [level]="'M'"></qrcode>
                                 </div>
-                                <div class="col-md-8">
-                                    <label>{{studentDetailsForCard.stdName}}</label>
+                                <div style="float: left; width: 50%; text-align: center; margin-top: 0px">
+                                    <p style="margin: 0px; font-weight: bold; font-size: 18px">{{studentCard.studentName}}</p>
+                                    <p style="margin-top: 5px; margin-bottom: 5px; font-weight: bold; font-size: 18px">{{studentCard.studentMcmId}}</p>
+                                    <p style="margin: 0px; font-weight: bold; font-size: 18px">{{studentCard.studentPlan}}</p>
                                 </div>
-                                <div class="col-md-4" style="text-align: right">
-                                    <label>Id :</label>
+                                <div style="float: left; width: 25%">
+                                    <img src="http://192.168.1.55:8080/students/imageFiles/{{studentCard.studentName}}" style="height: 68.031496063px; width: 75.590551181px" alt="student">
                                 </div>
-                                <div class="col-md-8">
-                                    <label>{{studentDetailsForCard.mcmId}}</label>
-                                </div>
-                                <div class="col-md-4" style="text-align: right">
-                                    <label>Plan :</label>
-                                </div>
-                                <div class="col-md-8">
-                                    <label>{{studentDetailsForCard.plan}}-{{studentDetailsForCard.membershipType}}</label>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <img src="http://192.168.1.55:8080/students/imageFiles/{{studentDetailsForCard.stdName}}" class="studentImage" alt="student">
+                                <div style="clear: both;"></div>
                             </div>
                         </div> -->
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-                    <button class="btn btn-primary" type="button" data-dismiss="modal" (click)="print()">Print</button>
-                </div>
+                    </li>
+                </ul>
+               
             </div>
+    
         </div>
+    
+    
+    
     </div>
-
-    <!-- custom id card design -->
-    <div style="visibility: hidden;">
-        <div id="customMembershipCard">
-            <ul style="list-style: none;">
-                <li *ngFor="let studentCard of studentCardList">
-                        <div class="idcard" style=" background: #fff;width: 325.03937008px;height:204.09448819px;border:1px solid #ccc;border-radius: 5px;margin-bottom: 45px;
-                        font-family:universal knowledge,arial;font-size:15px; padding:3px;">
-                            <div class="idcard-header" style="position:relative;">
-                                <div class="idcard-logo-left">
-                                    <img style="width: 167px;padding: 3px;margin-left: 11px;" src="./assets/img/combinedLogo.png" />
-                                </div>
-                                <div class="idcard-QR-right" style="position:absolute;top: 0px;right: 0px;border:solid;margin-right: 10px;margin-top: 5px; padding: 5px">
-                                    <qrcode [qrdata]="studentCard.studentQrCode" [size]="50" [level]="'M'"></qrcode>
-                                </div>
-                            </div>
-                            <hr style="width: 93%;">
-                            <div class="idcard-content " style="position:relative;">
-                                <div class="user-image" style="margin-left: 13px;border: solid;width: 23%;margin-top: 13px;float: left;position:absolute;">
-                                    <img src="http://192.168.1.55:8080/students/imageFiles/{{studentCard.studentName}}"
-                                        style="height: 68.031496063px; width: 75.590551181px" />
-                                </div>
-                                <div class="user-details" style="float: right; margin-right: 43px;margin-top: -7px;">
-                                    <P>{{studentCard.studentName}}</P>
-                                    <p>{{studentCard.studentMcmId}}</p>
-                                    <p>{{studentCard.studentPlan}}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                    <!-- <div style="width: 325.03937008px;height: 204.09448819px; margin-bottom: 45px;border:1px solid #ccc;border-radius: 3px;padding:37.795275591px;">
-                        <div style="width: 100%;">
-                            <div style="float: left; width: 15%;">
-                                <img src="./assets/img/noflaylogo1.jpg" style="width: 60px" alt="logo">
-                            </div>
-                            <div style="float: left; width: 80%">
-                                <img src="./assets/img/noflayTitle.png" style="width: 100px" alt="NoFlay">
-                                <small style="display: block;">LIVING IN WELLNESS - BALANCED LIFE</small>
-                            </div>
-                            <div style="clear: both;"></div>
-                        </div>
-                        <div style="width: 100%; margin-top: 15px">
-                            <div style="float: left; width: 25%">
-                                <qrcode [qrdata]="studentCard.studentQrCode" [size]="65" [level]="'M'"></qrcode>
-                            </div>
-                            <div style="float: left; width: 50%; text-align: center; margin-top: 0px">
-                                <p style="margin: 0px; font-weight: bold; font-size: 18px">{{studentCard.studentName}}</p>
-                                <p style="margin-top: 5px; margin-bottom: 5px; font-weight: bold; font-size: 18px">{{studentCard.studentMcmId}}</p>
-                                <p style="margin: 0px; font-weight: bold; font-size: 18px">{{studentCard.studentPlan}}</p>
-                            </div>
-                            <div style="float: left; width: 25%">
-                                <img src="http://192.168.1.55:8080/students/imageFiles/{{studentCard.studentName}}" style="height: 68.031496063px; width: 75.590551181px" alt="student">
-                            </div>
-                            <div style="clear: both;"></div>
-                        </div>
-                    </div> -->
-                </li>
-            </ul>
-           
-        </div>
-
-    </div>
-
-
-
-</div>

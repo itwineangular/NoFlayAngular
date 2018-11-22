@@ -230,7 +230,8 @@
             "planName":"Plan ",
             "checkbox": "Checkbox",
             "proceed": "Print ID Card",
-            "mcmId": "MCM ID"
+            "mcmId": "MCM ID",
+            "generateId":"Generate MCM Id"
         },
 
         "paymentDetailsPage" : {

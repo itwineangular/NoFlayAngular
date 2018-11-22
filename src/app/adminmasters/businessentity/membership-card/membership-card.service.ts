@@ -98,4 +98,23 @@ export class MembershipCardService {
     return this.http.post(newStr, obj, options).pipe(map(res => res.json()));
   }
 
+  generateMCMId(students) {
+
+    console.log(students);
+    let obj =[];
+    students.forEach(element => {
+      let objLocal =
+      {
+        "stdId": element.stdId
+      }
+      obj.push(objLocal);
+    });
+
+    console.log(obj);
+    let headers = new Headers({
+      'Content-Type': 'application/json'
+    });
+    let options = { headers: headers };
+    return this.http.post(this.url + '/students/updateMCMID', obj, options).pipe(map(res => res.json()));
+  }
 }

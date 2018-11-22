@@ -44,6 +44,7 @@ export class MembershipCardComponent implements OnInit {
   p: number = 1;
   pnamechangeflag: boolean;
   cnamechangeflag: boolean;
+  anamechangeflag: boolean;
   studentstatus: any;
 
 
@@ -59,7 +60,7 @@ export class MembershipCardComponent implements OnInit {
   courseLocal = [];
   courseCategory = [];
   courses = [];
-  studentList: Student[];
+  studentList: Student[]=[];
   selectedStudentName: string;
   membershipCard: MembershipCard = new MembershipCard();
   membershipCardList: MembershipCard[] = [];
@@ -131,10 +132,18 @@ export class MembershipCardComponent implements OnInit {
 
       this.cnamechangeflag = true;
       this.pnamechangeflag = false;
+      this.anamechangeflag = false;
     } else if (value == 'Payment') {
 
       this.cnamechangeflag = false;
       this.pnamechangeflag = true;
+      this.anamechangeflag = false;
+    }
+    else if (value == 'Active') {
+
+      this.cnamechangeflag = false;
+      this.pnamechangeflag = false;
+      this.anamechangeflag = true;
     }
   }
 
@@ -194,15 +203,14 @@ export class MembershipCardComponent implements OnInit {
 
   }
 
-  selectedStatusValue : any;
+  selectedStatusValue: any;
   statusNameconfig = {
     displayKey: "status", //if objects array passed which key to be displayed defaults to description
     search: true,
     limitTo: this.statusList.length
   };
-  changeValueStatus($event: any)
-   {
-    
+  changeValueStatus($event: any) {
+
   }
 
 
@@ -212,11 +220,12 @@ export class MembershipCardComponent implements OnInit {
   print(): void {
     this.studentCardList = [];
     var studentCard: StudentCard = new StudentCard();
-      studentCard.studentName = this.studentDetailsForCard.stdName;
-      // studentCard.studentMcmId = this.studentDetailsForCard.mcmId;
-      // studentCard.studentPlan = this.studentDetailsForCard.plan;
-      studentCard.studentQrCode = "Name:" + this.studentDetailsForCard.stdName + ",Id:" + this.studentDetailsForCard.mcmID + ",Card:" + this.studentDetailsForCard + ".";
-      this.studentCardList.push(studentCard);
+    studentCard.studentName = this.studentDetailsForCard.stdName;
+    studentCard.studentEmail = this.studentDetailsForCard.stdEmail;
+    studentCard.studentMcmId = this.studentDetailsForCard.mcmId;
+    studentCard.studentPlan = this.studentDetailsForCard.planName;
+    studentCard.studentQrCode = "Name:" + this.studentDetailsForCard.stdName + ",Id:" + this.studentDetailsForCard.mcmId + ",Card:" + this.studentDetailsForCard.planName+ ".";
+    this.studentCardList.push(studentCard);
 
     setTimeout(() => {
       let printContents = "", popupWin;
@@ -230,54 +239,10 @@ export class MembershipCardComponent implements OnInit {
       );
       popupWin.document.close();
     }, 1000);
-    // let printContents, popupWin;
-    // printContents = document.getElementById('customMembershipCard').innerHTML;
-    // popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
-    // popupWin.document.open();
-    // popupWin.document.write(`
-    //   <html>
-    //     <head>
-    //       <title>Print tab</title>
-    //       <style>
-    //       //........Customized style.......
-    //       </style>
-    //     </head>
-    // <body onload="window.print();window.close()">${printContents}</body>
-    //   </html>`
-    // );
-    // popupWin.document.close();
+
   }
 
-  // onInstituteSelect(institutionId) {
 
-  //   this.courseCategoryList = [];
-  //   this.courseList = [];
-  //   var institutionListLocal: Institution[] = [];
-  //   institutionListLocal = this.institutionList.filter((item) => item.institutionId == institutionId);
-  //   for (let item of institutionListLocal[0].courseCategory) {
-  //     this.courseCategoryList.push(item);
-  //   }
-
-  //   this.selectedInstitute = institutionListLocal[0].instName.toString();
-
-  // }
-
-
-  // onCourseCategorySelect(categoryId) {
-
-  //   this.courseList = [];
-  //   var courseCategoryListLocal: CourseCategory[] = [];
-  //   courseCategoryListLocal = this.courseCategoryList.filter((item) => item.categoryId == categoryId);
-  //   for (let item of courseCategoryListLocal[0].courseProfileVos) {
-  //     this.courseList.push(item);
-  //   }
-  //   this.selectedCategory = courseCategoryListLocal[0].categoryName.toString();
-
-  // }
-
-  // onCourseSelect(courseId) {
-  //   this.selectedCourse = courseId.toString();
-  // }
 
   getInstitution() {
     this.membershipCardService.getInstitution()
@@ -340,19 +305,17 @@ export class MembershipCardComponent implements OnInit {
       membershipObject.courseName = this.selectedCourseName[0].courseName;
     }
 
-    if (typeof this.selectedStatusValue !== 'undefined' && this.selectedStatusValue.length>0) 
-    {
+    if (typeof this.selectedStatusValue !== 'undefined' && this.selectedStatusValue.length > 0) {
       membershipObject.statusId = this.selectedStatusValue[0].statusId
     }
 
 
     membershipObject.stdName = studentParameters.stdName;
     membershipObject.status = studentParameters.status;
-    // this.studentstatus = membershipObject.status;
-    // this.changelistview( membershipObject.status);
 
 
-    if (typeof membershipObject.institutionName === 'undefined' && typeof membershipObject.courseCategory === 'undefined' && typeof membershipObject.courseName === 'undefined' && typeof membershipObject.stdName === 'undefined'  && typeof membershipObject.statusId === 'undefined') {
+
+    if (typeof membershipObject.institutionName === 'undefined' && typeof membershipObject.courseCategory === 'undefined' && typeof membershipObject.courseName === 'undefined' && typeof membershipObject.stdName === 'undefined' && typeof membershipObject.statusId === 'undefined') {
       Swal({
         title: 'Invalid!!',
         text: 'Atleast enter any one field.',
@@ -372,10 +335,13 @@ export class MembershipCardComponent implements OnInit {
             if (typeof this.studentList !== 'undefined' && this.studentList.length > 0) {
               this.isListContainsData = true;
               console.log(this.studentList);
-              if (this.studentList[0].status.status.toLowerCase() == 'created') {
+              if (this.studentList[0].statusName.toLowerCase() == 'created') {
                 this.isEditColumnVisible = true;
 
-              } else if (this.studentList[0].status.status.toLowerCase() == 'payment') {
+              } else if (this.studentList[0].statusName.toLowerCase() == 'payment') {
+                this.isEditColumnVisible = false;
+              }
+              else if (this.studentList[0].statusName.toLowerCase() == 'active') {
                 this.isEditColumnVisible = false;
               }
             }
@@ -404,7 +370,7 @@ export class MembershipCardComponent implements OnInit {
     this.ngSelectCourseCategoryName.ngOnInit();
     this.ngSelectCourseName.deselectItem(this.selectedCourseName, 0);
     this.ngSelectCourseName.ngOnInit();
-    this.ngSelectStatusValue.deselectItem(this.selectedStatusValue,0);
+    this.ngSelectStatusValue.deselectItem(this.selectedStatusValue, 0);
     this.ngSelectStatusValue.ngOnInit();
   }
 
@@ -429,6 +395,7 @@ export class MembershipCardComponent implements OnInit {
       if (this.selectedStudentsForEmailOrId.length === 0) {
         this.cnamechangeflag = false;
         this.pnamechangeflag = false;
+        this.anamechangeflag = false;
       }
     }
 
@@ -439,7 +406,7 @@ export class MembershipCardComponent implements OnInit {
   studentListLocal: Student[] = [];
   planChange(plan) {
 
-    this.studentListLocal= this.studentList.filter((item) => item.planId == plan)
+    this.studentListLocal = this.studentList.filter((item) => item.planId == plan)
     // this.planNameListLocal = this.planNameList.filter((item) => item.planId == plan);
     // this.selectedStudentData.plan = "" + this.planNameListLocal[0].planId;
     // this.selectedStudentData.planAmount = this.planNameListLocal[0].planPrice;
@@ -463,28 +430,7 @@ export class MembershipCardComponent implements OnInit {
     institutionListLocal = this.institutionList.filter((item) => item.instName == this.selectedStudentData.institutionName);
 
     console.log(institutionListLocal);
-    // console.log(institutionListLocal[0].instShortName.substring(0,2));
-
-    //   var courseCategoryListLocal : CourseCategory[] = [];
-    //   courseCategoryListLocal = this.courseCategoryList.filter((item)=> item.categoryName == this.selectedStudentData.courseCategory); 
-
-    //   console.log(courseCategoryListLocal);
-    //   console.log(courseCategoryListLocal[0].categoryCode);
-
-    //   var courseList : CourseProfile[] = [];
-    //   courseList = courseCategoryListLocal[0].courseProfile;
-    //   var courseListLocal : CourseProfile[] = [];
-    //   courseListLocal = courseListLocal.filter((item)=> item.courseName == this.selectedStudentData.course); 
-
-    //   console.log(courseListLocal);
-    //   console.log(courseListLocal[0].courseCode);
-
-    //  var randomNum =   Math.floor(Math.random() * 1000) + 1  ;
-    //  console.log(randomNum);
-
-    //   var membershipId = "NF"+institutionListLocal[0].instShortName.substring(0,2)+courseCategoryListLocal[0].categoryCode+courseListLocal[0].courseCode+randomNum;
-    //   console.log(membershipId);
-    //   console.log(this.selectedStudentData);
+    ;
   }
 
 
@@ -496,20 +442,30 @@ export class MembershipCardComponent implements OnInit {
   idCardTemplate: any[] = [];
 
   proceedClick() {
-
-
     this.studentCardList = [];
+    console.log("seklected")
+    console.log(this.selectedStudentsForEmailOrId)
+
     for (let studentLocal of this.selectedStudentsForEmailOrId) {
+      console.log("studentlocallist")
+      console.log(studentLocal)
+      console.log(studentLocal.mcmId)
       var studentCard: StudentCard = new StudentCard();
       studentCard.studentName = studentLocal.stdName;
-      // studentCard.studentMcmId = studentLocal.mcmId;
-      // this.planNameListLocal = this.planNameList.filter((item) => item.planId == studentLocal.plan);
-      var planName = "";
-      if (this.planNameListLocal.length > 0) {
-        planName = this.planNameListLocal[0].planName;
-      }
-      studentCard.studentPlan = planName;
-      studentCard.studentQrCode = "Name:" + studentLocal.stdName + ",Id:" + studentLocal.mcmID + ",Card:" + planName + ".";
+      studentCard.studentMcmId = studentLocal.mcmId;
+      studentCard.studentPlan = studentLocal.planName;
+      studentCard.studentMembership=studentLocal.membershipType;
+       console.log(studentCard.studentPlan);
+   
+      studentCard.studentEmail = studentLocal.stdEmail;
+      // // this.planNameListLocal = this.planNameList.filter((item) => item.planId == studentLocal.plan);
+      // var planName = "";
+      // if (this.planNameListLocal.length > 0) {
+      //   planName = this.planNameListLocal[0].planName;
+      // }
+      
+      // console.log(studentLocal.planName);
+      studentCard.studentQrCode = "Name:" + studentLocal.stdName + ",Id:" + studentLocal.mcmId + ",Card:" + studentLocal.planName+ ".";
       this.studentCardList.push(studentCard);
     }
 
@@ -573,24 +529,29 @@ export class MembershipCardComponent implements OnInit {
 
     });
   }
-
+  selectedStudentsStatus: any;
   checkedval: boolean;
   toggleSelect(checked) {
     this.selectedStudentsForEmailOrId = [];
+    this.selectedStudentsStatus = this.studentList[0].statusName;
+    this.changelistview(this.selectedStudentsStatus);
+    console.log("this.student.statusId")
+    console.log(this.selectedStudentsStatus)
 
-    this.changelistview(this.student.status.statusId);
 
     if (checked) {
       this.checkedval = true;
-      // this.studentList.forEach(element => {
-      //   this.selectedStudentsForEmailOrId.push(element);
-      // });
+      this.studentList.forEach(element => {
+        this.selectedStudentsForEmailOrId.push(element);
+      });
       this.selectedStudentsForEmailOrId = this.studentList;
+
     }
     else {
       this.checkedval = null;
       this.cnamechangeflag = false;
       this.pnamechangeflag = false;
+      this.anamechangeflag = false;
       this.selectedStudentsForEmailOrId = [];
     }
   }
@@ -598,7 +559,7 @@ export class MembershipCardComponent implements OnInit {
   editUser(user) {
     console.log(user);
     this.selectedStudentData = user;
-    this.studentListLocal = this.studentList.filter((item) => item.plan.planId == user.plan.planId);    
+    this.studentListLocal = this.studentList.filter((item) => item.plan.planId == user.plan.planId);
     this.selectedStudentData.plan.planName = this.studentListLocal[0].plan.planName;
     this.selectedStudentData.plan.planPrice = this.studentListLocal[0].plan.planPrice;
     // this.selectedStudentData.plan.planMembership = this.planNameListLocal[0].planMembership;
@@ -675,9 +636,24 @@ export class MembershipCardComponent implements OnInit {
 
   selectedStudentForcard(student: Student): void {
     this.studentDetailsForCard = student;
-    // console.log(this.studentDetailsForCard.membershipType);
-    // this.planNameListLocal = this.planNameList.filter((item) => item.planId == student.plan);
-    // this.studentDetailsForCard.plan = this.planNameListLocal[0].planName;
+
   }
+
+  generateId() {
+    this.membershipCardService.generateMCMId(this.selectedStudentsForEmailOrId)
+
+      .subscribe(
+
+        (data) => {
+          console.log("gsfgsdhgfhds")
+          alert("Code  Generated");
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+
+  }
+  
 
 }
