@@ -81,7 +81,10 @@
             "selectPlan" : "Select Plan",
             "selectinstitution": "Select Institution",
             "selectCourseCategory": "Select CourseCategory",
-            "selectCourse": "Select Course"
+            "selectCourse": "Select Course",
+            "startDate":"StartDate",
+            "endDate":"EndDate",
+            "imageupload": "Image Upload"
            
 
         },
@@ -239,7 +242,8 @@
             "institutionName":"Institutiuon Name",
             "courseCategory": "Course Category",
             "course":"Course",
-            "studentName":"Student Name"
+            "studentName":"Student Name",
+            "paymentDate":"Payment Date"
         },
         "statusPage":
         {

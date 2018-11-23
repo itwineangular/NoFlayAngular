@@ -82,11 +82,12 @@ export class BrowseplansComponent implements OnInit {
   }
 
   payment() {
-    // this.student.plan = "" + this.selectedPlan.planId;
+    this.student.planId = "" + this.selectedPlan.planId;
     this.studentService.updateStudent(this.student)
       .subscribe(
         (data) => {
-          this.getStudent();
+         // this.getStudent();
+         this.router.navigate(['payment/' + this.student.stdId]);
         },
         (error) => {
           console.log(error);
@@ -95,14 +96,14 @@ export class BrowseplansComponent implements OnInit {
       );
   }
 
-  getStudent() {
-    this.studentService.getStudent()
-      .subscribe(
-        (data) => {
-          this.router.navigate(['payment/' + data[data.length - 1].stdId]);
-        }
-      );
-  }
+  // getStudent() {
+  //   this.studentService.getStudent()
+  //     .subscribe(
+  //       (data) => {
+  //         this.router.navigate(['payment/' + data[data.length - 1].stdId]);
+  //       }
+  //     );
+  // }
 
   //navigating the page to payment
   previousPage() {

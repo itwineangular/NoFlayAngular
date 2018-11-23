@@ -29,11 +29,21 @@
                             <input class="form-control" type="text" placeholder="Student Name"
                                 name="stdName" #studentNameControl="ngModel" [(ngModel)]="paymentDetails.stdName" />
                     </div>
-                    <div class="col-md-3">
+                    <!-- <div class="col-md-3">
                       <label class="control-label col-sm-2" for="startDate">StartDate</label>
                       <my-date-picker [options]="myDatePickerOptions2" name="startDateTime" #startDateTime="ngModel" [(ngModel)]="plan.startDateTime"></my-date-picker>
   
-                  </div>
+                  </div> -->
+                  <div class="col-md-3">
+                    <label for="startDate" >Period StartDate</label>
+                    <my-date-picker #startDate [options]="myDatePickerOptions2" name="startDateTime" #startDateTime="ngModel" [(ngModel)]="paymentDetails.startDateTime"></my-date-picker>
+
+                </div>
+                <div class="col-md-3">
+                    <label for="endDate">Period EndDate</label>
+                    <my-date-picker [options]="myDatePickerOptions2" id="endDate"  name="endDateTime" #endDateTime="ngModel" [(ngModel)]="paymentDetails.endDateTime"></my-date-picker>
+
+                </div>
   
                   <div class="col-md-3">
                       <label for="status">{{'adminConfigarationPage.studentPage.status' | translate}}</label>
@@ -82,9 +92,9 @@
                                             <th>{{ 'adminConfigarationPage.paymentDetailsPage.course' | translate }}
                     
                                                 </th>
-                                                <th>{{ 'adminConfigarationPage.paymentDetailsPage.courseCategory' | translate }}
-                    
-                                                    </th>
+                                                <th>{{ 'adminConfigarationPage.paymentDetailsPage.courseCategory' | translate }} </th>
+                                                    <th>{{ 'adminConfigarationPage.paymentDetailsPage.paymentDate' | translate }}</th>
+                                                   
                                             <th>{{ 'adminConfigarationPage.statusPage.status' | translate }}</th>
                                             <!-- <th>{{ 'adminConfigarationPage.membershipCardPage.mcmId' | translate }} </th> -->
                     
@@ -100,6 +110,7 @@
                                             <td>{{item.institutionName}}</td>
                                             <td>{{item.courseName}}</td>
                                             <td>{{item.categoryName}}</td>
+                                            <td>{{item.paymentDate | date}}</td>
                                             <!-- <td>{{item.plan}}</td> -->
                                             <td>{{item.statusName}}</td>
                                             

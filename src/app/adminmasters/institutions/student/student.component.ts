@@ -777,69 +777,72 @@ console.log("student ****");
   planname: any;
   errormsg: any;
 
-  // onSelectPlan(i, checked) {
-  //   this.planname = $('#planName').val();
-  //   if (this.planname == null) {
-  //     this.errormsg = "Please Select Plan Name First..!";
-  //     $('#mycheck-' + i).prop("checked", false);
-  //     $('#planName').focus();
-  //   } else {
-  //     this.errormsg = "";
-  //     if ($('#mycheck-' + i).prop("checked") == true) {
-  //       i--;
-  //       this.studentBulkList[i].plan = this.planname;
-  //       this.studentBulkList[i].institutionName = this.selectedInstitute;
-  //       this.studentBulkList[i].courseCategory = this.selectedCategory;
-  //       this.studentBulkList[i].courseName = this.selectedCourse;
-  //     } else if ($('#mycheck-' + i).prop("checked") == false) {
-  //       i--;
-  //       this.studentBulkList[i].plan = '';
-  //       this.studentBulkList[i].institutionName = '';
-  //       this.studentBulkList[i].courseCategory = '';
-  //       this.studentBulkList[i].courseName = '';
-  //     }
-  //   }
+  onSelectPlan(i, checked) {
+    this.planname = $('#planName').val();
+    if (this.planname == null) {
+      this.errormsg = "Please Select Plan Name First..!";
+      $('#mycheck-' + i).prop("checked", false);
+      $('#planName').focus();
+    } else {
+      this.errormsg = "";
+      if ($('#mycheck-' + i).prop("checked") == true) {
+        i--;
+        this.studentBulkList[i].planId = this.planname;
+        this.studentBulkList[i].institutionId = this.student.institutionId;
+        this.studentBulkList[i].categoryId = this.student.categoryId;
+        this.studentBulkList[i].courseId = this.student.courseId;
+        
+      } else if ($('#mycheck-' + i).prop("checked") == false) {
+        i--;
+        this.studentBulkList[i].planId = '';
+        this.studentBulkList[i].institutionId = '';
+        this.studentBulkList[i].categoryId = '';
+        this.studentBulkList[i].courseId = '';
+      }
+    }
 
-  // }
+  }
 
-  // toggleSelect(checked) {
-  //   this.planname = $('#planName').val();
-  //   if (this.planname == null) {
-  //     this.errormsg = "Please Select Plan Name First..!";
-  //     $('#mycheck-' + checked).prop("checked", false);
-  //     $('#planName').focus();
-  //   } else {
-  //     if (checked) {
-  //       this.checkedval = true;
-  //       this.studentBulkList.forEach(element => {
-  //         element.plan = this.planname;
-  //       });
-  //       this.studentBulkList.forEach(element => {
-  //         element.institutionName = this.selectedInstitute;
-  //       });
-  //       this.studentBulkList.forEach(element => {
-  //         element.courseCategory = this.selectedCategory;
-  //       });
-  //       this.studentBulkList.forEach(element => {
-  //         element.courseName = this.selectedCourse;
-  //       });
-  //     } else {
-  //       this.checkedval = null;
-  //       this.studentBulkList.forEach(element => {
-  //         element.plan = "";
-  //       });
-  //       this.studentBulkList.forEach(element => {
-  //         element.institutionName = "";
-  //       });
-  //       this.studentBulkList.forEach(element => {
-  //         element.courseCategory = "";
-  //       });
-  //       this.studentBulkList.forEach(element => {
-  //         element.courseName = "";
-  //       });
-  //     }
-  //   }
-  // }
+  
+  toggleSelect(checked) {
+    this.planname = $('#planName').val();
+    if (this.planname == null) {
+      this.errormsg = "Please Select Plan Name First..!";
+      $('#mycheck-' + checked).prop("checked", false);
+      $('#planName').focus();
+    } else {
+      if (checked) {
+        this.checkedval = true;
+        this.studentBulkList.forEach(element => {
+          element.planId = this.planname;
+        });
+        this.studentBulkList.forEach(element => {
+          element.institutionId = this.student.institutionId;
+        });
+        this.studentBulkList.forEach(element => {
+          element.categoryId = this.student.categoryId;
+        });
+        this.studentBulkList.forEach(element => {
+          element.courseId = this.student.courseId;
+        });
+      } else {
+        this.checkedval = null;
+        this.studentBulkList.forEach(element => {
+          element.planId = "";
+        });
+        this.studentBulkList.forEach(element => {
+          element.institutionId = "";
+        });
+        this.studentBulkList.forEach(element => {
+          element.categoryId = "";
+        });
+        this.studentBulkList.forEach(element => {
+          element.courseId = "";
+        });
+      }
+    }
+  }
+
 
   searchStudent(studentParameters) {
       var studentObject: Student = new Student();

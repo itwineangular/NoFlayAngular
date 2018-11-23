@@ -43,6 +43,7 @@ export class PaymentComponent implements OnInit {
 private router : Router) { }
 
   ngOnInit() {
+    //sessionStorage.setItem('userID','336');
 
     const id = +this.route.snapshot.paramMap.get('id');
     this.getStudentDetails(id);
@@ -146,7 +147,15 @@ private router : Router) { }
               showCancelButton: false,
               confirmButtonText: 'Ok',
              
-            });
+            }).then((result)=>
+            {if
+              (result.value)
+              {
+              this.router.navigate(['adminlogin/']);
+            }
+             
+            })
+           // this.router.navigate(['adminlogin/']);
             this.reset();
         
           },
@@ -175,7 +184,10 @@ private router : Router) { }
 
   reset()
   {
-    
+    this.iban_no = "";
+    this.expiredate ="";
+    this.cvv_no = "";
+
   }
 
 }

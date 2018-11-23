@@ -45,6 +45,8 @@ export class MembershipCardComponent implements OnInit {
   pnamechangeflag: boolean;
   cnamechangeflag: boolean;
   anamechangeflag: boolean;
+  enamechangeflag : boolean;
+
   studentstatus: any;
 
 
@@ -82,6 +84,7 @@ export class MembershipCardComponent implements OnInit {
 
   statusList: Student[] = [];
   isEditColumnVisible: boolean;
+  isStartDateColumnVisible : boolean;
   studentDetailsForCard: Student = new Student();
 
   studentCardList: StudentCard[] = [];
@@ -109,7 +112,7 @@ export class MembershipCardComponent implements OnInit {
     private studentService: StudentService) { }
 
   ngOnInit() {
-
+    this.isStartDateColumnVisible = false;
     this.isListContainsData = false;
     this.isSearchClicked = false;
     this.myAngularxQrCode = 'Name:ROSS GELLER,Id:NFRVBECS0001,Card:SILVER-ANNUAL,Expiry:08-10-2019';
@@ -118,6 +121,7 @@ export class MembershipCardComponent implements OnInit {
     this.getPlanName();
     this.pageChange(5);
     this.getStatus();
+    this.selectedStudentsForEmailOrId= [];
 
 
     this.getEmailTemplate("froalaEditorStudentPayment", "StudentPayment");
@@ -133,17 +137,23 @@ export class MembershipCardComponent implements OnInit {
       this.cnamechangeflag = true;
       this.pnamechangeflag = false;
       this.anamechangeflag = false;
+      this.enamechangeflag = false;
+
     } else if (value == 'Payment') {
 
       this.cnamechangeflag = false;
       this.pnamechangeflag = true;
       this.anamechangeflag = false;
+      this.enamechangeflag = false;
+
     }
     else if (value == 'Active') {
 
       this.cnamechangeflag = false;
       this.pnamechangeflag = false;
       this.anamechangeflag = true;
+      this.enamechangeflag = true;
+
     }
   }
 
@@ -336,13 +346,16 @@ export class MembershipCardComponent implements OnInit {
               this.isListContainsData = true;
               console.log(this.studentList);
               if (this.studentList[0].statusName.toLowerCase() == 'created') {
-                this.isEditColumnVisible = true;
+                //this.isEditColumnVisible = true;
+                this.makeCreatedStudentColumnsVisible();
 
               } else if (this.studentList[0].statusName.toLowerCase() == 'payment') {
-                this.isEditColumnVisible = false;
+               // this.isEditColumnVisible = true;
+               this.makeCreatedStudentColumnsVisible();
               }
               else if (this.studentList[0].statusName.toLowerCase() == 'active') {
-                this.isEditColumnVisible = false;
+                this.makeActiveStudentColumnsVisible()
+               // this.isStartDateColumnVisible = true;
               }
             }
             else {
@@ -355,6 +368,17 @@ export class MembershipCardComponent implements OnInit {
           }
         );
     }
+  }
+
+  makeCreatedStudentColumnsVisible()
+  {
+   // this.isEditColumnVisible = true;
+    this.isStartDateColumnVisible = false;
+  }
+  makeActiveStudentColumnsVisible()
+  {
+   // this.isEditColumnVisible = false;
+    this.isStartDateColumnVisible = true;
   }
 
 
@@ -396,6 +420,7 @@ export class MembershipCardComponent implements OnInit {
         this.cnamechangeflag = false;
         this.pnamechangeflag = false;
         this.anamechangeflag = false;
+        this.enamechangeflag = false;
       }
     }
 
@@ -552,6 +577,8 @@ export class MembershipCardComponent implements OnInit {
       this.cnamechangeflag = false;
       this.pnamechangeflag = false;
       this.anamechangeflag = false;
+      this.enamechangeflag = false;
+
       this.selectedStudentsForEmailOrId = [];
     }
   }
@@ -627,6 +654,21 @@ export class MembershipCardComponent implements OnInit {
 
   }
 
+  sendLoginEmail() {
+    this.membershipCardService.sendstudentCredentialtMail(this.studentPaymentTemplate, this.selectedStudentsForEmailOrId)
+      .subscribe(
+        (data) => {
+          alert("Login mail sent");
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+
+
+
+  }
+
   getEmailTemplate(editorId, templateName) {
     this.emailTemplateservice.getEmailTemplate(templateName).subscribe(data => {
       this.studentPaymentTemplate = data.emailContent;
@@ -647,6 +689,7 @@ export class MembershipCardComponent implements OnInit {
         (data) => {
           console.log("gsfgsdhgfhds")
           alert("Code  Generated");
+          this.selectedStudentsForEmailOrId= [];
         },
         (error) => {
           console.log(error);

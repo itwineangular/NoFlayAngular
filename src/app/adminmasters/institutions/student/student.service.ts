@@ -157,16 +157,40 @@ export class StudentService {
     }).pipe(map(res => res.json()));
   }
 
-  uploadCsvFile(studentsData)
+  uploadCsvFile(data)
   {
+    
+    let obj = {
+
+      "stdName": data.stdName,
+      "addressOne": data.addressOne,
+      "addressTwo": data.addressTwo,
+      "city": data.city,
+      "state": data.state,
+      "zipCode": data.zipCode,
+      "countryName": data.countryName,
+      "stdMobile": data.stdMobile,
+      "gender": data.gender,
+      "stdEmail": data.stdEmail,
+      "stdRollnumber": data.stdRollnumber,
+      "institutionId": data.institutionId,
+      "courseId": data.courseId,
+      "categoryId": data.categoryId,
+      "planId": data.planId,
+      // "statusId": 1,
+      "yearofjoining": data.yearofjoining
+      
+    };
+
     console.log("here");
+    console.log(data);
    let headers = new Headers();
      headers.append('Access-Control-Allow-Origin','*');
      headers.append('Access-Control-Allow-Credentials','true');
      headers.append('Access-Control-Allow-Headers','Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
      headers.append('Access-Control-Allow-Methods','GET,POST,OPTIONS,DELETE,PUT');
      let options = { headers: headers };
-     return this.http.post(this.url+'/students/uploadStudentProfile',studentsData,options);
+     return this.http.post(this.url+'/students/saveExcelStudProfile',data,options);
   
    //  return this.http.post(this.url+'/students/startJob',options);
  }

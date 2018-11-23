@@ -43,6 +43,11 @@
                             [config]="statusNameconfig" [options]="statusList"></ngx-select-dropdown>
                             
                         </div>
+                        <!-- <div class="col-md-3">
+                            <label class="control-label col-sm-2" for="startDate">Date</label>
+                            <my-date-picker [options]="myDatePickerOptions2" name="startDateTime" #startDateTime="ngModel" [(ngModel)]="plan.startDateTime"></my-date-picker>
+    
+                        </div> -->
                         <div class="col-md-12">
                             <button class="btn btn-warning btn-outline pull-right cssButtonPadding" type="button" (click)="searchClear()">{{'adminConfigarationPage.commonFields.clear' | translate}}</button>
                             <button class="btn btn-primary btn-outline pull-right cssButtonPadding" type="button" (click)="searchStudent(membershipCard)">{{'adminConfigarationPage.commonFields.search' | translate}}</button>
@@ -81,11 +86,14 @@
     
                             </th>
                             <th>{{ 'adminConfigarationPage.statusPage.status' | translate }}</th>
+                            <th *ngIf="isStartDateColumnVisible">{{ 'adminConfigarationPage.studentPage.startDate' | translate }}</th>
+                            <th *ngIf="isStartDateColumnVisible">{{ 'adminConfigarationPage.studentPage.endDate' | translate }}</th>
+                            <!-- <th>Payment Date</th> -->
                             <!-- <th>{{ 'adminConfigarationPage.membershipCardPage.mcmId' | translate }} </th> -->
     
                             <th>{{ 'adminConfigarationPage.membershipCardPage.checkbox' | translate }}</th>
-                            <th *ngIf="isEditColumnVisible">{{ 'adminConfigarationPage.commonFields.edit' | translate }}</th>
-                            <th *ngIf="!isEditColumnVisible">{{ 'adminConfigarationPage.commonFields.view' | translate }}</th>
+                            <!-- <th *ngIf="isEditColumnVisible">{{ 'adminConfigarationPage.commonFields.edit' | translate }}</th> -->
+                            <th *ngIf="isStartDateColumnVisible">{{ 'adminConfigarationPage.commonFields.view' | translate }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -95,6 +103,11 @@
                             <td>{{item.institutionName}}</td>
                             <td>{{item.planName}}</td>
                             <td>{{item.statusName}}</td>
+                            <td *ngIf="isStartDateColumnVisible">{{item.planStartDate | date:'fullDate'}}</td>
+                            <td *ngIf="isStartDateColumnVisible">{{item.planEndDate | date:'fullDate'}}</td>
+                            
+    
+    
                             <!-- <td></td> -->
                             <td style="color:#cccccc">
                                 <!-- <input type="checkbox" id="mycheck-{{ i+1 }}"  (change)="onSelectPlan( i+1 , $event.target.checked)" checked={{checkedval}}>
@@ -102,12 +115,12 @@
                                 <input type="checkbox" id="mycheck-{{ i+1 }}" (change)="selectedStudent(item.statusName,item, $event.target.checked)" checked={{checkedval}}>
                                 <label for="mycheck-{{ i+1 }}"></label>
                             </td>
-                            <td *ngIf="isEditColumnVisible">
+                            <!-- <td *ngIf="isEditColumnVisible">
                                 <button class="btn btn-warning buttonStyle" data-toggle="modal" data-target="#addModal" (click)="editUser(item)">
                                     <i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size:15px"></i>
                                 </button>
-                            </td>
-                            <td *ngIf="!isEditColumnVisible">
+                            </td> -->
+                            <td *ngIf="isStartDateColumnVisible">
                                 <button class="btn btn-success buttonStyle" data-toggle="modal" data-target="#QRModal" (click)="selectedStudentForcard(item)">
                                     <span class="glyphicon glyphicon-eye-open" aria-hidden="true" style="font-size:15px" style="color:white"></span>
                                 </button>
@@ -135,14 +148,14 @@
                 <div class="clearfix"></div>
     
             </div>
-            <div class="col-lg-12 text-center">
+            <div class="col-lg-12 text-center member-nbt">
                 <button *ngIf="anamechangeflag" class="btn btn-primary btnNext" type="button" (click)="proceedClick()">{{ 'adminConfigarationPage.membershipCardPage.proceed' | translate }}</button>
-            </div>
-            <div class="col-lg-12 text-center">
+    
                 <button *ngIf="pnamechangeflag" class="btn btn-primary btnNext" type="button" (click)="generateId()">{{ 'adminConfigarationPage.membershipCardPage.generateId' | translate }}</button>
-            </div>
-            <div class="col-lg-12 text-center">
+    
                 <button *ngIf="cnamechangeflag" class="btn btn-primary btnNext" type="button" (click)="sendEmail()">Send Email</button>
+    
+                <button *ngIf="enamechangeflag" class="btn btn-primary btnNext" type="button" (click)="sendLoginEmail()">Send Login Credentilas</button>
             </div>
     
         </div>

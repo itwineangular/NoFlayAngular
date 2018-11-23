@@ -80,7 +80,8 @@
             "selectPlan" : "Sélectionnez le plan",
             "selectinstitution": "Sélectionner une institution",
             "selectCourseCategory": "Sélectionnez une catégorie de cours",
-            "selectCourse": "Sélectionner un cours"
+            "selectCourse": "Sélectionner un cours",
+            "imageupload": "Téléchargement d'image"
         },
       
         "commonFields": {
@@ -137,6 +138,7 @@
             "instituteDetails": "Détails de l'institut",
             "invalidAccNumberMessage": "Numéro de compte invalide",
             "planDetail":"Détails du plan"
+
         },
 
         "paymentDetailsPage" : {
@@ -144,7 +146,8 @@
             "institutionName":"Nom de l'institutiuon",
             "courseCategory": "Catégorie de cours  ",
             "course":"Cours",
-            "studentName":"Nom d'étudiant"
+            "studentName":"Nom d'étudiant",
+            "paymentDate":"Date de paiement"
         },
 
         "businessCategory" : {

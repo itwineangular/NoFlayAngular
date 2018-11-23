@@ -120,6 +120,7 @@ export class Student {
     statusId: any;
     statusName: any;
     membershipType:any;
+    paymentDate : any;
     
 }
 

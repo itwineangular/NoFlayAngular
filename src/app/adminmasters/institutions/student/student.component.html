@@ -329,8 +329,9 @@
 
                             <div class="form-group">
                                 <div class="col-sm-3">
+                                        <label for="plan">{{'adminConfigarationPage.studentPage.imageupload' | translate}}<span class="reqMark">*</span></label>
                                         <img *ngIf="url" [src]="url" height="200">
-                                        <input type="file"  id="fileControl" #fileInput  (change)="addToQueue($event.target.files)" />
+                                        <input type="file"  id="fileControl" #fileInput  (change)="addToQueue($event.target.files)" required />
                                 </div>
 
                             </div>
@@ -448,13 +449,13 @@
             <div class="modal-content">
                 <form role="form" class="form-horizontal" id="myform" action="#" >
                     <div class="modal-header">
-                        <button class="close" type="button" (click)="resetmodal()">X</button>
+                        <button class="close" type="button" data-dismiss="modal" (click)="resetmodal()">X</button>
                         <h4 class="modal-title">{{'adminConfigarationPage.studentPage.uploadStudent' | translate}}</h4>
                     </div>
                     <div id="div1" class="modal-body">
                         <h4 class="modal-title">{{'adminConfigarationPage.studentPage.selectFile' | translate}}</h4>
-
-                        <input type="file" id="uid"  (change)="onFileChange($event)"/> 
+                        <input type="file" id="uid"  (change)="addToQueue($event.target.files)"/> 
+                        <!-- <input type="file" id="uid"  (change)="addToFileToServer($event)"/>  -->
                        
                     <label style="color:red">{{errorMessage}}</label>
                     <label style="color:green">{{successMessage}}</label>
@@ -462,7 +463,7 @@
                     
                         <br>
                         <div class="col-lg-12 text-left">
-                            <button class="btn btn-warning" (click)="viewuploadedlistinpopup()" [disabled]="viewdisable"
+                            <button class="btn btn-warning" (click)="displayStudentsForUpdate()" data-toggle="modal" data-target="#studentFileUploadModal"
                                >View</button>
                         </div>
                         <div class="clearfix"></div>
@@ -478,6 +479,7 @@
 
     <!-- studentfileupload -->
 
+    
     <div class="modal fade" id="studentFileUploadModal" role="dialog">
         <div class="modal-dialog modal-lg ">
             <!-- Modal content -->
@@ -493,10 +495,10 @@
                             <!-- <h4>Select Plans </h4> -->
                             <div class="col-md-2">
                                 <label>{{'adminConfigarationPage.studentPage.selectPlan' | translate}}</label>
-                                <select class="form-control" name="planName" id="planName" #planName="ngModel" [(ngModel)]="plan.planId">
+                                <select class="form-control" name="planName" id="planName" #planName="ngModel" [(ngModel)]="student.planId">
                                     <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.selectPlan' | translate}}</option>
-                                    <option *ngFor="let item of planNameList" value={{item.planName}}-{{item.planMembership}}>
-                                        {{item.planName}} - {{item.planMembership}} </option>
+                                    <option *ngFor="let item of planList" value={{item.planId}}> {{item.planName}} - {{item.planMembership}}
+                                    </option>
 
                                 </select>
                                 {{ errormsg }}
@@ -505,7 +507,7 @@
                             <!-- <h5>Select Institution </h5> -->
                             <div class="col-md-2">
                                 <label>{{'adminConfigarationPage.studentPage.selectinstitution' | translate}}</label>
-                                <select class="form-control" type="text" name="institutionName" #institutionName="ngModel" [(ngModel)]="student.institutionName"
+                                <select class="form-control" type="text" name="institutionName" #institutionName="ngModel" [(ngModel)]="student.institutionId"
                                     (change)="onInstituteSelect($event.target.value)">
                                     <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.institution' | translate}}</option>
                                     <option *ngFor="let item of institutionList" value={{item.institutionId}}>{{item.instName}}
@@ -517,7 +519,7 @@
                             <!-- <h4>Select Course Category </h4> -->
                             <div class="col-md-2">
                                 <label>{{'adminConfigarationPage.studentPage.selectCourseCategory' | translate}}</label>
-                                <select class="form-control" type="text" name="courseCategory" #courseCategory="ngModel" [(ngModel)]="student.courseCategory"
+                                <select class="form-control" type="text" name="courseCategory" #courseCategory="ngModel" [(ngModel)]="student.categoryId"
                                     (change)="onCourseCategorySelect($event.target.value)" required>
                                     <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.courseCategory' | translate}}</option>
                                     <option *ngFor="let item of courseCategoryList" value={{item.categoryId}}>{{item.categoryName}}
@@ -528,10 +530,10 @@
                             <!-- <h4>Select Course </h4> -->
                             <div class="col-md-2">
                                 <label>{{'adminConfigarationPage.studentPage.selectCourse' | translate}}</label>
-                                <select class="form-control" type="text" name="courseName" #courseName="ngModel" [(ngModel)]="student.courseName" (change)="onCourseSelect($event.target.value)"
+                                <select class="form-control" type="text" name="courseName" #courseName="ngModel" [(ngModel)]="student.courseId" (change)="onCourseSelect($event.target.value)"
                                     required>
                                     <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.courses' | translate}}</option>
-                                    <option *ngFor="let item of courseList" value={{item.courseName}}>{{item.courseName}}
+                                    <option *ngFor="let item of courseList" value={{item.courseId}}>{{item.courseName}}
                                     </option>
                                 </select>
                             </div>
@@ -561,7 +563,7 @@
                                 <th>{{'adminConfigarationPage.studentFileUpload.course'| translate}}</th>
                                 <th>{{'adminConfigarationPage.studentFileUpload.parentsPhone'| translate}}</th>
                                 <th>{{'adminConfigarationPage.studentFileUpload.plan'| translate}}</th>
-                                <th>{{'adminConfigarationPage.studentFileUpload.status'| translate}}</th>
+                                <!-- <th>{{'adminConfigarationPage.studentFileUpload.status'| translate}}</th> -->
                                 <th>{{'adminConfigarationPage.studentFileUpload.delete'| translate}}</th>
 
                             </tr>
@@ -601,9 +603,9 @@
                                         <div class="validation-error" *ngIf="countryNameControl.invalid "> Country Name is required</div>
                                     </td>
                                     <td>
-                                        <input type="text" id="studentstate-{{ i }}" name="state[{{ i }}]" #stateControl="ngModel" [(ngModel)]="item.countryName"
+                                        <input type="text" id="studentstate-{{ i }}" name="state[{{ i }}]" #stateControl="ngModel" [(ngModel)]="item.state"
                                             required>
-                                        <div class="validation-error" *ngIf="stateControl.invalid "> Country Name is required
+                                        <div class="validation-error" *ngIf="stateControl.invalid "> State is required
                                         </div>
                                     </td>
                                     <td>
@@ -631,17 +633,17 @@
                                     </td>
                                     <td>
                                         <input type="text" id="studentinstitutionName-{{ i }}" name="institutionName[{{ i }}]" #institutionNameControl="ngModel"
-                                            [(ngModel)]="item.institutionName" required>
+                                            [(ngModel)]="item.institutionId" required>
                                         <div class="validation-error" *ngIf="institutionNameControl.invalid ">
                                             Institution Name is required</div>
                                     </td>
                                     <td>
-                                        <input type="text" id="studentcourseCategory-{{ i }}" name="courseCategory[{{ i }}]" #courseCategoryControl="ngModel" [(ngModel)]="item.courseCategory"
+                                        <input type="text" id="studentcourseCategory-{{ i }}" name="courseCategory[{{ i }}]" #courseCategoryControl="ngModel" [(ngModel)]="item.categoryId"
                                             required>
                                         <div class="validation-error" *ngIf="courseCategoryControl.invalid ">CourseCategory is required</div>
                                     </td>
                                     <td>
-                                        <input type="text" id="studentcourseName-{{ i }}" name="courseName[{{ i }}]" #courseNameControl="ngModel" [(ngModel)]="item.course" required>
+                                        <input type="text" id="studentcourseName-{{ i }}" name="courseName[{{ i }}]" #courseNameControl="ngModel" [(ngModel)]="item.courseId" required>
                                         <div class="validation-error" *ngIf="courseNameControl.invalid ">Course is required</div>
                                     </td>
                                     <td>
@@ -650,16 +652,16 @@
                                             <div class="validation-error" *ngIf="stdMobileControl.invalid ">Phone Number is not valid</div>
                                     </td>
                                     <td>
-                                        <input type="text" id="studentplan-{{ i+1 }}" name="plan[{{ i }}]" #planControl="ngModel" [(ngModel)]="item.plan" readonly
+                                        <input type="text" id="studentplan-{{ i+1 }}" name="plan[{{ i }}]" #planControl="ngModel" [(ngModel)]="item.planId" readonly
                                             required>
                                         <div class="validation-error" *ngIf="planControl.invalid && planControl.touched ">Plan is required</div>
                                     </td>
 
-                                    <td>
+                                    <!-- <td>
                                         <input type="text" id="studentstatus-{{ i }}" name="status[{{ i }}]" #statusControl="ngModel" [(ngModel)]="item.status" required>
                                         <div class="validation-error" *ngIf="statusControl.invalid ">Status is not required
                                         </div>
-                                    </td>
+                                    </td> -->
 
                                     <td>
                                         <button class="btn btn-danger" data-toggle="modal" data-target="#studentDeleteModal" (click)="selectedStudent(item)">

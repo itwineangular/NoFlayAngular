@@ -280,8 +280,23 @@ export class PaymentDetailsComponent implements OnInit {
       this.studentService.searchStudent(paymentDetailsObject)
         .subscribe(
           (data) => {
-            this.studentList = data;
+             this.studentList = data;
             if (typeof this.studentList !== 'undefined' && this.studentList.length > 0) {
+              console.log(data);
+              this.studentList = [];
+              data.forEach(element => {
+                var studentDataLocal = element;
+
+                var paymentDetailsLocal = this.paymentList.filter(x=>x.studentProfile.stdId == element.stdId);
+                if(paymentDetailsLocal.length>0)
+                {
+                  studentDataLocal.paymentDate = paymentDetailsLocal[0].paymentDate;
+                }
+                
+                this.studentList.push(studentDataLocal);
+              });
+              // this.studentList = data;
+              console.log(this.studentList);
               this.isListContainsData = true;
             }
             else {
@@ -295,6 +310,26 @@ export class PaymentDetailsComponent implements OnInit {
         );
     }
   }
+
+  //   else {
+  //     this.studentService.searchStudent(paymentDetailsObject)
+  //       .subscribe(
+  //         (data) => {
+  //           this.studentList = data;
+  //           if (typeof this.studentList !== 'undefined' && this.studentList.length > 0) {
+  //             this.isListContainsData = true;
+  //           }
+  //           else {
+  //             this.isListContainsData = false;
+  //           }
+  //         },
+  //         (error) => {
+  //           console.log(error);
+  //           alert("Try again");
+  //         }
+  //       );
+  //   }
+  // }
 
 
   searchClear() {
