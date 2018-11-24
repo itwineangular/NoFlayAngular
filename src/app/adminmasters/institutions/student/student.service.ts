@@ -232,7 +232,8 @@ searchStudent(studentsData) {
     "institutionId": studentsData.institutionId,
     "categoryId": studentsData.categoryId,
     "courseId": studentsData.courseId,    
-    "statusId": studentsData.statusId
+    "statusId": studentsData.statusId,
+    "stdName": studentsData.stdName
 
   };
   console.log(obj);

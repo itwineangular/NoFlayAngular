@@ -454,7 +454,7 @@ onInstituteSelect(institutionId)
 
   saveStudent(studentValue) {
 console.log("student ****");
-    this.uploader.uploadAll(studentValue,"studentImage");
+  
 
      if (this.saveOrUpdate == "save")
      {
@@ -462,7 +462,7 @@ console.log("student ****");
       this.studentService.saveStudent(studentValue)
         .subscribe(
           (data) => {
-            
+            this.uploader.uploadAll(studentValue,"studentImage");
             this.mytemplateForm.reset();
             this.url = "";
             $("#fileControl").val('');

@@ -23,3 +23,7 @@ export class BusinessEntity {
     bankBranch?: any;
     offers?: any;
 }
+
+export class SelectedServices {
+    attributeId: string;
+}

@@ -126,34 +126,35 @@ export class MembershipCardComponent implements OnInit {
 
     this.getEmailTemplate("froalaEditorStudentPayment", "StudentPayment");
 
-
+    this.changelistview("");
   }
 
   changelistview(value) {
     console.log("value");
     console.log(value);
     if (value == 'created') {
-
       this.cnamechangeflag = true;
       this.pnamechangeflag = false;
       this.anamechangeflag = false;
       this.enamechangeflag = false;
-
     } else if (value == 'Payment') {
-
       this.cnamechangeflag = false;
       this.pnamechangeflag = true;
       this.anamechangeflag = false;
       this.enamechangeflag = false;
-
     }
     else if (value == 'Active') {
-
       this.cnamechangeflag = false;
       this.pnamechangeflag = false;
       this.anamechangeflag = true;
       this.enamechangeflag = true;
-
+    }
+    else
+    {
+      this.cnamechangeflag = false;
+      this.pnamechangeflag = false;
+      this.anamechangeflag = false;
+      this.enamechangeflag = false;
     }
   }
 
@@ -299,20 +300,25 @@ export class MembershipCardComponent implements OnInit {
   }
 
   searchStudent(studentParameters) {
+
+
+    this.changelistview("");
+
+
     var membershipObject: Student = new Student();
     this.isSearchClicked = true;
 
 
     if (typeof this.selectedInstituteName !== 'undefined' && this.selectedInstituteName.length > 0) {
-      membershipObject.institutionName = this.selectedInstituteName[0].instName;;
+      membershipObject.institutionId = this.selectedInstituteName[0].institutionId;;
     }
 
     if (typeof this.selectedCourseCategoryName !== 'undefined' && this.selectedCourseCategoryName.length > 0) {
-      membershipObject.courseCategory = this.selectedCourseCategoryName[0].categoryName;;
+      membershipObject.categoryId = this.selectedCourseCategoryName[0].categoryId;;
     }
 
     if (typeof this.selectedCourseName !== 'undefined' && this.selectedCourseName.length > 0) {
-      membershipObject.courseName = this.selectedCourseName[0].courseName;
+      membershipObject.courseId = this.selectedCourseName[0].courseId;
     }
 
     if (typeof this.selectedStatusValue !== 'undefined' && this.selectedStatusValue.length > 0) {
@@ -320,12 +326,11 @@ export class MembershipCardComponent implements OnInit {
     }
 
 
-    membershipObject.stdName = studentParameters.stdName;
-    membershipObject.status = studentParameters.status;
+    membershipObject.stdName = studentParameters.stdName;  
 
 
 
-    if (typeof membershipObject.institutionName === 'undefined' && typeof membershipObject.courseCategory === 'undefined' && typeof membershipObject.courseName === 'undefined' && typeof membershipObject.stdName === 'undefined' && typeof membershipObject.statusId === 'undefined') {
+    if (typeof membershipObject.institutionId === 'undefined' && typeof membershipObject.categoryId === 'undefined' && typeof membershipObject.courseId === 'undefined' && typeof membershipObject.stdName === 'undefined' && typeof membershipObject.statusId === 'undefined') {
       Swal({
         title: 'Invalid!!',
         text: 'Atleast enter any one field.',

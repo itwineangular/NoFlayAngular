@@ -50,6 +50,8 @@ private router : Router) { }
     // this.amount = localStorage.getItem("amount");
     // this.browsePlan = localStorage.getItem("plan");
     this.getPaymentCardDetails();
+
+    this.debitCardClick();
   }
 
   getPaymentCardDetails() : void

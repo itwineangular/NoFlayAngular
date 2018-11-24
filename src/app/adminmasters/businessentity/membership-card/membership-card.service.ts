@@ -41,25 +41,7 @@ export class MembershipCardService {
     return this.http.get(this.url + '/status/list', options).pipe(map(res => res.json()));
   }
 
-  searchStudent(studentsData) {
-    let obj =
-    {
-      "institutionName": studentsData.institutionName,
-      "courseCategory": studentsData.courseCategory,
-      "courseName": studentsData.courseName,
-      // "stdName": studentsData.stdName,
-      "status": studentsData.status
 
-    };
-    let headers = new Headers({
-      'Content-Type': 'application/json'
-    });
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Access-Control-Allow-Headers', 'Content-Type');
-    headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
-    let options = { headers: headers };
-    return this.http.post(this.url + '/students/searchStudent', obj, options).pipe(map(res => res.json()));
-  }
 
   sendEmail(students) {
     let headers = new Headers({
@@ -97,17 +79,7 @@ export class MembershipCardService {
     return this.http.post(newStr, obj, options).pipe(map(res => res.json()));
   }
 
-  // sendLoginEmail(students) {
-  //   let headers = new Headers({
-  //     'Content-Type': 'application/json'
-  //   });
-  //   headers.append('Access-Control-Allow-Origin', '*');
-  //   headers.append('Access-Control-Allow-Headers', 'Content-Type');
-  //   headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
-  //   let options = { headers: headers };
-  //   return this.http.post(this.url + '/students/studentCredential', students, options).pipe(map(res => res.json()));
-  // }
-
+ 
   sendstudentCredentialtMail(template, students) {
     let obj =
     {

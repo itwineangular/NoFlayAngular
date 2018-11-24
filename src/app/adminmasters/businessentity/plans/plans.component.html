@@ -1,16 +1,12 @@
 <div class="mycontent">
-    <!-- <div class="container"> -->
-
     <div class="col-md-12">
         <hr />
         <h3 class="text-center">{{'adminConfigarationPage.plans.plans' | translate}}</h3>
         <hr />
         <div class="col-md-12">
             <div class="panel panel-default">
-
                 <div class="panel-body">
                     <form class="form-horizontal" #planForm="ngForm" (ngSubmit)="searchPlan(planForm)">
-
                         <div class="col-md-3">
                             <label for="planName">{{'adminConfigarationPage.plans.planName' | translate}}</label>
                             <ngx-select-dropdown #planName (change)="changeValue($event)" [multiple]="false" [(value)]="selectedValue" [config]="config"
@@ -21,11 +17,11 @@
                             <ngx-select-dropdown #planMembership (change)="planMembershipchangeValue($event)" [multiple]="false" [(value)]="selectedplanMembershipValue"
                                 [config]="planMembershipconfig" [options]="planListLocal"></ngx-select-dropdown>
                         </div>
-                        <div class="col-md-3">
+                        <!-- <div class="col-md-3">
                             <label class="control-label col-sm-2" for="startDate">StartDate</label>
                             <my-date-picker [options]="myDatePickerOptions2" name="startDateTime" #startDateTime="ngModel" [(ngModel)]="plan.startDateTime"></my-date-picker>
 
-                        </div>
+                        </div> -->
                         <div class="col-md-12">
                             <button class="btn btn-info btn-outline pull-right cssButtonPadding" data-toggle="modal" data-target="#addModal" type="button"
                                 (click)="addNew()">{{'adminConfigarationPage.commonFields.addNew' | translate}}</button>
@@ -67,14 +63,14 @@
                                 <span [hidden]="reverse">▼</span>
                                 <span [hidden]="!reverse">▲</span>
                             </th>
-                            <th [class.active]="key === 'startDateTime'" (click)=" sort('startDateTime')">{{'adminConfigarationPage.plans.startDate' | translate}}
+                            <!-- <th [class.active]="key === 'startDateTime'" (click)=" sort('startDateTime')">{{'adminConfigarationPage.plans.startDate' | translate}}
                                 <span [hidden]="reverse">▼</span>
                                 <span [hidden]="!reverse">▲</span>
                             </th>
                             <th [class.active]="key === 'endDateTime'" (click)=" sort('endDateTime')">{{'adminConfigarationPage.plans.endDate' | translate}}
                                 <span [hidden]="reverse">▼</span>
                                 <span [hidden]="!reverse">▲</span>
-                            </th>
+                            </th> -->
                             <th>{{'adminConfigarationPage.commonFields.edit' | translate }}</th>
                         </tr>
                     </thead>
@@ -84,8 +80,8 @@
                             <td>{{item.planName}}</td>
                             <td>{{item.planPrice}}</td>
                             <td>{{item.planMembership}} </td>
-                            <td>{{item.startDateTime | date:'fullDate'}}</td>
-                            <td>{{item.endDateTime | date:'fullDate'}}</td>
+                            <!-- <td>{{item.startDateTime | date:'fullDate'}}</td>
+                            <td>{{item.endDateTime | date:'fullDate'}}</td> -->
                             <td>
                                 <button class="btn btn-warning buttonStyle" data-toggle="modal" data-target="#addModal" (click)="selectUser(item,item.endDateTime)">
                                     <i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size:15px"></i>
@@ -159,7 +155,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <label class="control-label col-sm-2" for="full name">{{ 'adminConfigarationPage.plans.startDate' | translate }}
                                             <span class="reqMark">*</span>
                                         </label>
@@ -167,7 +163,7 @@
                                             <my-date-picker [options]="myDatePickerOptions" name="startDateTime" #startDateTime="ngModel" [(ngModel)]="plan.startDateTime"
                                                 required></my-date-picker>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                             <div class="modal-footer">

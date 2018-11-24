@@ -185,7 +185,7 @@ selectCheckbox(id){
 
   saveBusinessEntity(data) {
     if (this.saveOrUpdate == "save") {
-      this.service.saveBusinessEntity(data)
+      this.service.saveBusinessEntity(data, this.selectedPrivilegeCategoryList, this.selectedAttributeList)
       .subscribe(
         (data) => {
           this.alertMassege = "New item add on list successfully!!";         
