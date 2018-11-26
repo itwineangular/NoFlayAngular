@@ -81,7 +81,9 @@
             "selectinstitution": "Sélectionner une institution",
             "selectCourseCategory": "Sélectionnez une catégorie de cours",
             "selectCourse": "Sélectionner un cours",
-            "imageupload": "Téléchargement d'image"
+            "imageupload": "Téléchargement d'image",
+            "mcmId":"ID MCM",
+            "createDate": "créer un rendez-vous"
         },
       
         "commonFields": {

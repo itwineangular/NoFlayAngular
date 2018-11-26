@@ -29,7 +29,85 @@
     "name": "Alabama",
     "countryCode":"USA"
    
-}]
+},
+{
+    "id": "DB",
+    "name": "Diourbel",
+    "countryCode":"SN"
+   
+},
+{
+    "id": "DK",
+    "name": "Dakar",
+    "countryCode":"SN"
+   
+},
+{
+    "id": "TH",
+    "name": "Thiès",
+    "countryCode":"SN"
+   
+},
+{
+    "id": "KL",
+    "name": "Kaolack",
+    "countryCode":"SN"
+   
+},
+{
+    "id": "ZG",
+    "name": "Ziguinchor",
+    "countryCode":"SN"
+   
+},
+{
+    "id": "SL",
+    "name": "Saint-Louis",
+    "countryCode":"SN"
+   
+},
+{
+    "id": "LG",
+    "name": "Louga",
+    "countryCode":"SN"
+   
+},
+{
+    "id": "TC",
+    "name": "Tambacounda",
+    "countryCode":"SN"
+   
+},
+{
+    "id": "KD",
+    "name": "Kolda",
+    "countryCode":"SN"
+   
+},
+{
+    "id": "FK",
+    "name": "Fatick",
+    "countryCode":"SN"
+   
+},
+{
+    "id": "MT",
+    "name": "Matam",
+    "countryCode":"SN"
+   
+},
+{
+    "id": "SE",
+    "name": "Sédhiou",
+    "countryCode":"SN"
+   
+},
+{
+    "id": "KE",
+    "name": "Kédougou",
+    "countryCode":"SN"
+}
+]
 
 
 

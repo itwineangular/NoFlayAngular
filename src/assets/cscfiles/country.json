@@ -1,4 +1,9 @@
-[{
+[
+    {
+        "id":"SN",
+        "name":"Senegal"
+        },
+    {
     "id": "IN",
    "name": "India"
     

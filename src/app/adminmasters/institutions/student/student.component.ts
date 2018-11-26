@@ -669,6 +669,7 @@ console.log("student ****");
     }
   
     this.uploader.addToQueue(file);
+    this.uploader.uploadAll("abcd", "file");
   }
 
   //convert to csv to json
@@ -869,11 +870,12 @@ console.log("student ****");
     }
 
     // studentObject.status = studentParameters.status;
+    studentObject.mcmId = studentParameters.mcmId;
 
  
   
 
-    if (typeof studentObject.institutionId === 'undefined'  && typeof studentObject.categoryId === 'undefined' && typeof studentObject.courseId === 'undefined' && typeof studentObject.statusId === 'undefined') 
+    if (typeof studentObject.institutionId === 'undefined'  && typeof studentObject.categoryId === 'undefined' && typeof studentObject.courseId === 'undefined' && typeof studentObject.statusId === 'undefined'  && typeof studentObject.mcmId === 'undefined') 
   {
     Swal({
       title: 'Invalid!!',
@@ -985,4 +987,59 @@ console.log("student ****");
     this.ngSelectStatusValue.ngOnInit();
     
   }
+
+  viewStudentdetails(id) {
+    console.log(id);
+    var studentDetailListLocal: Student[]=[];
+    studentDetailListLocal = this.studentList.filter((item)=> item.stdId == id); 
+    console.log("her jsdkgds")
+    console.log(studentDetailListLocal)
+    this.studentService.getStudent().subscribe(data => {
+      // const popupData = data[0];
+      const popupData = studentDetailListLocal[0];         
+     
+        Swal({
+          title: '<strong>Student Details</strong>',
+          type: 'info',
+          width: 1000,
+          padding: 3,
+          html:
+            '<div class="panel panel-default"><style>th, td{border: 2px solid #ddd !important;}</style>' +
+            '<div class="panel-body nopadding">' +
+            '<table class="new-table table table-striped nomargin" border=1 style="font-size: 13px !important;">' +
+            '<thead>' +
+            // '<th> Name </th>' +
+            
+            '<th> Name</th>' +
+            '<th>Email</th>' +
+            '<th> MCM ID</th>' +
+            '<th> Institution </th>' +
+          +
+            '</thead>' +
+            '<tbody>' +
+            // '<td> Manual Asset </td>' +
+            '<td>' + popupData.stdName + '</td>' +
+            '<td>' + popupData.stdEmail + '</td>' +
+            '<td>' + popupData.mcmId + '</td>' +
+            '<td>' + popupData.institutionName + '</td>' +
+           
+            '</tbody>' +
+            '</table>' +
+            '</div>' +
+            '</div>',
+          showCloseButton: true,
+          showCancelButton: true,
+          focusConfirm: false,
+          confirmButtonText:
+            '<i class="fa fa-check"></i>',
+          confirmButtonAriaLabel: 'Ok',
+          cancelButtonText:
+            '<i class="fa fa-close"></i>',
+          cancelButtonAriaLabel: 'Close',
+        });
+   
+    });
+  }
+
+
 }

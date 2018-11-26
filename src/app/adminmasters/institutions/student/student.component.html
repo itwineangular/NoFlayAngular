@@ -53,6 +53,11 @@
                         <option *ngFor="let item of statusList" value={{item.status}}>{{item.status}} </option>
                     </select> -->
                 </div>
+                <div class="col-md-3">
+                    <label for="mcmId">{{ 'adminConfigarationPage.studentPage.mcmId' | translate }}</label>
+                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentPage.mcmId' | translate}}"
+                        name="mcmId" #studentNameControl="ngModel" [(ngModel)]="student.mcmId" />
+                </div>
                 <div class="col-md-12">
                     <button class="btn btn-info btn-outline pull-right cssButtonPadding"  type="button" data-toggle="modal"
                     data-target="#addModal"
@@ -98,22 +103,25 @@
                             <span [hidden]="reverse">▼</span>
                             <span [hidden]="!reverse">▲</span>
                         </th>
-                        <th [class.active]="key === 'stdRollnumber'" (click)=" sort('stdRollnumber')">{{ 'adminConfigarationPage.studentPage.rollNumber' | translate }}
+                        <!-- <th [class.active]="key === 'stdRollnumber'" (click)=" sort('stdRollnumber')">{{ 'adminConfigarationPage.studentPage.rollNumber' | translate }}
                             <span [hidden]="reverse">▼</span>
                             <span [hidden]="!reverse">▲</span>
-                        </th>
+                        </th> -->
                         <th [class.active]="key === 'institutionName'" (click)=" sort('institutionName')">{{ 'adminConfigarationPage.studentPage.institution' | translate }}
                             <span [hidden]="reverse">▼</span>
                             <span [hidden]="!reverse">▲</span>
                         </th>
-                        <th [class.active]="key === 'courseCategory'" (click)=" sort('courseCategory')">{{ 'adminConfigarationPage.studentPage.courseCategory' | translate }}
+                        <!-- <th [class.active]="key === 'courseCategory'" (click)=" sort('courseCategory')">{{ 'adminConfigarationPage.studentPage.courseCategory' | translate }}
                             <span [hidden]="reverse">▼</span>
                             <span [hidden]="!reverse">▲</span>
-                        </th>
-                        <th [class.active]="key === 'courseName'" (click)=" sort('courseName')">{{ 'adminConfigarationPage.studentPage.courses' | translate }}
+                        </th> -->
+                        <!-- <th [class.active]="key === 'courseName'" (click)=" sort('courseName')">{{ 'adminConfigarationPage.studentPage.courses' | translate }}
                             <span [hidden]="reverse">▼</span>
                             <span [hidden]="!reverse">▲</span>
-                        </th>
+                        </th> -->
+                        <th>{{ 'adminConfigarationPage.studentPage.mcmId' | translate }}</th>
+                        <th>{{ 'adminConfigarationPage.studentPage.createDate' | translate }}</th>
+
                         <th [class.active]="key === 'status'" (click)=" sort('status')">{{ 'adminConfigarationPage.studentPage.status' | translate }}
                             <span [hidden]="reverse">▼</span>
                             <span [hidden]="!reverse">▲</span>
@@ -125,13 +133,19 @@
                 <tbody>
                     <tr *ngFor="let item of studentList | orderBy: key : reverse : caseInsensitive : comparator |  paginate: { itemsPerPage: pagenumber, currentPage: p };let i=index">
                         <td>{{((p-1)*itemsPerPage2)+i+1}}</td>
-                        <td>{{item.stdName}}</td>
+                        <td>
+                            <a  (click)="viewStudentdetails(item.stdId)">
+                                <!-- <i class="fa fa-link"></i> -->
+                                {{item.stdName}}
+                       </a></td>
                         <td>{{item.stdMobile}}</td>
                         <td>{{item.stdEmail}}</td>
-                        <td>{{item.stdRollnumber}}</td>
+                        <!-- <td>{{item.stdRollnumber}}</td> -->
                         <td>{{item.institutionName}}</td>
-                        <td>{{item.categoryName}}</td>
-                        <td>{{item.courseName}}</td>
+                        <!-- <td>{{item.categoryName}}</td> -->
+                        <!-- <td>{{item.courseName}}</td> -->
+                        <td>{{item.mcmId}}</td>
+                        <td>{{item.createDateTime| date:'fullDate'}}</td>
                         <td>{{item.statusName}}</td>
                         <td>
                             <button class="btn btn-warning buttonStyle" data-toggle="modal" data-target="#addModal" (click)="selectUser(item)">
@@ -330,7 +344,7 @@
                             <div class="form-group">
                                 <div class="col-sm-3">
                                         <label for="plan">{{'adminConfigarationPage.studentPage.imageupload' | translate}}<span class="reqMark">*</span></label>
-                                        <img *ngIf="url" [src]="url" height="200">
+                                        <img *ngIf="url" [src]="url" style="width:100px;height:100px;">
                                         <input type="file"  id="fileControl" #fileInput  (change)="addToQueue($event.target.files)" required />
                                 </div>
 
@@ -454,7 +468,7 @@
                     </div>
                     <div id="div1" class="modal-body">
                         <h4 class="modal-title">{{'adminConfigarationPage.studentPage.selectFile' | translate}}</h4>
-                        <input type="file" id="uid"  (change)="addToQueue($event.target.files)"/> 
+                        <input type="file" multiple id="uid"  (change)="addToQueue($event.target.files)"/> 
                         <!-- <input type="file" id="uid"  (change)="addToFileToServer($event)"/>  -->
                        
                     <label style="color:red">{{errorMessage}}</label>

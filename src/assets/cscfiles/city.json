@@ -109,7 +109,293 @@
    "stateCode":"AL",
    "countryCode":"USA"
     
+},
+{
+    "id": "DA",
+    "name": "Dakar",
+    "stateCode":"DK",
+    "countryCode":"SN"
+},
+{
+    "id": "RU",
+    "name": "Rufisque",
+    "stateCode":"DK",
+    "countryCode":"SN"
+},
+{
+    "id": "SE",
+    "name": "Sébikhotane",
+    "stateCode":"DK",
+    "countryCode":"SN"
+},
+{
+    "id": "DA",
+    "name": "Damniadio",
+    "stateCode":"DK",
+    "countryCode":"SN"
+},
+{
+    "id": "TO",
+    "name": "Touba",
+    "stateCode":"DB",
+    "countryCode":"SN"
+},
+{
+    "id": "DI",
+    "name": "Diourbel",
+    "stateCode":"DB",
+    "countryCode":"SN"
+},
+{
+    "id": "MB",
+    "name": "Mbacké",
+    "stateCode":"DB",
+    "countryCode":"SN"
+},
+{
+    "id": "BA",
+    "name": "Bambey",
+    "stateCode":"DB",
+    "countryCode":"SN"
+},
+{
+    "id": "FA",
+    "name": "Fatick",
+    "stateCode":"FK",
+    "countryCode":"SN"
+},
+{
+    "id": "GU",
+    "name": "Guinguinéo",
+    "stateCode":"FK",
+    "countryCode":"SN"
+},
+{
+    "id": "SO",
+    "name": "Sokone",
+    "stateCode":"FK",
+    "countryCode":"SN"
+},
+{
+    "id": "GO",
+    "name": "Gossas",
+    "stateCode":"FK",
+    "countryCode":"SN"
+},
+{
+    "id": "TO",
+    "name": "Touba",
+    "stateCode":"SN-KL",
+    "countryCode":"SN"
+},
+{
+    "id": "KA",
+    "name": "Kaolack",
+    "stateCode":"KL",
+    "countryCode":"SN"
+},
+{
+    "id": "KA",
+    "name": "Kaffrine",
+    "stateCode":"KL",
+    "countryCode":"SN"
+},
+
+{
+    "id": "NI",
+    "name": "Nioro du Rip",
+    "stateCode":"KL",
+    "countryCode":"SN"
+},
+{
+    "id": "KO",
+    "name": "Koungheul",
+    "stateCode":"KL",
+    "countryCode":"SN"
+},
+{
+    "id": "KE",
+    "name": "Kédougou",
+    "stateCode":"KE",
+    "countryCode":"SN"
+},
+{
+    "id": "KO",
+    "name": "Kolda",
+    "stateCode":"KD",
+    "countryCode":"SN"
+},{
+    "id": "VE",
+    "name": "Vélingara",
+    "stateCode":"KD",
+    "countryCode":"SN"
+},
+
+{
+    "id": "GO",
+    "name": "Goudomp",
+    "stateCode":"KD",
+    "countryCode":"SN"
+},
+{
+    "id": "LO",
+    "name": "Louga",
+    "stateCode":"LG",
+    "countryCode":"SN"
+},
+{
+    "id": "DA",
+    "name": "Dahra",
+    "stateCode":"LG",
+    "countryCode":"SN"
+},
+{
+    "id": "LI",
+    "name": "Linguère",
+    "stateCode":"LG",
+    "countryCode":"SN"
+},
+{
+    "id": "KE",
+    "name": "Kébémer",
+    "stateCode":"LG",
+    "countryCode":"SN"
+},
+{
+    "id": "OU",
+    "name": "Ouro Sogui",
+    "stateCode":"MT",
+    "countryCode":"SN"
+},
+{
+    "id": "KE",
+    "name": "Kébémer",
+    "stateCode":"MT",
+    "countryCode":"SN"
+},
+{
+    "id": "KA",
+    "name": "Kanel",
+    "stateCode":"MT",
+    "countryCode":"SN"
+},
+{
+    "id": "SA",
+    "name": "Saint-Louis",
+    "stateCode":"SL",
+    "countryCode":"SN"
+},
+{
+    "id": "RI",
+    "name": "Richard Toll",
+    "stateCode":"SL",
+    "countryCode":"SN"
+},
+{
+    "id": "DA",
+    "name": "Dagana",
+    "stateCode":"SL",
+    "countryCode":"SN"
+},
+{
+    "id": "ND",
+    "name": "Ndioum",
+    "stateCode":"SL",
+    "countryCode":"SN"
+},
+{
+    "id": "TA",
+    "name": "Tambacounda",
+    "stateCode":"TC",
+    "countryCode":"SN"
+},
+{
+    "id": "BA",
+    "name": "Bakel",
+    "stateCode":"TC",
+    "countryCode":"SN"
+},
+
+{
+    "id": "TH",
+    "name": "Thiès",
+    "stateCode":"TH",
+    "countryCode":"SN"
+},
+{
+    "id": "M",
+    "name": "M'Bour",
+    "stateCode":"TH",
+    "countryCode":"SN"
+},
+{
+    "id": "TI",
+    "name": "Tivaouane",
+    "stateCode":"TH",
+    "countryCode":"SN"
+},
+{
+    "id": "JO",
+    "name": "Joal-Fadiouth",
+    "stateCode":"TH",
+    "countryCode":"SN"
+},
+{
+    "id": "NG",
+    "name": "Nguékhokh",
+    "stateCode":"TH",
+    "countryCode":"SN"
+},
+{
+    "id": "KA",
+    "name": "Kayar",
+    "stateCode":"TH",
+    "countryCode":"SN"
+},
+{
+    "id": "PO",
+    "name": "Pout",
+    "stateCode":"TH",
+    "countryCode":"SN"
+},
+{
+    "id": "ME",
+    "name": "Mékhé",
+    "stateCode":"TH",
+    "countryCode":"SN"
+},
+{
+    "id": "MB",
+    "name": "Mboro",
+    "stateCode":"TH",
+    "countryCode":"SN"
+},
+{
+    "id": "TH",
+    "name": "Thiadiaye",
+    "stateCode":"TH",
+    "countryCode":"SN"
+},
+{
+    "id": "KH",
+    "name": "Khombole",
+    "stateCode":"TH",
+    "countryCode":"SN"
+},
+{
+    "id": "ZI",
+    "name": "Ziguinchor",
+    "stateCode":"ZG",
+    "countryCode":"SN"
+},
+{
+    "id": "BI",
+    "name": "Bignona",
+    "stateCode":"ZG",
+    "countryCode":"SN"
 }
+
+
 ]
 
 

@@ -84,7 +84,9 @@
             "selectCourse": "Select Course",
             "startDate":"StartDate",
             "endDate":"EndDate",
-            "imageupload": "Image Upload"
+            "imageupload": "Image Upload",
+            "mcmId":"MCM ID",
+            "createDate": "Create Date"
            
 
         },
