@@ -24,6 +24,11 @@ export class PaymentDetailsComponent implements OnInit {
   @ViewChild('courseName') public ngSelectCourseName: SelectDropDownComponent;
    @ViewChild('status') public ngSelectStatusValue: SelectDropDownComponent;
 
+   
+   key: string;
+  reverse: boolean = false;
+  caseInsensitive: boolean = true;
+
   itemsPerPage2: number = 1;
   pagenumber: string;
   p: number = 1;
@@ -54,6 +59,8 @@ export class PaymentDetailsComponent implements OnInit {
 
   isSearchClicked = false;
   isListContainsData: boolean;
+
+ 
 
   studentstatus:any;
   public currentDateModule: any;
@@ -347,5 +354,12 @@ export class PaymentDetailsComponent implements OnInit {
 
 
   }
+
+  sort(key) {
+    this.key = key;
+    this.reverse = !this.reverse;
+  }
+
+  
 
 }

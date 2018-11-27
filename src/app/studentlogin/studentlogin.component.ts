@@ -21,6 +21,11 @@ import Swal from 'sweetalert2';
 import { NgForm } from '@angular/forms';
 import { CommonServicesService } from "../common-services.service";
 import { FileQueueObject, FileuploaderService } from "./../adminmasters/institutions/educational-institute/fileuploader.service";
+import { StudentLoginObject } from './studentlogin';
+import { EmailTemplateServicesService } from '../adminmasters/accesscontrol/email-template/email-template-services.service';
+import { StudentProfileService } from '../student-profile/student-profile.service';
+import { StudentloginService } from './studentlogin.service';
+import { StudentDetailsService } from '../shared/student-details.service';
 
 @Component({
   selector: 'app-studentlogin',
@@ -77,6 +82,10 @@ export class StudentloginComponent implements OnInit {
 
   courseList: CourseProfile[] = [];
   selectedCourse: string;
+  studentLoginObject : StudentLoginObject = new StudentLoginObject();
+  passwordResetEmailTemplate: any;
+  studentId: number;
+  enteredEmailAddress : string;
 
   
   // selectedInstituteNameValue: any;
@@ -159,6 +168,10 @@ export class StudentloginComponent implements OnInit {
     private courseCategoryService: CourseCategoryService,
     private courseservice: CourseService,
     private router: Router,
+    private emailTemplateservice: EmailTemplateServicesService,
+    private studentProfileService:StudentProfileService,
+    private studentloginService : StudentloginService,
+    private studentDetailsService : StudentDetailsService,
     private commonService: CommonServicesService,
     private uploader: FileuploaderService
   ) {
@@ -254,6 +267,11 @@ export class StudentloginComponent implements OnInit {
     // });
 
     // ki
+
+    this.getEmailTemplate("PasswordReset");
+    var studentEmail = this.studentDetailsService.getStudentEmail();
+    console.log(studentEmail);
+    this.getStudentDetails(studentEmail);
 
   }
 
@@ -651,6 +669,104 @@ addToQueue(file: FileList) {
   
     onCourseSelect(courseId) {
       this.selectedCourse = courseId.toString();
+    }
+
+    studentLogin(studentDat)
+    {
+      console.log(studentDat);
+     // this.router.navigate(['student/' + studentDat.username]);
+  
+      this.studentDetailsService.saveStudentEmail(studentDat.username);
+      //this.studentDetailsService.saveStudentDetails(studentDat);
+      if (localStorage.getItem('currentUser')) {
+        // logged in so return true
+        return true;
+    }
+      this.router.navigate(["/student"]);
+  
+      
+      // if(studentDat.username === "user" && studentDat.password === "1234")
+      // {
+      //   this.router.navigate(['student/' + studentDat.username]);
+      //  // this.router.navigate(["/student"]);
+      // }
+      // else
+      // {
+      //   Swal({
+      //       title: 'Invalid User !!',
+      //       text: 'Please enter valid credentials.',
+      //       showCancelButton: false,
+      //       confirmButtonText: 'Ok',
+      //     });
+       
+      // }
+    }
+
+    getEmailTemplate(templateName) {
+      this.emailTemplateservice.getEmailTemplate(templateName).subscribe(data => {
+     this.passwordResetEmailTemplate = data;
+        console.log(data);
+      });
+    }
+    getStudentDetails(studentEmail:string) : void
+    {
+      this.studentProfileService.getStudent(studentEmail).subscribe(
+        (data)=>{
+          console.log(data);
+          this.studentId = data.stdId;
+          
+        }
+      );
+  
+    }
+  
+    passwordReset() 
+    {
+      
+       this.getStudentDetailsByEmailId(this.enteredEmailAddress);
+      
+    }
+  
+    getStudentDetailsByEmailId(studentEmail:string) : void
+    {
+      this.studentProfileService.getStudent(studentEmail).subscribe(
+        (data)=>{
+          console.log(data);
+         if(data.length>0)
+         {
+         // return data[0].stdId;
+          this.studentloginService.sendStudentPasswordResetRequestMail(this.studentId,this.passwordResetEmailTemplate)
+      .subscribe(
+        (data) => {
+          console.log(data);
+          alert("mail sent");
+        },
+        (error) => {
+          console.log(error);
+        }
+      ); 
+         }
+         else
+         {
+             Swal({
+            title: 'Invalid mail id!!',
+            text: 'Please enter existing mail id.',
+            showCancelButton: false,
+            confirmButtonText: 'Ok',
+          });
+         }
+        },
+        (error)=>
+        {
+          //     Swal({
+      //       title: 'Invalid mail id!!',
+      //       text: 'Please enter existing mail id.',
+      //       showCancelButton: false,
+      //       confirmButtonText: 'Ok',
+      //     });
+        }
+      );
+  
     }
 
 }

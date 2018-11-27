@@ -80,22 +80,34 @@
                                     <thead>
                                         <tr class="text-center">
                                             <th>{{'adminConfigarationPage.commonFields.index' | translate}}</th>
-                                            <th>{{ 'adminConfigarationPage.paymentDetailsPage.studentName' | translate }}
-                    
+                                            <th  [class.active]="key === 'stdName'" (click)=" sort('stdName')">{{ 'adminConfigarationPage.paymentDetailsPage.studentName' | translate }}
+                                                <span [hidden]="reverse">▼</span>
+                                                <span [hidden]="!reverse">▲</span>
                                             </th>
-                                            <th>{{ 'adminConfigarationPage.paymentDetailsPage.institutionName' | translate }}
-                    
+                                            <th [class.active]="key === 'institutionName'" (click)=" sort('institutionName')">{{ 'adminConfigarationPage.paymentDetailsPage.institutionName' | translate }}
+                                                <span [hidden]="reverse">▼</span>
+                                                <span [hidden]="!reverse">▲</span>
                                             </th>
                                             <!-- <th>{{ 'adminConfigarationPage.membershipCardPage.planName' | translate }}
                     
                                             </th> -->
-                                            <th>{{ 'adminConfigarationPage.paymentDetailsPage.course' | translate }}
-                    
+                                            <th [class.active]="key === 'courseName'" (click)=" sort('courseName')">{{ 'adminConfigarationPage.paymentDetailsPage.course' | translate }}
+                                                <span [hidden]="reverse">▼</span>
+                                                <span [hidden]="!reverse">▲</span>
                                                 </th>
-                                                <th>{{ 'adminConfigarationPage.paymentDetailsPage.courseCategory' | translate }} </th>
-                                                    <th>{{ 'adminConfigarationPage.paymentDetailsPage.paymentDate' | translate }}</th>
+                                                <th [class.active]="key === 'courseCategory'" (click)=" sort('courseCategory')">{{ 'adminConfigarationPage.paymentDetailsPage.courseCategory' | translate }}
+                                                        <span [hidden]="reverse">▼</span>
+                                                        <span [hidden]="!reverse">▲</span>
+                                                </th>
+                                                    <th  [class.active]="key === 'paymentDate'" (click)=" sort('paymentDate')">{{ 'adminConfigarationPage.paymentDetailsPage.paymentDate' | translate }}
+                                                            <span [hidden]="reverse">▼</span>
+                                                            <span [hidden]="!reverse">▲</span>
+                                                    </th>
                                                    
-                                            <th>{{ 'adminConfigarationPage.statusPage.status' | translate }}</th>
+                                            <th  [class.active]="key === 'status'" (click)=" sort('status')">{{ 'adminConfigarationPage.statusPage.status' | translate }}
+                                                    <span [hidden]="reverse">▼</span>
+                                                    <span [hidden]="!reverse">▲</span>
+                                            </th>
                                             <!-- <th>{{ 'adminConfigarationPage.membershipCardPage.mcmId' | translate }} </th> -->
                     
                                             <!-- <th>{{ 'adminConfigarationPage.membershipCardPage.checkbox' | translate }}</th> -->
@@ -104,7 +116,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr *ngFor="let item of studentList | paginate: { itemsPerPage: pagenumber, currentPage: p };let i=index">
+                                        <tr *ngFor="let item of studentList | orderBy: key : reverse : caseInsensitive : comparator | paginate: { itemsPerPage: pagenumber, currentPage: p };let i=index">
                                             <td>{{((p-1)*itemsPerPage2)+i+1}}</td>
                                             <td>{{item.stdName}}</td>
                                             <td>{{item.institutionName}}</td>

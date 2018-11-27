@@ -1,0 +1,265 @@
+
+<div class="mycontent-alter">
+        <div class="panel-group" id="accordion" >
+                <div class="panel panel-warning">
+                  <div class="panel-heading">
+                      <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                      <h4 class="panel-title">
+                      My Profile<i class="fa fa-angle-down pull-right"></i>
+                    </h4>
+                  </a>
+                  </div>
+                  <div id="collapse1" class="panel-collapse collapse in">
+                        <form class="form">
+                        <div class="panel-body">
+                               <!-- <div class="col-lg-12">
+                                <div class="image-view-part">
+                                    <img id="myprofileimg" src="#" alt="your image" />
+                                </div>
+                                <input type="file" id="fileBtn" (change)="uploadimage($event)" />
+                            </div>  -->
+                                <div class="form-group">
+                                        <div class="col-md-3">
+                                        <label for="stdName"> Name </label>
+                                     <input type="text" class="form-control" name="stdName" #stdName="ngModel" [disabled]="inidisabled"
+                                            [(ngModel)]="student.stdName" placeholder="name" /> 
+
+                                    </div> 
+                
+                                    <div class="col-md-3">
+                                        <label for="mcmId"> Noflay Id </label>
+                                        <input type="text" class="form-control" name="mcmId" #mcmId="ngModel" [readonly]="!editable"
+                                            [(ngModel)]="student.mcmId" placeholder="noflay id" />
+                                    </div>
+                
+                                    <div class="col-md-3">
+                                        <label for="stdMobile"> Mobile </label>
+                                        <input type="text" class="form-control" name="stdMobile" #stdMobile="ngModel" [disabled]="inidisabled"
+                                            [(ngModel)]="student.stdMobile" placeholder="enter mobile number" />
+                                    </div>
+                
+                                    <div class="col-md-3">
+                                        <label for="stdEmail"> Email </label>
+                                        <input type="email" [readonly]="!editable" class="form-control" name="stdEmail" #stdEmail="ngModel"  
+                                            [(ngModel)]="student.stdEmail" placeholder="you@email.com" />
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="clearfix"></div>
+                
+                                <div class="form-group">
+                
+                                        <div class="col-md-3">
+                                        <label for="addressOne">Address Line1 </label>
+                                        <input type="text" class="form-control" name="addressOne" #addressOne="ngModel" [disabled]="inidisabled"
+                                            [(ngModel)]="student.addressOne" placeholder="somewhere" />
+                                    </div>
+                
+                                    <div class="col-md-3">
+                                        <label for="addressTwo"> Address Line2 </label>
+                                        <input type="text" class="form-control" name="addressTwo" #addressTwo="ngModel" [disabled]="inidisabled"
+                                            [(ngModel)]="student.addressTwo" placeholder="somewhere" />
+                                    </div>
+                
+                                    <div class="col-md-3">
+                                        <label for="country">Country</label>
+                                        <select class="form-control" name="countryName" #countryName="ngModel" [disabled]="inidisabled"
+                                            [(ngModel)]="student.countryName" (change)="onSelect($event.target.value)" required>
+                                            <option disabled hidden [value]="selectUndefinedOptionValue">country</option>
+                                            <option *ngFor="let country of countries" value={{country.id}}>
+                                                {{country.name}}
+                                            </option>
+                                        </select>
+                                        <div class="validation-error" *ngIf="countryName.invalid && countryName.touched">countryRequired</div>
+                                    </div>
+                
+                
+                
+                                    <div class="col-md-3">
+                                        <label for="state">State</label>
+                                        <select class="form-control" name="state" #state="ngModel" [disabled]="inidisabled" [(ngModel)]="student.state"
+                                            (change)="onStateSelect($event.target.value)" required>
+                                            <option disabled hidden [value]="selectUndefinedOptionValue">state</option>
+                                            <option *ngFor="let state of states" value={{state.id}}>
+                                                {{state.name}}
+                                            </option>
+                                        </select>
+                                        <div class="validation-error" *ngIf="state.invalid && state.touched">stateRequired</div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="clearfix"></div>
+                
+                                <div class="form-group">
+                
+                                    <div class="col-md-3">
+                                        <label for="city"> City </label>
+                                        <select class="form-control" name="city" #city="ngModel" [disabled]="inidisabled" [(ngModel)]="student.city"
+                                            required>
+                                            <option disabled hidden [value]="selectUndefinedOptionValue">city</option>
+                                            <option *ngFor="let city of cities" value={{city.id}}>
+                                                {{city.name}}
+                                            </option>
+                                        </select>
+                                        <div class="validation-error" *ngIf="city.invalid && city.touched">cityRequired</div>
+                                    </div>
+                
+                                    <div class="col-md-3">
+                                        <label for="zipCode">
+                                            PIN Code
+                                        </label>
+                                        <input type="text" class="form-control" name="zipCode" #zipCode="ngModel" [disabled]="inidisabled"
+                                            [(ngModel)]="student.zipCode" placeholder="pincode"/>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                               <div class="clearfix"></div>
+                            </div>
+                
+                            <div class="panel-footer text-right">
+                                <button class="btn btn-info" type="button" (click)="editenable()">Edit</button>&nbsp;
+                                <button class="btn btn-primary" type="button" (click)="update()">Update</button>
+                            </div>
+                        </form>
+    
+
+                  </div>
+                </div>
+                <div class="panel panel-success">
+                  <div class="panel-heading">
+                      <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                    <h4 class="panel-title">
+                      
+                      My Plan<i class="fa fa-angle-down pull-right"></i>
+                    </h4>
+                  </a>
+                  </div>
+                  <div id="collapse2" class="panel-collapse collapse">
+                        <form class="form" action="##" method="post" id="registrationForm">
+                        <div class="panel-body">
+                             <table class="table table-bordered">
+                               <thead>
+                                 <tr class="text-center">
+                                   <th>Index</th>
+                                   <th>Plan Name</th>
+                                   <th>Plan Price</th>
+                                   <th> Membership Type</th>
+                                   <th>Plan StartDate</th>
+                                   <th>Plan EndDate</th>
+                                 </tr>
+                               </thead>
+                               <tbody>
+                                    <tr *ngFor="let item of studentPaymentList| paginate: { itemsPerPage: pagenumber, currentPage: p };let i=index">
+                                        <td>{{((p-1)*itemsPerPage2)+i+1}}</td>
+                                        <td>{{item.planName}}</td>
+                                        <td>{{item.planPrice}}</td>
+                                        <td>{{item.membershipType}} </td>
+                                        <td>{{item.planStartDate | date:'fullDate'}}</td>
+                                        <td>{{item.planEndDate | date:'fullDate'}}</td>
+                                  </tr>
+                               </tbody>
+                             </table>
+                             <div class="form-group">
+                                <div class="col-md-4">
+                                    Show
+                                    <select (change)="pageChange($event.target.value)" style="border: none;">
+                    
+                                        <option>5</option>
+                                        <option>10</option>
+                                        <option>15</option>
+                                    </select>
+                                    Entries
+                                </div>
+                                <div class="col-md-2"></div>
+                    
+                                <div class=" col-md-6 text-right">
+                                    <pagination-controls (pageChange)="customPageChange($event)"></pagination-controls>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                          
+                              </div>
+                              <div class="panel-footer text-right">
+                                <!-- <button class="btn btn-info" type="button" (click)="editenable()">Edit</button>&nbsp; -->
+                                <button class="btn btn-primary" type="button" (click)="update()">ChangePlan</button>
+                              </div>
+                            </form>
+                  </div>
+                </div>
+                <div class="panel panel-info">
+                  <div class="panel-heading">
+                      <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+                        <h4 class="panel-title">
+                            My Payment<i class="fa fa-angle-down pull-right"></i>
+                    </h4>
+                  </a>
+                  </div>
+                  <div id="collapse3" class="panel-collapse collapse">
+                        <form class="form" action="##" method="post" id="registrationForm">
+                        <div class="panel-body">
+
+                            <table class="table table-bordered">
+                                <thead>
+                                  <tr class="text-center">
+                              
+                                    <th>Index</th>
+                                    <th >Payment Date </th>
+                                    <th >  Payment Mode </th>
+                                    <th >  Reference Number</th>
+                                    <th >  Amount </th>
+                                    <th > Reason </th>
+                                        
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                   
+                                     <tr *ngFor="let item of studentPaymentList | paginate: { itemsPerPage: pagenumber, currentPage: p };let i=index">
+                                         <td>{{((p-1)*itemsPerPage2)+i+1}}</td>
+                                         <td>{{item.paymentDate| date:'fullDate'}}</td>
+                                         <td>{{item.paymentMode}}</td>
+                                         <td>{{item.paymentReference}}</td>
+                                         <td>{{item.amount}} </td>
+                                         <td>{{item.reason}}</td>
+                                        
+                                   </tr>
+                                </tbody>
+                              </table>
+                              <div class="form-group">
+                                <div class="col-md-4">
+                                    Show
+                                    <select (change)="pageChange($event.target.value)" style="border: none;">
+                    
+                                        <option>5</option>
+                                        <option>10</option>
+                                        <option>15</option>
+                                    </select>
+                                    Entries
+                                </div>
+                                <div class="col-md-2"></div>
+                    
+                                <div class=" col-md-6 text-right">
+                                    <pagination-controls (pageChange)="customPageChange($event)"></pagination-controls>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                          
+                              </div>
+                            </form>
+                  </div>
+                </div>
+
+                <div class="panel panel-danger">
+                        <div class="panel-heading">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+                          <h4 class="panel-title">
+                            Health Record<i class="fa fa-angle-down pull-right"></i>
+                          </h4>
+                        </a>
+                        </div>
+                        <div id="collapse4" class="panel-collapse collapse">
+                          <div class="panel-body">Health Record Content</div>
+                        </div>
+                      </div>
+              </div>
+</div>
+

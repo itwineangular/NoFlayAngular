@@ -296,11 +296,13 @@
                         </form> -->
                         <div class="tab-content">
                             <div id="sign" class="tab-pane fade in active">
-                                <input type="text" class="login-input" style="margin-top: 50px;" placeholder="{{'studentLoginPage.studentLogin.userName' | translate}}" autofocus>
+                                <input type="text" class="login-input" style="margin-top: 50px;" placeholder="{{'studentLoginPage.studentLogin.userName' | translate}}" autofocus
+                                name="username" #username="ngModel" [(ngModel)]="studentLoginObject.username">
                                 <br>
-                                <input type="password" class="login-input" placeholder="{{'studentLoginPage.studentLogin.password' | translate}}">
+                                <input type="password" class="login-input" placeholder="{{'studentLoginPage.studentLogin.password' | translate}}"
+                                name="password" #password="ngModel" [(ngModel)]="studentLoginObject.password">
                                 <br>
-                                <input type="submit" value="{{'studentLoginPage.studentLogin.letsgo' | translate}}" class="login-button">
+                                <input type="button" value="{{'studentLoginPage.studentLogin.letsgo' | translate}}" (click)="studentLogin(studentLoginObject)" class="login-button">
                                 <br>
                                 <p class="login-lost">
                                     <!-- <a href="">Forgot Password?</a> -->

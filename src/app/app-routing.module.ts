@@ -35,6 +35,9 @@ import { PrivilegecategoryComponent } from './adminmasters/businessentity/privil
 import { PaymentDetailsComponent } from './adminmasters/businessentity/payment-details/payment-details.component';
 import { PaymentComponent } from './adminmasters/payment/payment.component';
 import { BrowseplansComponent } from './adminmasters/browseplans/browseplans.component';
+import { StudentHomePageComponent } from './layouts/student-home-page/student-home-page.component';
+import { StudentProfileComponent } from './student-profile/student-profile.component';
+
 
 const appRoutes: Routes = [
   {
@@ -77,8 +80,16 @@ const appRoutes: Routes = [
       { path: 'privilegeCategory', component: PrivilegecategoryComponent ,canActivate: [AuthGuard]},
       { path: 'paymentDetails', component: PaymentDetailsComponent ,canActivate: [AuthGuard]},
     ]
-  }
+  },
   /* ADMIN PART END*/
+
+  {
+    path: 'student' ,children: [
+      { path: '',component:StudentHomePageComponent,outlet:'Studentlayout'},
+      { path: 'studentProfile', component: StudentProfileComponent },
+     
+    ]
+  }
   
 
 ];

@@ -1,0 +1,107 @@
+img{
+    max-width: 100%;
+}
+.myimg {
+    max-width: 115px;
+    margin-left: 57px;
+    margin-top: 20px;
+}
+/* .ad1{
+    position: absolute;
+    bottom: 0px;
+}
+
+.ad2{
+    position: absolute;
+    top:0px;
+} */
+.navbar-default {
+    background-color: #fff;
+    border-color: #eee;
+    border-radius: 0px;
+}
+
+img.myaccimg {
+    width: 35px;
+    height: 35px;
+}
+.navbar-header {
+    position: relative;
+    top: 5px;
+}
+.navbar-brand>img {
+    display: block;
+    width: 150px;
+    position: relative;
+    top: -23px;
+}
+
+.left-icon {
+    width: 25%;
+    float: left;
+}
+
+.right-icon {
+    width: 40%;
+    float: left;
+    margin: 10px 0px;
+}
+
+ul.dropdown1 {
+    margin: 30px 64px;
+    padding: 0px;
+    list-style: none;
+}
+
+.dropdown1 > li > a{
+    text-decoration: none;
+    color: #fff;
+    border: 1px solid #fff;
+    padding: 7px;
+    border-radius: 21px;
+}
+.navbar-nav>li>a {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.myabtn {
+    color: #fff !important;
+    text-decoration: none;
+    border: 1px solid;
+    padding: 8px;
+    border-radius: 15px;
+}
+
+.list-group-item {
+    background-color: transparent;
+    border: 1px solid #ccc;
+    border-radius: 0px;
+    color: #fff;
+}
+a{
+    cursor: pointer;
+}
+
+.badge {
+    display: inline-block;
+    min-width: 10px;
+    padding: 4px 7px;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    background-color: green;
+    border-radius: 10px;
+}
+
+.alterdd {
+    top: -41%;
+    left: -57px;
+    min-width: 225px;
+}
+
+

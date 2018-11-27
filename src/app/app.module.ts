@@ -76,6 +76,8 @@ import { from } from '../../node_modules/rxjs';
 import { PaymentDetailsComponent } from './adminmasters/businessentity/payment-details/payment-details.component';
 import { PaymentComponent } from './adminmasters/payment/payment.component';
 import { BrowseplansComponent } from './adminmasters/browseplans/browseplans.component';
+import { StudentProfileComponent } from './student-profile/student-profile.component';
+import { StudentHomePageComponent } from './layouts/student-home-page/student-home-page.component';
 
 
 @NgModule({
@@ -124,7 +126,9 @@ import { BrowseplansComponent } from './adminmasters/browseplans/browseplans.com
     PaymentDetailsComponent,
     PaymentComponent,
     FilterPipeStatus,
-    BrowseplansComponent
+    BrowseplansComponent,
+    StudentProfileComponent,
+    StudentHomePageComponent
    
   ],
   imports: [

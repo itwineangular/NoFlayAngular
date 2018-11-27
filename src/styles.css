@@ -15,3 +15,10 @@
 	color: #367FA9;
 	margin: 100px;
 }
+.mycontent-alter {
+    padding-left: 30px;
+    /* padding-top: 60px; */
+    padding-right: 15px;
+    float: left;
+    width: 83%;
+}
