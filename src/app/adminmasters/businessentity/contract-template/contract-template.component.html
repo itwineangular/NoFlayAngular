@@ -1,0 +1,64 @@
+<div class="mycontent">
+  <div class="col-md-12">
+    <hr />
+    <h3 class="text-center">{{'adminConfigarationPage.contractTemplatePage.contractTemplate' | translate}}</h3>
+    <hr />
+  </div>
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <form class="form-horizontal">
+          <div class="col-md-3">
+            <label for="name">{{'adminConfigarationPage.contractTemplatePage.selectTemplate' | translate}}</label>
+            <select class="form-control" class="form-control" type="text" name="selectTemplate" (change)="onTemplateSelect($event.target.value)">
+              <option disabled hidden [value]="selectTemplatedOptionValue">{{'adminConfigarationPage.contractTemplatePage.selectTemplate' | translate}}</option>
+              <option value="Template For Hospital"> Template For Hospital </option>
+              <option value="Template For Loan"> Template For Loan </option>
+              <option value="Template For Insurance"> Template For Insurance </option>
+            </select>
+          </div>
+          <div class="col-md-12">
+            <button class="btn btn-primary btn-outline pull-right cssButtonPadding" type="button" (click)="searchContractTemplate()">{{'adminConfigarationPage.commonFields.search'|
+              translate}}</button>
+          </div>
+          <div class="clearfix"></div>
+        </form>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12">
+    <div class="alert alert-warning fade in myAlert" *ngIf="alertMassege">
+      <a class="close" href="#" data-dismiss="alert" (click)="clickedAlert()">X</a>
+      <h4 style="text-align: center">{{alertMassege}}</h4>
+    </div>
+  </div>
+  <div class="col-md-12" *ngIf="isSearchClicked">
+    <table class="table table-bordered myTable table-condensed table-striped">
+      <thead>
+        <tr>
+          <th rowspan="2" style="text-align:center"> Services</th>
+          <th style="text-align:center" colspan="2" *ngFor="let plan of plans">{{plan.planName}}</th>
+        </tr>
+        <tr>
+          <th style="text-align: center" *ngFor="let membership of planMembershipList">{{membership.planMembership}}</th>
+        </tr>
+        <tr *ngFor="let discount of discountEntityExtended">
+          <th>
+            <input type="checkbox" id="{{discount.attributesEntityExtended.id}}" value={{discount.attributesEntityExtended.id}}
+              (change)="servicesCheckboxSelect(discount.attributesEntityExtended.id)" checked={{discount.attributesEntityExtended.isSelected}} />
+            <label for="{{discount.attributesEntityExtended.id}}">{{discount.attributesEntityExtended.name}}</label>
+          </th>
+          <td *ngFor="let planDiscount of discount.attributesEntityExtended.planEntityExtended">
+            <input type="text" maxlength="2" pattern="[0-9]" name="discount" #discount="ngModel" [(ngModel)]="planDiscount.discount">
+          </td>
+        </tr>
+      </thead>
+    </table>
+  </div>
+  <div class="col-md-12 text-center" *ngIf="isSearchClicked">
+    <button *ngIf="isContractTemplateSave" class="btn btn-primary" type="button" (click)="saveContractTemplate()">SAVE</button>
+    <button *ngIf="!isContractTemplateSave" class="btn btn-primary" type="button" (click)="updateContractTemplate()">UPDATE</button>
+  </div>
+
+</div>

@@ -37,6 +37,8 @@ import { PaymentComponent } from './adminmasters/payment/payment.component';
 import { BrowseplansComponent } from './adminmasters/browseplans/browseplans.component';
 import { StudentHomePageComponent } from './layouts/student-home-page/student-home-page.component';
 import { StudentProfileComponent } from './student-profile/student-profile.component';
+import { ContractsComponent } from './adminmasters/businessentity/contracts/contracts.component';
+import { ContractTemplateComponent } from './adminmasters/businessentity/contract-template/contract-template.component';
 
 
 const appRoutes: Routes = [
@@ -79,6 +81,8 @@ const appRoutes: Routes = [
       { path: 'membershipCard', component: MembershipCardComponent ,canActivate: [AuthGuard]},
       { path: 'privilegeCategory', component: PrivilegecategoryComponent ,canActivate: [AuthGuard]},
       { path: 'paymentDetails', component: PaymentDetailsComponent ,canActivate: [AuthGuard]},
+      { path:'contracts', component:ContractsComponent, canActivate:[AuthGuard]},
+      { path:'contractTemplate', component:ContractTemplateComponent, canActivate:[AuthGuard]}
     ]
   },
   /* ADMIN PART END*/

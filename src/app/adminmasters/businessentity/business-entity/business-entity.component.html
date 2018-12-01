@@ -404,7 +404,7 @@
                                                       
                                                         <div class="boxes" *ngFor="let item of privilegeList">
                                                             <input type="checkbox" id="{{item.privilegeId}}" name="privilegeList[]" (change)="privilegeCategoryCheckboxSelect(item.privilegeId)"
-                                                                value={{item.privilegeId}}>
+                                                                value={{item.privilegeId}} checked={{item.isSelected}}>
                                                             <label for="{{item.privilegeId}}">{{item.privilegeName}}</label>
                                                         </div>
                                                         
@@ -414,7 +414,7 @@
                                                         <h4>{{'adminConfigarationPage.businessEntity.services' | translate}}<span class="reqMark">*</span></h4>
                                                       
                                                             <div class="boxes" *ngFor="let item of attributeListLocal">
-                                                                <input type="checkbox" id="{{item.attributeId}}" name="attribute[]" value={{item.attributeId}} (change)="servicesCheckboxSelect(item)" required/>
+                                                                <input type="checkbox" id="{{item.attributeId}}" name="attribute[]" value={{item.attributeId}} checked={{item.isSelected}} (change)="servicesCheckboxSelect(item)" required/>
                                                                 <label for="{{item.attributeId}}">{{item.attributeName}}</label>
                                                             </div>
                                                         </div>

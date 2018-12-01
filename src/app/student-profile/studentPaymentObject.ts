@@ -44,6 +44,8 @@ export class StudentPayment {
     membershipType: string;
     planStartDate: Date;
     planEndDate: Date;
+    amount: string;
+    reason?: any;
 }
 
 

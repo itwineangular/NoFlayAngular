@@ -1,0 +1,223 @@
+<div class="mycontent">
+  <div class="col-md-12">
+    <hr />
+    <h3 class="text-center">{{'adminConfigarationPage.contractsPage.contract' | translate}}</h3>
+    <hr />
+  </div>
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <form class="form-horizontal">
+          <div class="col-md-3">
+            <label for="name">{{'adminConfigarationPage.businessCategory.businessCategory1' | translate}}</label>
+
+            <ngx-select-dropdown #businessCategoryName (change)="businessCategoryNameChange()" [multiple]="false"
+              [(value)]="selectedbusinessCategoryCodeValue" [config]="businessCategoryCodeconfig" [options]="businessCategory"></ngx-select-dropdown>
+          </div>
+          <div class="col-md-3">
+            <label for="name">{{ 'adminConfigarationPage.businessEntity.businessEntity' | translate }}</label>
+
+            <ngx-select-dropdown #businessEntityName (change)="businessEntityNameChange()" [multiple]="false" [(value)]="selectedbusinessEntityCodeValue"
+              [config]="businessEntityCodeconfig" [options]="businessEntitiesOfParent"></ngx-select-dropdown>
+          </div>
+          <div class="col-md-3">
+            <label>{{'adminConfigarationPage.contractsPage.businessEntityAddress' | translate}}</label>
+            <p id="beAddress"></p>
+          </div>
+          <div class="col-md-12">
+            <button class="btn btn-info btn-outline pull-right cssButtonPadding" data-toggle="modal" data-target="#addContractModal"
+              type="button" (click)="addNewContract()">{{'adminConfigarationPage.contractsPage.addNewContract' |
+              translate}}</button>
+            <button class="btn btn-warning btn-outline pull-right cssButtonPadding" type="button" (click)="clearSearchFields()">{{'adminConfigarationPage.commonFields.clear'
+              | translate}}</button>
+            <button class="btn btn-primary btn-outline pull-right cssButtonPadding" type="button" (click)="searchBusinessEntity()">{{'adminConfigarationPage.commonFields.search'
+              | translate}}</button>
+          </div>
+          <div class="clearfix"></div>
+        </form>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12">
+    <div class="alert alert-warning fade in myAlert" *ngIf="alertMassage">
+      <a class="close" href="#" data-dismiss="alert" (click)="clickedAlert()">X</a>
+      <h4 style="text-align: center">{{alertMassage}}</h4>
+    </div>
+    <div *ngIf="isSearchClicked">
+      <div *ngIf="!isListContainsData">
+        <h3 class="text-center noRecord">{{ 'adminConfigarationPage.commonFields.noRecordFound' | translate }}</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-12" *ngIf="isListContainsData">
+    <div class="table-responsive">
+      <table class="table table-bordered myTable table-condensed table-striped">
+        <thead>
+          <tr class="text-center">
+            <th>{{'adminConfigarationPage.commonFields.index' | translate}}</th>
+            <th [class.active]="key === 'name'" (click)=" sort('name')">{{'adminConfigarationPage.contractsPage.templateName'
+              | translate}}<span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span></th>
+            <th [class.active]="key === 'registrationCode'" (click)=" sort('registrationCode')">{{'adminConfigarationPage.plans.startDate'|
+              translate}} <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span></th>
+            <th [class.active]="key === 'registrationCode'" (click)=" sort('registrationCode')">{{'adminConfigarationPage.plans.endDate'|
+              translate}}<span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span></th>
+            <!-- <th [class.active]="key === 'status'" (click)=" sort('status')">{{'adminConfigarationPage.commonFields.status' | translate }}
+              <span [hidden]="reverse">▼</span>
+              <span [hidden]="!reverse">▲</span></th> -->
+            <th>{{ 'adminConfigarationPage.commonFields.edit' | translate }}</th>
+            <th>{{ 'adminConfigarationPage.commonFields.delete' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of contractTemplateListForTable | orderBy: key : reverse : caseInsensitive : comparator |  paginate: { itemsPerPage: pagenumber, currentPage: p };let i=index">
+            <!-- <td>{{((p-1)*itemsPerPage2)+i+1}}</td> -->
+            <td>{{i+1}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.startDate | date}}</td>
+            <td>{{item.endDate | date}}</td>
+            <!-- <td>{{item.s}}</td> -->
+            <!-- <td *ngIf="item.status=='true'">{{ 'adminConfigarationPage.courseCategoryPage.active' | translate }}</td>
+            <td *ngIf="item.status=='false'">{{ 'adminConfigarationPage.courseCategoryPage.inactive' | translate }}</td> -->
+            <td>
+              <button class="btn btn-warning buttonStyle" data-toggle="modal" data-target="#addContractModal" (click)="selectUser(item)">
+                <i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size:15px"></i>
+              </button>
+            </td>
+            <td>
+              <button class="btn btn-danger buttonStyle" data-toggle="modal" data-target="#deleteModal" (click)="selectTemplateForDeletion(item)">
+                <i class="fa fa-trash-o" aria-hidden="true" style="font-size:15px"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="form-group">
+      <div class="col-md-4">
+        Show
+        <select (change)="pageChange($event.target.value)" style="border: none;">
+
+          <option>5</option>
+          <option>10</option>
+          <option>15</option>
+        </select>
+        Entries
+      </div>
+      <div class="col-md-2"></div>
+
+      <div class=" col-md-6 text-right">
+        <pagination-controls (pageChange)="customPageChange($event)"></pagination-controls>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+
+  <!-- Add contract Modal-->
+  <div class="modal fade" id="addContractModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form class="form-horizontal" #contractForm="ngForm">
+          <div>
+            <div class="modal-header">
+              <button class="close" type="button" data-dismiss="modal">×</button>
+              <h4 class="modal-title">{{'adminConfigarationPage.contractsPage.addNewContract' | translate}}</h4>
+            </div>
+            <div class="modal-body">
+              <div class="container">
+
+                <div class="form-group">
+                  <div class="col-md-3">
+                    <label for="name">Select Template</label>
+                    <select class="form-control" class="form-control" type="text" name="selectTemplate" (change)="onTemplateSelect($event.target.value)"
+                      required [(ngModel)]="contractObject.name">
+                      <option disabled hidden [value]="selectTemplatedOptionValue">Select Template</option>
+                      <option value="Template For Hospital"> Template For Hospital </option>
+                      <option value="Template For Loan"> Template For Loan </option>
+                      <option value="Template For Insurance"> Template For Insurance </option>
+                    </select>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="control-label " for="startDate">{{'adminConfigarationPage.plans.startDate'|
+                      translate}}
+                    </label>
+                    <my-date-picker [options]="myDatePickerOptions" name="startDate" #startDate="ngModel" [(ngModel)]="contractObject.startDate"></my-date-picker>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="control-label " for="endDate">{{'adminConfigarationPage.plans.endDate'| translate}}
+                    </label>
+                    <my-date-picker [options]="myDatePickerOptions" name="endDate" #endDate="ngModel" [(ngModel)]="contractObject.endDate"></my-date-picker>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="control-label col-sm-2" for="status">{{'adminConfigarationPage.statusPage.status'|
+                      translate}}</label>
+                    <br>
+                    <br>
+                    <input type="radio" name="actInd" #actInd="ngModel" [(ngModel)]="contractObject.actInd" value=A
+                      required>
+                    {{'adminConfigarationPage.courseCategoryPage.active'|translate}}
+                    <input type="radio" name="actInd" #actInd="ngModel" [(ngModel)]="contractObject.actInd" value=I>
+                    {{'adminConfigarationPage.courseCategoryPage.inactive'|translate}}
+                  </div>
+                  <div class="col-md-12" *ngIf="isContractTemplateSelected">
+                    <table class="table table-bordered myTable table-condensed table-striped">
+                      <thead>
+                        <tr>
+                          <th rowspan="2" style="text-align:center"> Services</th>
+                          <th style="text-align:center" colspan="2" *ngFor="let plan of plans">{{plan.planName}}</th>
+                        </tr>
+                        <tr>
+                          <th style="text-align: center" *ngFor="let membership of planMembershipList">{{membership.planMembership}}</th>
+                        </tr>
+                        <tr *ngFor="let discount of discountEntityExtended">
+                          <th>{{discount.attributesEntityExtended.name}}</th>
+                          <td *ngFor="let planDiscount of discount.attributesEntityExtended.planEntityExtended">
+                            <input type="text" maxlength="2" pattern="[0-9]" [ngModelOptions]="{standalone: true}" name="discount"
+                              #discount="ngModel" [(ngModel)]="planDiscount.discount">
+                          </td>
+                        </tr>
+                      </thead>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-success" type="button" data-dismiss="modal" [disabled]="contractForm.invalid"
+                  (click)="saveContract(contractObject)">{{'adminConfigarationPage.commonFields.save'|
+                  translate}}</button>
+                <button class="btn btn-default" type="button" data-dismiss="modal">{{'adminConfigarationPage.commonFields.close'|
+                  translate}}</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+      <!-- Delete Modal-->
+      <div class="modal fade" id="deleteModal" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal">X</button>
+                    <h4 class="modal-title">{{ 'adminConfigarationPage.commonFields.delete' | translate }}</h4>
+                </div>
+                <div class="modal-body">
+                    <h3>Are you sure to delete
+                        <span>{{contractObject.name}}</span>????
+                      </h3> 
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger" type="button" (click)="deleteContractTemplate(contractObject.id)"
+                        data-dismiss="modal">{{ 'adminConfigarationPage.commonFields.yes' | translate }}</button>
+                    <button class="btn btn-primary" type="button" data-dismiss="modal">{{
+                        'adminConfigarationPage.commonFields.no' | translate }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -22,8 +22,28 @@ export class BusinessEntity {
     bankName?: any;
     bankBranch?: any;
     offers?: any;
+    privilegesList:PrivilegeCategory[];
 }
 
 export class SelectedServices {
     attributeId: string;
+}
+
+export class Attribute{
+    attributeId: number;
+    attributeName: string;
+    attributeCode: string;
+    creationDate?: any;
+    createdBy?: any;
+    modifiedDate?: any;
+    modifiedBy?: any;
+    privilegesList: PrivilegeCategory[];
+    isSelected : boolean;
+}
+
+export class PrivilegeCategory {
+    privilegeId: number;
+    privilegeName: string;
+    attributes: Attribute[];
+    isSelected : boolean;
 }

@@ -57,6 +57,8 @@ export class BusinessEntityComponent implements OnInit {
   selectedPrivilegeCategoryList: number[] = [];
   attributeListLocal: Attribute[] = [];
   selectedAttributeList: Attribute[] = [];
+  serviceListLocal: Attribute[] = [];
+  selectedCourseListGlobal: Attribute[] = [];
 
   @ViewChild('businessName') public ngSelectbusinessName: SelectDropDownComponent;
   @ViewChild('registrationNumber') public ngSelectregistrationNumber: SelectDropDownComponent;
@@ -200,7 +202,7 @@ selectCheckbox(id){
     }
     else if (this.saveOrUpdate == "update") {
        
-        this.service.updateBusinessEntity(this.business)
+        this.service.updateBusinessEntity(this.business, this.selectedPrivilegeCategoryList, this.selectedAttributeList)
       .subscribe(
         (data) => {
           this.alertMassege = "Item updated on list successfully!!";
@@ -307,6 +309,53 @@ selectCheckbox(id){
     this.business = item;
     this.onSelect(this.business.country);
     this.onStateSelect(this.business.state);
+
+
+    console.log(item);
+    this.selectedPrivilegeCategoryList = [];
+    if (item.privilegeVos.length > 0)
+    {
+      item.privilegeVos.forEach(element => {
+        this.selectedPrivilegeCategoryList.push(element.privilegeId);
+        var data = this.privilegeList.filter(x => x.privilegeId == element.privilegeId);
+        data[0].isSelected = true;
+        var list = this.privilegeList.filter(x => x.privilegeId != element.privilegeId);
+        list.push(data[0]);
+        this.privilegeList = list;
+      });
+    }
+
+    this.privilegeList = Array.from(new Set(this.privilegeList));
+
+    item.privilegeVos.forEach(element => {
+      this.attributeList.forEach(element2 => {
+        element2.privilegeVos.forEach(element3 => {
+          if(element3.privilegeId == element.privilegeId){
+            this.attributeListLocal.push(element2);
+          }
+        });
+      });
+    });
+
+    this.attributeListLocal = Array.from(new Set(this.attributeListLocal));
+    this.selectedAttributeList = []
+    item.privilegeVos.forEach(element => {
+      element.attributeVos.forEach(element => {
+        var listOfAttribute = this.attributeListLocal.filter(x=>x.attributeId != element.attributeId);
+        var selectListOfAttribute = this.attributeListLocal.filter(x=>x.attributeId == element.attributeId);
+        if(selectListOfAttribute.length>0)
+        {
+          selectListOfAttribute[0].isSelected = true;
+          listOfAttribute.push(selectListOfAttribute[0]);
+          this.selectedAttributeList.push(selectListOfAttribute[0]);
+        }
+        this.attributeListLocal = listOfAttribute;
+      });
+    });
+
+    this.attributeListLocal = Array.from(new Set(this.attributeListLocal));
+    this.selectedAttributeList = Array.from(new Set(this.selectedAttributeList));
+
   }
 
   clickedAlert = function () {
@@ -457,8 +506,7 @@ selectCheckbox(id){
     this.attributeListLocal = []
     this.attributeList.forEach(element => {
       element.privilegeVos.forEach(innerElement => {
-        if(this.selectedPrivilegeCategoryList.findIndex(x => x === innerElement.privilegeId) >= 0)
-        {
+        if (this.selectedPrivilegeCategoryList.findIndex(x => x === innerElement.privilegeId) >= 0) {
           this.attributeListLocal.push(element);
         }
       });
@@ -466,14 +514,16 @@ selectCheckbox(id){
     this.attributeListLocal = Array.from(new Set(this.attributeListLocal));
   }
 
-  servicesCheckboxSelect(service)
-  {
+  servicesCheckboxSelect(service) {  
+
     if (this.selectedAttributeList.findIndex(x => x.attributeId === service.attributeId) >= 0) {
-      var list = this.selectedAttributeList.filter(x=>x.attributeId !=service.attributeId);
+      var list = this.selectedAttributeList.filter(x => x.attributeId != service.attributeId);
       this.selectedAttributeList = list;
+      console.log(this.selectedAttributeList)
     }
     else {
       this.selectedAttributeList.push(service);
+      console.log(this.selectedAttributeList)
     }
 
   }

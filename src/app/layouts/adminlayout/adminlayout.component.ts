@@ -28,6 +28,9 @@ export class AdminlayoutComponent implements OnInit {
   courses: string;
   educationalInstitutions: string;
   student: string;
+  contracts:string;
+
+  contractTemplate:string;
 
   businessCategory: string;
   businessEntity: string;
@@ -109,6 +112,8 @@ export class AdminlayoutComponent implements OnInit {
       this.emailTemplate = "Email Templates",
       this.initialConfiguration = "Initial Configuration",
       this.user = "User",
+      this.contractTemplate="Contract Template",
+      this.contracts="Contracts",
       this.institutions = "Institutions",
       this.businessEntities = "Business Entities",
       this.courseCategory = "Course Categories",
@@ -140,6 +145,8 @@ export class AdminlayoutComponent implements OnInit {
       this.emailTemplate = "Modèles de courrier électronique",
       this.initialConfiguration = "Initial Configuration",
       this.user = "Utilisateur",
+      this.contractTemplate="Modèle de contrat",
+      this.contracts="Les contrats"
       this.institutions = "Institutions",
       this.businessEntities = "Entités commerciales",
       this.courseCategory = "Catégories de cours",
@@ -210,8 +217,12 @@ export class AdminlayoutComponent implements OnInit {
                 'submenu': [
                   { 'name': this.privilegeCategory, 'url': 'privilegeCategory' },
                   { 'name': this.attribute, 'url': 'attribute' },
+                  {'name': this.contractTemplate, 'url':'contractTemplate'},
+
                   { 'name': this.businessCategory, 'url': 'businessCategory' },
-                  { 'name': this.businessEntities, 'url': 'businessEntity' }       
+                  { 'name': this.businessEntities, 'url': 'businessEntity' } ,
+                  {'name': this.contracts, 'url':'contracts'}
+      
                 ]
               },
               {

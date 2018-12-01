@@ -9,9 +9,11 @@ export class Attribute {
     createdBy?: any;
     modifiedDate?: any;
     modifiedBy?: any;
+    isSelected : boolean;
 }
 
 export class privilegeVos {
     privilegeId: number;
     privilegeName: string;
+    isSelected : boolean;
 }

@@ -12,12 +12,16 @@
                   <div id="collapse1" class="panel-collapse collapse in">
                         <form class="form">
                         <div class="panel-body">
-                               <!-- <div class="col-lg-12">
-                                <div class="image-view-part">
-                                    <img id="myprofileimg" src="#" alt="your image" />
+                            <div class="form-group">
+                                <div class="col-lg-12">
+                                  <div class="image-view-part">
+                                      <img id="myprofileimg" style="width:100px;height:100px;" src="http://192.168.1.51:9090/students/imageFiles/{{student.stdEmail}}" alt="your image" />
+                                  </div>
+                                  <input type="file" id="fileBtn" (change)="uploadimage($event)" />
                                 </div>
-                                <input type="file" id="fileBtn" (change)="uploadimage($event)" />
-                            </div>  -->
+                                <div class="clearfix"></div>
+                              </div>  
+                              <div class="clearfix"></div>
                                 <div class="form-group">
                                         <div class="col-md-3">
                                         <label for="stdName"> Name </label>
@@ -144,12 +148,12 @@
                                    <th>Plan Name</th>
                                    <th>Plan Price</th>
                                    <th> Membership Type</th>
-                                   <th>Plan StartDate</th>
+                                   <th [class.active]="key === 'planStartDate'" (click)=" sort('planStartDate')">Plan StartDate <span [hidden]="reverse">▼</span> </th>
                                    <th>Plan EndDate</th>
                                  </tr>
                                </thead>
                                <tbody>
-                                    <tr *ngFor="let item of studentPaymentList| paginate: { itemsPerPage: pagenumber, currentPage: p };let i=index">
+                                    <tr *ngFor="let item of studentPaymentList| orderBy: key : reverse : caseInsensitive : comparator| paginate: { itemsPerPage: pagenumber, currentPage: p };let i=index">
                                         <td>{{((p-1)*itemsPerPage2)+i+1}}</td>
                                         <td>{{item.planName}}</td>
                                         <td>{{item.planPrice}}</td>
@@ -203,7 +207,7 @@
                                   <tr class="text-center">
                               
                                     <th>Index</th>
-                                    <th >Payment Date </th>
+                                    <th [class.active]="key === 'paymentDate'" (click)=" sort('paymentDate')" >Payment Date  <span [hidden]="reverse">▼</span> </th>
                                     <th >  Payment Mode </th>
                                     <th >  Reference Number</th>
                                     <th >  Amount </th>
@@ -213,7 +217,7 @@
                                 </thead>
                                 <tbody>
                                    
-                                     <tr *ngFor="let item of studentPaymentList | paginate: { itemsPerPage: pagenumber, currentPage: p };let i=index">
+                                     <tr *ngFor="let item of studentPaymentList | orderBy: key : reverse : caseInsensitive : comparator| paginate: { itemsPerPage: pagenumber, currentPage: p };let i=index">
                                          <td>{{((p-1)*itemsPerPage2)+i+1}}</td>
                                          <td>{{item.paymentDate| date:'fullDate'}}</td>
                                          <td>{{item.paymentMode}}</td>

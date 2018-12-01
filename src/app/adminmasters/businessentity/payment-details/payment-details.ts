@@ -93,6 +93,7 @@ export class Student {
     planEndDate?: any;
     mcmId: string;
     qrImage?: any;
+    membershipType: any;
 
     planPrice : any;
    

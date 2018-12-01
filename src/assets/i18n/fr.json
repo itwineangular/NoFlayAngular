@@ -241,6 +241,18 @@
             "id" : "ID"
 
         },
+        "contractsPage": {
+            "contract": "Contrat",
+            "businessEntityAddress": "Adresse de l'entité commerciale",
+            "addNewContract": "Ajouter un nouveau contrat",
+            "contractTemplateName": "Ajouter un nouveau contrat",
+            "template Name": "Nom du modèle",
+            "membershipPlan": "Plan d'adhésion"
+        },
+        "contractTemplatePage":{
+            "contractTemplate":"Modèle de contrat",
+            "selectTemplate":"Sélectionner un modèle"
+        },
         "emailTemplatePage":
         {
             "emailTemplates" : "Modèles de courrier électronique",

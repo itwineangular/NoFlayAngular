@@ -264,6 +264,20 @@
             "username":"Username",
             "password":"Password",
             "roles": "Role"
+        },
+        "contractsPage":{
+            "contract":"Contract ",
+            "businessEntityAddress":"Business Entity Address",
+            "contractTemplateName":"Contract Template Name",
+            "addNewContract":"Add New Contract",
+            "templateName":"Template Name",
+            "membershipPlan":"Membership Plan"
+        
+            
+        },
+        "contractTemplatePage":{
+            "contractTemplate":"Contract Template",
+            "selectTemplate":"Select Template"
         }
      },
      "studentLoginPage": {

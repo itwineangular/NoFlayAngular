@@ -78,6 +78,8 @@ import { PaymentComponent } from './adminmasters/payment/payment.component';
 import { BrowseplansComponent } from './adminmasters/browseplans/browseplans.component';
 import { StudentProfileComponent } from './student-profile/student-profile.component';
 import { StudentHomePageComponent } from './layouts/student-home-page/student-home-page.component';
+import { ContractsComponent } from './adminmasters/businessentity/contracts/contracts.component';
+import { ContractTemplateComponent } from './adminmasters/businessentity/contract-template/contract-template.component';
 
 
 @NgModule({
@@ -128,7 +130,9 @@ import { StudentHomePageComponent } from './layouts/student-home-page/student-ho
     FilterPipeStatus,
     BrowseplansComponent,
     StudentProfileComponent,
-    StudentHomePageComponent
+    StudentHomePageComponent,
+    ContractsComponent,
+    ContractTemplateComponent
    
   ],
   imports: [

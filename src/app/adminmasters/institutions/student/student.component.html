@@ -596,8 +596,7 @@
                                     <td>
                                         <input type="text" id="studentgender-{{ i }}" name="gender[{{ i }}]" #genderControl="ngModel" [(ngModel)]="item.gender" pattern="[a-zA-Z]*"
                                             minlength="4" maxlength="6" required>
-                                        <div class="validation-error" *ngIf="genderControl.invalid "> Gender is required
-                                        </div>
+                                       
                                     </td>
                                     <td>
                                         <input type="text" id="studentaddressOne-{{ i }}" name="addressOne[{{ i }}]" #addressOneControl="ngModel" [(ngModel)]="item.addressOne"

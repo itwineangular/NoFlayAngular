@@ -6,4 +6,5 @@ export class PrivilegeCategory {
 
    privilegeId: number;
    privilegeName : string;
+   isSelected : boolean;
 }

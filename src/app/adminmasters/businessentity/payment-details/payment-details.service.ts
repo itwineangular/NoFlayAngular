@@ -43,26 +43,16 @@ export class PaymentDetailsService {
   }
 
   searchStudent(studentsData) {
-    let obj =
-    {
-      "institutionId": studentsData.institutionId,
-    "categoryId": studentsData.categoryId,
-    "courseId": studentsData.courseId ,  
-      // "institutionName": studentsData.institutionName,
-      // "courseCategory": studentsData.courseCategory,
-      // "courseName": studentsData.courseName,
-       "stdName": studentsData.stdName,
-      "status": studentsData.status
-
-    };
+    console.log("studentsData");
+    console.log(studentsData);
+    
     let headers = new Headers({
       'Content-Type': 'application/json'
     });
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Access-Control-Allow-Headers', 'Content-Type');
-    headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
+    
     let options = { headers: headers };
-    return this.http.post(this.url + '/students/searchStudent', obj, options).pipe(map(res => res.json()));
+    //return this.http.post(this.url + '/students/searchStudent', obj, options).pipe(map(res => res.json()));
+    return this.http.get(this.url + '/students/getPaymentHistory?paymentDate=' + studentsData.paymentDate + '&stdId=&courseId=' + studentsData.courseId + '&categoryId=' + studentsData.categoryId + '&institutionId=' + studentsData.institutionId, options).pipe(map(res => res.json()));
   }
 
 }

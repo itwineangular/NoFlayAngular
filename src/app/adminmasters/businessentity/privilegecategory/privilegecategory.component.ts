@@ -89,7 +89,7 @@ export class PrivilegecategoryComponent implements OnInit {
           },
           (error) => {
             console.log(error);
-            alert("Try again");
+            alert("Service already exists");
           }
         );
 

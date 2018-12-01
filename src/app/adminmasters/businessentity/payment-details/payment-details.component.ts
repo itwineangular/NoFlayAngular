@@ -237,8 +237,24 @@ export class PaymentDetailsComponent implements OnInit {
     
   }
 
+  selectedDate: any;
+  paymentDateconfig =
+    {
+      displayKey: "paymentDate",
+      search: true,
+      limitTo: this.paymentList.length
+
+    };
+  changeValuePaymentDate($event: any) {
+
+  }
+
   searchStudent(studentParameters) {
     var paymentDetailsObject: Student = new Student();
+    paymentDetailsObject.institutionId = "";
+    paymentDetailsObject.categoryId = "";
+    paymentDetailsObject.courseId = "";
+    paymentDetailsObject.paymentDate = "";
     this.isSearchClicked = true;
 
 
@@ -254,13 +270,17 @@ export class PaymentDetailsComponent implements OnInit {
       paymentDetailsObject.courseId = this.selectedCourseName[0].courseId;
     }
 
-    if (typeof this.selectedStatusValue !== 'undefined' && this.selectedStatusValue.length>0) 
-    {
-      paymentDetailsObject.statusId = this.selectedStatusValue[0].statusId
-    }
+    // if (typeof this.selectedStatusValue !== 'undefined' && this.selectedStatusValue.length>0) 
+    // {
+    //   paymentDetailsObject.statusId = this.selectedStatusValue[0].statusId
+    // }
 
+    if (typeof studentParameters.paymentDate !== 'undefined' && studentParameters.paymentDate !==null) {
+      var dateWithFormat = studentParameters.paymentDate.date.year + "-" + studentParameters.paymentDate.date.month + "-" + studentParameters.paymentDate.date.day;
+      paymentDetailsObject.paymentDate = dateWithFormat;
+    }
      paymentDetailsObject.stdName = studentParameters.stdName;
-     paymentDetailsObject.status = studentParameters.status;
+    // paymentDetailsObject.status = studentParameters.status;
     // this.studentstatus = paymentDetailsObject.status;
     // this.changelistview( membershipObject.status);
 
@@ -270,7 +290,8 @@ export class PaymentDetailsComponent implements OnInit {
       typeof paymentDetailsObject.categoryId === 'undefined' 
       && typeof paymentDetailsObject.courseId === 'undefined' 
       && typeof paymentDetailsObject.stdName === 'undefined' 
-       && typeof paymentDetailsObject.statusId === 'undefined'
+      //  && typeof paymentDetailsObject.statusId === 'undefined'
+      && typeof paymentDetailsObject.paymentDate == 'undefined'
     ) {
       Swal({
         title: 'Invalid!!',
@@ -284,7 +305,8 @@ export class PaymentDetailsComponent implements OnInit {
     }
 
     else {
-      this.studentService.searchStudent(paymentDetailsObject)
+      //this.studentService.searchStudent(paymentDetailsObject)
+      this.paymentDetailsService.searchStudent(paymentDetailsObject)
         .subscribe(
           (data) => {
              this.studentList = data;
