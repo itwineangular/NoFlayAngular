@@ -345,7 +345,10 @@
                                 <div class="col-sm-3">
                                         <label for="plan">{{'adminConfigarationPage.studentPage.imageupload' | translate}}<span class="reqMark">*</span></label>
                                         <img *ngIf="url" [src]="url" style="width:100px;height:100px;">
-                                        <input type="file"  id="fileControl" #fileInput  (change)="addToQueue($event.target.files)" required />
+                                        <input type="file"  id="fileControl" #fileInput  (change)="addToQueue($event.target.files)" (change)="onFileChange($event)"  required />
+                                        <label style="color:red">{{errorMessage}}</label>
+                                        <label style="color:green">{{successMessage}}</label>
+                                        <label style="color:orange">{{warningMessage}}</label>
                                 </div>
 
                             </div>
@@ -468,7 +471,7 @@
                     </div>
                     <div id="div1" class="modal-body">
                         <h4 class="modal-title">{{'adminConfigarationPage.studentPage.selectFile' | translate}}</h4>
-                        <input type="file" multiple id="uid"  (change)="addToQueue($event.target.files)"/> 
+                        <input type="file" multiple id="uid"  (change)="addToQueue($event.target.files)" /> 
                         <!-- <input type="file" id="uid"  (change)="addToFileToServer($event)"/>  -->
                        
                     <label style="color:red">{{errorMessage}}</label>
@@ -508,20 +511,20 @@
                         <div class="form-group">
                             <!-- <h4>Select Plans </h4> -->
                             <div class="col-md-2">
-                                <label>{{'adminConfigarationPage.studentPage.selectPlan' | translate}}</label>
+                                <label>{{'adminConfigarationPage.studentPage.selectPlan' | translate}} <span class="reqMark">*</span></label>
                                 <select class="form-control" name="planName" id="planName" #planName="ngModel" [(ngModel)]="student.planId">
                                     <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.selectPlan' | translate}}</option>
                                     <option *ngFor="let item of planList" value={{item.planId}}> {{item.planName}} - {{item.planMembership}}
                                     </option>
 
                                 </select>
-                                {{ errormsg }}
+                                <label style="color:red">{{errormsg}}</label>
                             </div>
 
                             <!-- <h5>Select Institution </h5> -->
                             <div class="col-md-2">
-                                <label>{{'adminConfigarationPage.studentPage.selectinstitution' | translate}}</label>
-                                <select class="form-control" type="text" name="institutionName" #institutionName="ngModel" [(ngModel)]="student.institutionId"
+                                <label>{{'adminConfigarationPage.studentPage.selectinstitution' | translate}} <span class="reqMark">*</span></label>
+                                <select class="form-control" type="text" name="institutionName" id="institutionName" #institutionName="ngModel" [(ngModel)]="student.institutionId"
                                     (change)="onInstituteSelect($event.target.value)">
                                     <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.institution' | translate}}</option>
                                     <option *ngFor="let item of institutionList" value={{item.institutionId}}>{{item.instName}}
@@ -532,8 +535,8 @@
 
                             <!-- <h4>Select Course Category </h4> -->
                             <div class="col-md-2">
-                                <label>{{'adminConfigarationPage.studentPage.selectCourseCategory' | translate}}</label>
-                                <select class="form-control" type="text" name="courseCategory" #courseCategory="ngModel" [(ngModel)]="student.categoryId"
+                                <label>{{'adminConfigarationPage.studentPage.selectCourseCategory' | translate}} <span class="reqMark">*</span></label>
+                                <select class="form-control" type="text" name="courseCategory" id="courseCategory" #courseCategory="ngModel" [(ngModel)]="student.categoryId"
                                     (change)="onCourseCategorySelect($event.target.value)" required>
                                     <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.courseCategory' | translate}}</option>
                                     <option *ngFor="let item of courseCategoryList" value={{item.categoryId}}>{{item.categoryName}}
@@ -543,8 +546,8 @@
 
                             <!-- <h4>Select Course </h4> -->
                             <div class="col-md-2">
-                                <label>{{'adminConfigarationPage.studentPage.selectCourse' | translate}}</label>
-                                <select class="form-control" type="text" name="courseName" #courseName="ngModel" [(ngModel)]="student.courseId" (change)="onCourseSelect($event.target.value)"
+                                <label>{{'adminConfigarationPage.studentPage.selectCourse' | translate}} <span class="reqMark">*</span></label>
+                                <select class="form-control" type="text" name="courseName" id="courseName" #courseName="ngModel" [(ngModel)]="student.courseId" (change)="onCourseSelect($event.target.value)"
                                     required>
                                     <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentPage.courses' | translate}}</option>
                                     <option *ngFor="let item of courseList" value={{item.courseId}}>{{item.courseName}}
@@ -554,9 +557,10 @@
                             <br>
                             <br>
                         </div>
+                       
 
                         <h5>Select All</h5>
-                        <input type="checkbox" id="mycheck-{{ i+1 }}" value="{{ i+1 }}" (click)="toggleSelect($event.target.checked)">
+                        <input type="checkbox" id="mycheck-{{ i+1 }}" value="{{ i+1 }}" (click)="toggleSelect(i+1 ,$event.target.checked)">
                         <label for="mycheck-{{ i+1 }}"></label>
                         <table class="table table-bordered myTable">
                             <tr class="text-center">
@@ -594,8 +598,8 @@
                                         <div class="validation-error" *ngIf="stdNameControl.invalid "> Name must be at least 4 characters</div>
                                     </td>
                                     <td>
-                                        <input type="text" id="studentgender-{{ i }}" name="gender[{{ i }}]" #genderControl="ngModel" [(ngModel)]="item.gender" pattern="[a-zA-Z]*"
-                                            minlength="4" maxlength="6" required>
+                                        <input type="text" id="studentgender-{{ i }}" name="gender[{{ i }}]" #genderControl="ngModel" [(ngModel)]="item.gender" 
+                                            >
                                        
                                     </td>
                                     <td>
@@ -646,17 +650,17 @@
                                     </td>
                                     <td>
                                         <input type="text" id="studentinstitutionName-{{ i }}" name="institutionName[{{ i }}]" #institutionNameControl="ngModel"
-                                            [(ngModel)]="item.institutionId" required>
+                                            [(ngModel)]="item.institutionId" readonly required>
                                         <div class="validation-error" *ngIf="institutionNameControl.invalid ">
                                             Institution Name is required</div>
                                     </td>
                                     <td>
                                         <input type="text" id="studentcourseCategory-{{ i }}" name="courseCategory[{{ i }}]" #courseCategoryControl="ngModel" [(ngModel)]="item.categoryId"
-                                            required>
+                                        readonly required>
                                         <div class="validation-error" *ngIf="courseCategoryControl.invalid ">CourseCategory is required</div>
                                     </td>
                                     <td>
-                                        <input type="text" id="studentcourseName-{{ i }}" name="courseName[{{ i }}]" #courseNameControl="ngModel" [(ngModel)]="item.courseId" required>
+                                        <input type="text" id="studentcourseName-{{ i }}" name="courseName[{{ i }}]" #courseNameControl="ngModel" [(ngModel)]="item.courseId" readonly required>
                                         <div class="validation-error" *ngIf="courseNameControl.invalid ">Course is required</div>
                                     </td>
                                     <td>
@@ -667,7 +671,7 @@
                                     <td>
                                         <input type="text" id="studentplan-{{ i+1 }}" name="plan[{{ i }}]" #planControl="ngModel" [(ngModel)]="item.planId" readonly
                                             required>
-                                        <div class="validation-error" *ngIf="planControl.invalid && planControl.touched ">Plan is required</div>
+                                        <div class="validation-error" *ngIf="planControl.invalid ">Plan is required</div>
                                     </td>
 
                                     <!-- <td>
@@ -687,7 +691,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-danger" type="submit" (click)="saveStudentuploadFile(studentBulkList)" data-dismiss="modal">{{'adminConfigarationPage.commonFields.save'| translate}}</button>
+                        <button class="btn btn-danger" type="submit" (click)="saveStudentuploadFile(studentBulkList)" [disabled]="studentUploadFileForm.invalid" data-dismiss="modal">{{'adminConfigarationPage.commonFields.save'| translate}}</button>
                         <button class="btn btn-primary" type="button" data-dismiss="modal">{{'adminConfigarationPage.commonFields.close'| translate}}
                         </button>
                     </div>

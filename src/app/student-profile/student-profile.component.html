@@ -148,7 +148,7 @@
                                    <th>Plan Name</th>
                                    <th>Plan Price</th>
                                    <th> Membership Type</th>
-                                   <th [class.active]="key === 'planStartDate'" (click)=" sort('planStartDate')">Plan StartDate <span [hidden]="reverse">▼</span> </th>
+                                   <th [class.active]="key === 'planStartDate'" (click)=" sort('planStartDate')">Plan StartDate  </th>
                                    <th>Plan EndDate</th>
                                  </tr>
                                </thead>
@@ -158,8 +158,8 @@
                                         <td>{{item.planName}}</td>
                                         <td>{{item.planPrice}}</td>
                                         <td>{{item.membershipType}} </td>
-                                        <td>{{item.planStartDate | date:'fullDate'}}</td>
-                                        <td>{{item.planEndDate | date:'fullDate'}}</td>
+                                        <td>{{item.planStartDate | date:'dd-MM-yyyy'}}</td>
+                                        <td>{{item.planEndDate | date:'dd-MM-yyyy'}}</td>
                                   </tr>
                                </tbody>
                              </table>
@@ -207,7 +207,7 @@
                                   <tr class="text-center">
                               
                                     <th>Index</th>
-                                    <th [class.active]="key === 'paymentDate'" (click)=" sort('paymentDate')" >Payment Date  <span [hidden]="reverse">▼</span> </th>
+                                    <th [class.active]="key === 'paymentDate'" (click)=" sort('paymentDate')" >Payment Date </th>
                                     <th >  Payment Mode </th>
                                     <th >  Reference Number</th>
                                     <th >  Amount </th>
@@ -219,7 +219,7 @@
                                    
                                      <tr *ngFor="let item of studentPaymentList | orderBy: key : reverse : caseInsensitive : comparator| paginate: { itemsPerPage: pagenumber, currentPage: p };let i=index">
                                          <td>{{((p-1)*itemsPerPage2)+i+1}}</td>
-                                         <td>{{item.paymentDate| date:'fullDate'}}</td>
+                                         <td>{{item.paymentDate| date:'dd-MM-yyyy'}}</td>
                                          <td>{{item.paymentMode}}</td>
                                          <td>{{item.paymentReference}}</td>
                                          <td>{{item.amount}} </td>

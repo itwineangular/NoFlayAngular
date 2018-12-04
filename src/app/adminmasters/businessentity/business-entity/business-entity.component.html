@@ -185,14 +185,6 @@
                                             </a>
                                         </li>
 
-                                        <li id="test4" role="presentation">
-                                            <a class="disableTab" href="#complete" data-toggle="tab" aria-controls="complete" role="tab"
-                                                title="Plans">
-                                                <span class="round-tab">
-                                                    <i class="fa fa-indent"></i>
-                                                </span>
-                                            </a>
-                                        </li>
                                     </ul>
                                 </div>
 
@@ -422,11 +414,7 @@
                                                         </div>
                                             </form>
                                         </div>
-                                        <div class="tab-pane" role="tabpanel" id="complete">
-                                            <div class="form-group">
-                                            <h4><label for=""></label>{{'adminConfigarationPage.businessEntity.plans' | translate}}</h4>
-                                            </div>
-                                        </div>
+                                        
                                         <div class="clearfix"></div>
                                     </div>
                                 <!-- </form> -->
@@ -436,7 +424,7 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-success" type="button" data-dismiss="modal" (click)="saveBusinessEntity(business)"
-                        [disabled]="businessEntityForm.invalid || contactDetails.invalid || bankDetails.invalid ">{{
+                        [disabled]="businessEntityForm.invalid || contactDetails.invalid || bankDetails.invalid || checkboxActivated != true  ">{{
                             'adminConfigarationPage.commonFields.save' | translate }}</button>
                         <button class="btn btn-default" type="button" data-dismiss="modal">{{
                             'adminConfigarationPage.commonFields.close' | translate }}</button>

@@ -306,6 +306,7 @@
                                 <br>
                                 <p class="login-lost">
                                     <!-- <a href="">Forgot Password?</a> -->
+                                    <a class="btn btn-link" href=""data-target="#pwdModal" data-toggle="modal"  >Forgot Your Password?</a>
                                     <label style="margin-right: 5px">{{'studentLoginPage.studentLogin.noAccount' | translate}}</label>
                                     <a data-toggle="tab" href="#reg" (click)="regester()">{{'studentLoginPage.studentLogin.register' | translate}}</a>
                                 </p>
@@ -647,5 +648,45 @@
 
         </div>
     </div>
+    <div class="modal fade"  id="pwdModal" tabindex="-1" role="dialog" 
+    aria-labelledby="myModalLabel" aria-hidden="true" >
+   <div class="modal-dialog">
+       <div class="modal-content" >
+           <!-- Modal Header -->
+           <div class="modal-header">
+               <button type="button" class="close" 
+                  data-dismiss="modal">
+                      <span aria-hidden="true">&times;</span>
+                      <span class="sr-only">Close</span>
+               </button>
+               <h4 class="modal-title" id="myModalLabel">
+                Reset Account Password
+               </h4>
+           </div>
+           
+           <!-- Modal Body -->
+           <div class="modal-body">
+               
+               <form role="form">
+                 <div class="form-group">
+                        <p>To reset your password you must enter a valid email address below:</p>
+                   <label for="exampleInputEmail1">Email address</label>
+                     <input type="email" class="form-control" name="email" #email="ngModel" [(ngModel)]="enteredEmailAddress" placeholder="example@gmail.com" />
+                 </div>      
+               </form>
+               
+               
+           </div>
+           
+           <!-- Modal Footer -->
+           <div class="modal-footer">
+                   <button type="button" class="btn btn-primary" (click)="passwordReset()"> Reset Password </button>
+               <button type="button" class="btn btn-default"
+                       data-dismiss="modal"> Close </button>
+               
+           </div>
+       </div>
+   </div>
+</div>
 
 </body>

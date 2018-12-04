@@ -641,7 +641,7 @@ addToQueue(file: FileList) {
   
     for(let item of institutionListLocal[0].courseCategoryVos)
     {
-      console.log("gdhsfghdsgfh");
+     
       console.log(this.courseCategoryList);
   
         this.courseCategoryList.push(item);
@@ -727,43 +727,41 @@ addToQueue(file: FileList) {
       
     }
   
-    getStudentDetailsByEmailId(studentEmail:string) : void
-    {
+    getStudentDetailsByEmailId(studentEmail: string): void {
       this.studentProfileService.getStudent(studentEmail).subscribe(
-        (data)=>{
-          console.log(data);
-         if(data.length>0)
-         {
-         // return data[0].stdId;
-          this.studentloginService.sendStudentPasswordResetRequestMail(this.studentId,this.passwordResetEmailTemplate)
-      .subscribe(
         (data) => {
           console.log(data);
-          alert("mail sent");
+          if (this.studentList.findIndex(x => x.stdId === data.stdId) >= 0)
+       {
+  
+            // return data.stdId;
+            this.studentloginService.sendStudentPasswordResetRequestMail(data.stdId, this.passwordResetEmailTemplate)
+              .subscribe(
+                (data) => {
+                  console.log(data);
+                  alert("mail sent");
+                },
+                (error) => {
+                  console.log(error);
+                }
+              );
+          }
+          else {
+            Swal({
+              title: 'Invalid mail id!!',
+              text: 'Please enter existing mail id.',
+              showCancelButton: false,
+              confirmButtonText: 'Ok',
+            });
+          }
         },
         (error) => {
-          console.log(error);
-        }
-      ); 
-         }
-         else
-         {
-             Swal({
-            title: 'Invalid mail id!!',
-            text: 'Please enter existing mail id.',
-            showCancelButton: false,
-            confirmButtonText: 'Ok',
-          });
-         }
-        },
-        (error)=>
-        {
-          //     Swal({
-      //       title: 'Invalid mail id!!',
-      //       text: 'Please enter existing mail id.',
-      //       showCancelButton: false,
-      //       confirmButtonText: 'Ok',
-      //     });
+              Swal({
+                title: 'Invalid mail id!!',
+                text: 'Please enter existing mail id.',
+                showCancelButton: false,
+                confirmButtonText: 'Ok',
+              });
         }
       );
   

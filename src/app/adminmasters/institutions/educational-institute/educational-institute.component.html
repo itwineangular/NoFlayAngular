@@ -463,7 +463,8 @@
 
 
                                                 <div class="boxes" *ngFor="let item of courseListLocal;let i=index">
-                                                    <input type="checkbox" id="{{i+1}}" name="courseListLocal" value={{i+1}} (click)="courseCheckboxSelect(item)" checked={{item.isSelected}}
+                                                    <input type="checkbox" id="{{i+1}}" name="courseListLocal" value={{i+1}} (click)="courseCheckboxSelect(item)"
+                                                    (change)="selectCheckbox($event.target.value)" checked={{item.isSelected}}
                                                         required/>
                                                     <label for="{{i+1}}">{{item.courseName}}</label>
                                                 </div>
@@ -472,7 +473,7 @@
                                         </div>
                                         <div class="col-lg-12 text-right">
                                             <button type="button" class="btn btn-default btnPrevious preConButton" data-toggle="pill" href="#step2" (click)="activeChangePrevious('third')">Previous</button>
-                                            <button type="button" class="btn btn-primary btnNext" [disabled]="courseoffered.invalid" data-toggle="pill" href="#complete" (click)="activeChange('third')">Continue</button>
+                                            <button type="button" class="btn btn-primary btnNext"  [disabled]="checkboxActivated != true" data-toggle="pill" href="#complete" (click)="activeChange('third')">Continue</button>
                                         </div>
                                     </form>
                                 </div>
@@ -496,7 +497,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-success" type="submit"  [disabled]="contactDetails.invalid||bankDetails.invalid||courseoffered.invalid" data-dismiss="modal" (click)="saveInstitute(institute)">{{'adminConfigarationPage.commonFields.save'
+                    <button class="btn btn-success" type="submit"  [disabled]="contactDetails.invalid||bankDetails.invalid||checkboxActivated != true" data-dismiss="modal" (click)="saveInstitute(institute)">{{'adminConfigarationPage.commonFields.save'
                         | translate}}</button>
                     <button class="btn btn-default" type="button" data-dismiss="modal">{{'adminConfigarationPage.commonFields.close'
                         | translate}}</button>

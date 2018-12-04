@@ -143,21 +143,8 @@ export class StudentService {
     return this.http.get(this.url + '/students/delete/' + stdId, options).pipe(map(res => res.json()));
   }
 
-  upload(formData)
-   {
-    let headers = this.tokenService.currentAuthHeaders;
-    headers.delete('Content-Type');
-    let options = new RequestOptions({ headers: headers });
 
-    return this.tokenService.request({
-      method: 'post',
-      url: `http://192.168.1.44:8080/mcmwebservices/uploadFile`,
-      body: formData,
-      headers: options.headers
-    }).pipe(map(res => res.json()));
-  }
-
-  uploadCsvFile(data)
+  saveBulkStudentFile(data)
   {
     
     let obj = {
@@ -194,19 +181,6 @@ export class StudentService {
   
    //  return this.http.post(this.url+'/students/startJob',options);
  }
-
- uploadImage(imageFile)
- {
-   console.log("here");
-  let headers = new Headers();
-    headers.append('Access-Control-Allow-Origin','*');
-    headers.append('Access-Control-Allow-Credentials','true');
-    headers.append('Access-Control-Allow-Headers','Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
-    headers.append('Access-Control-Allow-Methods','GET,POST,OPTIONS,DELETE,PUT');
-    let options = { headers: headers };
-
-  return this.http.post(this.url+'/uploadFile',imageFile,options);
-}
 
 getPlanName() {
   let headers = new Headers();

@@ -139,15 +139,6 @@ activeChangePrevious(value){
     }
 
 }
-selectCheckbox(id){
-  if($('#'+id).prop('checked')){    
-    this.checkboxActivated = true;
-  }else{
-    this.checkboxActivated = false;
-  }
-
-}
-
 
   addNew() {
     this.saveOrUpdate = "save";
@@ -515,6 +506,11 @@ selectCheckbox(id){
   }
 
   servicesCheckboxSelect(service) {  
+    if($('#'+service.attributeId).prop('checked')){    
+      this.checkboxActivated = true;
+    }else{
+      this.checkboxActivated = false;
+    }
 
     if (this.selectedAttributeList.findIndex(x => x.attributeId === service.attributeId) >= 0) {
       var list = this.selectedAttributeList.filter(x => x.attributeId != service.attributeId);

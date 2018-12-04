@@ -60,6 +60,7 @@ export class EducationalInstituteComponent implements OnInit {
     institute: EducationalInstitute = new EducationalInstitute();
     instituteList: EducationalInstitute[];
     instituteListLocal: EducationalInstitute[] = [];
+    checkboxActivated:boolean = false;
 
     // tslint:disable-next-line:no-output-on-prefix
     @Output() onCompleteItem = new EventEmitter();
@@ -404,8 +405,7 @@ export class EducationalInstituteComponent implements OnInit {
 
     courseCheckboxSelect(course)
         {  
-           
-  
+             
         if (this.selectedCourseListGlobal.findIndex(x => x.courseId === course.courseId) >= 0)
         {
             var data = this.selectedCourseListGlobal.filter(x=>x.courseId !== course.courseId);
@@ -525,6 +525,15 @@ export class EducationalInstituteComponent implements OnInit {
         this.key = key;
         this.reverse = !this.reverse;
     }
+
+    selectCheckbox(id){
+        if($('#'+id).prop('checked')){    
+          this.checkboxActivated = true;
+        }else{
+          this.checkboxActivated = false;
+        }
+      
+      }
 
 }
 
