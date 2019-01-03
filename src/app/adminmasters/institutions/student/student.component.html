@@ -193,7 +193,7 @@
                     <div class="modal-body">
                         <div class="form-group col-md-12">
 
-                            <h3>Student Details</h3>
+                            <h3>{{'adminConfigarationPage.studentPage.studentDetails' | translate}}</h3>
                             <div class="form-group">
                                 
                                 <div class="col-md-3">
@@ -355,7 +355,7 @@
 
 
                             <div class="form-group col-md-12">
-                                <h3>Institution Details</h3>
+                                <h3>{{'adminConfigarationPage.studentPage.institutionDetails' | translate}}</h3>
                                 <div class="form-group">
                                     <div class="col-sm-3">
                                         <label for="institution">{{'adminConfigarationPage.studentPage.institution' | translate}}<span class="reqMark">*</span></label>
@@ -426,7 +426,7 @@
                     </div>
                     <div class="modal-footer">
 
-                        <button class="btn btn-success"  [disabled]="studentForm.invalid"  (click)="saveStudent(student)" type="button"  >Save</button>
+                        <button class="btn btn-success"  [disabled]="studentForm.invalid"  (click)="saveStudent(student)" type="button"  >{{ 'adminConfigarationPage.commonFields.save' | translate }}</button>
                         <button class="btn btn-default" type="button" data-dismiss="modal">{{ 'adminConfigarationPage.commonFields.close' | translate }}</button>
 
                     </div>

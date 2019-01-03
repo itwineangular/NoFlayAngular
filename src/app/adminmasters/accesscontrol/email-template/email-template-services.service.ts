@@ -9,6 +9,7 @@ import { map } from "rxjs/operators";
 export class EmailTemplateServicesService {
 
   url = Constants.HOME_URL;
+  tokens = sessionStorage.getItem("token_type");
 
   constructor(private http: Http) { }
 
@@ -19,8 +20,10 @@ export class EmailTemplateServicesService {
     };
     console.log(obj);
     let headers = new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
     });
+    
     let options = { headers: headers };
    // return this.http.post('http://192.168.1.57:9090/email/saveEmailTemplate', obj, options).pipe(map(res => res.json()));
     return this.http.post(this.url + '/email/saveEmailTemplate', obj, options).pipe(map(res => res.json()));
@@ -28,13 +31,14 @@ export class EmailTemplateServicesService {
 
   getEmailTemplate(templateName)
   {
-    // let headers = new Headers();
-    //   headers.append('Access-Control-Allow-Origin','*');
-    //   headers.append('Access-Control-Allow-Headers','Content-Type');
-    //   headers.append('Access-Control-Allow-Methods','GET,POST,OPTIONS,DELETE,PUT');
-    // let options = { headers: headers };
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
+    });
+    
+    let options = { headers: headers };
    // return this.http.get('http://192.168.1.57:9090/email/getEmailTemplate?templateName='+templateName).pipe(map(res => res.json()));
-     return this.http.get(this.url+'/email/getEmailTemplate?templateName='+templateName).pipe(map(res => res.json()));
+     return this.http.get(this.url+'/email/getEmailTemplate?templateName='+templateName,options).pipe(map(res => res.json()));
   }
 
 }

@@ -235,6 +235,7 @@ export class MembershipCardComponent implements OnInit {
     studentCard.studentEmail = this.studentDetailsForCard.stdEmail;
     studentCard.studentMcmId = this.studentDetailsForCard.mcmId;
     studentCard.studentPlan = this.studentDetailsForCard.planName;
+    studentCard.studentMembership = this.studentDetailsForCard.membershipType;
     studentCard.studentQrCode = "Name:" + this.studentDetailsForCard.stdName + ",Id:" + this.studentDetailsForCard.mcmId + ",Card:" + this.studentDetailsForCard.planName+ ".";
     this.studentCardList.push(studentCard);
 
@@ -648,6 +649,7 @@ export class MembershipCardComponent implements OnInit {
     this.membershipCardService.sendStudentPaymentRequestMail(this.studentPaymentTemplate, this.selectedStudentsForEmailOrId)
       .subscribe(
         (data) => {
+          this.selectedStudentsForEmailOrId = [];
           alert("mail sent");
         },
         (error) => {
@@ -687,14 +689,16 @@ export class MembershipCardComponent implements OnInit {
   }
 
   generateId() {
-    this.membershipCardService.generateMCMId(this.selectedStudentsForEmailOrId)
+    var listSelectedStudentsForEmailOrIdLocal = this.selectedStudentsForEmailOrId;
+    this.membershipCardService.generateMCMId(listSelectedStudentsForEmailOrIdLocal)
 
       .subscribe(
 
         (data) => {
+          this.selectedStudentsForEmailOrId= [];
           console.log("gsfgsdhgfhds")
           alert("Code  Generated");
-          this.selectedStudentsForEmailOrId= [];
+          
         },
         (error) => {
           console.log(error);

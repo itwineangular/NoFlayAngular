@@ -9,6 +9,8 @@ import { map } from "rxjs/operators";
 export class CourseService {
 
   url = Constants.HOME_URL;
+  tokens = sessionStorage.getItem("token_type");
+
 
   constructor(private http : Http) { }
   // CourseCategoryVo: any;
@@ -26,11 +28,10 @@ export class CourseService {
       
    console.log(obj);
     let headers = new Headers({ 
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
       });
-      headers.append('Access-Control-Allow-Origin','*');
-      headers.append('Access-Control-Allow-Headers','Content-Type');
-      headers.append('Access-Control-Allow-Methods','GET,POST,OPTIONS,DELETE,PUT');
+     
     let options = { headers: headers };
     return this.http.post(this.url+'/courseprofile/create', obj, options);
   }
@@ -49,11 +50,10 @@ export class CourseService {
       
       console.log(obj);
     let headers = new Headers({ 
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
       });
-      headers.append('Access-Control-Allow-Origin','*');
-      headers.append('Access-Control-Allow-Headers','Content-Type');
-      headers.append('Access-Control-Allow-Methods','GET,POST,OPTIONS,DELETE,PUT');
+     
     let options = { headers: headers };
     // return this.http.put(this.url+'/courseprofile/update/'+course.courseId, obj, options);
     return this.http.put(this.url+'/courseprofile/update/'+course.courseId, obj, options);
@@ -61,10 +61,10 @@ export class CourseService {
 
   getCourse()
   {
-    let headers = new Headers();
-      headers.append('Access-Control-Allow-Origin','*');
-      headers.append('Access-Control-Allow-Headers','Content-Type');
-      headers.append('Access-Control-Allow-Methods','GET,POST,OPTIONS,DELETE,PUT');
+    let headers = new Headers({ 
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
+      });
     let options = { headers: headers };
 
      return this.http.get(this.url+'/courseprofile/list',options).pipe(map(res => res.json()));
@@ -73,22 +73,20 @@ export class CourseService {
   deleteCourse(courseId)
   {
     let headers = new Headers({ 
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.tokens
         });
-      headers.append('Access-Control-Allow-Origin','*');
-      headers.append('Access-Control-Allow-Headers','Content-Type');
-      headers.append('Access-Control-Allow-Methods','GET,POST,OPTIONS,DELETE,PUT');
+      
     let options = { headers: headers };
      return this.http.get(this.url+'/courseprofile/delete/'+courseId,options);
   }
 
   searchCourse(course) {
     let headers = new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
     });
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Access-Control-Allow-Headers', 'Content-Type');
-    headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
+   
     let options = { headers: headers };
     
     return this.http.get(this.url+'/courseprofile/searchCourse?courseName='+course.courseName+'&courseCode='+course.courseCode+'&categoryId='+course.categoryName+'&duration='+course.duration+'',options).pipe(map(res => res.json()));

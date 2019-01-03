@@ -12,6 +12,7 @@ export class BusinessEntityService {
 
   // business : BusinessEntity;
   url = Constants.HOME_URL;
+  tokens = sessionStorage.getItem("token_type");
 
   selectedServices: SelectedServices = new SelectedServices();
   constructor(private http: Http) { }
@@ -71,8 +72,10 @@ export class BusinessEntityService {
 
 
     let headers = new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
     });
+    
     let options = { headers: headers };
  
     return this.http.post(this.url + '/businessentity/create', obj, options).pipe(map(res => res.json()));
@@ -80,19 +83,21 @@ export class BusinessEntityService {
 
 
   getBusinessEntity() {
-    let headers = new Headers();
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Access-Control-Allow-Headers', 'Content-Type');
-    headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
+    });
+    
     let options = { headers: headers };
     return this.http.get(this.url + '/businessentity/list', options).pipe(map(res => res.json()));
   }
 
   deleteBusinessEntity(businessId) {
-    let headers = new Headers();
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Access-Control-Allow-Headers', 'Content-Type');
-    headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
+    });
+    
     let options = { headers: headers };
     return this.http.get(this.url + '/businessentity/delete/' + businessId, options).pipe(map(res => res.json()));
   }
@@ -144,11 +149,11 @@ export class BusinessEntityService {
     console.log(obj.privilegesList);
 
     let headers = new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
     });
-   
+    
     let options = { headers: headers };
-    // console.log(data.businessCategoryId);
     console.log(obj);
     return this.http.put(this.url + '/businessentity/update/' + business.businessId, obj, options).pipe(map(res => res.json()));
   }
@@ -163,11 +168,10 @@ export class BusinessEntityService {
     console.log("sdftsdegtf");
     console.log(obj);
     let headers = new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
     });
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Access-Control-Allow-Headers', 'Content-Type');
-    headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
+    
     let options = { headers: headers };
     // return this.http.post(this.url + '/businessentity/searchList', obj, options).pipe(map(res => res.json()));
     return this.http.post(this.url + '/businessentity/searchByCriteria', obj, options).pipe(map(res => res.json()));

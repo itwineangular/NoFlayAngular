@@ -14,8 +14,8 @@
 
         <div class="col-lg-6">
             <div class="logins">
-                <form [formGroup]="loginForm" (ngSubmit)="login()">
-                    <ul class="list-inline">
+                <form #loginForm="ngForm" (ngSubmit)="Onlogin(username.value,password.value)">
+                    <!-- <ul class="list-inline">
                         <li>
                             <input type="text" class="form-control" formControlName="userid" placeholder="User Id" />
                         </li>
@@ -25,7 +25,18 @@
                         <li>
                             <button class="btn btn-success" type="submit">Login</button>
                         </li>
-                    </ul>
+                    </ul> -->
+                    <div class="logins">
+                        <div class="row">
+                        <input type="text" #username ngModel name="username" placeholder="Username">
+                    </div>
+                    <div class="row">
+                        <input type="password" #password ngModel name="password" placeholder="Password">
+                    </div>
+                    <div class="row">
+                            <button class="btn-success" type="submit">Login</button>                    
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>

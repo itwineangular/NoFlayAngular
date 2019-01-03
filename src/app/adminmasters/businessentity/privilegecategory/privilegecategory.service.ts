@@ -9,6 +9,7 @@ import { map } from "rxjs/operators";
 })
 export class PrivilegecategoryService {
   url = Constants.HOME_URL;
+  tokens = sessionStorage.getItem("token_type");
 
   constructor(private http: Http) { }
 
@@ -18,28 +19,30 @@ export class PrivilegecategoryService {
       "privilegeName": data.privilegeName
     };
     let headers = new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
     });
+    
     let options = { headers: headers };
     return this.http.post(this.url + '/privilege/create', obj, options).pipe(map(res => res.json()));
   }
 
   getPrivilegeCategory() {
     let headers = new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
     });
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Access-Control-Allow-Headers', 'Content-Type');
-    headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
+    
     let options = { headers: headers };
     return this.http.get(this.url + '/privilege/list', options).pipe(map(res => res.json()));
   }
 
   deletePrivilegeCategory(PrivilegeId) {
-    let headers = new Headers();
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Access-Control-Allow-Headers', 'Content-Type');
-    headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
+    });
+    
     let options = { headers: headers };
     return this.http.get(this.url + '/privilege/delete/' + PrivilegeId, options);
   }
@@ -50,8 +53,10 @@ export class PrivilegecategoryService {
       "privilegeName": privilegeCategory.privilegeName
     };
     let headers = new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
     });
+    
     let options = { headers: headers };
     return this.http.put(this.url + '/privilege/update/' + privilegeCategory.privilegeId, obj, options).pipe(map(res => res.json()));
   }
@@ -63,8 +68,10 @@ export class PrivilegecategoryService {
     };
     console.log(obj);
     let headers = new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
     });
+    
     let options = { headers: headers };
     return this.http.post(this.url + '/privilege/searchByCriteria', obj, options).pipe(map(res => res.json()));
   }

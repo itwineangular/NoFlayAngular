@@ -14,6 +14,7 @@ export class StudentService {
 
 
   url = Constants.HOME_URL;
+  tokens = sessionStorage.getItem("token_type");
   constructor(private http : Http,
     private tokenService: Angular2TokenService) {
       tokenService.init();
@@ -21,11 +22,10 @@ export class StudentService {
 
   getStatus() {
     let headers = new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
     });
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Access-Control-Allow-Headers', 'Content-Type');
-    headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
+    
     let options = { headers: headers };
     return this.http.get(this.url +'/status/list', options).pipe(map(res => res.json()));
   }
@@ -66,11 +66,10 @@ export class StudentService {
 
     console.log(obj);
     let headers = new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
     });
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Access-Control-Allow-Headers', 'Content-Type');
-    headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
+   
     let options = { headers: headers };
     return this.http.post(this.url + '/students/create', obj, options).pipe(map(res => res.json()));
 
@@ -98,11 +97,10 @@ export class StudentService {
     };
 
     let headers = new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
     });
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Access-Control-Allow-Headers', 'Content-Type');
-    headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
+    
     let options = { headers: headers };
     // console.log(data.businessCategoryId);
     // console.log(obj);
@@ -111,11 +109,10 @@ export class StudentService {
 
   getStudent() {
     let headers = new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
     });
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Access-Control-Allow-Headers', 'Content-Type');
-    headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
+  
     let options = { headers: headers };
     return this.http.get(this.url + '/students/list', options).pipe(map(res => res.json()));
   }
@@ -123,11 +120,10 @@ export class StudentService {
 
   getInstitution() {
     let headers = new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
     });
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Access-Control-Allow-Headers', 'Content-Type');
-    headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
+  
     let options = { headers: headers };
     return this.http.get(this.url + '/institutions/list', options).pipe(map(res => res.json()));
   }
@@ -135,10 +131,11 @@ export class StudentService {
 
 
   deleteStudent(stdId) {
-    let headers = new Headers();
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Access-Control-Allow-Headers', 'Content-Type');
-    headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
+    });
+   
     let options = { headers: headers };
     return this.http.get(this.url + '/students/delete/' + stdId, options).pipe(map(res => res.json()));
   }
@@ -171,11 +168,10 @@ export class StudentService {
 
     console.log("here");
     console.log(data);
-   let headers = new Headers();
-     headers.append('Access-Control-Allow-Origin','*');
-     headers.append('Access-Control-Allow-Credentials','true');
-     headers.append('Access-Control-Allow-Headers','Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
-     headers.append('Access-Control-Allow-Methods','GET,POST,OPTIONS,DELETE,PUT');
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
+    });
      let options = { headers: headers };
      return this.http.post(this.url+'/students/saveExcelStudProfile',data,options);
   
@@ -183,21 +179,21 @@ export class StudentService {
  }
 
 getPlanName() {
-  let headers = new Headers();
-  headers.append('Access-Control-Allow-Origin', '*');
-  headers.append('Access-Control-Allow-Headers', 'Content-Type');
-  headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
+  let headers = new Headers({
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer ' + this.tokens
+  });
   let options = { headers: headers };
   return this.http.get(this.url+'/plans/list', options).pipe(map(res => res.json()));
 }
 
 getBulkStudentsdata() {
-  let headers = new Headers();
-  headers.append('Access-Control-Allow-Origin', '*');
-  headers.append('Access-Control-Allow-Headers', 'Content-Type');
-  headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
+  let headers = new Headers({
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer ' + this.tokens
+  });
   let options = { headers: headers };
-  return this.http.get(this.url+'/students/viewExcelData', options).pipe(map(res => res.json()));
+  return this.http.get('http://192.168.1.65:9090/students/viewExcelData', options).pipe(map(res => res.json()));
 }
 
 searchStudent(studentsData) {
@@ -213,11 +209,10 @@ searchStudent(studentsData) {
   };
   console.log(obj);
   let headers = new Headers({
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer ' + this.tokens
   });
-  headers.append('Access-Control-Allow-Origin', '*');
-  headers.append('Access-Control-Allow-Headers', 'Content-Type');
-  headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
+  
   let options = { headers: headers };
   return this.http.post(this.url+'/students/searchStudent', obj, options).pipe(map(res => res.json()));
   // return this.http.post(this.url+'/students/searchByCriteria', obj, options).pipe(map(res => res.json()));

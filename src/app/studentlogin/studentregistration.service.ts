@@ -12,6 +12,7 @@ export class StudentregistrationService {
 
 
   url = Constants.HOME_URL;
+  // tokens = sessionStorage.getItem("token_type");
   constructor(private http: Http,
     private tokenService: Angular2TokenService) {
       tokenService.init();
@@ -54,96 +55,88 @@ export class StudentregistrationService {
          };
          console.log(obj);
          let headers = new Headers({
-     
-           'Content-Type': 'application/json'
-     
-         });
-     
-         headers.append('Access-Control-Allow-Origin', '*');
-         headers.append('Access-Control-Allow-Headers', 'Content-Type');
-         headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
-         let options = { headers: headers };
+          'Content-Type': 'application/json',
+          // 'Authorization': 'Bearer ' + this.tokens
+        });
+        
+        let options = { headers: headers };
          
          // console.log(obj);
-         return this.http.post(this.url + '/students/create', obj, options);
+         return this.http.post( 'http://192.168.1.65:9090/students/create', obj, options);
      
        }
 
        getStudent() {
         let headers = new Headers({
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          // 'Authorization': 'Bearer ' + this.tokens
         });
-        headers.append('Access-Control-Allow-Origin', '*');
-        headers.append('Access-Control-Allow-Headers', 'Content-Type');
-        headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
+        
         let options = { headers: headers };
-        return this.http.get(this.url + '/students/list', options).pipe(map(res => res.json()));
+        return this.http.get( 'http://192.168.1.65:9090/students/list', options).pipe(map(res => res.json()));
       }
 
       getInstitution() {
         let headers = new Headers({
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          // 'Authorization': 'Bearer ' + this.tokens
         });
-        headers.append('Access-Control-Allow-Origin', '*');
-        headers.append('Access-Control-Allow-Headers', 'Content-Type');
-        headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
+        
         let options = { headers: headers };
-        return this.http.get(this.url + '/institutions/list', options).pipe(map(res => res.json()));
+        return this.http.get( 'http://192.168.1.65:9090/institutions/list',options).pipe(map(res => res.json()));
       }
 
       getCourse() {
         let headers = new Headers({
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          // 'Authorization': 'Bearer ' + this.tokens
         });
-        headers.append('Access-Control-Allow-Origin', '*');
-        headers.append('Access-Control-Allow-Headers', 'Content-Type');
-        headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
+        
         let options = { headers: headers };
-        return this.http.get(this.url + '/courseprofile/list', options).pipe(map(res => res.json()));
+        return this.http.get( 'http://192.168.1.65:9090/courseprofile/list', options).pipe(map(res => res.json()));
       }
 
       getCourseCategory() {
         let headers = new Headers({
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          // 'Authorization': 'Bearer ' + this.tokens
         });
-        headers.append('Access-Control-Allow-Origin', '*');
-        headers.append('Access-Control-Allow-Headers', 'Content-Type');
-        headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
+        
         let options = { headers: headers };
-        return this.http.get(this.url + '/coursecategory/list', options).pipe(map(res => res.json()));
+        return this.http.get( 'http://192.168.1.65:9090/coursecategory/list', options).pipe(map(res => res.json()));
       }
 
       getPlanName() {
-        let headers = new Headers();
-        headers.append('Access-Control-Allow-Origin', '*');
-        headers.append('Access-Control-Allow-Headers', 'Content-Type');
-        headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
+        let headers = new Headers({
+          'Content-Type': 'application/json',
+          // 'Authorization': 'Bearer ' + this.tokens
+        });
+        
         let options = { headers: headers };
-        return this.http.get(this.url + '/plans/list', options).pipe(map(res => res.json()));
+        return this.http.get( 'http://192.168.1.65:9090/plans/list', options).pipe(map(res => res.json()));
       }
 
       uploadImage(imageFile)
       {
         console.log("here");
-       let headers = new Headers();
-         headers.append('Access-Control-Allow-Origin','*');
-         headers.append('Access-Control-Allow-Credentials','true');
-         headers.append('Access-Control-Allow-Headers','Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
-         headers.append('Access-Control-Allow-Methods','GET,POST,OPTIONS,DELETE,PUT');
-         let options = { headers: headers };
+        let headers = new Headers({
+          'Content-Type': 'application/json',
+          // 'Authorization': 'Bearer ' + this.tokens
+        });
+        
+        let options = { headers: headers };
      
-       return this.http.post(this.url+'/uploadFile',imageFile,options);
+       return this.http.post('http://192.168.1.65:9090/uploadFile',imageFile,options);
      }
 
      getStatus() {
       let headers = new Headers({
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        // 'Authorization': 'Bearer ' + this.tokens
       });
-      headers.append('Access-Control-Allow-Origin', '*');
-      headers.append('Access-Control-Allow-Headers', 'Content-Type');
-      headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
+      
       let options = { headers: headers };
-      return this.http.get(this.url +'/status/list', options).pipe(map(res => res.json()));
+      return this.http.get('http://192.168.1.65:9090/status/list', options).pipe(map(res => res.json()));
     }
     
 }

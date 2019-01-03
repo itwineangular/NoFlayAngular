@@ -48,7 +48,7 @@ export class AdminlayoutComponent implements OnInit {
   paymentDetails :string;
   payment : string;
   browseplans :string;
-
+  studentmedicalrecord:string;
   id: string;
 
   constructor(public router: Router,
@@ -135,19 +135,19 @@ export class AdminlayoutComponent implements OnInit {
       this.paymentDetails =" Payment Details",
       this.payment = "Payment",
       this.browseplans ="Browse Plans",
-     
+      this.studentmedicalrecord="Student Medical Record",
 
       this.gotopage(this.selectedFlag)
   }
   frenchMenuitems() {
     this.accessControl = "Contrôle d'accès",
-      this.generalSetup = "General Setup",
+      this.generalSetup = "Configuration générale",
       this.emailTemplate = "Modèles de courrier électronique",
       this.initialConfiguration = "Initial Configuration",
       this.user = "Utilisateur",
       this.contractTemplate="Modèle de contrat",
       this.contracts="Les contrats"
-      this.institutions = "Institutions",
+      this.institutions = "Les institutions",
       this.businessEntities = "Entités commerciales",
       this.courseCategory = "Catégories de cours",
       this.courses = "Cours",
@@ -168,7 +168,7 @@ export class AdminlayoutComponent implements OnInit {
       this.paymentDetails ="Détails de paiement",
       this.payment = "Paiement",
       this.browseplans ="Parcourir les plans"
-     
+      this.studentmedicalrecord="Dossier médical étudiant",
 
       this.gotopage(this.selectedFlag);
   }
@@ -233,6 +233,13 @@ export class AdminlayoutComponent implements OnInit {
                   { 'name': this.plans, 'url': 'plans' },
                   { 'name': this.membershipCard, 'url': 'membershipCard' },
                   { 'name': this.paymentDetails, 'url': 'paymentDetails' },
+                 
+                ]
+              },
+              {
+                'menuid': '5', 'mainmenu': this.studentmedicalrecord,
+                'submenu': [
+                  { 'name': this.studentmedicalrecord, 'url': 'record' }               
                  
                 ]
               }

@@ -26,6 +26,7 @@ import { EmailTemplateServicesService } from '../adminmasters/accesscontrol/emai
 import { StudentProfileService } from '../student-profile/student-profile.service';
 import { StudentloginService } from './studentlogin.service';
 import { StudentDetailsService } from '../shared/student-details.service';
+import { HomepageService } from 'src/app/homepage/homepage.service';
 
 @Component({
   selector: 'app-studentlogin',
@@ -173,6 +174,7 @@ export class StudentloginComponent implements OnInit {
     private studentloginService : StudentloginService,
     private studentDetailsService : StudentDetailsService,
     private commonService: CommonServicesService,
+    private homeService: HomepageService,
     private uploader: FileuploaderService
   ) {
       translate.setDefaultLang('en');
@@ -671,36 +673,36 @@ addToQueue(file: FileList) {
       this.selectedCourse = courseId.toString();
     }
 
-    studentLogin(studentDat)
-    {
-      console.log(studentDat);
-     // this.router.navigate(['student/' + studentDat.username]);
+    // studentLogin(studentDat)
+    // {
+    //   console.log(studentDat);
+    //  // this.router.navigate(['student/' + studentDat.username]);
   
-      this.studentDetailsService.saveStudentEmail(studentDat.username);
-      //this.studentDetailsService.saveStudentDetails(studentDat);
-      if (localStorage.getItem('currentUser')) {
-        // logged in so return true
-        return true;
-    }
-      this.router.navigate(["/student"]);
+    //   this.studentDetailsService.saveStudentEmail(studentDat.username);
+    //   //this.studentDetailsService.saveStudentDetails(studentDat);
+    //   if (localStorage.getItem('currentUser')) {
+    //     // logged in so return true
+    //     return true;
+    // }
+    //   this.router.navigate(["/student"]);
   
       
-      // if(studentDat.username === "user" && studentDat.password === "1234")
-      // {
-      //   this.router.navigate(['student/' + studentDat.username]);
-      //  // this.router.navigate(["/student"]);
-      // }
-      // else
-      // {
-      //   Swal({
-      //       title: 'Invalid User !!',
-      //       text: 'Please enter valid credentials.',
-      //       showCancelButton: false,
-      //       confirmButtonText: 'Ok',
-      //     });
+    //   // if(studentDat.username === "user" && studentDat.password === "1234")
+    //   // {
+    //   //   this.router.navigate(['student/' + studentDat.username]);
+    //   //  // this.router.navigate(["/student"]);
+    //   // }
+    //   // else
+    //   // {
+    //   //   Swal({
+    //   //       title: 'Invalid User !!',
+    //   //       text: 'Please enter valid credentials.',
+    //   //       showCancelButton: false,
+    //   //       confirmButtonText: 'Ok',
+    //   //     });
        
-      // }
-    }
+    //   // }
+    // }
 
     getEmailTemplate(templateName) {
       this.emailTemplateservice.getEmailTemplate(templateName).subscribe(data => {
@@ -767,4 +769,31 @@ addToQueue(file: FileList) {
   
     }
 
+    studentLogin(username,password)
+    {
+      console.log(username,password);
+      this.homeService.userAuthentication(username,password)
+      .subscribe(
+        (res:any) => {
+          // localStorage.setItem('token_type', res.access_token);
+          sessionStorage.setItem('token_type', res.access_token);
+          // localStorage.setItem('isLogin',"true");
+        // this.router.navigate([this.returnUrl]);
+         this.router.navigate(["/student"]);
+        // this.router.navigate(['coursecategory/' ]);
+        // window.location.href = "http://localhost:4200/user";
+        this.studentDetailsService.saveStudentEmail(username);
+        },
+        (error)=>
+        {
+          Swal({
+                title: 'Invalid User !!',
+                 text: 'Please enter valid credentials.',
+               showCancelButton: false,
+                confirmButtonText: 'Ok',
+              });
+        }
+      );
+
+    }
 }

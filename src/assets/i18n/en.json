@@ -11,7 +11,8 @@
         "courseCategoryPage": {
             "courseCategory": "Course Category",
             "categoryName": "Category Name",
-            "categoryCode" : "Category Code",           
+            "categoryCode" : "Category Code", 
+            "status":"Status",          
             "active" : "Active",
             "inactive" : "Inactive"
         },
@@ -51,6 +52,33 @@
             "city" : "City"
             
         },
+        "studentMedicalRecordPage": {
+            "studentMedicalRecord":"Student Medical Record",
+            "addRecord":"Add Medical Record",
+            "viewdRecord":"Details Of Medical Record",
+            "weight":"Weight",
+            "height":"Height",
+            "bloddPressure":"Blood Pressure",
+            "bloodGlucose":"Blood Glucose Content",
+            "pulse":"Pulse/Heart Rate",
+            "repRate":"Respiratory Rate",
+            "bodyTemp":"Body Temperature",
+            "bodyfat":"Body Fat Percentage",
+            "bodymass":"Body Mass Index",
+            "leanBody":"Lean Body Mass",
+            "waistCircumference":"Waist Circumference",
+            "select":"Select",
+            "selectOutPatient":"Out-Patient",
+            "hospitalName":"Hospital Name",
+            "dateOfadmission":"Date Of Admission",
+            "dateOfDischarge":"Date of Discharge",
+            "treatement":"Treatement For",
+            "summary":"Discharge Summary",
+            "medication":"Medication",
+            "specialCare":"Special Care",
+            "startDate":"StartDate",
+            "endDate":"EndDate"
+        },
         "studentPage": {
             "student": "Student",
             "studentName": "Name",
@@ -86,7 +114,9 @@
             "endDate":"EndDate",
             "imageupload": "Image Upload",
             "mcmId":"MCM ID",
-            "createDate": "Create Date"
+            "createDate": "Create Date",
+            "studentDetails":"Student Details",
+            "institutionDetails":"Institution Details"
            
 
         },
@@ -125,6 +155,7 @@
             "save" : "Save",
             "edit" : "Edit",
             "delete" : "Delete",
+            "add" : "Add",
             "view":"View",
             "status" : "Status",
             "search" : "Search",
@@ -245,7 +276,16 @@
             "courseCategory": "Course Category",
             "course":"Course",
             "studentName":"Student Name",
-            "paymentDate":"Payment Date"
+            "paymentDate":"Payment Date",
+            "periodStartDate":"Period StartDate",
+            "periodEndDate" :"Period EndDate",
+            "clear":"Clear",
+            "search":"Search",
+            "planName" :"Plan Name:",
+            "membershipType":"Membership Type:",
+            "amount":"Amount:",
+            "paymentMode":"Payment Mode:",
+            "referenceNumber":"Reference Number:"
         },
         "statusPage":
         {

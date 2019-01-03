@@ -9,6 +9,7 @@ import { map } from "rxjs/operators";
 export class PlanNameServicesService {
 
   url = Constants.HOME_URL;
+  tokens = sessionStorage.getItem("token_type");
   constructor(private http : Http) { }
 
   savePlanName(planName)
@@ -18,33 +19,34 @@ export class PlanNameServicesService {
       };
 
     
-    let headers = new Headers({ 
-      'Content-Type': 'application/json'
+      let headers = new Headers({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.tokens
       });
-      headers.append('Access-Control-Allow-Origin','*');
-      headers.append('Access-Control-Allow-Headers','Content-Type');
-      headers.append('Access-Control-Allow-Methods','GET,POST,OPTIONS,DELETE,PUT');
-    let options = { headers: headers };
+      
+      let options = { headers: headers };
      return this.http.post(this.url+'/plan/create', obj, options);
     //return this.http.post(this.url+'/plan/create', obj, options).pipe(map(res => res.json()));
   }
   getplanName()
   {
-    let headers = new Headers();
-      headers.append('Access-Control-Allow-Origin','*');
-      headers.append('Access-Control-Allow-Headers','Content-Type');
-      headers.append('Access-Control-Allow-Methods','GET,POST,OPTIONS,DELETE,PUT');
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
+    });
+    
     let options = { headers: headers };
     return this.http.get(this.url+'/plan/list',options).pipe(map(res => res.json()));
   }
 
   deletePlanName(plannameId)
   {
-      let headers = new Headers();
-      headers.append('Access-Control-Allow-Origin','*');
-      headers.append('Access-Control-Allow-Headers','Content-Type');
-      headers.append('Access-Control-Allow-Methods','GET,POST,OPTIONS,DELETE,PUT');
-      let options = { headers: headers };
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
+    });
+    
+    let options = { headers: headers };
       return this.http.get(this.url+'/plan/delete/'+plannameId,options);
      // return this.http.get(this.url+'/plan/delete/'+plannameId,options).pipe(map(res => res.json()));
   }
@@ -55,13 +57,12 @@ export class PlanNameServicesService {
       "plannameId": planName.plannameId,
       "planName": planName.planName
       };
-    let headers = new Headers({ 
-      'Content-Type': 'application/json'
+      let headers = new Headers({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.tokens
       });
-      headers.append('Access-Control-Allow-Origin','*');
-      headers.append('Access-Control-Allow-Headers','Content-Type');
-      headers.append('Access-Control-Allow-Methods','GET,POST,OPTIONS,DELETE,PUT');
-    let options = { headers: headers };
+      
+      let options = { headers: headers };
    return this.http.put(this.url+'/plan/update/'+planName.plannameId, obj, options);
      //return this.http.put(this.url+'/plan/update/'+membership.plannameId, obj, options).pipe(map(res => res.json()));
   }
@@ -73,11 +74,10 @@ export class PlanNameServicesService {
     };
     console.log(obj);
     let headers = new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
     });
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Access-Control-Allow-Headers', 'Content-Type');
-    headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
+    
     let options = { headers: headers };
     return this.http.post(this.url+'/plan/searchList', obj, options).pipe(map(res => res.json()));
   }

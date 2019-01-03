@@ -11,10 +11,17 @@ import { Observable, of } from "rxjs";
 export class StudentProfileService {
 
   url = Constants.HOME_URL;
+  tokens = sessionStorage.getItem("token_type");
   constructor(private http: Http) { }
 
   getStudent(studentMailId: string) {
-    return this.http.get('http://192.168.1.51:9090/students/findByStdEmail?stdEmail=' +studentMailId).pipe(map(res => res.json()));
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+     
+    });
+    
+    let options = { headers: headers };
+    return this.http.get('http://192.168.1.65:9090/students/findByStdEmail?stdEmail=' +studentMailId,options).pipe(map(res => res.json()));
   }
 
   
@@ -64,19 +71,38 @@ export class StudentProfileService {
     console.log(obj);
 
     let headers = new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+     
     });
-
+    
     let options = { headers: headers };
     // console.log(data.businessCategoryId);
     // console.log(obj);
     //return null;
-    return this.http.put(this.url + '/students/update/' + data.stdId, obj, options).pipe(map(res => res.json()));
+    return this.http.put('http://192.168.1.65:9090/students/update/' + data.stdId, obj, options).pipe(map(res => res.json()));
   }
 
   getPaymentDetails(stdId: number)
   {
-     return this.http.get('http://192.168.1.51:9090/payments/getPaymentHistory/'+ stdId).pipe(map(res => res.json()));
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      
+    });
+    
+    let options = { headers: headers };
+     return this.http.get('http://192.168.1.65:9090/payments/getPaymentHistory/'+ stdId,options).pipe(map(res => res.json()));
+  }
+
+  getStudentMedicalRecord(studentId) {
+    console.log("student id for get")
+    console.log(studentId);
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+     
+    });
+  
+    let options = { headers: headers };
+    return this.http.get('http://192.168.1.65:9090/medicalrecord/'+studentId, options).pipe(map(res => res.json()));
   }
 
 }

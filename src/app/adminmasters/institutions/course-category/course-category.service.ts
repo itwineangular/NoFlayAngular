@@ -9,6 +9,8 @@ import { map } from "rxjs/operators";
 export class CourseCategoryService {
 
   url = Constants.HOME_URL;
+  tokens = sessionStorage.getItem("token_type");
+
 
   constructor(private http : Http) { }
 
@@ -20,11 +22,10 @@ export class CourseCategoryService {
       "status": courseCategory.status
       };
     let headers = new Headers({ 
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
       });
-      headers.append('Access-Control-Allow-Origin','*');
-      headers.append('Access-Control-Allow-Headers','Content-Type');
-      headers.append('Access-Control-Allow-Methods','GET,POST,OPTIONS,DELETE,PUT');
+     
     let options = { headers: headers };
     return this.http.post(this.url+'/coursecategory/create', obj, options).pipe(map(res => res.json()));
   }
@@ -38,33 +39,31 @@ export class CourseCategoryService {
       };
       console.log(obj);
     let headers = new Headers({ 
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
       });
-      headers.append('Access-Control-Allow-Origin','*');
-      headers.append('Access-Control-Allow-Headers','Content-Type');
-      headers.append('Access-Control-Allow-Methods','GET,POST,OPTIONS,DELETE,PUT');
+    
     let options = { headers: headers };
     return this.http.put(this.url+'/coursecategory/update/'+courseCategory.categoryId, obj, options).pipe(map(res => res.json()));
   }
 
   getCourseCategory()
   {
-    let headers = new Headers();
-      headers.append('Access-Control-Allow-Origin','*');
-      headers.append('Access-Control-Allow-Headers','Content-Type');
-      headers.append('Access-Control-Allow-Methods','GET,POST,OPTIONS,DELETE,PUT');
-    let options = { headers: headers };
-
-     return this.http.get(this.url+'/coursecategory/list',options).pipe(map(res => res.json()));
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
+    });
+   let options = { headers: headers };
+    return this.http.get(this.url+'/coursecategory/list',options).pipe(map(res => res.json()));
   }
 
 
   fetchCourseCategory()
   {
-    let headers = new Headers();
-      headers.append('Access-Control-Allow-Origin','*');
-      headers.append('Access-Control-Allow-Headers','Content-Type');
-      headers.append('Access-Control-Allow-Methods','GET,POST,OPTIONS,DELETE,PUT');
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
+    });
     let options = { headers: headers };
 
      return this.http.get(this.url+'/coursecategory/fetch',options).pipe(map(res => res.json()));
@@ -72,10 +71,10 @@ export class CourseCategoryService {
 
   deleteCourseCategory(id)
   {
-    let headers = new Headers();
-      headers.append('Access-Control-Allow-Origin','*');
-      headers.append('Access-Control-Allow-Headers','Content-Type');
-      headers.append('Access-Control-Allow-Methods','GET,POST,OPTIONS,DELETE,PUT');
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
+    });
     let options = { headers: headers };
      return this.http.get(this.url+'/coursecategory/delete/'+id,options).pipe(map(res => res.json()));
   }
@@ -88,7 +87,8 @@ export class CourseCategoryService {
       "status": courseCategory.status
     };
     let headers = new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
     });
     headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Access-Control-Allow-Headers', 'Content-Type');

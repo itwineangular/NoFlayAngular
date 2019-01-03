@@ -294,7 +294,7 @@ export class StudentComponent implements OnInit {
     this.onStateSelect(this.student.state);
     this.onInstituteSelect(this.student.institutionId);
     this.onCourseCategorySelect(this.student.categoryId);
-    this.url = this.globalurl + "/students/imageFiles/" + this.student.stdEmail;
+    this.url =  "http://192.168.1.65:9090/students/imageFiles/" + this.student.stdEmail;
   }
 
   getBulkStudents() {

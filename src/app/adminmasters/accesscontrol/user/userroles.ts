@@ -1,5 +1,5 @@
 export class Userroles {
-    userId: number;
+    id: number;
     username: string;
     password: string;
     roles: string;

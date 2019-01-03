@@ -9,6 +9,7 @@ import { map } from "rxjs/operators";
 })
 export class PlanService {
   url = Constants.HOME_URL;
+  tokens = sessionStorage.getItem("token_type");
   constructor(private http: Http) { }
 
   saveplans(data) {
@@ -31,11 +32,10 @@ export class PlanService {
     console.log("and here");
     console.log(obj);
     let headers = new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
     });
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Access-Control-Allow-Headers', 'Content-Type');
-    headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
+    
     let options = { headers: headers };
     return this.http.post(this.url + '/plans/create', obj, options);
   }
@@ -64,33 +64,32 @@ export class PlanService {
       };
     }
 console.log(obj);
-    let headers = new Headers({
-      'Content-Type': 'application/json'
-    });
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Access-Control-Allow-Headers', 'Content-Type');
-    headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
-    let options = { headers: headers };
+let headers = new Headers({
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer ' + this.tokens
+});
+
+let options = { headers: headers };
     return this.http.post(this.url + '/plans/searchByCriteria', obj, options).pipe(map(res => res.json()));
   }
 
   getPlan() {
     let headers = new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
     });
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Access-Control-Allow-Headers', 'Content-Type');
-    headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
+    
     let options = { headers: headers };
     return this.http.get(this.url + '/plans/list', options).pipe(map(res => res.json()));
   }
 
 
   deletePlan(planId) {
-    let headers = new Headers();
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Access-Control-Allow-Headers', 'Content-Type');
-    headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
+    });
+    
     let options = { headers: headers };
     return this.http.get(this.url + '/plans/delete/' + planId, options).pipe(map(res => res.json()));
   }
@@ -105,11 +104,10 @@ console.log(obj);
     };
 
     let headers = new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
     });
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Access-Control-Allow-Headers', 'Content-Type');
-    headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
+    
     let options = { headers: headers };
     // console.log(data.businessCategoryId);
     // console.log(obj);
@@ -117,19 +115,21 @@ console.log(obj);
   }
 
   getMembership() {
-    let headers = new Headers();
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Access-Control-Allow-Headers', 'Content-Type');
-    headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
+    });
+    
     let options = { headers: headers };
     return this.http.get(this.url + '/membership/list', options).pipe(map(res => res.json()));
   }
 
   getPlanName() {
-    let headers = new Headers();
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Access-Control-Allow-Headers', 'Content-Type');
-    headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
+    });
+    
     let options = { headers: headers };
     return this.http.get(this.url + '/plan/list', options).pipe(map(res => res.json()));
   }

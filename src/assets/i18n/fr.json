@@ -11,7 +11,8 @@
         "courseCategoryPage": {
             "courseCategory": "Catégorie de cours",
             "categoryName": "Nom de catégorie",
-            "categoryCode" : "Code de catégorie",            
+            "categoryCode" : "Code de catégorie", 
+            "status":"Statut",            
             "active" : "actif",
             "inactive" : "Inactif"
         },
@@ -50,6 +51,34 @@
             "state" : "Etat",
             "city" : "Ville"
         },
+        "studentMedicalRecordPage": {
+            "studentMedicalRecord":"Dossier médical étudiant",
+            "addRecord":"Ajouter un dossier médical",
+            "viewdRecord":"Détails du dossier médical",
+            "weight":"Poids",
+            "height":"la taille",
+            "bloddPressure":"Tension artérielle",
+            "bloodGlucose":"Teneur en glucose sanguin",
+            "pulse":"Pouls / fréquence cardiaque",
+            "repRate":"Fréquence respiratoire",
+            "bodyTemp":"Température corporelle",
+            "bodyfat":"Pourcentage de graisse corporelle",
+            "bodymass":"Indice de masse corporelle",
+            "leanBody":"Masse corporelle mince",
+            "waistCircumference":"Tour de taille",
+            "select":"Sélectionner",
+            "selectOutPatient":"Patient externe",
+            "hospitalName":"Nom de l'hôpital",
+            "dateOfadmission":"Date d'admission",
+            "dateOfDischarge":"Date de sortie",
+            "treatement":"Traitement pour",
+            "summary":"Résumé de décharge",
+            "medication":"Des médicaments",
+            "specialCare":"Soin particulier",
+            "startDate" : "Date de début",
+            "endDate" : "Date de fin"
+           
+        },
         "studentPage": {
             "student": "Étudiant",
             "studentName": "prénom",
@@ -83,7 +112,12 @@
             "selectCourse": "Sélectionner un cours",
             "imageupload": "Téléchargement d'image",
             "mcmId":"ID MCM",
-            "createDate": "créer un rendez-vous"
+            "createDate": "créer un rendez-vous",
+            "startDate":"Date de début",
+            "endDate":"Date de fin",
+            "studentDetails":"Détails de l'étudiant",
+            "institutionDetails":"Détails de l'institution"
+            
         },
       
         "commonFields": {
@@ -98,6 +132,7 @@
             "save" : "sauvegarder",
             "edit" : "modifier",
             "delete" : "Effacer",
+            "add" : "Ajouter",
             "view":"Vue",
             "status" : "Statut",
             "search" : "Chercher",
@@ -149,7 +184,16 @@
             "courseCategory": "Catégorie de cours  ",
             "course":"Cours",
             "studentName":"Nom d'étudiant",
-            "paymentDate":"Date de paiement"
+            "paymentDate":"Date de paiement",
+            "periodStartDate" :"Date de début de la période",
+            "periodEndDate" :"Date de fin de période",
+            "clear":"Clair",
+            "search":"Chercher",
+            "planName" :"Nom du plan:",
+            "membershipType":"Type d'adhésion:",
+            "amount":"Montant:",
+            "paymentMode":"Mode de paiement:",
+            "referenceNumber":"Numéro de réference:"
         },
 
         "businessCategory" : {
@@ -240,6 +284,13 @@
             "status" : "Statut",
             "id" : "ID"
 
+        },
+        "userPage":
+        {
+            "user" : "Rôles d'utilisateur",
+            "username":"Nom d'utilisateur",
+            "password":"Mot de passe",
+            "roles": "Rôle"
         },
         "contractsPage": {
             "contract": "Contrat",

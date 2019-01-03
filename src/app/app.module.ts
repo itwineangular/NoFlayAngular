@@ -80,6 +80,8 @@ import { StudentProfileComponent } from './student-profile/student-profile.compo
 import { StudentHomePageComponent } from './layouts/student-home-page/student-home-page.component';
 import { ContractsComponent } from './adminmasters/businessentity/contracts/contracts.component';
 import { ContractTemplateComponent } from './adminmasters/businessentity/contract-template/contract-template.component';
+import { PrivilegeComponent } from 'src/app/privilege/privilege.component';
+import { StudentmedicalrecordComponent } from 'src/app/adminmasters/studentmedicalrecord/studentmedicalrecord/studentmedicalrecord.component';
 
 
 @NgModule({
@@ -132,7 +134,9 @@ import { ContractTemplateComponent } from './adminmasters/businessentity/contrac
     StudentProfileComponent,
     StudentHomePageComponent,
     ContractsComponent,
-    ContractTemplateComponent
+    ContractTemplateComponent,
+    StudentmedicalrecordComponent,
+    PrivilegeComponent
    
   ],
   imports: [

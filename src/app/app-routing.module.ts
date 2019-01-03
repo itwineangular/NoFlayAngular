@@ -39,6 +39,8 @@ import { StudentHomePageComponent } from './layouts/student-home-page/student-ho
 import { StudentProfileComponent } from './student-profile/student-profile.component';
 import { ContractsComponent } from './adminmasters/businessentity/contracts/contracts.component';
 import { ContractTemplateComponent } from './adminmasters/businessentity/contract-template/contract-template.component';
+import { PrivilegeComponent } from 'src/app/privilege/privilege.component';
+import { StudentmedicalrecordComponent } from 'src/app/adminmasters/studentmedicalrecord/studentmedicalrecord/studentmedicalrecord.component';
 
 
 const appRoutes: Routes = [
@@ -82,7 +84,8 @@ const appRoutes: Routes = [
       { path: 'privilegeCategory', component: PrivilegecategoryComponent ,canActivate: [AuthGuard]},
       { path: 'paymentDetails', component: PaymentDetailsComponent ,canActivate: [AuthGuard]},
       { path:'contracts', component:ContractsComponent, canActivate:[AuthGuard]},
-      { path:'contractTemplate', component:ContractTemplateComponent, canActivate:[AuthGuard]}
+      { path:'contractTemplate', component:ContractTemplateComponent, canActivate:[AuthGuard]},
+      { path: 'record',component:StudentmedicalrecordComponent},
     ]
   },
   /* ADMIN PART END*/
@@ -90,7 +93,8 @@ const appRoutes: Routes = [
   {
     path: 'student' ,children: [
       { path: '',component:StudentHomePageComponent,outlet:'Studentlayout'},
-      { path: 'studentProfile', component: StudentProfileComponent },
+      { path: 'studentProfile', component: StudentProfileComponent, canActivate:[AuthGuard]},
+      { path: 'privilegeService', component: PrivilegeComponent,canActivate:[AuthGuard] }
      
     ]
   }

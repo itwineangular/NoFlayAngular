@@ -7,36 +7,36 @@ import { map } from "rxjs/operators";
 })
 export class MembershipCardService {
   url = Constants.HOME_URL;
+  tokens = sessionStorage.getItem("token_type");
 
   constructor(private http: Http) { }
 
   getInstitution() {
     let headers = new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
     });
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Access-Control-Allow-Headers', 'Content-Type');
-    headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
+    
     let options = { headers: headers };
     return this.http.get(this.url + '/institutions/list', options).pipe(map(res => res.json()));
   }
 
   getPlanName() {
-    let headers = new Headers();
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Access-Control-Allow-Headers', 'Content-Type');
-    headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
+    });
+    
     let options = { headers: headers };
     return this.http.get(this.url + '/plans/list', options).pipe(map(res => res.json()));
   }
 
   getStatus() {
     let headers = new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
     });
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Access-Control-Allow-Headers', 'Content-Type');
-    headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
+    
     let options = { headers: headers };
     return this.http.get(this.url + '/status/list', options).pipe(map(res => res.json()));
   }
@@ -45,11 +45,10 @@ export class MembershipCardService {
 
   sendEmail(students) {
     let headers = new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
     });
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Access-Control-Allow-Headers', 'Content-Type');
-    headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
+    
     let options = { headers: headers };
     return this.http.post(this.url + '/students/EmailStudProfile', students, options).pipe(map(res => res.json()));
   }
@@ -61,8 +60,11 @@ export class MembershipCardService {
       "emailContent": template
     };
     let headers = new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
     });
+    
+   
 
     let url = "http://192.168.1.51:9090/email/sendEmail/";
     students.forEach(element => {
@@ -87,8 +89,11 @@ export class MembershipCardService {
       "emailContent": template
     };
     let headers = new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
     });
+    
+   
 
     let url = "http://192.168.1.51:9090/email/studentCredential/";
     students.forEach(element => {
@@ -124,8 +129,10 @@ export class MembershipCardService {
 
     console.log(obj);
     let headers = new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
     });
+    
     let options = { headers: headers };
     return this.http.post(this.url + '/students/updateMCMID', obj, options).pipe(map(res => res.json()));
   }

@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
 export class ContractTemplateService {
 
   url = Constants.HOME_URL;
+  tokens = sessionStorage.getItem("token_type");
 
   constructor(private http: Http) { }
 
@@ -42,8 +43,10 @@ export class ContractTemplateService {
     console.log(obj);
 
     let headers = new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
     });
+    
     let options = { headers: headers };
     // return this.http.post('http://192.168.1.57:9090/contractTemplate/create', obj, options).pipe(map(res => res.json()));
     return this.http.post(this.url + '/contractTemplate/create', obj, options).pipe(map(res => res.json()));
@@ -76,8 +79,10 @@ export class ContractTemplateService {
     console.log(obj);
 
     let headers = new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
     });
+    
     let options = { headers: headers };
     return this.http.put(this.url + '/contractTemplate/update/' + id, obj, options).pipe(map(res => res.json()));
   }
@@ -88,14 +93,22 @@ export class ContractTemplateService {
       "contractTemplateName": templateName,
     };
     let headers = new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
     });
+    
     let options = { headers: headers };
     return this.http.post(this.url + '/contractTemplate/search', obj, options).pipe(map(res => res.json()));
   }
 
   getContractTemplate() {
-    return this.http.get(this.url + '/contractTemplate/list').pipe(map(res => res.json()));
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
+    });
+    
+    let options = { headers: headers };
+    return this.http.get(this.url + '/contractTemplate/list',options).pipe(map(res => res.json()));
   }
 
   //   http://localhost:9090/contractTemplate/list

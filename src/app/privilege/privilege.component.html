@@ -1,0 +1,106 @@
+
+<div class="mycontent-alter">
+  <div class="panel-group" id="accordion" >
+          <div class="panel panel-info">
+            <div class="panel-heading">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                <h4 class="panel-title">
+                     Privilege Service<i class="fa fa-angle-down pull-right"></i>
+              </h4>
+            </a>
+            </div>
+            <div id="collapse1" class="panel-collapse collapse in">
+                  <form class="form">
+                  <div class="panel-body">                         
+                      
+                          <div class="form-group">
+                                <div class="col-md-3">
+                                        <label for="businessCategory">Organization</label>
+                                        <ngx-select-dropdown #businessCategoryName (change)="businessCategoryNameChange()" [multiple]="false"
+                                        [(value)]="selectedbusinessCategoryCodeValue" [config]="businessCategoryCodeconfig" [options]="businessCategory"></ngx-select-dropdown>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                            <label for="businessEntity">Organization Name</label>
+                                            <ngx-select-dropdown #businessEntityName (change)="businessEntityNameChange()" [multiple]="false" [(value)]="selectedbusinessEntityCodeValue"
+                                            [config]="businessEntityCodeconfig" [options]="businessEntitiesOfParent"></ngx-select-dropdown>
+                                        </div>
+
+                                    <div class="col-md-3">
+                                <label for="privilegeCategory">Privileges</label>
+                                <!-- <ngx-select-dropdown #privilegeName (change)="privilegeNameChange()" [multiple]="false" [(value)]="selectedprivilegeCodeValue"
+                                      [config]="privilegeCodeconfig" [options]="privilegeCategoryListLocal"></ngx-select-dropdown> -->
+                                       <div class="boxes" *ngFor="let item of privilegeList">
+                                          <input type="checkbox" id="{{item.privilegeId}}" name="privilegeList[]" (change)="privilegeCategoryCheckboxSelect(item)"
+                                              value={{item.privilegeId}} checked={{item.isSelected}}>
+                                          <label for="{{item.privilegeId}}">{{item.privilegeName}}</label>
+                                      </div>
+                            </div>
+                       
+                                        <div class="col-md-3">
+                                        <label for="services">Services</label>
+                                        <!-- <ngx-select-dropdown #serviceName (change)="serviceNameChange()" [multiple]="false" [(value)]="selectedserviceCodeValue"
+                                      [config]="serviceCodeconfig" [options]="attributeList"></ngx-select-dropdown> -->
+                                      <div class="boxes" *ngFor="let item of attributeListLocal">
+                                          <input type="checkbox" id="{{item.attributeId}}" name="attribute[]" value={{item.attributeId}} checked={{item.isSelected}} (change)="servicesCheckboxSelect(item)" 
+                                           required/>
+                                          <label for="{{item.attributeId}}">{{item.attributeName}}</label>
+                                      </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                    <div class="form-group">
+                                    <div class="col-md-12">                                      
+                                            <button class="btn btn-primary btn-outline pull-right cssButtonPadding" type="button"  data-toggle="modal" data-target="#addContractModal"  (click)="searchPrivilegeCategory()">{{'adminConfigarationPage.commonFields.search' | translate}}</button>
+                                        </div>    
+                          </div>
+                          <div class="clearfix"></div>
+        
+                      </div>
+                  </form>
+              </div>
+          </div>
+          </div>
+          </div>
+
+<!-- Add contract Modal-->
+<div class="modal fade" id="addContractModal" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form class="form-horizontal" #contractForm="ngForm">
+        <div>
+          <div class="modal-header">
+            <button class="close" type="button" data-dismiss="modal">×</button>
+            <h4 class="modal-title"></h4>
+          </div>
+          <div class="modal-body">
+            <div class="container">
+              <div class="form-group">
+                <div class="col-md-12" >
+                  <table class="table table-bordered myTable table-condensed table-striped" >
+                    <thead>
+                      <tr>
+                        <th  style="text-align:center"> Services</th>
+                        <th style="text-align:center" *ngFor="let plan of studentPaymentList">{{plan.planName}} - {{plan.membershipType}}</th>
+                        <!-- <th style="text-align:center">{{item.planName}} - {{item.membershipType}}</th> -->
+                      </tr>
+                      <!-- <tr>
+                        <th style="text-align:center" colspan="2" *ngFor="let item of studentPaymentList">{{item.membershipType}}</th>
+                      </tr> -->
+                        <tr *ngFor="let discount of discountEntityGlobal">
+                          <td>{{discount.attributesEntity.attributeName}}</td>
+                          <td>{{discount.discount}}</td>
+                        </tr>                
+                    </thead>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+

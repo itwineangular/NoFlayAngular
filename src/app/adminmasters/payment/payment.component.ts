@@ -126,7 +126,7 @@ private router : Router) { }
     }
 
     getPlan(id: number) {
-      this.planService.getPlan().subscribe(data => {
+      this.service.getPlan().subscribe(data => {
         this.planList = data;
         var PlansData = this.planList.filter(x => x.planId == id);
         if (PlansData.length > 0) {
@@ -153,7 +153,8 @@ private router : Router) { }
             {if
               (result.value)
               {
-              this.router.navigate(['adminlogin/']);
+              // this.router.navigate(['adminlogin/']);
+              this.router.navigate(['paymentDetails/']);
             }
              
             })

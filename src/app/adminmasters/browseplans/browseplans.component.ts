@@ -7,6 +7,7 @@ import * as _ from 'underscore';
 import { StudentService } from '../institutions/student/student.service';
 import { PaymentService } from '../payment/payment.service';
 import { Student } from '../institutions/student/student';
+import { BrowseplansService} from '../browseplans/browseplans.service';
 
 @Component({
   selector: 'app-browseplans',
@@ -30,7 +31,8 @@ export class BrowseplansComponent implements OnInit {
     private service: PlanService,
     private router: Router,
     private paymentService: PaymentService,
-    private studentService: StudentService) { }
+    private studentService: StudentService,
+    private browseplansService: BrowseplansService) { }
 
   ngOnInit() {
     this.studentId = +this.route.snapshot.paramMap.get('id');
@@ -39,7 +41,7 @@ export class BrowseplansComponent implements OnInit {
   }
 
   getPlan() {
-    this.service.getPlan()
+    this.paymentService.getPlan()
       .subscribe(
         (data) => {
           this.planList = data;
@@ -83,10 +85,10 @@ export class BrowseplansComponent implements OnInit {
 
   payment() {
     this.student.planId = "" + this.selectedPlan.planId;
-    this.studentService.updateStudent(this.student)
+    this.browseplansService.updateStudent(this.student)
       .subscribe(
         (data) => {
-         // this.getStudent();
+        //  this.getStudent();
          this.router.navigate(['payment/' + this.student.stdId]);
         },
         (error) => {

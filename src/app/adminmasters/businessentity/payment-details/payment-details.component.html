@@ -1,7 +1,7 @@
 <div class="mycontent">
     <div class="col-md-12">
         <hr />
-        <h3 class="text-center">Payment Details</h3>
+        <h3 class="text-center">{{'adminConfigarationPage.paymentDetailsPage.paymentDetails' | translate}}</h3>
         <hr />
     </div>
   
@@ -10,45 +10,45 @@
             <div class="panel-body">
                 <form class="form-horizontal" #paymentDetailsSearchForm="ngForm" (ngSubmit)="searchStudent(paymentDetailsSearchForm)">
                     <div class="col-md-3">
-                        <label for="instituteName">Institution Name</label>
+                        <label for="instituteName">{{'adminConfigarationPage.paymentDetailsPage.institutionName' | translate}}</label>
                         <ngx-select-dropdown #instituteName (change)="changeInstituteNameValue($event)" [multiple]="false" [(value)]="selectedInstituteName"
                             [config]="configInstituteName" [options]="institutionList"></ngx-select-dropdown>
                     </div>
                     <div class="col-md-3">
-                            <label for="categoryCode">Course Category</label>
+                            <label for="categoryCode">{{'adminConfigarationPage.paymentDetailsPage.courseCategory' | translate}}</label>
                             <ngx-select-dropdown #courseCategoryName (change)="changeCourseCategoryNameValue($event)" [multiple]="false" [(value)]="selectedCourseCategoryName"
                                 [config]="configCourseCategoryName" [options]="courseCategoryList"></ngx-select-dropdown>
                      </div>
                      <div class="col-md-3">
-                            <label for="courseName">Course Name</label>
+                            <label for="courseName">{{'adminConfigarationPage.paymentDetailsPage.course' | translate}}</label>
                             <ngx-select-dropdown #courseName (change)="changeCourseNameValue($event)" [multiple]="false" [(value)]="selectedCourseName"
                                 [config]="configCourseName" [options]="courseList"></ngx-select-dropdown>
                     </div>
                     <div class="col-md-3">
-                            <label for="stdName">Student Name</label>
+                            <label for="stdName">{{'adminConfigarationPage.paymentDetailsPage.studentName' | translate}}</label>
                             <input class="form-control" type="text" placeholder="Student Name"
                                 name="stdName" #studentNameControl="ngModel" [(ngModel)]="paymentDetails.stdName" />
                     </div>
-                    <div class="col-md-3">
+                    <!-- <div class="col-md-3">
                         <label for="startDate" >Payment Date</label>
                         <my-date-picker #paymentDate [options]="myDatePickerOptions2" id="paymentDate" name="paymentDate" #paymentDate="ngModel" [(ngModel)]="paymentDetails.paymentDate"></my-date-picker>
     
-                    </div>
+                    </div> -->
                     <!-- <div class="col-md-3">
                       <label class="control-label col-sm-2" for="startDate">StartDate</label>
                       <my-date-picker [options]="myDatePickerOptions2" name="startDateTime" #startDateTime="ngModel" [(ngModel)]="plan.startDateTime"></my-date-picker>
   
                   </div> -->
-                  <!-- <div class="col-md-3">
-                    <label for="startDate" >Period StartDate</label>
-                    <my-date-picker #startDate [options]="myDatePickerOptions2" name="startDateTime" #startDateTime="ngModel" [(ngModel)]="paymentDetails.startDateTime"></my-date-picker>
+                   <div class="col-md-3">
+                    <label for="startDate" >{{'adminConfigarationPage.paymentDetailsPage.periodStartDate' | translate}}</label>
+                    <my-date-picker #startDate [options]="myDatePickerOptions" id="startDate" name="startDate" #startDate="ngModel" [(ngModel)]="paymentDetails.startDate"></my-date-picker>
 
                 </div>
                 <div class="col-md-3">
-                    <label for="endDate">Period EndDate</label>
-                    <my-date-picker [options]="myDatePickerOptions2" id="endDate"  name="endDateTime" #endDateTime="ngModel" [(ngModel)]="paymentDetails.endDateTime"></my-date-picker>
+                    <label for="endDate">{{'adminConfigarationPage.paymentDetailsPage.periodEndDate' | translate}}</label>
+                    <my-date-picker [options]="myDatePickerOptions" id="endDate"  name="endDate" #endDate="ngModel" [(ngModel)]="paymentDetails.endDate"></my-date-picker>
 
-                </div> -->
+                </div> 
   
                   <!-- <div class="col-md-3">
                       <label for="status">{{'adminConfigarationPage.studentPage.status' | translate}}</label>
@@ -61,8 +61,8 @@
                     
   
                     <div class="col-md-12">
-                        <button class="btn btn-warning btn-outline pull-right cssButtonPadding" type="button" (click)="searchClear()">clear</button>
-                        <button class="btn btn-primary btn-outline pull-right cssButtonPadding" type="button" (click)="searchStudent(paymentDetails)">search</button>
+                        <button class="btn btn-warning btn-outline pull-right cssButtonPadding" type="button" (click)="searchClear()">{{'adminConfigarationPage.paymentDetailsPage.clear' | translate}}</button>
+                        <button class="btn btn-primary btn-outline pull-right cssButtonPadding" type="button" (click)="searchStudent(paymentDetails)">{{'adminConfigarationPage.paymentDetailsPage.search' | translate}}</button>
                     </div>
     
                    
@@ -74,7 +74,7 @@
         <div class="col-md-12">
             <div *ngIf="isSearchClicked">
                  <div *ngIf="!isListContainsData">
-                     <h3 class="text-center noRecord">No Record Found</h3>
+                     <h3 class="text-center noRecord">{{ 'adminConfigarationPage.commonFields.noRecordFound' | translate }}</h3>
                  </div>
              </div>
      </div>
@@ -181,7 +181,7 @@
                             <div class="modal-body">
                                 <div class="container">
                                     <div class="form-group">
-                                        <label class="control-label col-sm-2">Plan Name:</label>
+                                        <label class="control-label col-sm-2">{{ 'adminConfigarationPage.paymentDetailsPage.planName' | translate }}</label>
                                         <div class="col-sm-3">
                                              <input class="form-control" type="text" placeholder="Plan Name" name="plan" readonly 
                                                 [(ngModel)]="selectedStudentData.planName" />
@@ -193,7 +193,7 @@
                                     </div>
   
                                     <div class="form-group">
-                                            <label class="control-label col-sm-2">Membership Type:</label>
+                                            <label class="control-label col-sm-2">{{ 'adminConfigarationPage.paymentDetailsPage.membershipType' | translate }}</label>
                                             <div class="col-sm-3">
         
                                                 <input class="form-control" type="text" placeholder="Membership Type" name="membershipType" readonly
@@ -203,7 +203,7 @@
                                         </div>
   
                                     <div class="form-group">
-                                        <label class="control-label col-sm-2">Amount:</label>
+                                        <label class="control-label col-sm-2">{{ 'adminConfigarationPage.paymentDetailsPage.amount' | translate }}</label>
                                         <div class="col-sm-3">
     
                                             <input class="form-control" type="text" placeholder="Amount" name="planPrice" readonly
@@ -236,7 +236,7 @@
                                     </div> -->
                                     <!-- <my-date-picker [options]="myDatePickerOptions" name="planEndEnd" [(ngModel)]="selectedStudentData.planEndDate" placeholder="End Date"></my-date-picker> -->
                                     <div class="form-group">
-                                            <label class="control-label col-sm-2">Payment Mode:</label>
+                                            <label class="control-label col-sm-2">{{ 'adminConfigarationPage.paymentDetailsPage.paymentMode' | translate }}</label>
                                             <div class="col-sm-3">
         
                                                 <input class="form-control" type="text" placeholder="Payment Mode" name="paymentMode" readonly 
@@ -248,7 +248,7 @@
                                         </div>
   
                                         <div class="form-group">
-                                                <label class="control-label col-sm-2">Reference Number:</label>
+                                                <label class="control-label col-sm-2">{{ 'adminConfigarationPage.paymentDetailsPage.referenceNumber' | translate }}</label>
                                                 <div class="col-sm-3">
             
                                                     <input class="form-control" type="text" placeholder="Reference Number" name="paymentReference" readonly 
@@ -260,7 +260,7 @@
                                             </div>
   
                                             <div class="form-group">
-                                                <label class="control-label col-sm-2">Payment Date:</label>
+                                                <label class="control-label col-sm-2">{{ 'adminConfigarationPage.paymentDetailsPage.paymentDate' | translate }}</label>
                                                 <div class="col-sm-3">
             
                                                     <input class="form-control" type="text" placeholder="Payment Date" name="paymentDate" readonly 

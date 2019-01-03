@@ -302,7 +302,7 @@
                                 <input type="password" class="login-input" placeholder="{{'studentLoginPage.studentLogin.password' | translate}}"
                                 name="password" #password="ngModel" [(ngModel)]="studentLoginObject.password">
                                 <br>
-                                <input type="button" value="{{'studentLoginPage.studentLogin.letsgo' | translate}}" (click)="studentLogin(studentLoginObject)" class="login-button">
+                                <input type="button" value="{{'studentLoginPage.studentLogin.letsgo' | translate}}" (click)="studentLogin(username.value,password.value)" class="login-button">
                                 <br>
                                 <p class="login-lost">
                                     <!-- <a href="">Forgot Password?</a> -->

@@ -12,6 +12,7 @@ import {Observable} from 'rxjs';
 export class ContractService {
 
   url = Constants.HOME_URL;
+  tokens = sessionStorage.getItem("token_type");
 
   constructor(private http: Http) { }
 
@@ -35,13 +36,14 @@ export class ContractService {
     //   "businessId": businessEntityId
     // }
     let headers = new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
     });
     
     let options = { headers: headers };
     console.log("id")
     console.log(businessEntityId);
-    return this.http.get(this.url+'/contractor/getContractnameByBusinessId?businessId='+businessEntityId+'',options).pipe(map(res => res.json()));
+    return this.http.get(this.url+'/contractor/findByBusinessId/'+businessEntityId+'',options).pipe(map(res => res.json()));
 
   }
 
@@ -78,18 +80,30 @@ export class ContractService {
     console.log(obj);
 
     let headers = new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
     });
+    
     let options = { headers: headers };
     return this.http.post(this.url +'/contractor/create', obj, options).pipe(map(res => res.json()));
   }
 
   getContract() : Observable<ContractObject[]> 
   {
-    return this.http.get(this.url +'/contractor/list').pipe(map(res => res.json()));
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
+    });
+    
+    let options = { headers: headers };
+    return this.http.get(this.url +'/contractor/list',options).pipe(map(res => res.json()));
   }
   deleteContractTemplate(id) {
-    let headers = new Headers();
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
+    });
+    
     let options = { headers: headers };
     return this.http.get(this.url + '/contractor/delete/' + id, options).pipe(map(res => res.json()));
   }
@@ -126,8 +140,10 @@ export class ContractService {
     console.log(obj);
 
     let headers = new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
     });
+    
     let options = { headers: headers };
     return this.http.put(this.url +'/contractor/update/'+contractObject.id, obj, options).pipe(map(res => res.json()));
   }

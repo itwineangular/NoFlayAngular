@@ -9,6 +9,7 @@ import { map } from "rxjs/operators";
 export class MembershipServicesService {
 
   url = Constants.HOME_URL;
+  tokens = sessionStorage.getItem("token_type");
   constructor(private http : Http) { }
 
   saveMembership(membership)
@@ -16,33 +17,34 @@ export class MembershipServicesService {
     let obj = {
       "memberName": membership.memberName
       };
-    let headers = new Headers({ 
-      'Content-Type': 'application/json'
+      let headers = new Headers({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.tokens
       });
-      headers.append('Access-Control-Allow-Origin','*');
-      headers.append('Access-Control-Allow-Headers','Content-Type');
-      headers.append('Access-Control-Allow-Methods','GET,POST,OPTIONS,DELETE,PUT');
-    let options = { headers: headers };
+      
+      let options = { headers: headers };
     return this.http.post(this.url+'/membership/create', obj, options);
     // return this.http.post(this.url+'/membership/create', obj, options).pipe(map(res => res.json()));
   }
   getMembership()
   {
-    let headers = new Headers();
-      headers.append('Access-Control-Allow-Origin','*');
-      headers.append('Access-Control-Allow-Headers','Content-Type');
-      headers.append('Access-Control-Allow-Methods','GET,POST,OPTIONS,DELETE,PUT');
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
+    });
+    
     let options = { headers: headers };
     return this.http.get(this.url+'/membership/list',options).pipe(map(res => res.json()));
   }
 
   deleteMembership(MembershipId)
   {
-      let headers = new Headers();
-      headers.append('Access-Control-Allow-Origin','*');
-      headers.append('Access-Control-Allow-Headers','Content-Type');
-      headers.append('Access-Control-Allow-Methods','GET,POST,OPTIONS,DELETE,PUT');
-      let options = { headers: headers };
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
+    });
+    
+    let options = { headers: headers };
       return this.http.get(this.url+'/membership/delete/'+MembershipId,options);
       // return this.http.get(this.url+'/membership/delete/'+MembershipId,options).pipe(map(res => res.json()));
   }
@@ -53,13 +55,12 @@ export class MembershipServicesService {
       "membership_id": membership.membership_id,
       "memberName": membership.memberName
       };
-    let headers = new Headers({ 
-      'Content-Type': 'application/json'
+      let headers = new Headers({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.tokens
       });
-      headers.append('Access-Control-Allow-Origin','*');
-      headers.append('Access-Control-Allow-Headers','Content-Type');
-      headers.append('Access-Control-Allow-Methods','GET,POST,OPTIONS,DELETE,PUT');
-    let options = { headers: headers };
+      
+      let options = { headers: headers };
     return this.http.put(this.url+'/membership/update/'+membership.membership_id, obj, options);
     // return this.http.put(this.url+'/membership/update/'+membership.membership_id, obj, options).pipe(map(res => res.json()));
   }
@@ -72,11 +73,10 @@ export class MembershipServicesService {
     };
     console.log(obj);
     let headers = new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
     });
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Access-Control-Allow-Headers', 'Content-Type');
-    headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
+    
     let options = { headers: headers };
     return this.http.post(this.url+'/membership/searchList', obj, options).pipe(map(res => res.json()));
   }

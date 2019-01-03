@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 
 import * as _ from 'lodash';
 import { Constants } from 'src/app/Constants';
+import { headersToString } from '../../../../../node_modules/@types/selenium-webdriver/http';
 
 export enum FileQueueStatus {
   Pending,
@@ -41,6 +42,7 @@ export class FileQueueObject {
 
 @Injectable()
 export class FileuploaderService {
+  tokens = sessionStorage.getItem("token_type");
 
     globalUrl = Constants.HOME_URL;
     public url = this.globalUrl+'/uploadFile';
@@ -75,20 +77,26 @@ export class FileuploaderService {
   // }
 
   public uploadAll(data,type) {
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      // 'Authorization': 'Bearer ' + this.tokens
+    });
+  
+    let options = { headers: headers };
     if(type=="image")
     {
-      this.url = this.globalUrl+'/uploadFile';
+      this.url = 'http://192.168.1.65:9090/uploadFile';
       this.form.append("instName", data.instName);
     }
     else if(type=="studentImage")
     {     
-      this.url = this.globalUrl+'/students/imageUpload';      
+      this.url = 'http://192.168.1.65:9090/students/imageUpload';      
       this.form.append("stdEmail", data.stdEmail);
       console.log("stdEmail", data.stdEmail);
     }
     else if(type=="file")
     {
-      this.url = this.globalUrl+'/students/uploadFile';
+      this.url = 'http://192.168.1.65:9090/students/uploadFile';
       this.form.append("name", data.instName);
     }
     //  this.form.append("instName", data.instName);

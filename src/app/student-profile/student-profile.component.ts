@@ -5,6 +5,8 @@ import { CommonServicesService } from "../../app/common-services.service";
 import { StudentDetailsService } from '../shared/student-details.service';
 import { StudentPayment } from './studentPaymentObject';
 import { PlanService } from '../adminmasters/businessentity/plans/plans.service';
+import { StudentmedicalrecordService } from 'src/app/adminmasters/studentmedicalrecord/studentmedicalrecord.service';
+import { Medicalrecord } from 'src/app/adminmasters/studentmedicalrecord/studentmedicalrecord/medicalrecord';
 declare var $:any;
 
 @Component({
@@ -18,6 +20,8 @@ export class StudentProfileComponent implements OnInit {
   studentPlan : Student = new Student();
   studentPayment : StudentPayment = new StudentPayment();
   studentPaymentList: StudentPayment[]=[];
+  studentRecord: Medicalrecord = new Medicalrecord();
+  studentMedicalList: Medicalrecord[]=[];
 
  countries = [];
   states = [];
@@ -34,6 +38,7 @@ export class StudentProfileComponent implements OnInit {
   constructor(private studentProfileService : StudentProfileService,
     private studentDetailsService : StudentDetailsService,
     private service: PlanService,
+    private studentmedicalrecordService: StudentmedicalrecordService,
     private commonService: CommonServicesService) {
      
      }
@@ -47,6 +52,7 @@ export class StudentProfileComponent implements OnInit {
     this.stdId= this.studentDetailsService.getStudentId();
     this.getPaymentDetails(this.stdId);
     this.pageChange(5);
+    this.getStudentMedicalRecord();
 
   }
 
@@ -150,5 +156,17 @@ export class StudentProfileComponent implements OnInit {
     }
   }
   
+  getStudentMedicalRecord() { 
+    this.studentProfileService.getStudentMedicalRecord(this.stdId)
+      .subscribe(
+        (data) => {
+          this.studentMedicalList = data;
+          console.log(" thisstudentMedicalList");
+          console.log( this.stdId);
+
+        }
+      );
+  } 
+
 
 }

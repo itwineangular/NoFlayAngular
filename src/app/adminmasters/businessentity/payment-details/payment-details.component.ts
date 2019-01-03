@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
 import {PlanName} from '../plan-name/plan-name';
 import {PlansObject} from '../../businessentity/plans/plans-object';
 import {PaymentService} from '../../payment/payment.service';
-
+import { IMyDpOptions } from 'mydatepicker';
 
 @Component({
   selector: 'app-payment-details',
@@ -66,6 +66,7 @@ export class PaymentDetailsComponent implements OnInit {
   public currentDateModule: any;
   public endDateModule: any;
   localDate = new Date();
+    date = new Date();
 
   constructor(private studentService: StudentService,
     private paymentDetailsService : PaymentDetailsService,
@@ -82,6 +83,11 @@ export class PaymentDetailsComponent implements OnInit {
     this.pageChange(5);
 
   }
+
+  public myDatePickerOptions: IMyDpOptions = {
+    dateFormat: 'yyyy-mm-dd',
+    disableUntil: { year: this.date.getFullYear(), month: this.date.getMonth(), day: this.date.getDate() }
+  };
 
   viewUser(student : Student) : void
   {
@@ -248,13 +254,40 @@ export class PaymentDetailsComponent implements OnInit {
   changeValuePaymentDate($event: any) {
 
   }
+  selectedStartDate: any;
+  paymentStartDateconfig =
+    {
+      displayKey: "paymentStartDate",
+      search: true,
+      limitTo: this.paymentList.length
+
+    };
+  changeValuePaymentStartDate($event: any) {
+
+  }
+  selectedEndDate: any;
+  paymentEndDateconfig =
+    {
+      displayKey: "paymentEndDate",
+      search: true,
+      limitTo: this.paymentList.length
+
+    };
+  changeValuePaymentEndDate($event: any) {
+
+  }
+
 
   searchStudent(studentParameters) {
     var paymentDetailsObject: Student = new Student();
     paymentDetailsObject.institutionId = "";
     paymentDetailsObject.categoryId = "";
     paymentDetailsObject.courseId = "";
-    paymentDetailsObject.paymentDate = "";
+    // paymentDetailsObject.paymentDate = "";
+     paymentDetailsObject.startDate;
+     paymentDetailsObject.endDate;
+
+     paymentDetailsObject.stdId1 = "";
     this.isSearchClicked = true;
 
 
@@ -269,17 +302,20 @@ export class PaymentDetailsComponent implements OnInit {
     if (typeof this.selectedCourseName !== 'undefined' && this.selectedCourseName.length > 0) {
       paymentDetailsObject.courseId = this.selectedCourseName[0].courseId;
     }
+    
 
     // if (typeof this.selectedStatusValue !== 'undefined' && this.selectedStatusValue.length>0) 
     // {
     //   paymentDetailsObject.statusId = this.selectedStatusValue[0].statusId
     // }
 
-    if (typeof studentParameters.paymentDate !== 'undefined' && studentParameters.paymentDate !==null) {
-      var dateWithFormat = studentParameters.paymentDate.date.year + "-" + studentParameters.paymentDate.date.month + "-" + studentParameters.paymentDate.date.day;
-      paymentDetailsObject.paymentDate = dateWithFormat;
-    }
-     paymentDetailsObject.stdName = studentParameters.stdName;
+    // if (typeof studentParameters.paymentDate !== 'undefined' && studentParameters.paymentDate !==null) {
+    //   var dateWithFormat = studentParameters.paymentDate.date.year + "-" + studentParameters.paymentDate.date.month + "-" + studentParameters.paymentDate.date.day;
+    //   paymentDetailsObject.paymentDate = dateWithFormat;
+    // }
+     paymentDetailsObject.stdId = studentParameters.stdId;
+     paymentDetailsObject.startDate = studentParameters.startDate;
+     paymentDetailsObject.endDate = studentParameters.endDate;
     // paymentDetailsObject.status = studentParameters.status;
     // this.studentstatus = paymentDetailsObject.status;
     // this.changelistview( membershipObject.status);
@@ -289,9 +325,11 @@ export class PaymentDetailsComponent implements OnInit {
       if (typeof paymentDetailsObject.institutionId === 'undefined' && 
       typeof paymentDetailsObject.categoryId === 'undefined' 
       && typeof paymentDetailsObject.courseId === 'undefined' 
-      && typeof paymentDetailsObject.stdName === 'undefined' 
+      && typeof paymentDetailsObject.stdId === 'undefined' 
       //  && typeof paymentDetailsObject.statusId === 'undefined'
-      && typeof paymentDetailsObject.paymentDate == 'undefined'
+     // && typeof paymentDetailsObject.paymentDate == 'undefined'
+      && typeof paymentDetailsObject.startDate == 'undefined'
+      && typeof paymentDetailsObject.endDate == 'undefined'
     ) {
       Swal({
         title: 'Invalid!!',
@@ -311,19 +349,20 @@ export class PaymentDetailsComponent implements OnInit {
           (data) => {
              this.studentList = data;
             if (typeof this.studentList !== 'undefined' && this.studentList.length > 0) {
+              console.log("data i n table")
               console.log(data);
-              this.studentList = [];
-              data.forEach(element => {
-                var studentDataLocal = element;
+              // this.studentList = [];
+             // data.forEach(element => {
+                //var studentDataLocal = element;
 
-                var paymentDetailsLocal = this.paymentList.filter(x=>x.studentProfile.stdId == element.stdId);
-                if(paymentDetailsLocal.length>0)
-                {
-                  studentDataLocal.paymentDate = paymentDetailsLocal[0].paymentDate;
-                }
+                // var paymentDetailsLocal = this.paymentList.filter(x=>x.studentProfile.stdId == element.stdId);
+                // if(paymentDetailsLocal.length>0)
+                // {
+                //   studentDataLocal.paymentDate = paymentDetailsLocal[0].paymentDate;
+                // }
                 
-                this.studentList.push(studentDataLocal);
-              });
+                //this.studentList.push(studentDataLocal);
+             // });
               // this.studentList = data;
               console.log(this.studentList);
               this.isListContainsData = true;

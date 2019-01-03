@@ -31,6 +31,7 @@ export class ContractsComponent implements OnInit {
   businessEntity: BusinessEntity[] = [];
   businessEntitiesOfParent: BusinessEntity[] = [];
   businessEntityListOfSearched: BusinessEntity[];
+  value:string;
 
   attributeList: Attribute[] = [];
   pagenumber: string;
@@ -44,6 +45,7 @@ export class ContractsComponent implements OnInit {
   caseInsensitive: boolean = true;
   saveOrUpdate: string;
   isSearchedClicked: boolean;
+  
 
   countries = [];
   states = [];
@@ -71,6 +73,7 @@ export class ContractsComponent implements OnInit {
 
   @ViewChild('businessCategoryName') public ngSelectbusinessCategoryName: SelectDropDownComponent;
   @ViewChild('businessEntityName') public ngSelectbusinessEntityName: SelectDropDownComponent;
+  @ViewChild('contractForm') mytemplateForm: NgForm;
 
   constructor(private businessCategoryServicesService: BusinessCategoryServicesService,
     private businessEntityService: BusinessEntityService,
@@ -417,6 +420,7 @@ export class ContractsComponent implements OnInit {
         .subscribe(
           (data) => {
             console.log(data);
+            this.mytemplateForm.reset();
             this.alertMassage = "New Item added Successfully!!";
           },
           (error) => {
@@ -425,7 +429,7 @@ export class ContractsComponent implements OnInit {
           }
         );
     }
-    else (this.saveOrUpdate == "update")
+    else if(this.saveOrUpdate == "update")
     {
       this.contractService.updateContract(this.selectedbusinessEntityCodeValue[0].businessId, this.contractObject, this.discountEntityExtended)
         .subscribe(
@@ -498,5 +502,20 @@ export class ContractsComponent implements OnInit {
          alert("You can't delete this data");
       });
   }
+  numberOnly(event): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+
+  }
+  setTwoNumberDecimal(event) {
+    this.value = parseFloat(this.value).toFixed(2);
+  }
+   myCtrl($scope) {
+    $scope.myDecimal = 0;
+  }
+
 
 }

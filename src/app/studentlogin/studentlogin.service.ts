@@ -9,6 +9,7 @@ import { map } from "rxjs/operators";
 export class StudentloginService {
 
   url = Constants.HOME_URL;
+  tokens = sessionStorage.getItem("token_type");
   constructor(private http : Http) { }
 
   sendStudentPasswordResetRequestMail(studentId,template) {
@@ -18,8 +19,11 @@ export class StudentloginService {
       "emailContent":  template.emailContent
     };
     let headers = new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokens
     });
+    
+   
 
     console.log(studentId);
     console.log(template);

@@ -5,6 +5,7 @@ import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { ViewChild } from '@angular/core';
 import { SelectDropDownComponent } from "ngx-select-dropdown";
+import { identifierModuleUrl } from '@angular/compiler';
 
 declare var jquery: any;
 declare var $: any;
@@ -109,8 +110,9 @@ export class UserComponent implements OnInit {
     }
   }
 
-  deleteUser(userId) {
-    this.service.deleteUser(userId).subscribe(data => {
+  deleteUser(id) {
+    console.log(id)
+    this.service.deleteUser(id).subscribe(data => {
       this.alertMassege = "Deleted successfully!!";
       this.getUser();
     });

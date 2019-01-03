@@ -5,63 +5,49 @@
         <h3 class="text-center">{{ 'adminConfigarationPage.userPage.user' | translate }}</h3>
         <hr />
     </div>
-    <div class="col-md-12">
+     <div class="col-md-12">
         <div class="panel panel-default">
-            <!-- <div class="rcorners2"> -->
-            <form class="form-horizontal">
-                <div class="col-md-3">
-                    <label for="user">{{'adminConfigarationPage.userPage.username' | translate}}</label>
-                    <input class="form-control" type="text"  name="username"
-                    #username="ngModel" [(ngModel)]="searchUser.username"
-                    placeholder="{{'adminConfigarationPage.userPage.username' | translate}}" />
-                </div>
-                <div class="col-md-3">
-                    <label for="user">{{ 'adminConfigarationPage.userPage.roles' | translate }}</label>
-                    <ngx-select-dropdown #roleName (change)="changeUserRoleValue($event)" [multiple]="false" [(value)]="selectedUserRoleValue"
-                        [config]="userRoleSerachConfig" [options]="userRoleOptions"></ngx-select-dropdown>
-                </div>
+           <form class="form-horizontal">
+                
+               
                 <div class="col-md-12">
                     <button class="btn btn-info btn-outline pull-right cssButtonPadding" type="button" (click)="addNew()" data-toggle="modal"
                         data-target="#addModal">{{'adminConfigarationPage.commonFields.addNew' | translate}}
                     </button>
-                    <button class="btn btn-warning btn-outline pull-right cssButtonPadding" type="button" (click)="searchClear()">{{'adminConfigarationPage.commonFields.clear'
+                    <!-- <button class="btn btn-warning btn-outline pull-right cssButtonPadding" type="button" (click)="searchClear()">{{'adminConfigarationPage.commonFields.clear'
                         | translate}}</button>
                     <button class="btn btn-primary btn-outline pull-right cssButtonPadding" type="button" (click)="searchUserRoles(searchUser)">{{'adminConfigarationPage.commonFields.search'
-                        | translate}}</button>
+                        | translate}}</button> -->
                 </div>
                 <div class="clearfix"></div>
 
             </form>
             <div class="clearfix"></div>
-            <!-- </div> -->
+           
         </div>
-    </div>
-    <!-- <div class="col-md-12">
-        <div class="alert alert-warning fade in myAlert" *ngIf="alertMassege">
-            <a class="close" href="#" data-dismiss="alert" (click)="clickedAlert()">X</a>
-            <h4 style="text-align: center">{{alertMassege}}</h4>
-        </div>
-    </div> -->
+    </div> 
+            
+   
     <div class="col-md-12">
         <div class="alert alert-warning fade in myAlert" *ngIf="alertMassege">
             <a class="close" href="#" data-dismiss="alert" (click)="clickedAlert()">X</a>
             <h4 style="text-align: center">{{alertMassege}}</h4>
         </div>
-        <div *ngIf="isSearchClicked">
+        <!-- <div *ngIf="isSearchClicked">
             <div *ngIf="!isListContainsData">
                 <h3 class="text-center noRecord">{{ 'adminConfigarationPage.commonFields.noRecordFound' | translate }}</h3>
             </div>
-        </div>
+        </div> -->
     </div>
-    <div class="col-md-12" *ngIf="isListContainsData">
+    <div class="col-md-12">
         <div class="table-responsive">
             <table class="table table-bordered myTable table-condensed table-striped">
                 <thead>
                     <tr class="text-center">
                         <th>{{'adminConfigarationPage.commonFields.index' | translate}}</th>
                         <th>{{'adminConfigarationPage.userPage.username' | translate}}</th>
-                        <th>{{'adminConfigarationPage.userPage.password' | translate}}</th>
-                        <th>{{'adminConfigarationPage.userPage.roles' | translate}}</th>
+                        <!-- <th>{{'adminConfigarationPage.userPage.password' | translate}}</th> -->
+                        <!-- <th>{{'adminConfigarationPage.userPage.roles' | translate}}</th> -->
 
                         <th>{{ 'adminConfigarationPage.commonFields.edit' | translate }}</th>
                         <th>{{ 'adminConfigarationPage.commonFields.delete' | translate }}</th>
@@ -71,8 +57,8 @@
                     <tr *ngFor="let item of userList | orderBy: key : reverse : caseInsensitive : comparator |  paginate: { itemsPerPage: pagenumber, currentPage: p }; let i=index">
                         <td>{{((p-1)*itemsPerPage2)+i+1}}</td>
                         <td>{{item.username}}</td>
-                        <td>{{item.password}}</td>
-                        <td>{{item.roles}}</td>
+                        <!-- <td>{{item.password}}</td> -->
+                        <!-- <td>{{item.roles}}</td> -->
 
 
                         <td>
@@ -152,8 +138,8 @@
                                 </label>
                                 <div class="col-md-3">
                                     <select class="form-control" name="roles" #roleName="ngModel" [(ngModel)]="user.roles" required>
-                                        <option value="Admin">Admin</option>
-                                        <option value="Super Admin">Super Admin</option>
+                                        <option value="Admin">ADMIN</option>
+                                        <option value="User">USER</option>
                                     </select>
                                 </div>
                             </div>
@@ -185,7 +171,7 @@
                         <span>{{user.username}}</span>????</h3>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-danger" type="button" (click)="deleteUser(user.userId)" data-dismiss="modal">{{
+                    <button class="btn btn-danger" type="button" (click)="deleteUser(user.id)" data-dismiss="modal">{{
                         'adminConfigarationPage.commonFields.yes' | translate }}</button>
                     <button class="btn btn-primary" type="button" data-dismiss="modal">{{ 'adminConfigarationPage.commonFields.no'
                         | translate }}</button>

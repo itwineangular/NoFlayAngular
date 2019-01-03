@@ -29,7 +29,7 @@
                         #categoryCodeControl="ngModel" [(ngModel)]="courseCategory.categoryCode" /> -->
                 </div>
                 <div class="col-md-3">
-                    <label class="control-label col-sm-2" for="status">Status</label>
+                    <label class="control-label col-sm-2" for="status">{{ 'adminConfigarationPage.courseCategoryPage.status' | translate }}</label>
                     <br>
                     <br>
                     <input type="radio" name="status" #status="ngModel" [(ngModel)]="courseCategory.status" value=true> {{ 'adminConfigarationPage.courseCategoryPage.active' | translate }}

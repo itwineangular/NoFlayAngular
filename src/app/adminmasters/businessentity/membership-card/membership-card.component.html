@@ -1,7 +1,7 @@
 <div class="mycontent">
     <div class="col-md-12">
         <hr />
-        <h3 class="text-center">Membership Card</h3>
+        <h3 class="text-center">{{'adminConfigarationPage.membershipCardPage.membershipCard' | translate}}</h3>
         <hr />
     </div>
 
@@ -77,6 +77,8 @@
                         <th>{{ 'adminConfigarationPage.statusPage.status' | translate }}</th>
                         <th *ngIf="isStartDateColumnVisible">{{ 'adminConfigarationPage.studentPage.startDate' | translate }}</th>
                         <th *ngIf="isStartDateColumnVisible">{{ 'adminConfigarationPage.studentPage.endDate' | translate }}</th>
+                       
+                        <th>I</th>
                         <th>{{ 'adminConfigarationPage.membershipCardPage.checkbox' | translate }}</th>
                         <th *ngIf="isStartDateColumnVisible">{{ 'adminConfigarationPage.commonFields.view' | translate }}</th>
                     </tr>
@@ -90,7 +92,11 @@
                         <td>{{item.statusName}}</td>
                         <td *ngIf="isStartDateColumnVisible">{{item.planStartDate | date:'fullDate'}}</td>
                         <td *ngIf="isStartDateColumnVisible">{{item.planEndDate | date:'fullDate'}}</td>
-
+                      
+                        <td style="color:#cccccc">
+                            <input type="checkbox" id="mycheck-{{ i+2 }}" >
+                            <label for="mycheck-{{ i+2 }}"></label>
+                        </td>   
                         <td style="color:#cccccc">
                             <input type="checkbox" id="mycheck-{{ i+1 }}" (change)="selectedStudent(item.statusName,item, $event.target.checked)" checked={{checkedval}}>
                             <label for="mycheck-{{ i+1 }}"></label>
@@ -221,7 +227,7 @@
                             <hr style="width: 93%;">
                             <div class="idcard-content " style="position:relative;">
                                 <div class="user-image" style="margin-left: 13px;border: solid;width: 28%;margin-top: 13px;float: left;position:absolute;">
-                                    <img src="http://192.168.1.51:9090/students/imageFiles/{{studentDetailsForCard.stdEmail}}" style="height: 68.031496063px; width: 84px"
+                                    <img src="http://192.168.1.65:9090/students/imageFiles/{{studentDetailsForCard.stdEmail}}" style="height: 68.031496063px; width: 84px"
                                     />
                                 </div>
                                 <div class="user-details" style="float: right; margin-right: 43px;margin-top: -7px;">
@@ -258,7 +264,7 @@
                         <hr style="width: 93%;">
                         <div class="idcard-content " style="position:relative;">
                             <div class="user-image" style="margin-left: 11px;border:3px solid;width: 28%;margin-top: 1px;float: left;position:absolute;height: 97px;">
-                                <img src="http://192.168.1.51:9090/students/imageFiles/{{studentCard.studentEmail}}" style="height: 97px; width: 91px" />
+                                <img src="http://192.168.1.65:9090/students/imageFiles/{{studentCard.studentEmail}}" style="height: 97px; width: 91px" />
                             </div>
                             <div class="user-details" style="float: right; margin-right: 43px;margin-top: -7px;;width: 10em;height: 1.2em;word-wrap: break-word;">
                                 <P>{{studentCard.studentName}}</P>

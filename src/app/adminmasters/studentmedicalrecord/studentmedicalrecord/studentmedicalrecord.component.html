@@ -1,0 +1,487 @@
+<div class="mycontent">
+  <div class="col-md-12">
+    <hr/>
+    <h3 class="text-center">{{ 'adminConfigarationPage.studentMedicalRecordPage.studentMedicalRecord' | translate }}</h3>
+    <hr/>
+  </div>
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <form class="form-horizontal">
+        
+          <div class="col-md-3">
+            <label for="mcmId">{{ 'adminConfigarationPage.studentPage.mcmId' | translate }}</label>
+            <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentPage.mcmId' | translate}}" name="mcmId"
+              #studentNameControl="ngModel" [(ngModel)]="student.mcmId" />
+          </div>
+
+          <!-- <div class="col-md-3">
+            <label for="name">{{ 'adminConfigarationPage.studentPage.mcmId' | translate }}</label>
+
+            <ngx-select-dropdown #studentEntityName (change)="studentEntityNameChange()" [multiple]="false" [(value)]="selectedStudentEntityCodeValue"
+              [config]="studentEntityCodeconfig" [options]="studentEntitiesOfParent"></ngx-select-dropdown>
+          </div> -->
+          <div class="col-md-12">
+            <button class="btn btn-warning btn-outline pull-right cssButtonPadding" type="button" (click)="searchClear()">{{'adminConfigarationPage.commonFields.clear' | translate}}</button>
+            <button class="btn btn-primary btn-outline pull-right cssButtonPadding" type="button" (click)="searchStudent(student)">{{'adminConfigarationPage.commonFields.search' | translate}}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-12">
+    <div class="alert alert-warning fade in myAlert table-condensed table-striped" *ngIf="alertMassege">
+      <a class="close" href="#" data-dismiss="alert" (click)="clickedAlert()">X</a>
+      <h4 style="text-align: center">{{alertMassege}}</h4>
+    </div>
+    <div *ngIf="isSearchClicked">
+
+      <div *ngIf="!isListContainsData">
+        <h3 class="text-center noRecord">{{ 'adminConfigarationPage.commonFields.noRecordFound' | translate }}</h3>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12" *ngIf="isListContainsData">
+
+    <div class="table-responsive">
+      <table class="table table-bordered myTable table-condensed table-striped">
+        <thead>
+          <tr class="text-center">
+            <th>{{'adminConfigarationPage.commonFields.index' | translate}}</th>
+            <th [class.active]="key === 'stdName'" (click)=" sort('stdName')">{{ 'adminConfigarationPage.studentPage.studentName' | translate }}
+              <span [hidden]="reverse">▼</span>
+              <span [hidden]="!reverse">▲</span>
+            </th>
+
+            <th>{{ 'adminConfigarationPage.studentPage.mcmId' | translate }}</th>
+
+
+            <th>{{ 'adminConfigarationPage.commonFields.add' | translate }}</th>
+            <th>{{ 'adminConfigarationPage.commonFields.view' | translate }}</th>
+            <th>{{ 'adminConfigarationPage.commonFields.delete' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of studentList | orderBy: key : reverse : caseInsensitive : comparator |  paginate: { itemsPerPage: pagenumber, currentPage: p };let i=index">
+            <td>{{((p-1)*itemsPerPage2)+i+1}}</td>
+            <td>
+
+              {{item.stdName}}
+            </td>
+
+            <td>{{item.mcmId}}</td>
+            <td>
+              <button class="btn btn-warning buttonStyle" data-toggle="modal" data-target="#addModal" (click)="addNew(item)">
+                <i class="fa fa-plus" aria-hidden="true" style="font-size:15px"></i>
+              </button>
+            </td>
+
+            <td>
+              <button class="btn btn-warning buttonStyle" data-toggle="modal" data-target="#editModal" (click)="selectUser(item)">
+                <i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size:15px"></i>
+              </button>
+            </td>
+            <td>
+              <button class="btn btn-danger buttonStyle" data-toggle="modal" data-target="#deleteModal" (click)="selectUser(item)">
+                <i class="fa fa-trash-o" aria-hidden="true" style="font-size:15px"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="form-group">
+      <div class="col-md-4">
+        Show
+        <select (change)="pageChange($event.target.value)" style="border: none;">
+
+          <option>5</option>
+          <option>10</option>
+          <option>15</option>
+        </select>
+        Entries
+      </div>
+      <div class="col-md-2"></div>
+
+      <div class=" col-md-6 text-right">
+        <pagination-controls (pageChange)="customPageChange($event)"></pagination-controls>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+  
+
+
+  <!-- Add Modal-->
+  <div class="modal fade" id="addModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <form class="form-horizontal" #studentForm="ngForm">
+          <div class="modal-header">
+            <button class="close" type="button" data-dismiss="modal">X</button>
+            <h4 class="modal-title">{{'adminConfigarationPage.studentMedicalRecordPage.addRecord' | translate}}</h4>
+          </div>
+          <div class="modal-body">
+              
+            <div class="form-group col-md-12">
+
+              <h3>Medical Details</h3>
+              <div class="form-group">
+
+                <div class="col-md-3">
+                  <label for="studentName">{{'adminConfigarationPage.studentMedicalRecordPage.weight' | translate}}
+                    <span class="reqMark">*</span>
+                  </label>
+                  <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentMedicalRecordPage.weight' | translate}}"
+                    name="weight" #weight="ngModel" [(ngModel)]="studentRecord.weight" 
+                  />
+                </div>
+
+                 <div class="col-md-3">
+                  <label for="address1">{{'adminConfigarationPage.studentMedicalRecordPage.height' | translate}}
+                    <span class="reqMark">*</span>
+                  </label>
+                  <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentMedicalRecordPage.height' | translate}}"
+                    name="height" #height="ngModel" [(ngModel)]="studentRecord.height" required />
+
+                </div>
+                <div class="col-md-3">
+                  <label for="bloodPressure">{{'adminConfigarationPage.studentMedicalRecordPage.bloddPressure' | translate}}
+                    <span class="reqMark">*</span>
+                  </label>
+                  <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentMedicalRecordPage.bloddPressure' | translate}}"
+                    name="bloodPressure" #bloodPressure="ngModel" [(ngModel)]="studentRecord.bloodPressure" required />
+
+                </div>
+                <div class="col-md-3">
+                  <label for="bloodGluContent">{{'adminConfigarationPage.studentMedicalRecordPage.bloodGlucose' | translate}}
+                    <span class="reqMark">*</span>
+                  </label>
+                  <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentMedicalRecordPage.bloodGlucose' | translate}}"
+                    name="bloodGluContent" #bloodGluContent="ngModel" [(ngModel)]="studentRecord.bloodGluContent" required />
+
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="form-group">
+
+                <div class="col-md-3">
+                  <label for="pulse">{{'adminConfigarationPage.studentMedicalRecordPage.pulse' | translate}}
+                    <span class="reqMark">*</span>
+                  </label>
+                  <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentMedicalRecordPage.pulse' | translate}}"
+                    name="pulse" #pulse="ngModel" [(ngModel)]="studentRecord.pulse" required />
+
+                </div>
+                <div class="col-md-3">
+                  <label for="respiratoryRate">{{'adminConfigarationPage.studentMedicalRecordPage.repRate' | translate}}
+                    <span class="reqMark">*</span>
+                  </label>
+                  <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentMedicalRecordPage.repRate' | translate}}"
+                    name="respiratoryRate" #respiratoryRate="ngModel" [(ngModel)]="studentRecord.respiratoryRate" required />
+
+                </div>
+                <div class="col-md-3">
+                  <label for="bodyTemp">{{'adminConfigarationPage.studentMedicalRecordPage.bodyTemp' | translate}}
+                    <span class="reqMark">*</span>
+                  </label>
+                  <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentMedicalRecordPage.bodyTemp' | translate}}"
+                    name="bodyTemp" #bodyTemp="ngModel" [(ngModel)]="studentRecord.bodyTemp" required />
+
+                </div>
+                <div class="col-md-3">
+                  <label for="bodyFat">{{'adminConfigarationPage.studentMedicalRecordPage.bodyfat' | translate}}
+                    <span class="reqMark">*</span>
+                  </label>
+                  <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentMedicalRecordPage.bodyfat' | translate}}"
+                    name="bodyFat" #bodyFat="ngModel" [(ngModel)]="studentRecord.bodyFat" required />
+
+                </div> 
+                <div class="clearfix"></div>
+              </div>
+              <div class="form-group">
+
+
+
+                <div class="col-md-3">
+                  <label for="bodyMass">{{'adminConfigarationPage.studentMedicalRecordPage.bodymass' | translate}}
+                    <span class="reqMark">*</span>
+                  </label>
+                  <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentMedicalRecordPage.bodymass' | translate}}"
+                    name="bodyMass" #bodyMass="ngModel" [(ngModel)]="studentRecord.bodyMass" required />
+
+                </div>
+
+                <div class="col-md-3">
+                  <label for="leanBody">{{'adminConfigarationPage.studentMedicalRecordPage.leanBody' | translate}}
+                    <span class="reqMark">*</span>
+                  </label>
+                  <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentMedicalRecordPage.leanBody' | translate}}"
+                    name="leanBody" #leanBody="ngModel" [(ngModel)]="studentRecord.leanBody" required />
+
+                </div>
+
+                <div class="col-md-3">
+                  <label for="waistCirumference">{{'adminConfigarationPage.studentMedicalRecordPage.waistCircumference' | translate}}
+                    <span class="reqMark">*</span>
+                  </label>
+                  <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentMedicalRecordPage.waistCircumference' | translate}}"
+                    name="waistCirumference" #waistCirumference="ngModel" [(ngModel)]="studentRecord.waistCirumference" required />
+
+                </div>
+
+
+              </div>
+
+              <div class="form-group col-md-12">
+                <h3>Medical/Hospitalization</h3>
+                <div class="form-group">
+                  <div class="col-md-3">
+                    <label for="gender">{{'adminConfigarationPage.studentMedicalRecordPage.select' | translate}}
+                      <span class="reqMark">*</span>
+                    </label>
+                    <select class="form-control" class="form-control" type="text" name="gender" #gender="ngModel" [(ngModel)]="student.gender"
+                      required>
+                      <option disabled hidden [value]="selectUndefinedOptionValue">{{'adminConfigarationPage.studentMedicalRecordPage.select' | translate}}</option>
+                      <option value="0"> In-Patient </option>
+                      <option value="1"> Out-Patient </option>
+                    </select>
+                  </div>
+                  <div class="col-md-3">
+                    <label for="address2">{{'adminConfigarationPage.studentMedicalRecordPage.hospitalName' | translate}}
+                      <span class="reqMark">*</span>
+                    </label>
+                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentMedicalRecordPage.hospitalName' | translate}}"
+                      name="hospitalNmae" #hospitalNmae="ngModel" [(ngModel)]="studentRecord.hospitalNmae" required />
+
+                  </div>
+                  
+
+                  <div class="col-md-3">
+                    <label class="control-label " for="dateOfAdmission">{{'adminConfigarationPage.studentMedicalRecordPage.dateOfadmission'|
+                      translate}}
+                    </label>
+                    <my-date-picker [options]="myDatePickerOptions" name="dateOfAdmission" #dateOfAdmission="ngModel" [(ngModel)]="studentRecord.dateOfAdmission"></my-date-picker>
+                  </div>
+                  
+                  <div class="col-md-3">
+                    <label class="control-label " for="dateOfDischarge">{{'adminConfigarationPage.studentMedicalRecordPage.dateOfDischarge'|
+                      translate}}
+                    </label>
+                    <my-date-picker [options]="myDatePickerOptions"  name="dateOfDischarge" #dateOfDischarge="ngModel" [(ngModel)]="studentRecord.dateOfDischarge"></my-date-picker>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="col-md-3">
+                    <label for="treatementFor">{{'adminConfigarationPage.studentMedicalRecordPage.treatement' | translate}}
+                      <span class="reqMark">*</span>
+                    </label>
+                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentMedicalRecordPage.treatement' | translate}}"
+                      name="treatementFor" #treatementFor="ngModel" [(ngModel)]="studentRecord.treatementFor" required />
+
+                  </div>
+                  <div class="col-md-3">
+                    <label for="dischargeSummary">{{'adminConfigarationPage.studentMedicalRecordPage.summary' | translate}}
+                      <span class="reqMark">*</span>
+                    </label>
+                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentMedicalRecordPage.summary' | translate}}"
+                      name="dischargeSummary" #dischargeSummary="ngModel" [(ngModel)]="studentRecord.dischargeSummary" required />
+
+                  </div>
+                  <div class="col-md-3">
+                    <label for="medication">{{'adminConfigarationPage.studentMedicalRecordPage.medication' | translate}}
+                      <span class="reqMark">*</span>
+                    </label>
+                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentMedicalRecordPage.medication' | translate}}"
+                      name="medication" #medication="ngModel" [(ngModel)]="studentRecord.medication" required />
+
+                  </div>
+
+                  <div class="col-md-3">
+                    <label for="address2">{{'adminConfigarationPage.studentMedicalRecordPage.specialCare' | translate}}
+                      <span class="reqMark">*</span>
+                    </label>
+                    <input class="form-control" type="text" placeholder="{{'adminConfigarationPage.studentMedicalRecordPage.specialCare' | translate}}"
+                      name="specialCare" #specialCare="ngModel" [(ngModel)]="studentRecord.specialCare" required />
+
+                  </div>
+                </div>
+
+
+
+
+              </div>
+
+            </div>
+          </div>
+          <div class="modal-footer">
+
+            <button class="btn btn-success" (click)="saveStudentMediRecord(studentRecord)" type="button" data-dismiss="modal">Save</button>
+            <button class="btn btn-default" type="button" data-dismiss="modal">{{ 'adminConfigarationPage.commonFields.close' | translate }}</button>
+
+          </div>
+          <div class="clearfix"></div>
+
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+
+   <!-- edit Modal-->
+   <div class="modal fade" id="editModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <form class="form-horizontal" #studentForm="ngForm">
+          <div class="modal-header">
+            <button class="close" type="button" data-dismiss="modal">X</button>
+            <h4 class="modal-title">{{'adminConfigarationPage.studentMedicalRecordPage.viewdRecord' | translate}}</h4>
+          </div>
+          <div class="modal-body">
+              <div class="form-group col-md-12">
+                  <!-- <h3>Student Detail</h3> -->
+
+                  <div class="col-md-12">
+                    <div class="panel panel-default">
+                      <div class="panel-body">
+                        <form class="form-horizontal">
+                        
+                          <div class="col-md-3">
+                            <label class="control-label " for="startDate">{{'adminConfigarationPage.studentMedicalRecordPage.startDate'|
+                              translate}}
+                            </label>
+                            <my-date-picker [options]="myDatePickerOptions" name="startDate"
+                        #startDate="ngModel" [(ngModel)]="medicalrecordDate.startDate" ></my-date-picker>
+                          </div>
+        
+                          <div class="col-md-3">
+                            <label class="control-label " for="endDate">{{'adminConfigarationPage.studentMedicalRecordPage.endDate'|
+                              translate}}
+                            </label>
+                            <my-date-picker [options]="myDatePickerOptions" name="endDate" 
+                            #endDate="ngModel" [(ngModel)]="medicalrecordDate.endDate" ></my-date-picker>
+                          </div>
+                
+                          
+                          <div class="col-md-12">
+                            <button class="btn btn-warning btn-outline pull-right cssButtonPadding" type="button" (click)="searchClearRecord()">{{'adminConfigarationPage.commonFields.clear' | translate}}</button>
+                            <button class="btn btn-primary btn-outline pull-right cssButtonPadding" type="button" (click)="searchMedicalRecord(medicalrecordDate)">{{'adminConfigarationPage.commonFields.search' | translate}}</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+
+                  
+
+                  <div *ngIf="isSearchClickedforMedicalRecord">
+
+                    <div *ngIf="!isListContainsMedicalRecord">
+                      <h3 class="text-center noRecord">{{ 'adminConfigarationPage.commonFields.noRecordFound' | translate }}</h3>
+                    </div>
+                  </div>
+                  <div class="col-md-12" *ngIf="isListContainsMedicalRecord">
+
+                    <div class="table-responsive">
+                      <table class="table table-bordered myTable table-condensed table-striped">
+                        <thead>
+                          <tr class="text-center">
+                            <th>{{'adminConfigarationPage.commonFields.index' | translate}}</th>
+                            <th>Weight</th>
+                            <th>Height</th>
+                            <th>Blood Pressure</th>
+                            <th>Blood Glucose Content</th>
+                            <th>Pulse</th>
+                            <th>Respiratory Rate</th>
+                            <th>Body Temperature</th>
+                            <th>Body Fat</th>
+                            <th>Body Mass</th>
+                            <th>Lean Body</th>
+                            <th>Waist Cirumference</th>
+                            <th>Hospital Name</th>
+                            <th>Date Of Admission</th>
+                            <th>Date Of Discharge</th>
+                            <th>Treatement For</th>
+                            <!-- <th>{{ 'adminConfigarationPage.commonFields.edit' | translate }}</th>
+                            <th>{{ 'adminConfigarationPage.commonFields.delete' | translate }}</th> -->
+
+                          
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let item of studentMedicalList | orderBy: key : reverse : caseInsensitive : comparator |  paginate: { itemsPerPage: pagenumber, currentPage: p };let i=index">
+                            <td>{{((p-1)*itemsPerPage2)+i+1}}</td>
+                            <td>{{item.weight}}</td>
+                            <td>{{item.height}}</td>
+                            <td>{{item.bloodPressure}}</td>
+                            <td>{{item.bloodGluContent}}</td>
+                            <td>{{item.pulse}}</td>
+                            <td>{{item.respiratoryRate}}</td>
+                            <td>{{item.bodyTemp}}</td>
+                            <td>{{item.bodyFat}}</td>
+                            <td>{{item.bodyMass}}</td>
+                            <td>{{item.leanBody}}</td>
+                            <td>{{item.waistCirumference}}</td>
+                            <td>{{item.hospitalNmae}}</td>
+                            <td>{{item.dateOfAdmission| date:'fullDate'}}</td>
+                            <td>{{item.dateOfDischarge| date:'fullDate'}}</td>
+                            <td>
+                              <a  (click)="viewStudentdetails(item.id)">
+                                  <!-- <i class="fa fa-link"></i> -->
+                                  {{item.treatementFor}}
+                         </a></td>
+                            <!-- <td>
+                              <button class="btn btn-warning buttonStyle" data-toggle="modal" data-target="#addModal" (click)="selectUserRecord(item)">
+                                  <i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size:15px"></i>
+                              </button>
+                          </td>
+                          <td>
+                              <button class="btn btn-danger buttonStyle" data-toggle="modal" data-target="#deleteModal" (click)="selectUser(item)">
+                                  <i class="fa fa-trash-o" aria-hidden="true" style="font-size:15px"></i>
+                              </button>
+                          </td> -->
+                           
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-md-4">
+                        Show
+                        <select (change)="pageChange($event.target.value)" style="border: none;">
+                
+                          <option>5</option>
+                          <option>10</option>
+                          <option>15</option>
+                        </select>
+                        Entries
+                      </div>
+                      <div class="col-md-2"></div>
+                
+                      <div class=" col-md-6 text-right">
+                        <pagination-controls (pageChange)="customPageChange($event)"></pagination-controls>
+                      </div>
+                      <div class="clearfix"></div>
+                    </div>
+                  </div>
+            </div>
+          </div>
+          <!-- <div class="modal-footer">
+
+            <button class="btn btn-success" (click)="saveStudentMediRecord(studentRecord)" type="button" data-dismiss="modal">Save</button>
+            <button class="btn btn-default" type="button" data-dismiss="modal">{{ 'adminConfigarationPage.commonFields.close' | translate }}</button>
+
+          </div>
+          <div class="clearfix"></div> -->
+
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+
+</div>

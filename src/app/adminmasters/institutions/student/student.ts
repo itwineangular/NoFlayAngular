@@ -82,7 +82,7 @@ export class Status {
 
 export class Student { 
    
-    stdId: number;
+    stdId: number;;
     mcmId?: any;
     actInd?: any;
     stdName: string;
@@ -117,10 +117,14 @@ export class Student {
     categoryId?: any;
     courseId?: any;
     planId?: any;
+    stdId1?: any;
     statusId: any;
     statusName: any;
     membershipType:any;
     paymentDate : any;
+    startDate:Date;
+    endDate:Date;
+   
     
 }
 

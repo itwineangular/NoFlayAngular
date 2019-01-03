@@ -9,10 +9,18 @@ import { map } from "rxjs/operators";
 export class PaymentService {
 
   url = Constants.HOME_URL;
+
+  tokens = sessionStorage.getItem("token_type");
   constructor(private http: Http) { }
 
   getStudent(id) {
-    return this.http.get('http://192.168.1.51:9090/students/' + id).pipe(map(res => res.json()));
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      // 'Authorization': 'Bearer ' + this.tokens
+    });
+    
+    let options = { headers: headers };
+    return this.http.get('http://192.168.1.65:9090/students/'+id, options).pipe(map(res => res.json()));
   }
 
   payment(id, cardNum,randomNum ,paymentDate, cardType) 
@@ -31,10 +39,11 @@ export class PaymentService {
     }
     console.log("date"+paymentDate +"mode" + cardType +"card no"+ cardNum +"rand no"+ randomNum);
     let headers = new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      // 'Authorization': 'Bearer ' + this.tokens
     });
     let options = { headers: headers };
-    return this.http.post(this.url+'/students/receivePayament', obj, options).pipe(map(res => res.json()));
+    return this.http.post('http://192.168.1.65:9090/students/receivePayament', obj, options).pipe(map(res => res.json()));
 
   }
 
@@ -42,13 +51,19 @@ export class PaymentService {
   {
     
       let headers = new Headers({
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.tokens
       });
-      headers.append('Access-Control-Allow-Origin', '*');
-      headers.append('Access-Control-Allow-Headers', 'Content-Type');
-      headers.append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
+    
       let options = { headers: headers };
       return this.http.get(this.url + '/payments/lists', options).pipe(map(res => res.json()));
    
+  }
+
+  getPlan() {
+  
+    
+    // let options = { headers: headers };
+    return this.http.get( 'http://192.168.1.65:9090/plans/list').pipe(map(res => res.json()));
   }
 }
